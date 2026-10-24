@@ -35,7 +35,7 @@ Run from the repository root (npm workspaces):
 |---|---|
 | `npm install` | Installs every workspace |
 | `npm run dev` | Builds tokens, then starts the playground at http://localhost:5180 |
-| `npm run build` | Builds tokens, then the playground into `apps/playground/dist` (what Vercel runs; see `vercel.json`) |
+| `npm run build` | Builds tokens, then the playground into `apps/playground/dist`, mirrored to `./dist` so hosts find it whether their root is the repo or `apps/playground` |
 | `npm test` | Token tests (contrast matrix, theme coverage, naming) + component tests |
 | `npm run typecheck` | TypeScript for `@ds/react` and the playground |
 | `npm run build:tokens` | Rebuilds `packages/tokens/dist` |

@@ -9,6 +9,7 @@
     "dev": "vite",
     "prebuild": "npm run tokens",
     "build": "tsc -p tsconfig.json && vite build",
+    "postbuild": "node scripts/copy-dist-to-root.mjs",
     "preview": "vite preview",
     "typecheck": "tsc -p tsconfig.json"
   },
