@@ -12,6 +12,10 @@ export type { DateRangePickerProps, DateRangeValue } from "./components/date-pic
 export { DatePicker } from "./components/date-picker/date-picker";
 export type { DatePickerProps } from "./components/date-picker/date-picker";
 
+export { AgentProgress, DEFAULT_AGENT_PROGRESS_STEPS } from "./components/agent-progress/agent-progress";
+export type { AgentProgressProps } from "./components/agent-progress/agent-progress";
+
 export { ChevronDownSmall, ChevronLeft16, ChevronRight16 } from "./icons/chevrons";
+export { easing, layoutSpring } from "./motion/tokens";
 export { focusRing, focusRingInset, focusRingNative } from "./recipes/focus-ring";
 export { cx } from "./utils/cx";

@@ -10,10 +10,10 @@
   ],
   "scripts": {
     "build:tokens": "npm run build -w @ds/tokens",
-    "dev": "npm run build:tokens && npm run dev -w @ds/playground",
+    "dev": "npm run dev -w @ds/playground",
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "build": "npm run build --workspaces --if-present"
+    "build": "npm run build -w @ds/playground"
   },
   "engines": {
     "node": ">=20.19"

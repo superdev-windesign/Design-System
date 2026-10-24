@@ -1,4 +1,4 @@
-# Parity report: Select and Date Range Picker vs BoardUI
+# Parity report: Select, Date Range Picker and Agent Progress vs BoardUI
 
 **Date:** 24 October 2026.
 
@@ -95,3 +95,65 @@ These are BoardUI behaviors copied deliberately. Each is tracked, either in `pac
 | Date chip focus | Border darkens to neutral-400 only | Footer chips |
 
 Fixing these is token or class work, with no structural changes. The contrast tests will flag each one as it gets resolved.
+
+---
+
+## Agent Progress (BoardUI Pro)
+
+**Source:** BoardUI doesn't publish Pro source, so this was rebuilt from the component code boardui.com ships to the browser. Structure, class lists, durations, easings, springs and the stagger formula match that code. Licensing is covered in [THIRD_PARTY_NOTICES.md](../../THIRD_PARTY_NOTICES.md).
+
+**Compared using BoardUI's demo:** five steps, `stepDuration={2400}`, same Chromium, light theme. Both runs were measured in the finished state, after all animations had settled.
+
+| Element | BoardUI | This system |
+|---|---|---|
+| Card | 341 × 235, radius 16, 1px #ebebeb, #fff, shadow-xs | same |
+| Header row | 10.7, 12.7 · 319.7 × 20 | same |
+| Status label | 14/20 500 neutral-500, "All steps completed" | same |
+| Minimize button and tile | 20 × 20; tile 18 × 18, radius 4, neutral-300 | same |
+| Rows | 5 × (319.7 × 32), at y = 41.7 / 79.7 / 117.7 / 155.7 / 193.7 | same |
+| Check glyph | 15 × 15 at 14.2, 50.2; neutral-300 fill, neutral-500 stroke | same |
+| Step label | 116.3 × 20, 14/20 500 neutral-500 | same |
+| Strike-through | 116.3 × 1, opacity 0.8, current color | same |
+
+**Dark theme, finished state:**
+
+- Card fill, shadow, check glyph, label and tile colors are identical.
+- The card border differs: neutral-800 on boardui.com, neutral-700 here. The difference comes from a rule on BoardUI's *docs page* (`.component-detail … .border-border-button-default`) that recolors bordered `div`s inside its docs. In an app, BoardUI's component uses `border-button-default` = neutral-700, which is what this system renders.
+
+### Motion choreography (from the shipped code, reproduced value for value)
+
+| Moment | What moves | Timing |
+|---|---|---|
+| Mount | Card: opacity, y −12→0, blur 8→0, height 0→`45 + 38·n` | 350 / 500 / 400 / 650 ms, `easing.enter` |
+| Rows enter | opacity, y −4→0, blur 6→0 | delay 650 + 160·i ms, 450 ms |
+| Start | Rings begin sweeping | 1.1 s after mount |
+| Overall ring | Linear sweep over the whole job | n × stepDuration |
+| Step ring | Linear sweep over one step | stepDuration |
+| Step completes | Check pops in (scale 0.72→1, rotate −18°→0); strike-through draws (scaleX 0→1, opacity 0→0.8) | 340 ms / 380 ms |
+| Active row | Padding 4→9/13 px; outline pill glides to the next row (shared `layoutId`) | 360 ms; spring 260/30/0.8 |
+| Countdown | Old label exits up with blur, new one enters from below | 260 ms, pop layout |
+| Done | Overall ring scales out; its 24px slot collapses and the label slides left | 250 ms / 400 ms + layout spring |
+| Minimize | Height → 44 px; list exits (y −4, blur 3); bar fades in after 120 ms | 420 ms / 220 ms / 200 ms |
+| Restore | Height back; rows re-stagger quickly | 240 ms; 35·i ms stagger, 240 ms |
+| Active text | Highlight sweeps across the label | 3.4 s loop, linear |
+
+### Intentional differences
+
+None of these show visually in normal use.
+
+| Area | BoardUI | This system | Why |
+|---|---|---|---|
+| Screen-reader output | The whole animated card is `aria-live="polite"`, so every text change is announced | Card is `role="group"` with a name; one hidden `role="status"` says "3 steps left. Current step: …" | Concise, one announcement per change |
+| List semantics | `div`s | `<ol>` / `<li>`, `aria-current="step"`, hidden ", completed" on finished steps | Order and state are exposed to assistive tech |
+| Toggle buttons | No `aria-expanded`; no visible focus style | `aria-expanded` + `aria-controls`; system focus ring (inset on the minimized bar) | Keyboard and screen-reader users |
+| Reduced motion | Not handled for the motion animations | `MotionConfig reducedMotion="user"`: transform and layout moves are skipped; the rings still advance because they carry information | Blueprint motion rules |
+| Shimmer | `.agent-progress-loading-text` | `text-shimmer` utility, plus a forced-colors fallback | Shared utility; works in High Contrast mode |
+| Prop name | `paused` | `isPaused` | System boolean convention |
+| Glyph colors | Inline `var(--color-…)` attributes | `fill-*` / `stroke-*` token utilities | Themeable through the same bridge |
+| Localization | `useTemplateCopy` wrapper | Not ported | BoardUI-site specific |
+
+### Inherited debt (kept for parity)
+
+- `isPaused` holds the step timers, but rings that are already sweeping keep animating, and resuming restarts the current step's full duration.
+- The check glyph on its fill is 2.2:1 in dark mode, and the pending (dashed) marker is 1.5:1 in both themes. Both are tracked in `contrast-pairs.json` as `knownFailures`.
+- Not verified live: the in-flight animation frames. The browser pane was in the background during testing, so animation frames were paused. The choreography values come from the shipped code; watch it in the playground to confirm.

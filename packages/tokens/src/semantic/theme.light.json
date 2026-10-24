@@ -9,7 +9,8 @@
       "surface-disabled": { "$type": "color", "$value": "{color.neutral.100}", "$description": "background-primary-disabled" },
       "sunken": { "$type": "color", "$value": "{color.neutral.100}", "$description": "background-secondary-default" },
       "sunken-hover": { "$type": "color", "$value": "{color.neutral.200}", "$description": "background-secondary-hover" },
-      "muted": { "$type": "color", "$value": "{color.neutral.200}", "$description": "background-tertiary-default" }
+      "muted": { "$type": "color", "$value": "{color.neutral.200}", "$description": "background-tertiary-default" },
+      "strong": { "$type": "color", "$value": "{color.neutral.300}", "$description": "background-quaternary-default" }
     },
     "text": {
       "primary": { "$type": "color", "$value": "{color.neutral.950}", "$description": "text-primary" },
@@ -19,7 +20,12 @@
       "on-action": { "$type": "color", "$value": "{color.white}", "$description": "text-white" }
     },
     "icon": {
-      "primary": { "$type": "color", "$value": "{color.neutral.950}", "$description": "foreground-icon-primary" }
+      "primary": { "$type": "color", "$value": "{color.neutral.950}", "$description": "foreground-icon-primary" },
+      "secondary": { "$type": "color", "$value": "{color.neutral.500}", "$description": "foreground-icon-secondary" }
+    },
+    "progress": {
+      "track": { "$type": "color", "$value": "{color.neutral.200}", "$description": "Unfilled part of a progress ring (border-button-default)" },
+      "fill": { "$type": "color", "$value": "{color.neutral.700}", "$description": "agent-progress-ring" }
     },
     "border": {
       "default": { "$type": "color", "$value": "{color.neutral.200}", "$description": "border-button-default" },

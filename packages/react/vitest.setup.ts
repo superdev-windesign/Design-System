@@ -1,7 +1,10 @@
 import "@testing-library/jest-dom/vitest";
 
 // jsdom lacks these browser APIs; React Aria and motion probe for them.
-if (!window.matchMedia) {
+// (Tests that opt into the node environment have no window at all.)
+const hasWindow = typeof window !== "undefined";
+
+if (hasWindow && !window.matchMedia) {
   window.matchMedia = (query: string) =>
     ({
       matches: false,
@@ -15,7 +18,7 @@ if (!window.matchMedia) {
     }) as MediaQueryList;
 }
 
-if (!window.ResizeObserver) {
+if (hasWindow && !window.ResizeObserver) {
   window.ResizeObserver = class {
     observe() {}
     unobserve() {}

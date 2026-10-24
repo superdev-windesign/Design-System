@@ -27,10 +27,12 @@
     "200": { "$type": "duration", "$value": "200ms" },
     "220": { "$type": "duration", "$value": "220ms" },
     "250": { "$type": "duration", "$value": "250ms" },
-    "420": { "$type": "duration", "$value": "420ms" }
+    "420": { "$type": "duration", "$value": "420ms" },
+    "3400": { "$type": "duration", "$value": "3400ms" }
   },
   "easing": {
     "standard": { "$type": "cubicBezier", "$value": "cubic-bezier(0.4, 0, 0.2, 1)" },
+    "emphasized": { "$type": "cubicBezier", "$value": "cubic-bezier(0.22, 1, 0.36, 1)" },
     "decelerate": { "$type": "cubicBezier", "$value": "cubic-bezier(0, 0, 0.2, 1)" },
     "ease": { "$type": "cubicBezier", "$value": "cubic-bezier(0.25, 0.1, 0.25, 1)" },
     "overshoot": { "$type": "cubicBezier", "$value": "cubic-bezier(0.34, 1.2, 0.64, 1)" }

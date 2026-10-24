@@ -20,7 +20,19 @@ Adapted files carry a header comment naming their BoardUI source:
 | `packages/styles/src/utilities.css` (press motion, gradient buttons) | `styles/theme.css` |
 | Token values in `packages/tokens/src/semantic/*.json` | `styles/theme.css` |
 
-BoardUI Pro components are not used.
+## BoardUI Pro
+
+`packages/react/src/components/agent-progress/agent-progress.tsx` is adapted
+from BoardUI Pro's **Agent Progress** block. It was rebuilt from the component
+code that boardui.com serves to the browser, under the repository owner's
+BoardUI Pro license (purchased per the owner; keep the Lemon Squeezy receipt
+with this repository's records).
+
+This file is **not** covered by the MIT notice below. Use it within the terms of
+the BoardUI Pro license. In particular, don't publish `@ds/react` publicly, or
+otherwise redistribute this component's source, unless the license allows it.
+Run `npx boardui@latest add agent-progress` with the license activated to get
+the canonical source if you need to compare.
 
 ```
 MIT License

@@ -8,6 +8,7 @@
       "md": { "$type": "dimension", "$value": "{radius.10}" }
     },
     "item": { "$type": "dimension", "$value": "{radius.8}", "$description": "Day cells, small selectable items" },
+    "tile": { "$type": "dimension", "$value": "{radius.4}", "$description": "Small icon tiles (20px and under)" },
     "chip": { "$type": "dimension", "$value": "{radius.12}" },
     "surface": { "$type": "dimension", "$value": "{radius.16}", "$description": "Cards and month panels" },
     "overlay": { "$type": "dimension", "$value": "{radius.16}", "$description": "Menus, listboxes" },
@@ -70,10 +71,12 @@
       "moderate": { "$type": "duration", "$value": "{duration.200}", "$description": "Select trigger, chevron rotation, tooltip" },
       "slow": { "$type": "duration", "$value": "{duration.250}", "$description": "Footer summary slide-in" },
       "press-in": { "$type": "duration", "$value": "{duration.220}" },
-      "press-out": { "$type": "duration", "$value": "{duration.420}" }
+      "press-out": { "$type": "duration", "$value": "{duration.420}" },
+      "shimmer": { "$type": "duration", "$value": "{duration.3400}", "$description": "One sweep of the in-progress text shimmer" }
     },
     "easing": {
       "standard": { "$type": "cubicBezier", "$value": "{easing.standard}" },
+      "enter": { "$type": "cubicBezier", "$value": "{easing.emphasized}", "$description": "Decelerating entrances and state changes (BoardUI's signature curve)" },
       "out": { "$type": "cubicBezier", "$value": "{easing.decelerate}" },
       "ease": { "$type": "cubicBezier", "$value": "{easing.ease}" },
       "overshoot": { "$type": "cubicBezier", "$value": "{easing.overshoot}" }

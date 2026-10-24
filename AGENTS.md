@@ -5,8 +5,10 @@ look-alikes. They apply to `packages/react`, `packages/styles` and any app that
 consumes them.
 
 1. **Use the components.** Import from `@ds/react` (`Button`, `Select`,
-   `SelectItem`, `DateRangePicker`, `DatePicker`, `StatusDot`). Don't rebuild
-   a control with raw elements and classes.
+   `SelectItem`, `DateRangePicker`, `DatePicker`, `StatusDot`,
+   `AgentProgress`). Don't rebuild a control with raw elements and classes.
+   Motion values for the `motion` library come from `easing` and
+   `layoutSpring` in `@ds/react`, never inline bezier arrays.
 2. **Colors only from semantic utilities:** `bg-canvas`, `bg-surface`,
    `bg-sunken`, `bg-muted`, `text-fg`, `text-fg-secondary`, `border-line`,
    `outline-focus` and the rest listed in `packages/styles/src/tailwind.css`.

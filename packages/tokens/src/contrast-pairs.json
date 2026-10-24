@@ -33,6 +33,18 @@
     { "fg": "color.icon.primary", "bg": "color.bg.surface", "min": 3, "usage": "Calendar trigger icon" },
     { "fg": "color.border.focus", "bg": "color.bg.canvas", "min": 3, "usage": "Focus outline on the page" },
     { "fg": "color.border.focus", "bg": "color.bg.sunken", "min": 3, "usage": "Focus outline inside the calendar popover" },
+    { "fg": "color.progress.fill", "bg": "color.bg.surface", "min": 3, "usage": "Agent Progress rings (filled part)" },
+    { "fg": "color.text.primary", "bg": "color.bg.surface", "min": 4.5, "usage": "Agent Progress shimmer highlight" },
+    {
+      "fg": "color.icon.secondary", "bg": "color.bg.strong", "min": 3,
+      "usage": "Agent Progress check glyph on its filled circle",
+      "knownFailures": ["dark"], "note": "BoardUI parity: neutral-500 on neutral-700 in dark."
+    },
+    {
+      "fg": "color.bg.strong", "bg": "color.bg.surface", "min": 3,
+      "usage": "Agent Progress pending (dashed) step marker",
+      "knownFailures": ["light", "dark"], "note": "BoardUI parity: pending state is also conveyed by position and the missing strike-through."
+    },
     {
       "fg": "color.border.default", "bg": "color.bg.surface", "min": 3,
       "usage": "Trigger and input boundary",

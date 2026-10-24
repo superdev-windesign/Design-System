@@ -13,10 +13,10 @@ export const cx = extendTailwindMerge({
   extend: {
     theme: {
       text: ["body-md", "body-md-strong", "body-sm", "body-sm-strong", "caption-strong"],
-      radius: ["hairline", "control-xs", "control-sm", "control-md", "item", "chip", "surface", "overlay", "panel"],
+      radius: ["hairline", "control-xs", "control-sm", "control-md", "item", "tile", "chip", "surface", "overlay", "panel"],
       shadow: ["raised", "overlay"],
       blur: ["enter"],
-      ease: ["standard", "out", "default", "overshoot"],
+      ease: ["standard", "enter", "out", "default", "overshoot"],
       spacing: ["control-xs", "control-sm", "control-md", "icon-xs", "icon-sm", "icon-md"],
     },
   },

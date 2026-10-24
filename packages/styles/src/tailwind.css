@@ -40,6 +40,7 @@
   --color-sunken: var(--ds-color-bg-sunken);
   --color-sunken-hover: var(--ds-color-bg-sunken-hover);
   --color-muted: var(--ds-color-bg-muted);
+  --color-strong: var(--ds-color-bg-strong);
 
   /* Text and icons → text-* */
   --color-fg: var(--ds-color-text-primary);
@@ -48,6 +49,11 @@
   --color-fg-disabled: var(--ds-color-text-disabled);
   --color-on-action: var(--ds-color-text-on-action);
   --color-icon: var(--ds-color-icon-primary);
+  --color-icon-secondary: var(--ds-color-icon-secondary);
+
+  /* Progress indicators → stroke-progress-fill, stroke-progress-track */
+  --color-progress-track: var(--ds-color-progress-track);
+  --color-progress-fill: var(--ds-color-progress-fill);
 
   /* Borders and focus → border-*, outline-* */
   --color-line: var(--ds-color-border-default);
@@ -83,6 +89,7 @@
   --radius-control-sm: var(--ds-radius-control-sm);
   --radius-control-md: var(--ds-radius-control-md);
   --radius-item: var(--ds-radius-item);
+  --radius-tile: var(--ds-radius-tile);
   --radius-chip: var(--ds-radius-chip);
   --radius-surface: var(--ds-radius-surface);
   --radius-overlay: var(--ds-radius-overlay);
@@ -124,6 +131,7 @@
 
   /* Motion → ease-*, blur-* (durations: duration-(--ds-motion-duration-base)) */
   --ease-standard: var(--ds-motion-easing-standard);
+  --ease-enter: var(--ds-motion-easing-enter);
   --ease-out: var(--ds-motion-easing-out);
   --ease-default: var(--ds-motion-easing-ease);
   --ease-overshoot: var(--ds-motion-easing-overshoot);

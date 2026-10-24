@@ -9,7 +9,8 @@
       "surface-disabled": { "$type": "color", "$value": "{color.neutral.800}" },
       "sunken": { "$type": "color", "$value": "{color.neutral.900}" },
       "sunken-hover": { "$type": "color", "$value": "{color.neutral.800}" },
-      "muted": { "$type": "color", "$value": "{color.neutral.800}" }
+      "muted": { "$type": "color", "$value": "{color.neutral.800}" },
+      "strong": { "$type": "color", "$value": "{color.neutral.700}" }
     },
     "text": {
       "primary": { "$type": "color", "$value": "{color.neutral.50}" },
@@ -19,7 +20,12 @@
       "on-action": { "$type": "color", "$value": "{color.white}" }
     },
     "icon": {
-      "primary": { "$type": "color", "$value": "{color.neutral.50}" }
+      "primary": { "$type": "color", "$value": "{color.neutral.50}" },
+      "secondary": { "$type": "color", "$value": "{color.neutral.500}" }
+    },
+    "progress": {
+      "track": { "$type": "color", "$value": "{color.neutral.700}" },
+      "fill": { "$type": "color", "$value": "color-mix(in srgb, {color.white} 50%, transparent)" }
     },
     "border": {
       "default": { "$type": "color", "$value": "{color.neutral.700}" },

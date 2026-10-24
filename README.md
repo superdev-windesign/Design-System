@@ -1,11 +1,13 @@
 # Windesign Design System
 
 A token-driven React design system, set up according to the blueprint in
-[docs/blueprint](docs/blueprint/README.md). The first components are
-**Select** and **Date Range Picker** (plus the single-date **Date Picker** and
-the **Button** they depend on), rebuilt for visual parity with
-[BoardUI](https://www.boardui.com/components). Measurements are in
-[docs/components/parity-report.md](docs/components/parity-report.md).
+[docs/blueprint](docs/blueprint/README.md). The components so far, all rebuilt
+for visual parity with [BoardUI](https://www.boardui.com/components):
+
+- **Select** and **Date Range Picker**, plus the single-date **Date Picker** and the **Button** they depend on.
+- **Agent Progress**: animated multi-step progress, adapted from BoardUI Pro under the owner's license. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+
+Measurements are in [docs/components/parity-report.md](docs/components/parity-report.md).
 
 ## Packages
 
@@ -33,6 +35,7 @@ Run from the repository root (npm workspaces):
 |---|---|
 | `npm install` | Installs every workspace |
 | `npm run dev` | Builds tokens, then starts the playground at http://localhost:5180 |
+| `npm run build` | Builds tokens, then the playground into `apps/playground/dist` (what Vercel runs; see `vercel.json`) |
 | `npm test` | Token tests (contrast matrix, theme coverage, naming) + component tests |
 | `npm run typecheck` | TypeScript for `@ds/react` and the playground |
 | `npm run build:tokens` | Rebuilds `packages/tokens/dist` |

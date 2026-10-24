@@ -16,6 +16,7 @@ import {
 import type { CalendarCellRenderProps } from "react-aria-components";
 import { CalendarDate, endOfWeek, getLocalTimeZone, isSameDay, startOfWeek } from "@internationalized/date";
 import { ChevronLeft16, ChevronRight16 } from "../../icons/chevrons";
+import { easing } from "../../motion/tokens";
 import { focusRing, focusRingInset, focusRingNative } from "../../recipes/focus-ring";
 import { cx } from "../../utils/cx";
 
@@ -273,5 +274,5 @@ export const summaryMotion = {
   initial: { opacity: 0, y: -12 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -12 },
-  transition: { duration: 0.25, ease: [0.34, 1.2, 0.64, 1] as const },
+  transition: { duration: 0.25, ease: easing.overshoot },
 };

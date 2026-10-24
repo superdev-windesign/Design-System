@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import { Button, DatePicker, DateRangePicker, Select, SelectItem, StatusDot } from "@ds/react";
+import { AgentProgress, Button, DatePicker, DateRangePicker, Select, SelectItem, StatusDot } from "@ds/react";
 import { RiAddLine, RiArrowRightLine, RiDeleteBinLine } from "@remixicon/react";
 
 type ThemeChoice = "light" | "dark" | "system";
@@ -38,6 +38,43 @@ function Preview({ id, children }: { id: string; children: ReactNode }) {
       className="flex min-h-81.75 flex-wrap items-center justify-center gap-3 rounded-panel border border-line p-8"
     >
       {children}
+    </div>
+  );
+}
+
+/** BoardUI's demo steps and timing, so the run can be compared side by side. */
+const AGENT_STEPS = [
+  "Read project files",
+  "Update light mode tokens",
+  "Implement dark mode tokens",
+  "Register the theme toggle",
+  "Run lint and production build",
+];
+
+function AgentProgressDemo() {
+  const [run, setRun] = useState(0);
+  const [isFinished, setIsFinished] = useState(false);
+
+  return (
+    <div className="flex flex-col gap-3">
+      <Preview id="agent-progress">
+        <div className="flex min-h-75 w-full items-center justify-center">
+          <AgentProgress key={run} steps={AGENT_STEPS} stepDuration={2400} onFinished={() => setIsFinished(true)} />
+        </div>
+      </Preview>
+      <div className="flex items-center gap-3">
+        <Button
+          variant="secondary"
+          size="sm"
+          onPress={() => {
+            setIsFinished(false);
+            setRun((count) => count + 1);
+          }}
+        >
+          Replay
+        </Button>
+        <span className="text-body-md text-fg-secondary">{isFinished ? "onFinished fired" : "Running…"}</span>
+      </div>
     </div>
   );
 }
@@ -81,6 +118,13 @@ export function App() {
             ))}
           </div>
         </header>
+
+        <Section
+          title="Agent Progress"
+          description="Multi-step progress with staggered entry, synchronized rings, a gliding active-step outline and minimize."
+        >
+          <AgentProgressDemo />
+        </Section>
 
         <Section title="Select" description="Single-choice listbox with a non-modal popover and free-form items.">
           <Preview id="select">

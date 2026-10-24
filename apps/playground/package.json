@@ -4,7 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "tokens": "npm --prefix ../../packages/tokens run build",
+    "predev": "npm run tokens",
     "dev": "vite",
+    "prebuild": "npm run tokens",
     "build": "tsc -p tsconfig.json && vite build",
     "preview": "vite preview",
     "typecheck": "tsc -p tsconfig.json"
