@@ -1,0 +1,21 @@
+{
+  "name": "windesign-design-system",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/tokens",
+    "packages/styles",
+    "packages/react",
+    "apps/playground"
+  ],
+  "scripts": {
+    "build:tokens": "npm run build -w @ds/tokens",
+    "dev": "npm run build:tokens && npm run dev -w @ds/playground",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present"
+  },
+  "engines": {
+    "node": ">=20.19"
+  }
+}

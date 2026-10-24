@@ -1,0 +1,5 @@
+@import "tailwindcss";
+@import "@ds/styles/tailwind.css";
+
+/* Tailwind doesn't scan workspace packages under node_modules; point it at the component source. */
+@source "../../../packages/react/src";

@@ -1,0 +1,85 @@
+{
+  "$description": "Dark theme. Values match BoardUI's .dark overrides; tokens BoardUI leaves unchanged in dark keep their light value here so every theme defines every token.",
+  "color": {
+    "bg": {
+      "canvas": { "$type": "color", "$value": "{color.neutral.925}" },
+      "surface": { "$type": "color", "$value": "{color.neutral.800}" },
+      "surface-hover": { "$type": "color", "$value": "color-mix(in srgb, {color.neutral.700} 60%, transparent)" },
+      "surface-pressed": { "$type": "color", "$value": "{color.neutral.800}" },
+      "surface-disabled": { "$type": "color", "$value": "{color.neutral.800}" },
+      "sunken": { "$type": "color", "$value": "{color.neutral.900}" },
+      "sunken-hover": { "$type": "color", "$value": "{color.neutral.800}" },
+      "muted": { "$type": "color", "$value": "{color.neutral.800}" }
+    },
+    "text": {
+      "primary": { "$type": "color", "$value": "{color.neutral.50}" },
+      "secondary": { "$type": "color", "$value": "{color.neutral.500}" },
+      "tertiary": { "$type": "color", "$value": "{color.neutral.600}" },
+      "disabled": { "$type": "color", "$value": "{color.neutral.800}" },
+      "on-action": { "$type": "color", "$value": "{color.white}" }
+    },
+    "icon": {
+      "primary": { "$type": "color", "$value": "{color.neutral.50}" }
+    },
+    "border": {
+      "default": { "$type": "color", "$value": "{color.neutral.700}" },
+      "hover": { "$type": "color", "$value": "{color.neutral.500}" },
+      "pressed": { "$type": "color", "$value": "{color.neutral.600}" },
+      "focus": { "$type": "color", "$value": "{color.accent.500}" }
+    },
+    "selection": {
+      "range": { "$type": "color", "$value": "{color.accent.950}" },
+      "range-edge": { "$type": "color", "$value": "{color.accent.800}" }
+    },
+    "action": {
+      "primary": {
+        "fg-disabled": { "$type": "color", "$value": "{color.neutral.500}" }
+      },
+      "danger": {
+        "fg-disabled": { "$type": "color", "$value": "{color.red.400}" }
+      },
+      "tertiary": {
+        "bg": { "$type": "color", "$value": "{color.accent.900}" },
+        "bg-hover": { "$type": "color", "$value": "{color.accent.800}" },
+        "bg-pressed": { "$type": "color", "$value": "{color.accent.700}" },
+        "bg-disabled": { "$type": "color", "$value": "{color.neutral.800}" },
+        "fg": { "$type": "color", "$value": "{color.accent.300}" },
+        "fg-disabled": { "$type": "color", "$value": "{color.neutral.600}" }
+      }
+    },
+    "indicator": {
+      "green": {
+        "halo": { "$type": "color", "$value": "color-mix(in srgb, {color.green.800} 40%, transparent)" },
+        "dot": { "$type": "color", "$value": "{color.green.500}" }
+      },
+      "yellow": {
+        "halo": { "$type": "color", "$value": "color-mix(in srgb, {color.yellow.800} 40%, transparent)" },
+        "dot": { "$type": "color", "$value": "{color.yellow.500}" }
+      },
+      "indigo": {
+        "halo": { "$type": "color", "$value": "color-mix(in srgb, {color.indigo.800} 40%, transparent)" },
+        "dot": { "$type": "color", "$value": "{color.indigo.500}" }
+      }
+    }
+  },
+  "gradient": {
+    "action": {
+      "primary": {
+        "default": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.accent.500} 0%, {color.accent.600} 100%)" },
+        "hover": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.accent.400} 0%, {color.accent.500} 100%)" },
+        "pressed": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.accent.600} 0%, {color.accent.700} 100%)" },
+        "disabled": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.neutral.700} 0%, {color.neutral.800} 100%)" }
+      },
+      "danger": {
+        "default": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.500} 0%, {color.red.600} 100%)" },
+        "hover": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.400} 0%, {color.red.500} 100%)" },
+        "pressed": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.600} 0%, {color.red.700} 100%)" },
+        "disabled": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.900} 0%, {color.red.950} 100%)" }
+      }
+    }
+  },
+  "elevation": {
+    "raised": { "$type": "shadow", "$value": "{shadow.xs-strong}" },
+    "overlay": { "$type": "shadow", "$value": "{shadow.dropdown-strong}" }
+  }
+}

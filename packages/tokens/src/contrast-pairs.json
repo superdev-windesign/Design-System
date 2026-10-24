@@ -1,0 +1,42 @@
+{
+  "$description": "Every intended foreground/background pairing used by the components. The contrast test checks each pair in each theme. `knownFailures` lists themes where BoardUI's values (copied for parity) miss the target; the test fails if one of them starts passing, so the entry gets removed once fixed.",
+  "pairs": [
+    { "fg": "color.text.primary", "bg": "color.bg.surface", "min": 4.5, "usage": "Select trigger and options, day numbers, month titles" },
+    { "fg": "color.text.primary", "bg": "color.bg.surface-hover", "backdrop": "color.bg.surface", "min": 4.5, "usage": "Focused/selected Select option" },
+    { "fg": "color.text.primary", "bg": "color.bg.sunken", "min": 4.5, "usage": "Quick-select presets" },
+    { "fg": "color.text.primary", "bg": "color.bg.muted", "min": 4.5, "usage": "Active quick-select preset" },
+    { "fg": "color.text.primary", "bg": "color.selection.range", "min": 4.5, "usage": "Days inside a selected range" },
+    { "fg": "color.text.primary", "bg": "color.selection.range-edge", "min": 4.5, "usage": "Range start/end day" },
+    { "fg": "color.action.tertiary.fg", "bg": "color.action.tertiary.bg", "min": 4.5, "usage": "Tertiary (ghost) button" },
+    { "fg": "color.text.on-action", "bg": "color.accent.600", "min": 4.5, "usage": "Primary button, bottom gradient stop" },
+    {
+      "fg": "color.text.on-action", "bg": "color.accent.500", "min": 4.5,
+      "usage": "Primary button, top gradient stop",
+      "knownFailures": ["light", "dark"], "note": "BoardUI parity: the top stop of the primary gradient is 3.7:1 with white text."
+    },
+    {
+      "fg": "color.text.secondary", "bg": "color.bg.surface", "min": 4.5,
+      "usage": "Calendar weekday headers",
+      "knownFailures": ["dark"], "note": "BoardUI keeps text-secondary at neutral-500 in dark mode."
+    },
+    {
+      "fg": "color.text.secondary", "bg": "color.bg.muted", "min": 4.5,
+      "usage": "'N days selected' pill",
+      "knownFailures": ["light", "dark"], "note": "BoardUI parity."
+    },
+    {
+      "fg": "color.text.secondary", "bg": "color.bg.sunken", "min": 4.5,
+      "usage": "Date range separator in the picker footer",
+      "knownFailures": ["light", "dark"], "note": "BoardUI parity."
+    },
+    { "fg": "color.text.secondary", "bg": "color.bg.surface", "min": 3, "usage": "Select chevron (meaningful icon)" },
+    { "fg": "color.icon.primary", "bg": "color.bg.surface", "min": 3, "usage": "Calendar trigger icon" },
+    { "fg": "color.border.focus", "bg": "color.bg.canvas", "min": 3, "usage": "Focus outline on the page" },
+    { "fg": "color.border.focus", "bg": "color.bg.sunken", "min": 3, "usage": "Focus outline inside the calendar popover" },
+    {
+      "fg": "color.border.default", "bg": "color.bg.surface", "min": 3,
+      "usage": "Trigger and input boundary",
+      "knownFailures": ["light", "dark"], "note": "BoardUI parity: hairline border; the control is also identified by its text, chevron and shadow."
+    }
+  ]
+}

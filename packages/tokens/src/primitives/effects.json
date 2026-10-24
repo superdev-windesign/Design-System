@@ -1,0 +1,45 @@
+{
+  "shadow": {
+    "xs": {
+      "$type": "shadow",
+      "$value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+      "$description": "CSS shorthand. Buttons, triggers, cards (BoardUI shadow-xs)."
+    },
+    "xs-strong": {
+      "$type": "shadow",
+      "$value": "0 1px 2px 0 rgb(0 0 0 / 0.18)",
+      "$description": "CSS shorthand. Dark-theme counterpart of shadow.xs."
+    },
+    "dropdown": {
+      "$type": "shadow",
+      "$value": "0 1px 1px 0 rgb(0 0 0 / 0.04), 0 4px 4px 0 rgb(0 0 0 / 0.02)",
+      "$description": "CSS shorthand. Floating menus and popovers (BoardUI shadow-dropdown)."
+    },
+    "dropdown-strong": {
+      "$type": "shadow",
+      "$value": "0 1px 1px 0 rgb(0 0 0 / 0.14), 0 4px 4px 0 rgb(0 0 0 / 0.1)",
+      "$description": "CSS shorthand. Dark-theme counterpart of shadow.dropdown."
+    }
+  },
+  "duration": {
+    "100": { "$type": "duration", "$value": "100ms" },
+    "150": { "$type": "duration", "$value": "150ms" },
+    "200": { "$type": "duration", "$value": "200ms" },
+    "220": { "$type": "duration", "$value": "220ms" },
+    "250": { "$type": "duration", "$value": "250ms" },
+    "420": { "$type": "duration", "$value": "420ms" }
+  },
+  "easing": {
+    "standard": { "$type": "cubicBezier", "$value": "cubic-bezier(0.4, 0, 0.2, 1)" },
+    "decelerate": { "$type": "cubicBezier", "$value": "cubic-bezier(0, 0, 0.2, 1)" },
+    "ease": { "$type": "cubicBezier", "$value": "cubic-bezier(0.25, 0.1, 0.25, 1)" },
+    "overshoot": { "$type": "cubicBezier", "$value": "cubic-bezier(0.34, 1.2, 0.64, 1)" }
+  },
+  "blur": {
+    "2": { "$type": "dimension", "$value": "2px" },
+    "4": { "$type": "dimension", "$value": "4px" }
+  },
+  "scale": {
+    "98": { "$type": "number", "$value": "0.98" }
+  }
+}

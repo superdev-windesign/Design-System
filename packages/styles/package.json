@@ -1,0 +1,19 @@
+{
+  "name": "@ds/styles",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Base CSS, the Tailwind v4 bridge (@theme inline) and shared CSS utilities.",
+  "exports": {
+    "./base.css": "./src/base.css",
+    "./tailwind.css": "./src/tailwind.css",
+    "./utilities.css": "./src/utilities.css"
+  },
+  "files": ["src"],
+  "dependencies": {
+    "@ds/tokens": "0.0.1"
+  },
+  "peerDependencies": {
+    "tailwindcss": "^4.1.0"
+  }
+}

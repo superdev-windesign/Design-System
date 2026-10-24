@@ -1,0 +1,131 @@
+/* Tailwind v4 bridge for @ds tokens.
+ *
+ * Use from an app stylesheet:
+ *   @import "tailwindcss";
+ *   @import "@ds/styles/tailwind.css";
+ *   @source "<path to>/@ds/react/src";
+ *
+ * Tailwind's default palette, radii, shadows, type sizes, easings and blurs are
+ * removed so only system values exist as utilities. `@theme inline` points each
+ * utility straight at its --ds-* variable, so themes also work on a subtree
+ * (<aside data-theme="dark">), not just on <html>.
+ */
+@import "@ds/tokens/css";
+@import "./base.css";
+@import "./utilities.css";
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+@custom-variant rtl (&:dir(rtl));
+@custom-variant ltr (&:dir(ltr));
+
+@theme {
+  --color-*: initial;
+  --radius-*: initial;
+  --shadow-*: initial;
+  --text-*: initial;
+  --ease-*: initial;
+  --blur-*: initial;
+}
+
+@theme inline {
+  --font-sans: var(--ds-font-family-sans);
+  --font-mono: var(--ds-font-family-mono);
+
+  /* Surfaces → bg-* */
+  --color-canvas: var(--ds-color-bg-canvas);
+  --color-surface: var(--ds-color-bg-surface);
+  --color-surface-hover: var(--ds-color-bg-surface-hover);
+  --color-surface-pressed: var(--ds-color-bg-surface-pressed);
+  --color-surface-disabled: var(--ds-color-bg-surface-disabled);
+  --color-sunken: var(--ds-color-bg-sunken);
+  --color-sunken-hover: var(--ds-color-bg-sunken-hover);
+  --color-muted: var(--ds-color-bg-muted);
+
+  /* Text and icons → text-* */
+  --color-fg: var(--ds-color-text-primary);
+  --color-fg-secondary: var(--ds-color-text-secondary);
+  --color-fg-tertiary: var(--ds-color-text-tertiary);
+  --color-fg-disabled: var(--ds-color-text-disabled);
+  --color-on-action: var(--ds-color-text-on-action);
+  --color-icon: var(--ds-color-icon-primary);
+
+  /* Borders and focus → border-*, outline-* */
+  --color-line: var(--ds-color-border-default);
+  --color-line-hover: var(--ds-color-border-hover);
+  --color-line-pressed: var(--ds-color-border-pressed);
+  --color-focus: var(--ds-color-border-focus);
+
+  /* Selection */
+  --color-selection-range: var(--ds-color-selection-range);
+  --color-selection-range-edge: var(--ds-color-selection-range-edge);
+
+  /* Actions */
+  --color-action-primary-fg-disabled: var(--ds-color-action-primary-fg-disabled);
+  --color-action-danger-fg-disabled: var(--ds-color-action-danger-fg-disabled);
+  --color-action-tertiary: var(--ds-color-action-tertiary-bg);
+  --color-action-tertiary-hover: var(--ds-color-action-tertiary-bg-hover);
+  --color-action-tertiary-pressed: var(--ds-color-action-tertiary-bg-pressed);
+  --color-action-tertiary-disabled: var(--ds-color-action-tertiary-bg-disabled);
+  --color-action-tertiary-fg: var(--ds-color-action-tertiary-fg);
+  --color-action-tertiary-fg-disabled: var(--ds-color-action-tertiary-fg-disabled);
+
+  /* Categorical status indicators */
+  --color-indicator-green: var(--ds-color-indicator-green-dot);
+  --color-indicator-green-halo: var(--ds-color-indicator-green-halo);
+  --color-indicator-yellow: var(--ds-color-indicator-yellow-dot);
+  --color-indicator-yellow-halo: var(--ds-color-indicator-yellow-halo);
+  --color-indicator-indigo: var(--ds-color-indicator-indigo-dot);
+  --color-indicator-indigo-halo: var(--ds-color-indicator-indigo-halo);
+
+  /* Radius → rounded-* */
+  --radius-hairline: var(--ds-radius-hairline);
+  --radius-control-xs: var(--ds-radius-control-xs);
+  --radius-control-sm: var(--ds-radius-control-sm);
+  --radius-control-md: var(--ds-radius-control-md);
+  --radius-item: var(--ds-radius-item);
+  --radius-chip: var(--ds-radius-chip);
+  --radius-surface: var(--ds-radius-surface);
+  --radius-overlay: var(--ds-radius-overlay);
+  --radius-panel: var(--ds-radius-panel);
+
+  /* Elevation → shadow-* */
+  --shadow-raised: var(--ds-elevation-raised);
+  --shadow-overlay: var(--ds-elevation-overlay);
+
+  /* Sizes → h-control-md, size-icon-md … (the spacing namespace feeds sizing utilities) */
+  --spacing-control-xs: var(--ds-size-control-xs);
+  --spacing-control-sm: var(--ds-size-control-sm);
+  --spacing-control-md: var(--ds-size-control-md);
+  --spacing-icon-xs: var(--ds-size-icon-xs);
+  --spacing-icon-sm: var(--ds-size-icon-sm);
+  --spacing-icon-md: var(--ds-size-icon-md);
+
+  /* Composite text styles → text-body-md sets size, line height, weight and tracking */
+  --text-body-md: var(--ds-text-body-md-size);
+  --text-body-md--line-height: var(--ds-text-body-md-line-height);
+  --text-body-md--font-weight: var(--ds-text-body-md-weight);
+  --text-body-md--letter-spacing: var(--ds-text-body-md-tracking);
+  --text-body-md-strong: var(--ds-text-body-md-strong-size);
+  --text-body-md-strong--line-height: var(--ds-text-body-md-strong-line-height);
+  --text-body-md-strong--font-weight: var(--ds-text-body-md-strong-weight);
+  --text-body-md-strong--letter-spacing: var(--ds-text-body-md-strong-tracking);
+  --text-body-sm: var(--ds-text-body-sm-size);
+  --text-body-sm--line-height: var(--ds-text-body-sm-line-height);
+  --text-body-sm--font-weight: var(--ds-text-body-sm-weight);
+  --text-body-sm--letter-spacing: var(--ds-text-body-sm-tracking);
+  --text-body-sm-strong: var(--ds-text-body-sm-strong-size);
+  --text-body-sm-strong--line-height: var(--ds-text-body-sm-strong-line-height);
+  --text-body-sm-strong--font-weight: var(--ds-text-body-sm-strong-weight);
+  --text-body-sm-strong--letter-spacing: var(--ds-text-body-sm-strong-tracking);
+  --text-caption-strong: var(--ds-text-caption-strong-size);
+  --text-caption-strong--line-height: var(--ds-text-caption-strong-line-height);
+  --text-caption-strong--font-weight: var(--ds-text-caption-strong-weight);
+  --text-caption-strong--letter-spacing: var(--ds-text-caption-strong-tracking);
+
+  /* Motion → ease-*, blur-* (durations: duration-(--ds-motion-duration-base)) */
+  --ease-standard: var(--ds-motion-easing-standard);
+  --ease-out: var(--ds-motion-easing-out);
+  --ease-default: var(--ds-motion-easing-ease);
+  --ease-overshoot: var(--ds-motion-easing-overshoot);
+  --blur-enter: var(--ds-motion-blur-enter);
+}

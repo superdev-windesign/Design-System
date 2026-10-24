@@ -1,0 +1,58 @@
+/* Base document styles. Framework-agnostic: needs only @ds/tokens/css. */
+@layer base {
+  html,
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-variant-ligatures: contextual;
+    font-kerning: normal;
+  }
+
+  html {
+    color-scheme: light;
+    background-color: var(--ds-color-bg-canvas);
+    font-family: var(--ds-font-family-sans);
+  }
+
+  html[data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html:not([data-theme="light"]) {
+      color-scheme: dark;
+    }
+  }
+
+  body {
+    background-color: var(--ds-color-bg-canvas);
+    color: var(--ds-color-text-primary);
+  }
+
+  /* iOS Safari zooms into focused fields under 16px. Keep the 14px type scale
+     everywhere else and only bump form controls on small screens. */
+  @media (max-width: 639px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px;
+    }
+  }
+
+  /* Forced colors (Windows High Contrast) drops backgrounds and box-shadows,
+     which is how options and selected days are normally marked. Restore a
+     visible indicator with system colors. */
+  @media (forced-colors: active) {
+    [role="option"][data-focused],
+    [role="option"][aria-selected="true"] {
+      outline: 2px solid Highlight;
+      outline-offset: -2px;
+    }
+
+    [role="gridcell"][aria-selected="true"] > * {
+      forced-color-adjust: none;
+      background: Highlight;
+      color: HighlightText;
+    }
+  }
+}

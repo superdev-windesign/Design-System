@@ -1,0 +1,85 @@
+{
+  "$description": "Light theme. Values match BoardUI's light semantic tokens (styles/theme.css :root). The BoardUI name each token replaces is in $description.",
+  "color": {
+    "bg": {
+      "canvas": { "$type": "color", "$value": "{color.white}", "$description": "background-full" },
+      "surface": { "$type": "color", "$value": "{color.white}", "$description": "background-primary-default" },
+      "surface-hover": { "$type": "color", "$value": "{color.neutral.100}", "$description": "background-primary-hover, dropdown-item-hover-background" },
+      "surface-pressed": { "$type": "color", "$value": "{color.neutral.200}", "$description": "background-primary-active" },
+      "surface-disabled": { "$type": "color", "$value": "{color.neutral.100}", "$description": "background-primary-disabled" },
+      "sunken": { "$type": "color", "$value": "{color.neutral.100}", "$description": "background-secondary-default" },
+      "sunken-hover": { "$type": "color", "$value": "{color.neutral.200}", "$description": "background-secondary-hover" },
+      "muted": { "$type": "color", "$value": "{color.neutral.200}", "$description": "background-tertiary-default" }
+    },
+    "text": {
+      "primary": { "$type": "color", "$value": "{color.neutral.950}", "$description": "text-primary" },
+      "secondary": { "$type": "color", "$value": "{color.neutral.500}", "$description": "text-secondary" },
+      "tertiary": { "$type": "color", "$value": "{color.neutral.400}", "$description": "text-tertiary" },
+      "disabled": { "$type": "color", "$value": "{color.neutral.300}", "$description": "text-disabled" },
+      "on-action": { "$type": "color", "$value": "{color.white}", "$description": "text-white" }
+    },
+    "icon": {
+      "primary": { "$type": "color", "$value": "{color.neutral.950}", "$description": "foreground-icon-primary" }
+    },
+    "border": {
+      "default": { "$type": "color", "$value": "{color.neutral.200}", "$description": "border-button-default" },
+      "hover": { "$type": "color", "$value": "{color.neutral.300}", "$description": "border-button-hover" },
+      "pressed": { "$type": "color", "$value": "{color.neutral.400}", "$description": "border-button-active" },
+      "focus": { "$type": "color", "$value": "{color.accent.500}", "$description": "border-focus-ring" }
+    },
+    "selection": {
+      "range": { "$type": "color", "$value": "{color.accent.100}", "$description": "date-range-background" },
+      "range-edge": { "$type": "color", "$value": "{color.accent.300}", "$description": "date-range-edge-background" }
+    },
+    "action": {
+      "primary": {
+        "fg-disabled": { "$type": "color", "$value": "{color.neutral.400}", "$description": "button-primary-disabled-foreground" }
+      },
+      "danger": {
+        "fg-disabled": { "$type": "color", "$value": "{color.red.300}", "$description": "foreground-disabled-danger" }
+      },
+      "tertiary": {
+        "bg": { "$type": "color", "$value": "{color.accent.100}", "$description": "button-ghost-background" },
+        "bg-hover": { "$type": "color", "$value": "{color.accent.200}", "$description": "button-ghost-hover" },
+        "bg-pressed": { "$type": "color", "$value": "{color.accent.300}", "$description": "button-ghost-active" },
+        "bg-disabled": { "$type": "color", "$value": "{color.accent.50}", "$description": "button-ghost-disabled" },
+        "fg": { "$type": "color", "$value": "{color.accent.700}", "$description": "button-ghost-foreground" },
+        "fg-disabled": { "$type": "color", "$value": "{color.accent.300}", "$description": "button-ghost-disabled-foreground" }
+      }
+    },
+    "indicator": {
+      "green": {
+        "halo": { "$type": "color", "$value": "{color.green.100}", "$description": "status-dot-green-halo" },
+        "dot": { "$type": "color", "$value": "{color.green.500}" }
+      },
+      "yellow": {
+        "halo": { "$type": "color", "$value": "{color.yellow.200}", "$description": "status-dot-yellow-halo" },
+        "dot": { "$type": "color", "$value": "{color.yellow.500}" }
+      },
+      "indigo": {
+        "halo": { "$type": "color", "$value": "{color.indigo.100}", "$description": "status-dot-indigo-halo" },
+        "dot": { "$type": "color", "$value": "{color.indigo.500}" }
+      }
+    }
+  },
+  "gradient": {
+    "action": {
+      "primary": {
+        "default": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.accent.500} 0%, {color.accent.600} 100%)" },
+        "hover": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.accent.400} 0%, {color.accent.500} 100%)" },
+        "pressed": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.accent.600} 0%, {color.accent.700} 100%)" },
+        "disabled": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.neutral.200} 0%, {color.neutral.300} 100%)" }
+      },
+      "danger": {
+        "default": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.500} 0%, {color.red.600} 100%)" },
+        "hover": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.400} 0%, {color.red.500} 100%)" },
+        "pressed": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.600} 0%, {color.red.700} 100%)" },
+        "disabled": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.100} 0%, {color.red.200} 100%)" }
+      }
+    }
+  },
+  "elevation": {
+    "raised": { "$type": "shadow", "$value": "{shadow.xs}", "$description": "shadow-xs" },
+    "overlay": { "$type": "shadow", "$value": "{shadow.dropdown}", "$description": "shadow-dropdown" }
+  }
+}

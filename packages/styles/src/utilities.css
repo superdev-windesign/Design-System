@@ -1,0 +1,100 @@
+/* Tailwind v4 utilities shared by several components. Import via tailwind.css. */
+
+/* Press feedback: colors change quickly, the scale eases back slowly.
+   Driven by React Aria's data attributes so touch and keyboard presses match. */
+@utility press-motion {
+  transition:
+    background-color var(--ds-motion-duration-base) ease,
+    border-color var(--ds-motion-duration-base) ease,
+    box-shadow var(--ds-motion-duration-base) ease,
+    color var(--ds-motion-duration-base) ease,
+    transform var(--ds-motion-duration-press-out) var(--ds-motion-easing-standard);
+
+  &[data-pressed]:not([data-disabled]) {
+    transform: scale(var(--ds-motion-press-scale));
+    transition-duration:
+      var(--ds-motion-duration-base),
+      var(--ds-motion-duration-base),
+      var(--ds-motion-duration-base),
+      var(--ds-motion-duration-base),
+      var(--ds-motion-duration-press-in);
+  }
+
+  &[data-disabled] {
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* Gradient action surfaces. CSS can't interpolate background-image, so the
+   hover gradient sits on ::before and fades in; pressed and disabled swap
+   instantly. `isolation: isolate` keeps ::before behind the label and icons. */
+@utility bg-action-primary {
+  position: relative;
+  isolation: isolate;
+  background-image: var(--ds-gradient-action-primary-default);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: inherit;
+    background-image: var(--ds-gradient-action-primary-hover);
+    opacity: 0;
+    transition: opacity var(--ds-motion-duration-base) ease;
+  }
+  &[data-hovered]:not([data-disabled])::before {
+    opacity: 1;
+  }
+  &[data-pressed]:not([data-disabled]) {
+    background-image: var(--ds-gradient-action-primary-pressed);
+  }
+  &[data-pressed]:not([data-disabled])::before {
+    opacity: 0;
+  }
+  &[data-disabled] {
+    background-image: var(--ds-gradient-action-primary-disabled);
+  }
+  &[data-disabled]::before {
+    display: none;
+  }
+}
+
+@utility bg-action-danger {
+  position: relative;
+  isolation: isolate;
+  background-image: var(--ds-gradient-action-danger-default);
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    border-radius: inherit;
+    background-image: var(--ds-gradient-action-danger-hover);
+    opacity: 0;
+    transition: opacity var(--ds-motion-duration-base) ease;
+  }
+  &[data-hovered]:not([data-disabled])::before {
+    opacity: 1;
+  }
+  &[data-pressed]:not([data-disabled]) {
+    background-image: var(--ds-gradient-action-danger-pressed);
+  }
+  &[data-pressed]:not([data-disabled])::before {
+    opacity: 0;
+  }
+  &[data-disabled] {
+    background-image: var(--ds-gradient-action-danger-disabled);
+  }
+  &[data-disabled]::before {
+    display: none;
+  }
+}

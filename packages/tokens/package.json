@@ -1,0 +1,23 @@
+{
+  "name": "@ds/tokens",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Design tokens (DTCG JSON) built to CSS custom properties and flat JSON.",
+  "exports": {
+    "./css": "./dist/css/tokens.css",
+    "./css/*": "./dist/css/*",
+    "./json/*": "./dist/json/*"
+  },
+  "files": ["dist", "src"],
+  "scripts": {
+    "build": "node build.mjs",
+    "sync:palette": "node scripts/sync-tailwind-palette.mjs",
+    "test": "node build.mjs && vitest run"
+  },
+  "devDependencies": {
+    "style-dictionary": "^5.0.0",
+    "tailwindcss": "^4.1.0",
+    "vitest": "^3.2.0"
+  }
+}
