@@ -2,90 +2,483 @@
   "$description": "Light theme. Values match BoardUI's light semantic tokens (styles/theme.css :root). The BoardUI name each token replaces is in $description.",
   "color": {
     "bg": {
-      "canvas": { "$type": "color", "$value": "{color.white}", "$description": "background-full" },
-      "surface": { "$type": "color", "$value": "{color.white}", "$description": "background-primary-default" },
-      "surface-hover": { "$type": "color", "$value": "{color.neutral.100}", "$description": "background-primary-hover, dropdown-item-hover-background" },
-      "surface-pressed": { "$type": "color", "$value": "{color.neutral.200}", "$description": "background-primary-active" },
-      "surface-disabled": { "$type": "color", "$value": "{color.neutral.100}", "$description": "background-primary-disabled" },
-      "sunken": { "$type": "color", "$value": "{color.neutral.100}", "$description": "background-secondary-default" },
-      "sunken-hover": { "$type": "color", "$value": "{color.neutral.200}", "$description": "background-secondary-hover" },
-      "muted": { "$type": "color", "$value": "{color.neutral.200}", "$description": "background-tertiary-default" },
-      "strong": { "$type": "color", "$value": "{color.neutral.300}", "$description": "background-quaternary-default" }
+      "canvas": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "background-full"
+      },
+      "surface": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "background-primary-default"
+      },
+      "surface-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.100}",
+        "$description": "background-primary-hover, dropdown-item-hover-background"
+      },
+      "surface-pressed": {
+        "$type": "color",
+        "$value": "{color.neutral.200}",
+        "$description": "background-primary-active"
+      },
+      "surface-disabled": {
+        "$type": "color",
+        "$value": "{color.neutral.100}",
+        "$description": "background-primary-disabled"
+      },
+      "sunken": {
+        "$type": "color",
+        "$value": "{color.neutral.100}",
+        "$description": "background-secondary-default"
+      },
+      "sunken-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.200}",
+        "$description": "background-secondary-hover"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "{color.neutral.200}",
+        "$description": "background-tertiary-default"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{color.neutral.300}",
+        "$description": "background-quaternary-default"
+      },
+      "muted-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.300}"
+      },
+      "strong-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.400}"
+      },
+      "danger-subtle": {
+        "$type": "color",
+        "$value": "{color.red.100}"
+      }
     },
     "text": {
-      "primary": { "$type": "color", "$value": "{color.neutral.950}", "$description": "text-primary" },
-      "secondary": { "$type": "color", "$value": "{color.neutral.500}", "$description": "text-secondary" },
-      "tertiary": { "$type": "color", "$value": "{color.neutral.400}", "$description": "text-tertiary" },
-      "disabled": { "$type": "color", "$value": "{color.neutral.300}", "$description": "text-disabled" },
-      "on-action": { "$type": "color", "$value": "{color.white}", "$description": "text-white" }
+      "primary": {
+        "$type": "color",
+        "$value": "{color.neutral.950}",
+        "$description": "text-primary"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.neutral.500}",
+        "$description": "text-secondary"
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.neutral.400}",
+        "$description": "text-tertiary"
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{color.neutral.300}",
+        "$description": "text-disabled"
+      },
+      "on-action": {
+        "$type": "color",
+        "$value": "{color.white}",
+        "$description": "text-white"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.red.500}"
+      },
+      "danger-placeholder": {
+        "$type": "color",
+        "$value": "{color.red.400}"
+      },
+      "placeholder": {
+        "$type": "color",
+        "$value": "{color.neutral.400}",
+        "$description": "text-placeholder (same value in dark)"
+      }
     },
     "icon": {
-      "primary": { "$type": "color", "$value": "{color.neutral.950}", "$description": "foreground-icon-primary" },
-      "secondary": { "$type": "color", "$value": "{color.neutral.500}", "$description": "foreground-icon-secondary" }
+      "primary": {
+        "$type": "color",
+        "$value": "{color.neutral.950}",
+        "$description": "foreground-icon-primary"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.neutral.500}",
+        "$description": "foreground-icon-secondary"
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.neutral.400}"
+      },
+      "quaternary": {
+        "$type": "color",
+        "$value": "{color.neutral.300}"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.red.600}"
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{color.neutral.300}"
+      }
     },
     "progress": {
-      "track": { "$type": "color", "$value": "{color.neutral.200}", "$description": "Unfilled part of a progress ring (border-button-default)" },
-      "fill": { "$type": "color", "$value": "{color.neutral.700}", "$description": "agent-progress-ring" }
+      "track": {
+        "$type": "color",
+        "$value": "{color.neutral.200}",
+        "$description": "Unfilled part of a progress ring (border-button-default)"
+      },
+      "fill": {
+        "$type": "color",
+        "$value": "{color.neutral.700}",
+        "$description": "agent-progress-ring"
+      }
     },
     "border": {
-      "default": { "$type": "color", "$value": "{color.neutral.200}", "$description": "border-button-default" },
-      "hover": { "$type": "color", "$value": "{color.neutral.300}", "$description": "border-button-hover" },
-      "pressed": { "$type": "color", "$value": "{color.neutral.400}", "$description": "border-button-active" },
-      "focus": { "$type": "color", "$value": "{color.accent.500}", "$description": "border-focus-ring" }
+      "default": {
+        "$type": "color",
+        "$value": "{color.neutral.200}",
+        "$description": "border-button-default"
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{color.neutral.300}",
+        "$description": "border-button-hover"
+      },
+      "pressed": {
+        "$type": "color",
+        "$value": "{color.neutral.400}",
+        "$description": "border-button-active"
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{color.accent.500}",
+        "$description": "border-focus-ring"
+      },
+      "group": {
+        "$type": "color",
+        "$value": "{color.neutral.200}"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.red.500}"
+      },
+      "control": {
+        "$type": "color",
+        "$value": "{color.neutral.300}"
+      },
+      "control-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.400}"
+      },
+      "separator": {
+        "$type": "color",
+        "$value": "{color.neutral.200}"
+      }
     },
     "selection": {
-      "range": { "$type": "color", "$value": "{color.accent.100}", "$description": "date-range-background" },
-      "range-edge": { "$type": "color", "$value": "{color.accent.300}", "$description": "date-range-edge-background" }
+      "range": {
+        "$type": "color",
+        "$value": "{color.accent.100}",
+        "$description": "date-range-background"
+      },
+      "range-edge": {
+        "$type": "color",
+        "$value": "{color.accent.300}",
+        "$description": "date-range-edge-background"
+      }
     },
     "action": {
       "primary": {
-        "fg-disabled": { "$type": "color", "$value": "{color.neutral.400}", "$description": "button-primary-disabled-foreground" }
+        "fg-disabled": {
+          "$type": "color",
+          "$value": "{color.neutral.400}",
+          "$description": "button-primary-disabled-foreground"
+        }
       },
       "danger": {
-        "fg-disabled": { "$type": "color", "$value": "{color.red.300}", "$description": "foreground-disabled-danger" }
+        "fg-disabled": {
+          "$type": "color",
+          "$value": "{color.red.300}",
+          "$description": "foreground-disabled-danger"
+        }
       },
       "tertiary": {
-        "bg": { "$type": "color", "$value": "{color.accent.100}", "$description": "button-ghost-background" },
-        "bg-hover": { "$type": "color", "$value": "{color.accent.200}", "$description": "button-ghost-hover" },
-        "bg-pressed": { "$type": "color", "$value": "{color.accent.300}", "$description": "button-ghost-active" },
-        "bg-disabled": { "$type": "color", "$value": "{color.accent.50}", "$description": "button-ghost-disabled" },
-        "fg": { "$type": "color", "$value": "{color.accent.700}", "$description": "button-ghost-foreground" },
-        "fg-disabled": { "$type": "color", "$value": "{color.accent.300}", "$description": "button-ghost-disabled-foreground" }
+        "bg": {
+          "$type": "color",
+          "$value": "{color.accent.100}",
+          "$description": "button-ghost-background"
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{color.accent.200}",
+          "$description": "button-ghost-hover"
+        },
+        "bg-pressed": {
+          "$type": "color",
+          "$value": "{color.accent.300}",
+          "$description": "button-ghost-active"
+        },
+        "bg-disabled": {
+          "$type": "color",
+          "$value": "{color.accent.50}",
+          "$description": "button-ghost-disabled"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.accent.700}",
+          "$description": "button-ghost-foreground"
+        },
+        "fg-disabled": {
+          "$type": "color",
+          "$value": "{color.accent.300}",
+          "$description": "button-ghost-disabled-foreground"
+        }
       }
     },
     "indicator": {
       "green": {
-        "halo": { "$type": "color", "$value": "{color.green.100}", "$description": "status-dot-green-halo" },
-        "dot": { "$type": "color", "$value": "{color.green.500}" }
+        "halo": {
+          "$type": "color",
+          "$value": "{color.green.100}",
+          "$description": "status-dot-green-halo"
+        },
+        "dot": {
+          "$type": "color",
+          "$value": "{color.green.500}"
+        }
       },
       "yellow": {
-        "halo": { "$type": "color", "$value": "{color.yellow.200}", "$description": "status-dot-yellow-halo" },
-        "dot": { "$type": "color", "$value": "{color.yellow.500}" }
+        "halo": {
+          "$type": "color",
+          "$value": "{color.yellow.200}",
+          "$description": "status-dot-yellow-halo"
+        },
+        "dot": {
+          "$type": "color",
+          "$value": "{color.yellow.500}"
+        }
       },
       "indigo": {
-        "halo": { "$type": "color", "$value": "{color.indigo.100}", "$description": "status-dot-indigo-halo" },
-        "dot": { "$type": "color", "$value": "{color.indigo.500}" }
+        "halo": {
+          "$type": "color",
+          "$value": "{color.indigo.100}",
+          "$description": "status-dot-indigo-halo"
+        },
+        "dot": {
+          "$type": "color",
+          "$value": "{color.indigo.500}"
+        }
+      }
+    },
+    "control": {
+      "knob": {
+        "$type": "color",
+        "$value": "{color.white}"
+      },
+      "knob-shade": {
+        "$type": "color",
+        "$value": "{color.neutral.100}"
+      }
+    },
+    "field": {
+      "bg-disabled": {
+        "$type": "color",
+        "$value": "{color.neutral.100}"
+      },
+      "icon-disabled": {
+        "$type": "color",
+        "$value": "{color.neutral.300}"
+      },
+      "fg-disabled": {
+        "$type": "color",
+        "$value": "{color.neutral.300}"
+      }
+    },
+    "status": {
+      "info": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.blue.100}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.blue.600}"
+        }
+      },
+      "success": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.lime.100}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.lime.600}"
+        },
+        "solid": {
+          "$type": "color",
+          "$value": "{color.lime.500}"
+        }
+      },
+      "danger": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.rose.100}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.rose.600}"
+        },
+        "solid": {
+          "$type": "color",
+          "$value": "{color.rose.500}"
+        }
+      }
+    },
+    "tag": {
+      "blue": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.blue.200}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.blue.800}"
+        }
+      },
+      "cyan": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.cyan.200}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.cyan.800}"
+        }
+      },
+      "lime": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.lime.200}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.lime.800}"
+        }
+      },
+      "orange": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.orange.200}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.orange.800}"
+        }
+      },
+      "purple": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.purple.100}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.purple.600}"
+        }
+      },
+      "rose": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.rose.200}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.rose.800}"
+        }
+      },
+      "yellow": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.yellow.200}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.yellow.800}"
+        }
+      }
+    },
+    "overlay": {
+      "scrim": {
+        "$type": "color",
+        "$value": "color-mix(in srgb, {color.neutral.950} 40%, transparent)",
+        "$description": "Backdrop behind drawers and modals"
       }
     }
   },
   "gradient": {
     "action": {
       "primary": {
-        "default": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.accent.500} 0%, {color.accent.600} 100%)" },
-        "hover": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.accent.400} 0%, {color.accent.500} 100%)" },
-        "pressed": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.accent.600} 0%, {color.accent.700} 100%)" },
-        "disabled": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.neutral.200} 0%, {color.neutral.300} 100%)" }
+        "default": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.accent.500} 0%, {color.accent.600} 100%)"
+        },
+        "hover": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.accent.400} 0%, {color.accent.500} 100%)"
+        },
+        "pressed": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.accent.600} 0%, {color.accent.700} 100%)"
+        },
+        "disabled": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.neutral.200} 0%, {color.neutral.300} 100%)"
+        }
       },
       "danger": {
-        "default": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.500} 0%, {color.red.600} 100%)" },
-        "hover": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.400} 0%, {color.red.500} 100%)" },
-        "pressed": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.600} 0%, {color.red.700} 100%)" },
-        "disabled": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.100} 0%, {color.red.200} 100%)" }
+        "default": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.red.500} 0%, {color.red.600} 100%)"
+        },
+        "hover": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.red.400} 0%, {color.red.500} 100%)"
+        },
+        "pressed": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.red.600} 0%, {color.red.700} 100%)"
+        },
+        "disabled": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.red.100} 0%, {color.red.200} 100%)"
+        }
       }
     }
   },
   "elevation": {
-    "raised": { "$type": "shadow", "$value": "{shadow.xs}", "$description": "shadow-xs" },
-    "overlay": { "$type": "shadow", "$value": "{shadow.dropdown}", "$description": "shadow-dropdown" }
+    "raised": {
+      "$type": "shadow",
+      "$value": "{shadow.xs}",
+      "$description": "shadow-xs"
+    },
+    "overlay": {
+      "$type": "shadow",
+      "$value": "{shadow.dropdown}",
+      "$description": "shadow-dropdown"
+    },
+    "hairline": {
+      "$type": "shadow",
+      "$value": "{shadow.2xs}"
+    },
+    "control-checked": {
+      "$type": "shadow",
+      "$value": "inset 0 2px 0 0 rgb(255 255 255 / 0.25), inset 0 0 0 1px {color.accent.500}"
+    }
   }
 }

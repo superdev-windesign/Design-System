@@ -19,29 +19,84 @@
       "$type": "shadow",
       "$value": "0 1px 1px 0 rgb(0 0 0 / 0.14), 0 4px 4px 0 rgb(0 0 0 / 0.1)",
       "$description": "CSS shorthand. Dark-theme counterpart of shadow.dropdown."
+    },
+    "2xs": {
+      "$type": "shadow",
+      "$value": "0 1px rgb(0 0 0 / 0.05)",
+      "$description": "CSS shorthand. Hairline contact shadow."
+    },
+    "2xs-strong": {
+      "$type": "shadow",
+      "$value": "0 1px rgb(0 0 0 / 0.16)",
+      "$description": "CSS shorthand. Dark-theme counterpart of shadow.2xs."
     }
   },
   "duration": {
-    "100": { "$type": "duration", "$value": "100ms" },
-    "150": { "$type": "duration", "$value": "150ms" },
-    "200": { "$type": "duration", "$value": "200ms" },
-    "220": { "$type": "duration", "$value": "220ms" },
-    "250": { "$type": "duration", "$value": "250ms" },
-    "420": { "$type": "duration", "$value": "420ms" },
-    "3400": { "$type": "duration", "$value": "3400ms" }
+    "100": {
+      "$type": "duration",
+      "$value": "100ms"
+    },
+    "150": {
+      "$type": "duration",
+      "$value": "150ms"
+    },
+    "200": {
+      "$type": "duration",
+      "$value": "200ms"
+    },
+    "220": {
+      "$type": "duration",
+      "$value": "220ms"
+    },
+    "250": {
+      "$type": "duration",
+      "$value": "250ms"
+    },
+    "420": {
+      "$type": "duration",
+      "$value": "420ms"
+    },
+    "3400": {
+      "$type": "duration",
+      "$value": "3400ms"
+    }
   },
   "easing": {
-    "standard": { "$type": "cubicBezier", "$value": "cubic-bezier(0.4, 0, 0.2, 1)" },
-    "emphasized": { "$type": "cubicBezier", "$value": "cubic-bezier(0.22, 1, 0.36, 1)" },
-    "decelerate": { "$type": "cubicBezier", "$value": "cubic-bezier(0, 0, 0.2, 1)" },
-    "ease": { "$type": "cubicBezier", "$value": "cubic-bezier(0.25, 0.1, 0.25, 1)" },
-    "overshoot": { "$type": "cubicBezier", "$value": "cubic-bezier(0.34, 1.2, 0.64, 1)" }
+    "standard": {
+      "$type": "cubicBezier",
+      "$value": "cubic-bezier(0.4, 0, 0.2, 1)"
+    },
+    "emphasized": {
+      "$type": "cubicBezier",
+      "$value": "cubic-bezier(0.22, 1, 0.36, 1)"
+    },
+    "decelerate": {
+      "$type": "cubicBezier",
+      "$value": "cubic-bezier(0, 0, 0.2, 1)"
+    },
+    "ease": {
+      "$type": "cubicBezier",
+      "$value": "cubic-bezier(0.25, 0.1, 0.25, 1)"
+    },
+    "overshoot": {
+      "$type": "cubicBezier",
+      "$value": "cubic-bezier(0.34, 1.2, 0.64, 1)"
+    }
   },
   "blur": {
-    "2": { "$type": "dimension", "$value": "2px" },
-    "4": { "$type": "dimension", "$value": "4px" }
+    "2": {
+      "$type": "dimension",
+      "$value": "2px"
+    },
+    "4": {
+      "$type": "dimension",
+      "$value": "4px"
+    }
   },
   "scale": {
-    "98": { "$type": "number", "$value": "0.98" }
+    "98": {
+      "$type": "number",
+      "$value": "0.98"
+    }
   }
 }

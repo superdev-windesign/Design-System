@@ -1,7 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import { AgentProgress, Button, DatePicker, DateRangePicker, Select, SelectItem, StatusDot } from "@ds/react";
-import { RiAddLine, RiArrowRightLine, RiDeleteBinLine } from "@remixicon/react";
+import { Dialog, Modal, ModalOverlay } from "react-aria-components";
+import {
+  AgentProgress,
+  Button,
+  DatePicker,
+  DateRangePicker,
+  IconButton,
+  Select,
+  SelectItem,
+  StatusDot,
+} from "@ds/react";
+import { RiAddLine, RiArrowRightLine, RiDeleteBinLine, RiMenuLine } from "@remixicon/react";
+import { ShowcaseDetail, ShowcaseIndex, useHashRoute } from "./showcase/showcase";
+import { Sidebar } from "./showcase/sidebar";
 
 type ThemeChoice = "light" | "dark" | "system";
 
@@ -91,32 +103,15 @@ function Section({ title, description, children }: { title: string; description:
   );
 }
 
-export function App() {
-  const [theme, setTheme] = useTheme();
-
+/** Side-by-side parity checks against BoardUI's docs previews. */
+function ParityLab() {
   return (
-    <div className="min-h-dvh bg-canvas text-fg">
-      <main className="mx-auto flex max-w-3xl flex-col gap-12 px-4 py-10">
-        <header className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex flex-col gap-1">
-            <h1 className="text-body-md-strong text-fg">Windesign DS · Playground</h1>
-            <p className="text-body-md text-fg-secondary">
-              Select and Date Range Picker rebuilt for visual parity with BoardUI, on the @ds token system.
-            </p>
-          </div>
-          <div className="flex gap-1.5" role="group" aria-label="Theme">
-            {(["light", "dark", "system"] as const).map((choice) => (
-              <Button
-                key={choice}
-                size="sm"
-                variant={theme === choice ? "tertiary" : "secondary"}
-                aria-pressed={theme === choice}
-                onPress={() => setTheme(choice)}
-              >
-                {choice[0]!.toUpperCase() + choice.slice(1)}
-              </Button>
-            ))}
-          </div>
+    <div className="flex flex-col gap-12">
+        <header className="flex flex-col gap-1">
+          <h1 className="text-title-sm-strong text-fg">Parity lab</h1>
+          <p className="text-body-md text-fg-secondary">
+            Hand-built components measured against BoardUI's docs previews, on the @ds token system.
+          </p>
         </header>
 
         <Section
@@ -198,7 +193,102 @@ export function App() {
             <Button isDisabled>Disabled</Button>
           </Preview>
         </Section>
-      </main>
+    </div>
+  );
+}
+
+function ThemeSwitch() {
+  const [theme, setTheme] = useTheme();
+  return (
+    <div className="flex gap-1.5" role="group" aria-label="Theme">
+      {(["light", "dark", "system"] as const).map((choice) => (
+        <Button
+          key={choice}
+          size="sm"
+          variant={theme === choice ? "tertiary" : "secondary"}
+          aria-pressed={theme === choice}
+          onPress={() => setTheme(choice)}
+        >
+          {choice[0]!.toUpperCase() + choice.slice(1)}
+        </Button>
+      ))}
+    </div>
+  );
+}
+
+const DESKTOP = "(min-width: 64rem)";
+
+export function App() {
+  const route = useHashRoute();
+  const detail = /^\/components\/([a-z0-9-]+)$/.exec(route);
+  const onComponents = route.startsWith("/components") || route === "/";
+
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const desktopSearch = useRef<HTMLInputElement>(null);
+  const drawerSearch = useRef<HTMLInputElement>(null);
+  const [focusDrawerSearch, setFocusDrawerSearch] = useState(false);
+
+  // Close the drawer whenever the page changes (including back/forward).
+  useEffect(() => setDrawerOpen(false), [route]);
+
+  // ⌘K / Ctrl+K: focus search in the sidebar, opening the drawer on small screens.
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key.toLowerCase() !== "k" || !(event.metaKey || event.ctrlKey)) return;
+      event.preventDefault();
+      if (window.matchMedia(DESKTOP).matches) desktopSearch.current?.focus();
+      else {
+        setFocusDrawerSearch(true);
+        setDrawerOpen(true);
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
+  useEffect(() => {
+    if (drawerOpen && focusDrawerSearch) {
+      // Wait a frame so the drawer's own focus handling runs first.
+      requestAnimationFrame(() => drawerSearch.current?.focus());
+      setFocusDrawerSearch(false);
+    }
+  }, [drawerOpen, focusDrawerSearch]);
+
+  return (
+    <div className="flex min-h-dvh bg-canvas text-fg">
+      {/* Desktop: a floating sidebar that stays put while the page scrolls. */}
+      <aside className="sticky top-0 hidden h-dvh w-72 shrink-0 p-3 lg:block">
+        <Sidebar route={route} searchRef={desktopSearch} />
+      </aside>
+
+      {/* Small screens: the same sidebar in a slide-in drawer. */}
+      <ModalOverlay
+        isOpen={drawerOpen}
+        onOpenChange={setDrawerOpen}
+        isDismissable
+        className="fixed inset-0 z-50 bg-scrim transition-opacity duration-(--ds-motion-duration-moderate) data-[entering]:opacity-0 data-[exiting]:opacity-0 lg:hidden"
+      >
+        <Modal className="fixed inset-y-0 start-0 w-80 max-w-[calc(100vw-48px)] p-3 transition-transform duration-(--ds-motion-duration-slow) ease-enter data-[entering]:-translate-x-full data-[exiting]:-translate-x-full rtl:data-[entering]:translate-x-full rtl:data-[exiting]:translate-x-full motion-reduce:transition-none">
+          <Dialog aria-label="Navigation" className="h-full outline-none">
+            <Sidebar route={route} searchRef={drawerSearch} onNavigate={() => setDrawerOpen(false)} />
+          </Dialog>
+        </Modal>
+      </ModalOverlay>
+
+      <div className="flex min-w-0 flex-1 flex-col">
+        <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-line bg-canvas px-4 py-3 lg:border-none">
+          <div className="flex items-center gap-2 lg:hidden">
+            <IconButton icon={RiMenuLine} aria-label="Open navigation" onClick={() => setDrawerOpen(true)} />
+            <span className="text-body-md-strong text-fg">Windesign DS</span>
+          </div>
+          <div className="ms-auto">
+            <ThemeSwitch />
+          </div>
+        </header>
+        <main className="mx-auto w-full max-w-5xl px-4 pb-16 pt-6">
+          {detail ? <ShowcaseDetail slug={detail[1]!} /> : onComponents ? <ShowcaseIndex /> : <ParityLab />}
+        </main>
+      </div>
     </div>
   );
 }

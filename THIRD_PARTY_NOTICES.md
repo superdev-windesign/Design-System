@@ -18,7 +18,12 @@ Adapted files carry a header comment naming their BoardUI source:
 | `packages/react/src/icons/chevrons.tsx` | `components/foundations/icons/chevrons.tsx`, `components/base/date-picker/shared.tsx` |
 | `packages/react/src/utils/use-dismiss-on-outside-press.ts` | `utils/use-dismiss-on-outside-press.ts` |
 | `packages/styles/src/utilities.css` (press motion, gradient buttons) | `styles/theme.css` |
-| Token values in `packages/tokens/src/semantic/*.json` | `styles/theme.css` |
+| Token values in `packages/tokens/src/semantic/*.json` and `packages/tokens/src/component/*.json` | `styles/theme.css` |
+| 39 further files under `packages/react/src/components/`, `foundations/` and `utils/` (Announcement, Avatar, Badge, Chip, Breadcrumb, Button Group, Close Button, Icon Button, Link Button, Carousel, Checkbox, Checkbox Card, Meeting Scheduler, Divider, Dropdown, File Upload, Input, Input OTP, Kbd, Notification, Pagination, Radio, Radio Card, Segmented Control, Slider, Social Button, Switch, Switch Card, Table, Tabs, Pill Tabs, Textarea, Tooltip, Tree View, direction and copy helpers) | `components/base/**`, `components/foundations/**`, `utils/**`; converted by `tools/boardui-port/port.mjs` |
+
+Every adapted file starts with a header naming its BoardUI source. Demo
+defaults that held a real person's name and email were replaced with
+fictional ones, and a third-party logo image with a generic icon.
 
 ## BoardUI Pro
 

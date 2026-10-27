@@ -27,3 +27,6 @@ export const MENU_ITEM = [
 ].join(" ");
 
 export const MENU_ITEM_ACTIVE = "bg-surface-hover";
+
+/** For rows that track hover and keyboard focus with CSS rather than render state. */
+export const MENU_ITEM_INTERACTIVE = "hover:bg-surface-hover focus-visible:bg-surface-hover";

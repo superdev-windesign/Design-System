@@ -129,6 +129,155 @@
   --text-caption-strong--font-weight: var(--ds-text-caption-strong-weight);
   --text-caption-strong--letter-spacing: var(--ds-text-caption-strong-tracking);
 
+  /* ── Added for the BoardUI free-component port ─────────────────────────── */
+
+  /* Surfaces, text, icons */
+  --color-scrim: var(--ds-color-overlay-scrim);
+  --color-muted-hover: var(--ds-color-bg-muted-hover);
+  --color-strong-hover: var(--ds-color-bg-strong-hover);
+  --color-danger-subtle: var(--ds-color-bg-danger-subtle);
+  --color-fg-danger: var(--ds-color-text-danger);
+  --color-fg-placeholder: var(--ds-color-text-placeholder);
+  --color-fg-danger-placeholder: var(--ds-color-text-danger-placeholder);
+  --color-icon-tertiary: var(--ds-color-icon-tertiary);
+  --color-icon-quaternary: var(--ds-color-icon-quaternary);
+  --color-icon-danger: var(--ds-color-icon-danger);
+  --color-icon-disabled: var(--ds-color-icon-disabled);
+
+  /* Borders, controls, fields */
+  --color-line-group: var(--ds-color-border-group);
+  --color-line-danger: var(--ds-color-border-danger);
+  --color-line-control: var(--ds-color-border-control);
+  --color-line-control-hover: var(--ds-color-border-control-hover);
+  --color-separator: var(--ds-color-border-separator);
+  --color-control-knob: var(--ds-color-control-knob);
+  --color-control-knob-shade: var(--ds-color-control-knob-shade);
+  --color-field-disabled: var(--ds-color-field-bg-disabled);
+  --color-field-icon-disabled: var(--ds-color-field-icon-disabled);
+  --color-field-fg-disabled: var(--ds-color-field-fg-disabled);
+
+  /* Status (by meaning) */
+  --color-status-info: var(--ds-color-status-info-bg);
+  --color-status-info-fg: var(--ds-color-status-info-fg);
+  --color-status-success: var(--ds-color-status-success-bg);
+  --color-status-success-fg: var(--ds-color-status-success-fg);
+  --color-status-success-solid: var(--ds-color-status-success-solid);
+  --color-status-danger: var(--ds-color-status-danger-bg);
+  --color-status-danger-fg: var(--ds-color-status-danger-fg);
+  --color-status-danger-solid: var(--ds-color-status-danger-solid);
+
+  /* Tags (categorical, by hue) */
+  --color-tag-blue: var(--ds-color-tag-blue-bg);
+  --color-tag-blue-fg: var(--ds-color-tag-blue-fg);
+  --color-tag-cyan: var(--ds-color-tag-cyan-bg);
+  --color-tag-cyan-fg: var(--ds-color-tag-cyan-fg);
+  --color-tag-lime: var(--ds-color-tag-lime-bg);
+  --color-tag-lime-fg: var(--ds-color-tag-lime-fg);
+  --color-tag-orange: var(--ds-color-tag-orange-bg);
+  --color-tag-orange-fg: var(--ds-color-tag-orange-fg);
+  --color-tag-purple: var(--ds-color-tag-purple-bg);
+  --color-tag-purple-fg: var(--ds-color-tag-purple-fg);
+  --color-tag-rose: var(--ds-color-tag-rose-bg);
+  --color-tag-rose-fg: var(--ds-color-tag-rose-fg);
+  --color-tag-yellow: var(--ds-color-tag-yellow-bg);
+  --color-tag-yellow-fg: var(--ds-color-tag-yellow-fg);
+
+  /* Accent ramp: interactive emphasis (checked controls, slider fill, selection) */
+  --color-accent-50: var(--ds-color-accent-50);
+  --color-accent-100: var(--ds-color-accent-100);
+  --color-accent-200: var(--ds-color-accent-200);
+  --color-accent-300: var(--ds-color-accent-300);
+  --color-accent-400: var(--ds-color-accent-400);
+  --color-accent-500: var(--ds-color-accent-500);
+  --color-accent-600: var(--ds-color-accent-600);
+  --color-accent-700: var(--ds-color-accent-700);
+  --color-accent-800: var(--ds-color-accent-800);
+  --color-accent-900: var(--ds-color-accent-900);
+  --color-accent-950: var(--ds-color-accent-950);
+
+  /* Component-scoped colors */
+  --color-kbd: var(--ds-component-kbd-bg);
+  --color-kbd-fg: var(--ds-component-kbd-fg);
+  --color-avatar: var(--ds-component-avatar-bg);
+  --color-avatar-blue: var(--ds-component-avatar-blue-bg);
+  --color-avatar-blue-fg: var(--ds-component-avatar-blue-fg);
+  --color-avatar-lime: var(--ds-component-avatar-lime-bg);
+  --color-avatar-lime-fg: var(--ds-component-avatar-lime-fg);
+  --color-avatar-pink: var(--ds-component-avatar-pink-bg);
+  --color-avatar-pink-fg: var(--ds-component-avatar-pink-fg);
+  --color-badge-neutral: var(--ds-component-badge-neutral-bg);
+  --color-file-upload-icon: var(--ds-component-file-upload-icon-bg);
+  --color-file-upload-icon-fg: var(--ds-component-file-upload-icon-fg);
+  --color-file-upload-icon-fg-hover: var(--ds-component-file-upload-icon-fg-hover);
+  --color-pill-tab-selected: var(--ds-component-pill-tab-selected-bg);
+  --color-pill-tab-hover: var(--ds-component-pill-tab-hover-bg);
+  --color-segmented: var(--ds-component-segmented-bg);
+  --color-segmented-selected: var(--ds-component-segmented-selected-bg);
+  --color-tab-count: var(--ds-component-tab-count-bg);
+  --color-tab-count-selected: var(--ds-component-tab-count-selected-bg);
+  --color-switch-off-start: var(--ds-component-switch-off-start);
+  --color-switch-off-end: var(--ds-component-switch-off-end);
+  --color-switch-on-start: var(--ds-component-switch-on-start);
+  --color-switch-on-end: var(--ds-component-switch-on-end);
+  --color-social-dark: var(--ds-component-social-dark-bg);
+  --color-social-dark-hover: var(--ds-component-social-dark-bg-hover);
+  --color-social-dark-pressed: var(--ds-component-social-dark-bg-pressed);
+
+  /* Radius scale for component internals (prefer the role names above when one fits) */
+  --radius-xs: var(--ds-radius-2);
+  --radius-sm: var(--ds-radius-4);
+  --radius-md: var(--ds-radius-6);
+  --radius-lg: var(--ds-radius-8);
+  --radius-2lg: var(--ds-radius-10);
+  --radius-xl: var(--ds-radius-12);
+  --radius-2xl: var(--ds-radius-16);
+  --radius-3xl: var(--ds-radius-24);
+
+  /* Elevation and component effects */
+  --shadow-hairline: var(--ds-elevation-hairline);
+  --shadow-control-checked: var(--ds-elevation-control-checked);
+  --shadow-radio-checked-sm: var(--ds-component-radio-checked-sm);
+  --shadow-radio-checked-md: var(--ds-component-radio-checked-md);
+  --shadow-slider-track: var(--ds-component-slider-track);
+  --shadow-slider-fill: var(--ds-component-slider-fill);
+  --shadow-slider-thumb: var(--ds-component-slider-thumb);
+  --shadow-slider-thumb-active: var(--ds-component-slider-thumb-active);
+  --shadow-slider-highlight: var(--ds-component-slider-highlight);
+  --shadow-switch-on-sm: var(--ds-component-switch-on-sm);
+  --shadow-switch-on-md: var(--ds-component-switch-on-md);
+  --shadow-switch-chip-sm: var(--ds-component-switch-chip-sm);
+  --shadow-switch-chip-md: var(--ds-component-switch-chip-md);
+  --shadow-switch-chip-lg: var(--ds-component-switch-chip-lg);
+  --shadow-switch-thumb: var(--ds-component-switch-thumb);
+
+  /* More composite text styles */
+  --text-caption: var(--ds-text-caption-size);
+  --text-caption--line-height: var(--ds-text-caption-line-height);
+  --text-caption--font-weight: var(--ds-text-caption-weight);
+  --text-caption--letter-spacing: var(--ds-text-caption-tracking);
+  --text-caption-emphasis: var(--ds-text-caption-emphasis-size);
+  --text-caption-emphasis--line-height: var(--ds-text-caption-emphasis-line-height);
+  --text-caption-emphasis--font-weight: var(--ds-text-caption-emphasis-weight);
+  --text-caption-emphasis--letter-spacing: var(--ds-text-caption-emphasis-tracking);
+  --text-headline-emphasis: var(--ds-text-headline-emphasis-size);
+  --text-headline-emphasis--line-height: var(--ds-text-headline-emphasis-line-height);
+  --text-headline-emphasis--font-weight: var(--ds-text-headline-emphasis-weight);
+  --text-headline-emphasis--letter-spacing: var(--ds-text-headline-emphasis-tracking);
+  --text-title-sm-strong: var(--ds-text-title-sm-strong-size);
+  --text-title-sm-strong--line-height: var(--ds-text-title-sm-strong-line-height);
+  --text-title-sm-strong--font-weight: var(--ds-text-title-sm-strong-weight);
+  --text-title-sm-strong--letter-spacing: var(--ds-text-title-sm-strong-tracking);
+  --text-title-sm-emphasis: var(--ds-text-title-sm-emphasis-size);
+  --text-title-sm-emphasis--line-height: var(--ds-text-title-sm-emphasis-line-height);
+  --text-title-sm-emphasis--font-weight: var(--ds-text-title-sm-emphasis-weight);
+  --text-title-sm-emphasis--letter-spacing: var(--ds-text-title-sm-emphasis-tracking);
+  --text-micro-emphasis: var(--ds-text-micro-emphasis-size);
+  --text-micro-emphasis--line-height: var(--ds-text-micro-emphasis-line-height);
+  --text-micro-emphasis--font-weight: var(--ds-text-micro-emphasis-weight);
+  --text-micro-emphasis--letter-spacing: var(--ds-text-micro-emphasis-tracking);
+
+  --blur-enter-strong: var(--ds-motion-blur-enter-strong);
+
   /* Motion → ease-*, blur-* (durations: duration-(--ds-motion-duration-base)) */
   --ease-standard: var(--ds-motion-easing-standard);
   --ease-enter: var(--ds-motion-easing-enter);

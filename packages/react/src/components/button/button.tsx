@@ -16,7 +16,7 @@ import { cx } from "../../utils/cx";
  *   gap            2px                     2px                     2px
  *   icon           20                      18                      14
  *   label padding  px 4                    px 2                    px 2
- *   text           body-md-strong          body-md-strong          caption-strong
+ *   text           body-md-strong          body-md-strong          caption-emphasis
  *   icon-only      36×36 (from content)    32×32 (forced)          24×24 (forced)
  *
  * Built on React Aria's Button, so state styling uses its data attributes
@@ -44,10 +44,15 @@ interface CommonProps extends Omit<AriaButtonProps, "children"> {
   ref?: Ref<HTMLButtonElement>;
 }
 
-/** An icon-only button without an accessible name is a type error. */
+/**
+ * An icon-only button without an accessible name is a type error. When
+ * `iconOnly` is decided at runtime (e.g. a responsive layout), `aria-label`
+ * must always be provided so the compact state is still named.
+ */
 export type ButtonProps =
   | (CommonProps & { iconOnly?: false; children?: ReactNode })
-  | (CommonProps & { iconOnly: true; leadingIcon: IconComponent; "aria-label": string; children?: never });
+  | (CommonProps & { iconOnly: true; leadingIcon: IconComponent; "aria-label": string; children?: never })
+  | (CommonProps & { iconOnly: boolean; "aria-label": string; children?: ReactNode });
 
 const styles = {
   base: [
@@ -60,7 +65,7 @@ const styles = {
   size: {
     md: "h-control-md rounded-control-md p-2 text-body-md-strong",
     sm: "h-control-sm rounded-control-sm px-2 py-1.5 text-body-md-strong",
-    xs: "h-control-xs rounded-control-xs px-2 text-caption-strong",
+    xs: "h-control-xs rounded-control-xs px-2 text-caption-emphasis",
   },
 
   // md stays square from its content (8 + 20 + 8 = 36); sm and xs force the square.

@@ -1,0 +1,189 @@
+{
+  "$description": "Component-scoped tokens (dark). Used by one component each; values match BoardUI's.",
+  "component": {
+    "kbd": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.neutral.700}"
+      },
+      "fg": {
+        "$type": "color",
+        "$value": "{color.neutral.400}"
+      }
+    },
+    "avatar": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.neutral.800}"
+      },
+      "blue": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.blue.300}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.blue.900}"
+        }
+      },
+      "lime": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.lime.200}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.lime.700}"
+        }
+      },
+      "pink": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.pink.200}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.pink.500}"
+        }
+      }
+    },
+    "badge-neutral": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.neutral.800}"
+      }
+    },
+    "file-upload": {
+      "icon-bg": {
+        "$type": "color",
+        "$value": "{color.neutral.600}"
+      },
+      "icon-fg": {
+        "$type": "color",
+        "$value": "{color.neutral.400}"
+      },
+      "icon-fg-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.300}"
+      }
+    },
+    "pill-tab": {
+      "selected-bg": {
+        "$type": "color",
+        "$value": "color-mix(in srgb, {color.accent.950} 60%, transparent)"
+      },
+      "hover-bg": {
+        "$type": "color",
+        "$value": "{color.neutral.800}"
+      }
+    },
+    "segmented": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.neutral.925}"
+      },
+      "selected-bg": {
+        "$type": "color",
+        "$value": "{color.neutral.800}"
+      }
+    },
+    "tab-count": {
+      "bg": {
+        "$type": "color",
+        "$value": "color-mix(in srgb, {color.black} 10%, transparent)"
+      },
+      "selected-bg": {
+        "$type": "color",
+        "$value": "color-mix(in srgb, {color.accent.800} 60%, transparent)"
+      }
+    },
+    "switch": {
+      "off-start": {
+        "$type": "color",
+        "$value": "{color.neutral.800}"
+      },
+      "off-end": {
+        "$type": "color",
+        "$value": "{color.neutral.800}"
+      },
+      "on-start": {
+        "$type": "color",
+        "$value": "color-mix(in oklab, {color.accent.500} 63%, {color.accent.600})"
+      },
+      "on-end": {
+        "$type": "color",
+        "$value": "color-mix(in oklab, {color.accent.600} 16%, {color.accent.700})"
+      },
+      "on-sm": {
+        "$type": "shadow",
+        "$value": "inset 0 1px 0 0 rgb(255 255 255 / 0.25), inset 0 0 0 0.5px {color.accent.500}"
+      },
+      "on-md": {
+        "$type": "shadow",
+        "$value": "inset 0 1.5px 0 0 rgb(255 255 255 / 0.25), inset 0 0 0 0.75px {color.accent.500}"
+      },
+      "chip-sm": {
+        "$type": "shadow",
+        "$value": "0 2px 2px 0 rgb(0 0 0 / 0.03)"
+      },
+      "chip-md": {
+        "$type": "shadow",
+        "$value": "0 3px 3px 0 rgb(0 0 0 / 0.03)"
+      },
+      "chip-lg": {
+        "$type": "shadow",
+        "$value": "0 4px 4px 0 rgb(0 0 0 / 0.03)"
+      },
+      "thumb": {
+        "$type": "shadow",
+        "$value": "0 3px 3px 0 rgb(0 0 0 / 0.03), 0 0.75px 0 0 rgb(0 0 0 / 0.05)"
+      }
+    },
+    "social": {
+      "dark-bg": {
+        "$type": "color",
+        "$value": "{color.neutral.950}"
+      },
+      "dark-bg-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.800}"
+      },
+      "dark-bg-pressed": {
+        "$type": "color",
+        "$value": "{color.neutral.900}"
+      }
+    },
+    "radio": {
+      "checked-sm": {
+        "$type": "shadow",
+        "$value": "inset 0 0 0 0.875px {color.accent.500}, inset 0 1.75px 0 0 rgb(255 255 255 / 0.25)"
+      },
+      "checked-md": {
+        "$type": "shadow",
+        "$value": "inset 0 0 0 1px {color.accent.500}, inset 0 2px 0 0 rgb(255 255 255 / 0.25)"
+      }
+    },
+    "slider": {
+      "track": {
+        "$type": "shadow",
+        "$value": "inset 0 1px 1px rgb(0 0 0 / 0.06)"
+      },
+      "fill": {
+        "$type": "shadow",
+        "$value": "inset 0 1px 0 rgb(255 255 255 / 0.24), 0 1px 2px rgb(4 80 226 / 0.16)"
+      },
+      "thumb": {
+        "$type": "shadow",
+        "$value": "0 2px 4px rgb(0 0 0 / 0.10), inset 0 1px 0 rgb(255 255 255 / 0.8)"
+      },
+      "thumb-active": {
+        "$type": "shadow",
+        "$value": "0 3px 8px color-mix(in srgb, {color.accent.600} 22%, transparent)"
+      },
+      "highlight": {
+        "$type": "shadow",
+        "$value": "inset 0 1px 0 rgb(255 255 255 / 0.24)"
+      }
+    }
+  }
+}

@@ -19,10 +19,28 @@ function flatten(tree: Tree, prefix: string[] = [], out: Record<string, unknown>
 const light = flatten(readJson("../src/semantic/theme.light.json"));
 const dark = flatten(readJson("../src/semantic/theme.dark.json"));
 const base = flatten(readJson("../src/semantic/base.json"));
+const componentLight = flatten(readJson("../src/component/theme.light.json"));
+const componentDark = flatten(readJson("../src/component/theme.dark.json"));
 
 describe("theme coverage", () => {
-  it("dark defines every light token", () => {
+  it("dark defines every light semantic token", () => {
     expect(Object.keys(dark).sort()).toEqual(Object.keys(light).sort());
+  });
+
+  it("dark defines every light component token", () => {
+    expect(Object.keys(componentDark).sort()).toEqual(Object.keys(componentLight).sort());
+  });
+
+  it("component tokens stay in the component namespace", () => {
+    for (const path of Object.keys(componentLight)) expect(path).toMatch(/^component\./);
+  });
+});
+
+describe("component colors", () => {
+  // Component shadows may carry raw shadow geometry, but every color must come from a primitive.
+  const colors = Object.entries({ ...componentLight, ...componentDark }).filter(([, v]) => !String(v).includes("px"));
+  it.each(colors)("%s references a primitive", (_, value) => {
+    expect(String(value)).toMatch(/\{[a-z0-9.-]+\}/);
   });
 });
 

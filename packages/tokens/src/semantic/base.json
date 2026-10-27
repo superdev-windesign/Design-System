@@ -1,91 +1,373 @@
 {
   "$description": "Theme-invariant semantic tokens. Every value references a primitive.",
   "radius": {
-    "hairline": { "$type": "dimension", "$value": "{radius.3}", "$description": "Tiny hover targets (calendar month chevrons)" },
-    "control": {
-      "xs": { "$type": "dimension", "$value": "{radius.4}" },
-      "sm": { "$type": "dimension", "$value": "{radius.8}" },
-      "md": { "$type": "dimension", "$value": "{radius.10}" }
+    "hairline": {
+      "$type": "dimension",
+      "$value": "{radius.3}",
+      "$description": "Tiny hover targets (calendar month chevrons)"
     },
-    "item": { "$type": "dimension", "$value": "{radius.8}", "$description": "Day cells, small selectable items" },
-    "tile": { "$type": "dimension", "$value": "{radius.4}", "$description": "Small icon tiles (20px and under)" },
-    "chip": { "$type": "dimension", "$value": "{radius.12}" },
-    "surface": { "$type": "dimension", "$value": "{radius.16}", "$description": "Cards and month panels" },
-    "overlay": { "$type": "dimension", "$value": "{radius.16}", "$description": "Menus, listboxes" },
-    "panel": { "$type": "dimension", "$value": "{radius.24}", "$description": "Large popovers and dialogs" }
+    "control": {
+      "xs": {
+        "$type": "dimension",
+        "$value": "{radius.4}"
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": "{radius.8}"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{radius.10}"
+      }
+    },
+    "item": {
+      "$type": "dimension",
+      "$value": "{radius.8}",
+      "$description": "Day cells, small selectable items"
+    },
+    "tile": {
+      "$type": "dimension",
+      "$value": "{radius.4}",
+      "$description": "Small icon tiles (20px and under)"
+    },
+    "chip": {
+      "$type": "dimension",
+      "$value": "{radius.12}"
+    },
+    "surface": {
+      "$type": "dimension",
+      "$value": "{radius.16}",
+      "$description": "Cards and month panels"
+    },
+    "overlay": {
+      "$type": "dimension",
+      "$value": "{radius.16}",
+      "$description": "Menus, listboxes"
+    },
+    "panel": {
+      "$type": "dimension",
+      "$value": "{radius.24}",
+      "$description": "Large popovers and dialogs"
+    }
   },
   "size": {
     "control": {
-      "xs": { "$type": "dimension", "$value": "{size.24}" },
-      "sm": { "$type": "dimension", "$value": "{size.32}" },
-      "md": { "$type": "dimension", "$value": "{size.36}" }
+      "xs": {
+        "$type": "dimension",
+        "$value": "{size.24}"
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": "{size.32}"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{size.36}"
+      }
     },
     "icon": {
-      "xs": { "$type": "dimension", "$value": "{size.14}" },
-      "sm": { "$type": "dimension", "$value": "{size.18}" },
-      "md": { "$type": "dimension", "$value": "{size.20}" }
+      "xs": {
+        "$type": "dimension",
+        "$value": "{size.14}"
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": "{size.18}"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{size.20}"
+      }
     }
   },
   "font": {
     "family": {
-      "sans": { "$type": "fontFamily", "$value": "{font.family.inter}" },
-      "mono": { "$type": "fontFamily", "$value": "{font.family.jetbrains-mono}" }
+      "sans": {
+        "$type": "fontFamily",
+        "$value": "{font.family.inter}"
+      },
+      "mono": {
+        "$type": "fontFamily",
+        "$value": "{font.family.jetbrains-mono}"
+      }
     }
   },
   "text": {
     "body-md": {
-      "size": { "$type": "dimension", "$value": "{font.size.14}" },
-      "line-height": { "$type": "dimension", "$value": "{font.line-height.20}" },
-      "weight": { "$type": "fontWeight", "$value": "{font.weight.regular}" },
-      "tracking": { "$type": "dimension", "$value": "{font.tracking.0}" }
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.14}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.20}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.regular}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.0}"
+      }
     },
     "body-md-strong": {
-      "size": { "$type": "dimension", "$value": "{font.size.14}" },
-      "line-height": { "$type": "dimension", "$value": "{font.line-height.20}" },
-      "weight": { "$type": "fontWeight", "$value": "{font.weight.medium}" },
-      "tracking": { "$type": "dimension", "$value": "{font.tracking.0}" }
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.14}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.20}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.medium}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.0}"
+      }
     },
     "body-sm": {
-      "size": { "$type": "dimension", "$value": "{font.size.13}" },
-      "line-height": { "$type": "dimension", "$value": "{font.line-height.18}" },
-      "weight": { "$type": "fontWeight", "$value": "{font.weight.regular}" },
-      "tracking": { "$type": "dimension", "$value": "{font.tracking.0}" }
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.13}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.18}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.regular}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.0}"
+      }
     },
     "body-sm-strong": {
-      "size": { "$type": "dimension", "$value": "{font.size.13}" },
-      "line-height": { "$type": "dimension", "$value": "{font.line-height.18}" },
-      "weight": { "$type": "fontWeight", "$value": "{font.weight.medium}" },
-      "tracking": { "$type": "dimension", "$value": "{font.tracking.0}" }
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.13}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.18}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.medium}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.0}"
+      }
     },
     "caption-strong": {
-      "size": { "$type": "dimension", "$value": "{font.size.12}" },
-      "line-height": { "$type": "dimension", "$value": "{font.line-height.16}" },
-      "weight": { "$type": "fontWeight", "$value": "{font.weight.semibold}" },
-      "tracking": { "$type": "dimension", "$value": "{font.tracking.caption}" }
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.12}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.16}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.medium}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.caption}"
+      }
+    },
+    "caption": {
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.12}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.16}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.regular}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.caption}"
+      }
+    },
+    "caption-emphasis": {
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.12}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.16}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.semibold}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.caption}"
+      }
+    },
+    "headline-emphasis": {
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.16}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.22}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.semibold}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.0}"
+      }
+    },
+    "title-sm-strong": {
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.18}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.26}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.medium}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.0}"
+      }
+    },
+    "title-sm-emphasis": {
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.18}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.24}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.semibold}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.0}"
+      }
+    },
+    "micro-emphasis": {
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.10}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.15}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.semibold}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.0}"
+      }
     }
   },
   "motion": {
     "duration": {
-      "fast": { "$type": "duration", "$value": "{duration.100}", "$description": "Day-cell fades, chip focus" },
-      "base": { "$type": "duration", "$value": "{duration.150}", "$description": "Button colors, popover enter/exit" },
-      "moderate": { "$type": "duration", "$value": "{duration.200}", "$description": "Select trigger, chevron rotation, tooltip" },
-      "slow": { "$type": "duration", "$value": "{duration.250}", "$description": "Footer summary slide-in" },
-      "press-in": { "$type": "duration", "$value": "{duration.220}" },
-      "press-out": { "$type": "duration", "$value": "{duration.420}" },
-      "shimmer": { "$type": "duration", "$value": "{duration.3400}", "$description": "One sweep of the in-progress text shimmer" }
+      "fast": {
+        "$type": "duration",
+        "$value": "{duration.100}",
+        "$description": "Day-cell fades, chip focus"
+      },
+      "base": {
+        "$type": "duration",
+        "$value": "{duration.150}",
+        "$description": "Button colors, popover enter/exit"
+      },
+      "moderate": {
+        "$type": "duration",
+        "$value": "{duration.200}",
+        "$description": "Select trigger, chevron rotation, tooltip"
+      },
+      "slow": {
+        "$type": "duration",
+        "$value": "{duration.250}",
+        "$description": "Footer summary slide-in"
+      },
+      "press-in": {
+        "$type": "duration",
+        "$value": "{duration.220}"
+      },
+      "press-out": {
+        "$type": "duration",
+        "$value": "{duration.420}"
+      },
+      "shimmer": {
+        "$type": "duration",
+        "$value": "{duration.3400}",
+        "$description": "One sweep of the in-progress text shimmer"
+      }
     },
     "easing": {
-      "standard": { "$type": "cubicBezier", "$value": "{easing.standard}" },
-      "enter": { "$type": "cubicBezier", "$value": "{easing.emphasized}", "$description": "Decelerating entrances and state changes (BoardUI's signature curve)" },
-      "out": { "$type": "cubicBezier", "$value": "{easing.decelerate}" },
-      "ease": { "$type": "cubicBezier", "$value": "{easing.ease}" },
-      "overshoot": { "$type": "cubicBezier", "$value": "{easing.overshoot}" }
+      "standard": {
+        "$type": "cubicBezier",
+        "$value": "{easing.standard}"
+      },
+      "enter": {
+        "$type": "cubicBezier",
+        "$value": "{easing.emphasized}",
+        "$description": "Decelerating entrances and state changes (BoardUI's signature curve)"
+      },
+      "out": {
+        "$type": "cubicBezier",
+        "$value": "{easing.decelerate}"
+      },
+      "ease": {
+        "$type": "cubicBezier",
+        "$value": "{easing.ease}"
+      },
+      "overshoot": {
+        "$type": "cubicBezier",
+        "$value": "{easing.overshoot}"
+      }
     },
     "blur": {
-      "enter": { "$type": "dimension", "$value": "{blur.2}", "$description": "Blur applied while overlays enter/exit" }
+      "enter": {
+        "$type": "dimension",
+        "$value": "{blur.2}",
+        "$description": "Blur applied while overlays enter/exit"
+      },
+      "enter-strong": {
+        "$type": "dimension",
+        "$value": "{blur.4}",
+        "$description": "Stronger blur for tooltip-sized overlays"
+      }
     },
     "press": {
-      "scale": { "$type": "number", "$value": "{scale.98}" }
+      "scale": {
+        "$type": "number",
+        "$value": "{scale.98}"
+      }
     }
   }
 }

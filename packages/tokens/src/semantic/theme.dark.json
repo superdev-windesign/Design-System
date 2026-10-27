@@ -2,90 +2,444 @@
   "$description": "Dark theme. Values match BoardUI's .dark overrides; tokens BoardUI leaves unchanged in dark keep their light value here so every theme defines every token.",
   "color": {
     "bg": {
-      "canvas": { "$type": "color", "$value": "{color.neutral.925}" },
-      "surface": { "$type": "color", "$value": "{color.neutral.800}" },
-      "surface-hover": { "$type": "color", "$value": "color-mix(in srgb, {color.neutral.700} 60%, transparent)" },
-      "surface-pressed": { "$type": "color", "$value": "{color.neutral.800}" },
-      "surface-disabled": { "$type": "color", "$value": "{color.neutral.800}" },
-      "sunken": { "$type": "color", "$value": "{color.neutral.900}" },
-      "sunken-hover": { "$type": "color", "$value": "{color.neutral.800}" },
-      "muted": { "$type": "color", "$value": "{color.neutral.800}" },
-      "strong": { "$type": "color", "$value": "{color.neutral.700}" }
+      "canvas": {
+        "$type": "color",
+        "$value": "{color.neutral.925}"
+      },
+      "surface": {
+        "$type": "color",
+        "$value": "{color.neutral.800}"
+      },
+      "surface-hover": {
+        "$type": "color",
+        "$value": "color-mix(in srgb, {color.neutral.700} 60%, transparent)"
+      },
+      "surface-pressed": {
+        "$type": "color",
+        "$value": "{color.neutral.800}"
+      },
+      "surface-disabled": {
+        "$type": "color",
+        "$value": "{color.neutral.800}"
+      },
+      "sunken": {
+        "$type": "color",
+        "$value": "{color.neutral.900}"
+      },
+      "sunken-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.800}"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "{color.neutral.800}"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{color.neutral.700}"
+      },
+      "muted-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.700}"
+      },
+      "strong-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.600}"
+      },
+      "danger-subtle": {
+        "$type": "color",
+        "$value": "color-mix(in srgb, {color.red.950} 60%, transparent)"
+      }
     },
     "text": {
-      "primary": { "$type": "color", "$value": "{color.neutral.50}" },
-      "secondary": { "$type": "color", "$value": "{color.neutral.500}" },
-      "tertiary": { "$type": "color", "$value": "{color.neutral.600}" },
-      "disabled": { "$type": "color", "$value": "{color.neutral.800}" },
-      "on-action": { "$type": "color", "$value": "{color.white}" }
+      "primary": {
+        "$type": "color",
+        "$value": "{color.neutral.50}"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.neutral.500}"
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.neutral.600}"
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{color.neutral.800}"
+      },
+      "on-action": {
+        "$type": "color",
+        "$value": "{color.white}"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.red.400}"
+      },
+      "danger-placeholder": {
+        "$type": "color",
+        "$value": "{color.red.400}"
+      },
+      "placeholder": {
+        "$type": "color",
+        "$value": "{color.neutral.400}"
+      }
     },
     "icon": {
-      "primary": { "$type": "color", "$value": "{color.neutral.50}" },
-      "secondary": { "$type": "color", "$value": "{color.neutral.500}" }
+      "primary": {
+        "$type": "color",
+        "$value": "{color.neutral.50}"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.neutral.500}"
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.neutral.600}"
+      },
+      "quaternary": {
+        "$type": "color",
+        "$value": "{color.neutral.700}"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.red.400}"
+      },
+      "disabled": {
+        "$type": "color",
+        "$value": "{color.neutral.500}"
+      }
     },
     "progress": {
-      "track": { "$type": "color", "$value": "{color.neutral.700}" },
-      "fill": { "$type": "color", "$value": "color-mix(in srgb, {color.white} 50%, transparent)" }
+      "track": {
+        "$type": "color",
+        "$value": "{color.neutral.700}"
+      },
+      "fill": {
+        "$type": "color",
+        "$value": "color-mix(in srgb, {color.white} 50%, transparent)"
+      }
     },
     "border": {
-      "default": { "$type": "color", "$value": "{color.neutral.700}" },
-      "hover": { "$type": "color", "$value": "{color.neutral.500}" },
-      "pressed": { "$type": "color", "$value": "{color.neutral.600}" },
-      "focus": { "$type": "color", "$value": "{color.accent.500}" }
+      "default": {
+        "$type": "color",
+        "$value": "{color.neutral.700}"
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{color.neutral.500}"
+      },
+      "pressed": {
+        "$type": "color",
+        "$value": "{color.neutral.600}"
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{color.accent.500}"
+      },
+      "group": {
+        "$type": "color",
+        "$value": "color-mix(in srgb, {color.neutral.600} 60%, transparent)"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.red.400}"
+      },
+      "control": {
+        "$type": "color",
+        "$value": "{color.neutral.700}"
+      },
+      "control-hover": {
+        "$type": "color",
+        "$value": "{color.neutral.500}"
+      },
+      "separator": {
+        "$type": "color",
+        "$value": "{color.neutral.800}"
+      }
     },
     "selection": {
-      "range": { "$type": "color", "$value": "{color.accent.950}" },
-      "range-edge": { "$type": "color", "$value": "{color.accent.800}" }
+      "range": {
+        "$type": "color",
+        "$value": "{color.accent.950}"
+      },
+      "range-edge": {
+        "$type": "color",
+        "$value": "{color.accent.800}"
+      }
     },
     "action": {
       "primary": {
-        "fg-disabled": { "$type": "color", "$value": "{color.neutral.500}" }
+        "fg-disabled": {
+          "$type": "color",
+          "$value": "{color.neutral.500}"
+        }
       },
       "danger": {
-        "fg-disabled": { "$type": "color", "$value": "{color.red.400}" }
+        "fg-disabled": {
+          "$type": "color",
+          "$value": "{color.red.400}"
+        }
       },
       "tertiary": {
-        "bg": { "$type": "color", "$value": "{color.accent.900}" },
-        "bg-hover": { "$type": "color", "$value": "{color.accent.800}" },
-        "bg-pressed": { "$type": "color", "$value": "{color.accent.700}" },
-        "bg-disabled": { "$type": "color", "$value": "{color.neutral.800}" },
-        "fg": { "$type": "color", "$value": "{color.accent.300}" },
-        "fg-disabled": { "$type": "color", "$value": "{color.neutral.600}" }
+        "bg": {
+          "$type": "color",
+          "$value": "{color.accent.900}"
+        },
+        "bg-hover": {
+          "$type": "color",
+          "$value": "{color.accent.800}"
+        },
+        "bg-pressed": {
+          "$type": "color",
+          "$value": "{color.accent.700}"
+        },
+        "bg-disabled": {
+          "$type": "color",
+          "$value": "{color.neutral.800}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.accent.300}"
+        },
+        "fg-disabled": {
+          "$type": "color",
+          "$value": "{color.neutral.600}"
+        }
       }
     },
     "indicator": {
       "green": {
-        "halo": { "$type": "color", "$value": "color-mix(in srgb, {color.green.800} 40%, transparent)" },
-        "dot": { "$type": "color", "$value": "{color.green.500}" }
+        "halo": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, {color.green.800} 40%, transparent)"
+        },
+        "dot": {
+          "$type": "color",
+          "$value": "{color.green.500}"
+        }
       },
       "yellow": {
-        "halo": { "$type": "color", "$value": "color-mix(in srgb, {color.yellow.800} 40%, transparent)" },
-        "dot": { "$type": "color", "$value": "{color.yellow.500}" }
+        "halo": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, {color.yellow.800} 40%, transparent)"
+        },
+        "dot": {
+          "$type": "color",
+          "$value": "{color.yellow.500}"
+        }
       },
       "indigo": {
-        "halo": { "$type": "color", "$value": "color-mix(in srgb, {color.indigo.800} 40%, transparent)" },
-        "dot": { "$type": "color", "$value": "{color.indigo.500}" }
+        "halo": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, {color.indigo.800} 40%, transparent)"
+        },
+        "dot": {
+          "$type": "color",
+          "$value": "{color.indigo.500}"
+        }
+      }
+    },
+    "control": {
+      "knob": {
+        "$type": "color",
+        "$value": "{color.white}"
+      },
+      "knob-shade": {
+        "$type": "color",
+        "$value": "{color.neutral.100}"
+      }
+    },
+    "field": {
+      "bg-disabled": {
+        "$type": "color",
+        "$value": "color-mix(in srgb, {color.neutral.800} 30%, transparent)"
+      },
+      "icon-disabled": {
+        "$type": "color",
+        "$value": "{color.neutral.600}"
+      },
+      "fg-disabled": {
+        "$type": "color",
+        "$value": "color-mix(in srgb, {color.neutral.500} 40%, transparent)"
+      }
+    },
+    "status": {
+      "info": {
+        "bg": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, {color.blue.800} 50%, transparent)"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.blue.300}"
+        }
+      },
+      "success": {
+        "bg": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, {color.lime.800} 50%, transparent)"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.lime.300}"
+        },
+        "solid": {
+          "$type": "color",
+          "$value": "{color.lime.500}"
+        }
+      },
+      "danger": {
+        "bg": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, {color.rose.800} 50%, transparent)"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.rose.300}"
+        },
+        "solid": {
+          "$type": "color",
+          "$value": "{color.rose.500}"
+        }
+      }
+    },
+    "tag": {
+      "blue": {
+        "bg": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, {color.blue.950} 60%, transparent)"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.blue.300}"
+        }
+      },
+      "cyan": {
+        "bg": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, {color.cyan.950} 60%, transparent)"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.cyan.400}"
+        }
+      },
+      "lime": {
+        "bg": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, {color.lime.950} 60%, transparent)"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.lime.500}"
+        }
+      },
+      "orange": {
+        "bg": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, {color.orange.950} 60%, transparent)"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.orange.500}"
+        }
+      },
+      "purple": {
+        "bg": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, {color.purple.900} 50%, transparent)"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.purple.300}"
+        }
+      },
+      "rose": {
+        "bg": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, {color.rose.950} 60%, transparent)"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.rose.500}"
+        }
+      },
+      "yellow": {
+        "bg": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, {color.yellow.950} 60%, transparent)"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.yellow.500}"
+        }
+      }
+    },
+    "overlay": {
+      "scrim": {
+        "$type": "color",
+        "$value": "color-mix(in srgb, {color.black} 60%, transparent)"
       }
     }
   },
   "gradient": {
     "action": {
       "primary": {
-        "default": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.accent.500} 0%, {color.accent.600} 100%)" },
-        "hover": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.accent.400} 0%, {color.accent.500} 100%)" },
-        "pressed": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.accent.600} 0%, {color.accent.700} 100%)" },
-        "disabled": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.neutral.700} 0%, {color.neutral.800} 100%)" }
+        "default": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.accent.500} 0%, {color.accent.600} 100%)"
+        },
+        "hover": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.accent.400} 0%, {color.accent.500} 100%)"
+        },
+        "pressed": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.accent.600} 0%, {color.accent.700} 100%)"
+        },
+        "disabled": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.neutral.700} 0%, {color.neutral.800} 100%)"
+        }
       },
       "danger": {
-        "default": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.500} 0%, {color.red.600} 100%)" },
-        "hover": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.400} 0%, {color.red.500} 100%)" },
-        "pressed": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.600} 0%, {color.red.700} 100%)" },
-        "disabled": { "$type": "gradient", "$value": "linear-gradient(180deg, {color.red.900} 0%, {color.red.950} 100%)" }
+        "default": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.red.500} 0%, {color.red.600} 100%)"
+        },
+        "hover": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.red.400} 0%, {color.red.500} 100%)"
+        },
+        "pressed": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.red.600} 0%, {color.red.700} 100%)"
+        },
+        "disabled": {
+          "$type": "gradient",
+          "$value": "linear-gradient(180deg, {color.red.900} 0%, {color.red.950} 100%)"
+        }
       }
     }
   },
   "elevation": {
-    "raised": { "$type": "shadow", "$value": "{shadow.xs-strong}" },
-    "overlay": { "$type": "shadow", "$value": "{shadow.dropdown-strong}" }
+    "raised": {
+      "$type": "shadow",
+      "$value": "{shadow.xs-strong}"
+    },
+    "overlay": {
+      "$type": "shadow",
+      "$value": "{shadow.dropdown-strong}"
+    },
+    "hairline": {
+      "$type": "shadow",
+      "$value": "{shadow.2xs-strong}"
+    },
+    "control-checked": {
+      "$type": "shadow",
+      "$value": "inset 0 2px 0 0 rgb(255 255 255 / 0.25), inset 0 0 0 1px {color.accent.500}"
+    }
   }
 }

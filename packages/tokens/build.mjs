@@ -36,7 +36,8 @@ const SELECTORS = { light: ':root, [data-theme="light"]', dark: '[data-theme="da
 for (const theme of ["light", "dark"]) {
   await build({
     include: [...PRIMITIVES, ...BASE],
-    source: [`src/semantic/theme.${theme}.json`],
+    // Semantic theme tokens plus component-scoped tokens (namespaced `component.*`).
+    source: [`src/semantic/theme.${theme}.json`, `src/component/theme.${theme}.json`],
     // Theme files intentionally reference primitives that live in base.css,
     // so the "filtered out references" warning is expected here.
     log: { warnings: "disabled", verbosity: "silent" },

@@ -5,7 +5,13 @@ A token-driven React design system, set up according to the blueprint in
 for visual parity with [BoardUI](https://www.boardui.com/components):
 
 - **Select** and **Date Range Picker**, plus the single-date **Date Picker** and the **Button** they depend on.
-- **Agent Progress**: animated multi-step progress, adapted from BoardUI Pro under the owner's license. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+- **All 31 of BoardUI's free base components** (Input, Checkbox, Switch, Tabs, Table, Tooltip, Tree View and more), converted onto the @ds tokens by [tools/boardui-port](tools/boardui-port/README.md).
+- **Agent Progress**: animated multi-step progress, adapted from BoardUI Pro under the owner's license. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). It is not shown in the public showcase.
+
+Browse them at `#/components` in the playground: every card is a live
+preview, and each component has a page with an interactive demo and its
+import line. A docs sidebar lists every page by group, with quick search
+(⌘K / Ctrl K). On small screens it becomes a slide-in drawer.
 
 Measurements are in [docs/components/parity-report.md](docs/components/parity-report.md).
 
