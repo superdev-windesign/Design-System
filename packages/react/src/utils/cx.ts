@@ -15,7 +15,7 @@ export const cx = extendTailwindMerge({
       text: [
         "body-md", "body-md-strong", "body-sm", "body-sm-strong",
         "caption", "caption-strong", "caption-emphasis",
-        "headline-emphasis", "title-sm-strong", "title-sm-emphasis", "micro-emphasis",
+        "headline-emphasis", "title-sm-strong", "title-sm-emphasis", "micro-emphasis", "display-sm",
       ],
       radius: [
         "hairline", "control-xs", "control-sm", "control-md", "item", "tile", "chip", "surface", "overlay", "panel",

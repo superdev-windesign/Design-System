@@ -7,6 +7,11 @@ for visual parity with [BoardUI](https://www.boardui.com/components):
 - **Select** and **Date Range Picker**, plus the single-date **Date Picker** and the **Button** they depend on.
 - **All 31 of BoardUI's free base components** (Input, Checkbox, Switch, Tabs, Table, Tooltip, Tree View and more), converted onto the @ds tokens by [tools/boardui-port](tools/boardui-port/README.md).
 - **Agent Progress**: animated multi-step progress, adapted from BoardUI Pro under the owner's license. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). It is not shown in the public showcase.
+- **Pro tier**, designed for this system rather than ported:
+  - **Command Palette**: Autocomplete + Menu in a modal with a gliding highlight. `CommandMenu` embeds the same list inline.
+  - **Toast**: call `toast.success(…)` from anywhere and mount one `<Toaster />`. Toasts rest as a stack, fan out on hover or focus and swipe away; `toast.promise` swaps a loading toast for the outcome.
+  - **Step Wizard**: steps slide in the direction of travel, validate before moving on, and are announced to screen readers.
+  - **Stat Card**: a rolling odometer number, a trend chip, and a sparkline you can scrub to read each point.
 
 Browse them at `#/components` in the playground: every card is a live
 preview, and each component has a page with an interactive demo and its

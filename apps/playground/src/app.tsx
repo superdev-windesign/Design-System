@@ -10,6 +10,7 @@ import {
   Select,
   SelectItem,
   StatusDot,
+  Toaster,
 } from "@ds/react";
 import { RiAddLine, RiArrowRightLine, RiDeleteBinLine, RiMenuLine } from "@remixicon/react";
 import { ShowcaseDetail, ShowcaseIndex, useHashRoute } from "./showcase/showcase";
@@ -274,6 +275,9 @@ export function App() {
           </Dialog>
         </Modal>
       </ModalOverlay>
+
+      {/* One app-wide toast region; anything can call toast.success(…). */}
+      <Toaster />
 
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="sticky top-0 z-30 flex items-center justify-between gap-3 border-b border-line bg-canvas px-4 py-3 lg:border-none">

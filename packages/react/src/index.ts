@@ -54,6 +54,12 @@ export * from "./components/tooltip/tooltip";
 export * from "./components/tree-view/tree-view";
 export { DirectionProvider, useDirection } from "./foundations/direction";
 
+// Pro tier: original components designed for this system.
+export * from "./components/command-palette/command-palette";
+export * from "./components/toast/toast";
+export * from "./components/step-wizard/step-wizard";
+export * from "./components/stat-card/stat-card";
+
 export { ChevronDownSmall, ChevronLeft16, ChevronRight16, ChevronRightSmall, ChevronSortDown, ChevronUpDownSmall } from "./icons/chevrons";
 export { easing, layoutSpring } from "./motion/tokens";
 export { focusRing, focusRingInset, focusRingNative } from "./recipes/focus-ring";

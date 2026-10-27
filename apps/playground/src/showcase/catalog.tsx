@@ -71,8 +71,19 @@ import {
   TreeView,
   TreeViewItem,
 } from "@ds/react";
+import {
+  CommandPaletteDemo,
+  CommandPalettePreview,
+  StatCardPreview,
+  StatCardsDemo,
+  StepWizardDemo,
+  StepWizardPreview,
+  ToastDemo,
+  ToastPreview,
+} from "./pro-demos";
 
 export type Group =
+  | "Pro"
   | "Actions"
   | "Forms"
   | "Selection"
@@ -83,6 +94,7 @@ export type Group =
   | "Dates";
 
 export const GROUPS: { name: Group; blurb: string }[] = [
+  { name: "Pro", blurb: "Advanced, animated components designed for this system." },
   { name: "Actions", blurb: "Things people press to make something happen." },
   { name: "Forms", blurb: "Collecting text, codes and files." },
   { name: "Selection", blurb: "Choosing values, options and ranges." },
@@ -184,6 +196,48 @@ function SlideCard({ title, body }: { title: string; body: string }) {
 // ─── Catalog ───────────────────────────────────────────────────────────────
 
 export const CATALOG: CatalogEntry[] = [
+  // Pro
+  {
+    slug: "command-palette",
+    isNew: true,
+    name: "Command Palette",
+    group: "Pro",
+    summary: "Search and run any command from the keyboard, in a modal or inline.",
+    imports: ["CommandPalette", "CommandMenu", "CommandGroup", "CommandItem"],
+    preview: () => <CommandPalettePreview />,
+    demo: () => <CommandPaletteDemo />,
+  },
+  {
+    slug: "toast",
+    isNew: true,
+    name: "Toast",
+    group: "Pro",
+    summary: "Queued notifications that stack, fan out on hover and swipe away.",
+    imports: ["Toaster", "toast"],
+    preview: () => <ToastPreview />,
+    demo: () => <ToastDemo />,
+  },
+  {
+    slug: "step-wizard",
+    isNew: true,
+    name: "Step Wizard",
+    group: "Pro",
+    summary: "Multi-step form with a progress rail, validation and sliding steps.",
+    imports: ["StepWizard", "WizardStep"],
+    preview: () => <StepWizardPreview />,
+    demo: () => <StepWizardDemo />,
+  },
+  {
+    slug: "stat-card",
+    isNew: true,
+    name: "Stat Card",
+    group: "Pro",
+    summary: "A KPI with a rolling number, trend chip and a sparkline you can scrub.",
+    imports: ["StatCard", "AnimatedNumber", "Sparkline"],
+    preview: () => <StatCardPreview />,
+    demo: () => <StatCardsDemo />,
+  },
+
   // Actions
   {
     slug: "button",

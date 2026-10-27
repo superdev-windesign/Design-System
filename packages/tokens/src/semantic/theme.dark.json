@@ -288,6 +288,11 @@
         "solid": {
           "$type": "color",
           "$value": "{color.lime.500}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.lime.300}",
+          "$description": "Status-colored text and small icons on surfaces and on the matching status background"
         }
       },
       "danger": {
@@ -302,6 +307,11 @@
         "solid": {
           "$type": "color",
           "$value": "{color.rose.500}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.rose.300}",
+          "$description": "Status-colored text and small icons on surfaces and on the matching status background"
         }
       }
     },

@@ -49,6 +49,34 @@
       "fg": "color.border.default", "bg": "color.bg.surface", "min": 3,
       "usage": "Trigger and input boundary",
       "knownFailures": ["light", "dark"], "note": "BoardUI parity: hairline border; the control is also identified by its text, chevron and shadow."
+    },
+    {
+      "fg": "color.status.success-text", "bg": "color.status.success-bg", "min": 4.5,
+      "usage": "Stat card trend chip, good change"
+    },
+    {
+      "fg": "color.status.danger-text", "bg": "color.status.danger-bg", "min": 4.5,
+      "usage": "Stat card trend chip, bad change"
+    },
+    {
+      "fg": "color.status.danger-text", "bg": "color.bg.surface", "min": 4.5,
+      "usage": "Step wizard validation message"
+    },
+    {
+      "fg": "color.status.success-text", "bg": "color.bg.surface", "min": 3,
+      "usage": "Toast success icon"
+    },
+    {
+      "fg": "color.status.danger-solid", "bg": "color.bg.surface", "min": 3,
+      "usage": "Toast error icon"
+    },
+    {
+      "fg": "color.status.info-fg", "bg": "color.bg.surface", "min": 3,
+      "usage": "Toast info icon"
+    },
+    {
+      "fg": "color.accent.500", "bg": "color.bg.surface", "min": 3,
+      "usage": "Step wizard current-step ring and progress fill, sparkline stroke"
     }
   ]
 }

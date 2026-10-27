@@ -165,6 +165,8 @@
   --color-status-danger: var(--ds-color-status-danger-bg);
   --color-status-danger-fg: var(--ds-color-status-danger-fg);
   --color-status-danger-solid: var(--ds-color-status-danger-solid);
+  --color-status-success-text: var(--ds-color-status-success-text);
+  --color-status-danger-text: var(--ds-color-status-danger-text);
 
   /* Tags (categorical, by hue) */
   --color-tag-blue: var(--ds-color-tag-blue-bg);
@@ -275,6 +277,10 @@
   --text-micro-emphasis--line-height: var(--ds-text-micro-emphasis-line-height);
   --text-micro-emphasis--font-weight: var(--ds-text-micro-emphasis-weight);
   --text-micro-emphasis--letter-spacing: var(--ds-text-micro-emphasis-tracking);
+  --text-display-sm: var(--ds-text-display-sm-size);
+  --text-display-sm--line-height: var(--ds-text-display-sm-line-height);
+  --text-display-sm--font-weight: var(--ds-text-display-sm-weight);
+  --text-display-sm--letter-spacing: var(--ds-text-display-sm-tracking);
 
   --blur-enter-strong: var(--ds-motion-blur-enter-strong);
 

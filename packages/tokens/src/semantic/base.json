@@ -290,6 +290,25 @@
         "$type": "dimension",
         "$value": "{font.tracking.0}"
       }
+    },
+    "display-sm": {
+      "$description": "Headline figures: stat values, KPI totals",
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.28}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.34}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.semibold}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.display}"
+      }
     }
   },
   "motion": {
