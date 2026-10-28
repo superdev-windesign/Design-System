@@ -392,6 +392,104 @@
         "$type": "color",
         "$value": "color-mix(in srgb, {color.black} 60%, transparent)"
       }
+    },
+    "chart": {
+      "1": {
+        "$type": "color",
+        "$value": "{color.teal.400}"
+      },
+      "2": {
+        "$type": "color",
+        "$value": "{color.lime.400}"
+      },
+      "3": {
+        "$type": "color",
+        "$value": "{color.pink.400}"
+      },
+      "4": {
+        "$type": "color",
+        "$value": "{color.sky.400}"
+      },
+      "5": {
+        "$type": "color",
+        "$value": "{color.purple.400}"
+      },
+      "6": {
+        "$type": "color",
+        "$value": "{color.blue.400}"
+      },
+      "7": {
+        "$type": "color",
+        "$value": "{color.emerald.400}"
+      },
+      "8": {
+        "$type": "color",
+        "$value": "{color.yellow.400}"
+      },
+      "9": {
+        "$type": "color",
+        "$value": "{color.indigo.400}"
+      },
+      "track": {
+        "$type": "color",
+        "$value": "{color.neutral.800}",
+        "$description": "Unfilled part of bars, rings and meters"
+      },
+      "cursor": {
+        "$type": "color",
+        "$value": "{color.neutral.700}",
+        "$description": "Hover cursor band and guide lines"
+      },
+      "neutral": {
+        "$type": "color",
+        "$value": "{color.neutral.800}",
+        "$description": "De-emphasized series, e.g. last period"
+      },
+      "1-active": {
+        "$type": "color",
+        "$value": "{color.teal.500}",
+        "$description": "Hover emphasis for series 1"
+      },
+      "2-active": {
+        "$type": "color",
+        "$value": "{color.lime.500}",
+        "$description": "Hover emphasis for series 2"
+      },
+      "3-active": {
+        "$type": "color",
+        "$value": "{color.pink.500}",
+        "$description": "Hover emphasis for series 3"
+      },
+      "4-active": {
+        "$type": "color",
+        "$value": "{color.sky.500}",
+        "$description": "Hover emphasis for series 4"
+      },
+      "5-active": {
+        "$type": "color",
+        "$value": "{color.purple.500}",
+        "$description": "Hover emphasis for series 5"
+      },
+      "6-active": {
+        "$type": "color",
+        "$value": "{color.blue.500}",
+        "$description": "Hover emphasis for series 6"
+      },
+      "7-active": {
+        "$type": "color",
+        "$value": "{color.emerald.500}",
+        "$description": "Hover emphasis for series 7"
+      },
+      "8-active": {
+        "$type": "color",
+        "$value": "{color.yellow.500}",
+        "$description": "Hover emphasis for series 8"
+      },
+      "9-active": {
+        "$type": "color",
+        "$value": "{color.indigo.500}",
+        "$description": "Hover emphasis for series 9"
+      }
     }
   },
   "gradient": {

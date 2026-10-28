@@ -23,6 +23,7 @@ Re-run it after BoardUI updates; it rewrites the same files every time.
 | Converts box-shadow focus rings to the system outline | `focus-visible:ring-2 …ring-focus` → `focus-visible:outline-2 …outline-focus` |
 | Adapts `<Button>` props to the React Aria API | `onClick` → `onPress`, `disabled` → `isDisabled`, `size="small"` → `"sm"` |
 | Applies exact patches (`PATCHES`) | strict-mode guards; fictional demo data instead of a real person's contact; a generic icon instead of a third-party logo |
+| Applies strict-mode fixes (`STRICT_PATCHES`) | `rows[i].push(x)` → `rows[i]!.push(x)` under `noUncheckedIndexedAccess` |
 | Adds an attribution header to every file | `// Adapted from BoardUI (MIT) — … See THIRD_PARTY_NOTICES.md.` |
 
 Anything it can't map is written to `report.txt`. Two entries remain on
@@ -34,6 +35,6 @@ color at runtime, and the tooltip computes its caret shadow inline.
 - `components/base/buttons/button.tsx`, `select`, `date-picker` (range and
   single), `status-dot`, `dropdown/menu-styles`: hand-built earlier and kept.
 - `components/foundations/brand/logo.tsx`: BoardUI's own brand.
-- Blocks, charts and templates: not in this run. The free ones are in the
-  same MIT repository and can be added to `FILES` in `mapping.mjs`.
+- The Chat Starter template: it's built on Next.js routing, a server route and the
+  Vercel AI SDK. `@ds/react` has its own `ChatStarter` on `useChatSession` instead.
 - Everything in BoardUI Pro.

@@ -81,8 +81,70 @@ import {
   ToastDemo,
   ToastPreview,
 } from "./pro-demos";
+import {
+  ComposerPanelDemo,
+  ComposerPanelPreview,
+  ComposerAttachmentsDemo,
+  ComposerAttachmentsPreview,
+  WebSearchDemo,
+  WebSearchPreview,
+  TaskListDemo,
+  TaskListPreview,
+  AgentLimitsDemo,
+  AgentLimitsPreview,
+  QuestionnaireDemo,
+  QuestionnairePreview,
+  AgentCreatorDemo,
+  AgentCreatorPreview,
+  CalendarDemo,
+  CalendarPreview,
+} from "./agent-blocks-demos";
+import { ColorFoundation, ColorPreview, TypographyFoundation, TypographyPreview } from "./foundations";
+import { TEMPLATES, TemplateFrame, TemplatePreview } from "./templates-demos";
+import {
+  AgentThinkingDemo,
+  AuthCardDemo,
+  ComposerLoaderDemo,
+  ComposerLoaderPreview,
+  DataGridDemo,
+  DataGridPreview,
+  DataTableDemo,
+  DataTablePreview,
+  Fit,
+  NotificationCenterPreview,
+  RevenueChartDemo,
+  RevenueChartPreview,
+  SettingsModalDemo,
+  SettingsPreview,
+  SidebarDemo,
+  SidebarPreview,
+  StatCardsBlockDemo,
+  StatCardsPreview,
+} from "./blocks-demos";
+import {
+  AuthCard,
+  NotificationCenterDemo,
+  ActivityRingsCard,
+  AreaChartCard,
+  BarListCard,
+  ComboChartCard,
+  ContributionsCard,
+  EarningsChartCard,
+  FunnelChartCard,
+  HeatmapChartCard,
+  LineChartCard,
+  MostActiveDaysCard,
+  RadarChartCard,
+  RadialChartCard,
+  SankeyChartCard,
+  ScatterChartCard,
+  SleepScoreCard,
+  StageBarsCard,
+  StepsChartCard,
+} from "@ds/react";
 
 export type Group =
+  | "Foundations"
   | "Pro"
   | "Actions"
   | "Forms"
@@ -91,9 +153,13 @@ export type Group =
   | "Feedback"
   | "Overlays"
   | "Data display"
-  | "Dates";
+  | "Dates"
+  | "Blocks"
+  | "Charts"
+  | "Templates";
 
 export const GROUPS: { name: Group; blurb: string }[] = [
+  { name: "Foundations", blurb: "The colour and type tokens everything is built on." },
   { name: "Pro", blurb: "Advanced, animated components designed for this system." },
   { name: "Actions", blurb: "Things people press to make something happen." },
   { name: "Forms", blurb: "Collecting text, codes and files." },
@@ -103,6 +169,9 @@ export const GROUPS: { name: Group; blurb: string }[] = [
   { name: "Overlays", blurb: "Content that floats above the page." },
   { name: "Data display", blurb: "Showing people, labels and records." },
   { name: "Dates", blurb: "Picking days, ranges and meeting slots." },
+  { name: "Blocks", blurb: "Larger assemblies, ready to drop into a screen." },
+  { name: "Charts", blurb: "Data cards built on the chart palette." },
+  { name: "Templates", blurb: "Whole screens assembled from the blocks and charts." },
 ];
 
 export interface CatalogEntry {
@@ -196,6 +265,28 @@ function SlideCard({ title, body }: { title: string; body: string }) {
 // ─── Catalog ───────────────────────────────────────────────────────────────
 
 export const CATALOG: CatalogEntry[] = [
+  // Foundations
+  {
+    slug: "color",
+    isNew: true,
+    name: "Color",
+    group: "Foundations",
+    summary: "Semantic colour tokens by role, component tokens and the primitive ramps, with live values.",
+    imports: [],
+    preview: () => <ColorPreview />,
+    demo: () => <ColorFoundation />,
+  },
+  {
+    slug: "typography",
+    isNew: true,
+    name: "Typography",
+    group: "Foundations",
+    summary: "Font families and every named text style, largest first, with sizes from the tokens.",
+    imports: [],
+    preview: () => <TypographyPreview />,
+    demo: () => <TypographyFoundation />,
+  },
+
   // Pro
   {
     slug: "command-palette",
@@ -776,6 +867,529 @@ export const CATALOG: CatalogEntry[] = [
     summary: "Pick a day and a time slot for a meeting.",
     imports: ["MeetingScheduler"],
     preview: () => <MeetingScheduler />,
+  },
+  // Blocks (ported from BoardUI's free MIT blocks)
+  {
+    slug: "agent-thinking",
+    isNew: true,
+    name: "Agent Thinking",
+    group: "Blocks",
+    summary: "Four animated indicators for an agent that's working, with an elapsed timer.",
+    imports: ["AgentThinking"],
+    preview: () => <AgentThinkingDemo timers={false} />,
+    demo: () => <AgentThinkingDemo />,
+  },
+  {
+    slug: "composer-loader",
+    isNew: true,
+    name: "Composer Loader",
+    group: "Blocks",
+    summary: "A light band that orbits a chat composer while the agent works.",
+    imports: ["ComposerLoader"],
+    preview: () => <ComposerLoaderPreview />,
+    demo: () => <ComposerLoaderDemo />,
+  },
+  {
+    slug: "auth-card",
+    isNew: true,
+    name: "Auth Card",
+    group: "Blocks",
+    summary: "Sign-in, sign-up and code verification with social providers.",
+    imports: ["AuthCard"],
+    preview: () => (
+      <Fit width={400}>
+        <AuthCard layout="inline" providers={["google", "apple", "github"]} headingLevel={3} />
+      </Fit>
+    ),
+    demo: () => <AuthCardDemo />,
+  },
+  {
+    slug: "data-grid",
+    isNew: true,
+    name: "Data Grid",
+    group: "Blocks",
+    summary: "Editable spreadsheet with selection, filters, copy-paste and live summaries.",
+    imports: ["DataGrid", "DataGridExample"],
+    preview: () => <DataGridPreview />,
+    demo: () => <DataGridDemo />,
+  },
+  {
+    slug: "data-table",
+    name: "Data Table",
+    group: "Blocks",
+    summary: "Search, filters, selection, sorting and pagination wired up.",
+    imports: ["DataTableExample"],
+    preview: () => <DataTablePreview />,
+    demo: () => <DataTableDemo />,
+  },
+  {
+    slug: "notification-center",
+    name: "Notification Center",
+    group: "Blocks",
+    summary: "Grouped activity inbox with tabs, unread state and actions.",
+    imports: ["NotificationCenter"],
+    preview: () => <NotificationCenterPreview />,
+    demo: () => <NotificationCenterDemo />,
+  },
+  {
+    slug: "settings-modal",
+    name: "Settings Modal",
+    group: "Blocks",
+    summary: "Multi-page settings in a controlled dialog.",
+    imports: ["SettingsModal"],
+    preview: () => <SettingsPreview />,
+    demo: () => <SettingsModalDemo />,
+  },
+  {
+    slug: "sidebar",
+    name: "Sidebar",
+    group: "Blocks",
+    summary: "Floating app navigation with search, teams menu and collapse.",
+    imports: ["DashboardSidebar"],
+    preview: () => <SidebarPreview />,
+    demo: () => <SidebarDemo />,
+  },
+  {
+    slug: "stat-cards",
+    isNew: true,
+    name: "Stat Cards",
+    group: "Blocks",
+    summary: "KPI cards with delta chips or a footer band.",
+    imports: ["StatCards"],
+    preview: () => <StatCardsPreview />,
+    demo: () => <StatCardsBlockDemo />,
+  },
+  {
+    slug: "composer-panel",
+    isNew: true,
+    name: "Composer Panel",
+    group: "Blocks",
+    summary: "Two-row chat input with permission modes, model choice and send/stop.",
+    imports: ["ComposerPanel"],
+    preview: () => <ComposerPanelPreview />,
+    demo: () => <ComposerPanelDemo />,
+  },
+  {
+    slug: "composer-attachments",
+    isNew: true,
+    name: "Composer Attachments",
+    group: "Blocks",
+    summary: "File tiles that slide in above the prompt with upload progress.",
+    imports: ["ComposerAttachments"],
+    preview: () => <ComposerAttachmentsPreview />,
+    demo: () => <ComposerAttachmentsDemo />,
+  },
+  {
+    slug: "web-search",
+    isNew: true,
+    name: "Web Search",
+    group: "Blocks",
+    summary: "The research trail behind an answer: searches and the sources opened.",
+    imports: ["WebSearch"],
+    preview: () => <WebSearchPreview />,
+    demo: () => <WebSearchDemo />,
+  },
+  {
+    slug: "task-list",
+    isNew: true,
+    name: "Task List",
+    group: "Blocks",
+    summary: "An agent's work as a log that grows step by step while it runs.",
+    imports: ["TaskList"],
+    preview: () => <TaskListPreview />,
+    demo: () => <TaskListDemo />,
+  },
+  {
+    slug: "agent-limits",
+    isNew: true,
+    name: "Agent Limits",
+    group: "Blocks",
+    summary: "Context window by what fills it, plus plan quotas with reset times.",
+    imports: ["AgentLimits"],
+    preview: () => <AgentLimitsPreview />,
+    demo: () => <AgentLimitsDemo />,
+  },
+  {
+    slug: "questionnaire",
+    isNew: true,
+    name: "Questionnaire",
+    group: "Blocks",
+    summary: "Questions before planning, one at a time, with a review step.",
+    imports: ["Questionnaire"],
+    preview: () => <QuestionnairePreview />,
+    demo: () => <QuestionnaireDemo />,
+  },
+  {
+    slug: "agent-creator",
+    isNew: true,
+    name: "Agent Creator",
+    group: "Blocks",
+    summary: "Name, job, animated avatar and voice, with a live preview.",
+    imports: ["AgentCreator"],
+    preview: () => <AgentCreatorPreview />,
+    demo: () => <AgentCreatorDemo />,
+  },
+  {
+    slug: "calendar",
+    isNew: true,
+    name: "Calendar",
+    group: "Blocks",
+    summary: "Full month view with event pills and the selected day's agenda.",
+    imports: ["MonthCalendar"],
+    preview: () => <CalendarPreview />,
+    demo: () => <CalendarDemo />,
+  },
+
+  // Charts
+  {
+    slug: "revenue-chart",
+    isNew: true,
+    name: "Revenue Chart",
+    group: "Charts",
+    summary: "This year against last: an area over a dashed line, plus an orders bar card.",
+    imports: ["RevenueChartCard", "OrdersChartCard"],
+    preview: () => <RevenueChartPreview />,
+    demo: () => <RevenueChartDemo />,
+  },
+  {
+    slug: "activity-rings",
+    isNew: true,
+    name: "Activity Rings",
+    group: "Charts",
+    summary: "Concentric goal rings that draw in; hover a goal to spotlight it.",
+    imports: ["ActivityRingsCard"],
+    preview: () => (
+      <Fit width={480} center>
+        <ActivityRingsCard />
+      </Fit>
+    ),
+    demo: () => <ActivityRingsCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "area-chart",
+    isNew: true,
+    name: "Area Chart",
+    group: "Charts",
+    summary: "Several series over time: stacked, overlapping or as a 100% share.",
+    imports: ["AreaChartCard"],
+    preview: () => (
+      <Fit width={560} center>
+        <AreaChartCard />
+      </Fit>
+    ),
+    demo: () => <AreaChartCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "bar-list",
+    isNew: true,
+    name: "Bar List",
+    group: "Charts",
+    summary: "Ranked rows with share bars, with tabs for each breakdown.",
+    imports: ["BarListCard"],
+    preview: () => (
+      <Fit width={480} center>
+        <BarListCard />
+      </Fit>
+    ),
+    demo: () => <BarListCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "combo-chart",
+    isNew: true,
+    name: "Combo Chart",
+    group: "Charts",
+    summary: "Bars and a line on independent axes over one time scale.",
+    imports: ["ComboChartCard"],
+    preview: () => (
+      <Fit width={560} center>
+        <ComboChartCard />
+      </Fit>
+    ),
+    demo: () => <ComboChartCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "contributions",
+    isNew: true,
+    name: "Contributions",
+    group: "Charts",
+    summary: "Daily activity as a calendar grid, shaded in five steps.",
+    imports: ["ContributionsCard"],
+    preview: () => (
+      <Fit width={560} center>
+        <ContributionsCard />
+      </Fit>
+    ),
+    demo: () => <ContributionsCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "earnings-chart",
+    isNew: true,
+    name: "Earnings Chart",
+    group: "Charts",
+    summary: "Monthly bars paired with the same month last year.",
+    imports: ["EarningsChartCard"],
+    preview: () => (
+      <Fit width={560} center>
+        <EarningsChartCard />
+      </Fit>
+    ),
+    demo: () => <EarningsChartCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "funnel-chart",
+    isNew: true,
+    name: "Funnel Chart",
+    group: "Charts",
+    summary: "Stages joined by tapered bands, with step conversion pills.",
+    imports: ["FunnelChartCard"],
+    preview: () => (
+      <Fit width={560} center>
+        <FunnelChartCard />
+      </Fit>
+    ),
+    demo: () => <FunnelChartCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "heatmap-chart",
+    isNew: true,
+    name: "Heatmap Chart",
+    group: "Charts",
+    summary: "Weekday by time-of-day grid on a theme-following ramp.",
+    imports: ["HeatmapChartCard"],
+    preview: () => (
+      <Fit width={560} center>
+        <HeatmapChartCard />
+      </Fit>
+    ),
+    demo: () => <HeatmapChartCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "line-chart",
+    isNew: true,
+    name: "Line Chart",
+    group: "Charts",
+    summary: "Curved or sharp line over a soft area, with a target line.",
+    imports: ["LineChartCard"],
+    preview: () => (
+      <Fit width={560} center>
+        <LineChartCard />
+      </Fit>
+    ),
+    demo: () => <LineChartCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "most-active-days",
+    isNew: true,
+    name: "Most Active Days",
+    group: "Charts",
+    summary: "Weekday bars with the busiest day highlighted.",
+    imports: ["MostActiveDaysCard"],
+    preview: () => (
+      <Fit width={480} center>
+        <MostActiveDaysCard />
+      </Fit>
+    ),
+    demo: () => <MostActiveDaysCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "radar-chart",
+    isNew: true,
+    name: "Radar Chart",
+    group: "Charts",
+    summary: "Two profiles on shared axes, filled or as outlines.",
+    imports: ["RadarChartCard"],
+    preview: () => (
+      <Fit width={480} center>
+        <RadarChartCard />
+      </Fit>
+    ),
+    demo: () => <RadarChartCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "radial-chart",
+    isNew: true,
+    name: "Radial Chart",
+    group: "Charts",
+    summary: "Quota parts as concentric rings or one half gauge.",
+    imports: ["RadialChartCard"],
+    preview: () => (
+      <Fit width={480} center>
+        <RadialChartCard />
+      </Fit>
+    ),
+    demo: () => <RadialChartCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "sankey-chart",
+    isNew: true,
+    name: "Sankey Chart",
+    group: "Charts",
+    summary: "How a total splits into parts, with tinted links and shares.",
+    imports: ["SankeyChartCard"],
+    preview: () => (
+      <Fit width={560} center>
+        <SankeyChartCard />
+      </Fit>
+    ),
+    demo: () => <SankeyChartCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "scatter-chart",
+    isNew: true,
+    name: "Scatter Chart",
+    group: "Charts",
+    summary: "Correlation in two groups; bubbles size by a third measure.",
+    imports: ["ScatterChartCard"],
+    preview: () => (
+      <Fit width={560} center>
+        <ScatterChartCard />
+      </Fit>
+    ),
+    demo: () => <ScatterChartCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "sleep-score",
+    isNew: true,
+    name: "Sleep Score",
+    group: "Charts",
+    summary: "A score on an open arc gauge, with the factors behind it.",
+    imports: ["SleepScoreCard"],
+    preview: () => (
+      <Fit width={480} center>
+        <SleepScoreCard />
+      </Fit>
+    ),
+    demo: () => <SleepScoreCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "stage-bars",
+    isNew: true,
+    name: "Stage Bars",
+    group: "Charts",
+    summary: "Pipeline stages as rounded pills with pass rates.",
+    imports: ["StageBarsCard"],
+    preview: () => (
+      <Fit width={480} center>
+        <StageBarsCard />
+      </Fit>
+    ),
+    demo: () => <StageBarsCard className="w-full max-w-2xl" />,
+  },
+  {
+    slug: "steps-chart",
+    isNew: true,
+    name: "Steps Chart",
+    group: "Charts",
+    summary: "Daily bars against a dashed goal; goal days light up.",
+    imports: ["StepsChartCard"],
+    preview: () => (
+      <Fit width={560} center>
+        <StepsChartCard />
+      </Fit>
+    ),
+    demo: () => <StepsChartCard className="w-full max-w-2xl" />,
+  },
+
+  // Templates
+  {
+    slug: "chat-starter",
+    isNew: true,
+    name: "Chat Starter",
+    group: "Templates",
+    summary: "A complete chat app to put your own model behind; demo replies until you connect one.",
+    imports: ["ChatStarter"],
+    preview: () => <TemplatePreview template={TEMPLATES.ChatStarter} />,
+    demo: () => <TemplateFrame template={TEMPLATES.ChatStarter} />,
+  },
+  {
+    slug: "ai-chat",
+    isNew: true,
+    name: "AI Chat",
+    group: "Templates",
+    summary: "Chat with a code panel: code in replies opens as files beside the thread.",
+    imports: ["AiChat"],
+    preview: () => <TemplatePreview template={TEMPLATES.AiChat} />,
+    demo: () => <TemplateFrame template={TEMPLATES.AiChat} />,
+  },
+  {
+    slug: "multi-agent-chat",
+    isNew: true,
+    name: "Multi-agent Chat",
+    group: "Templates",
+    summary: "A team of agents with animated avatars; talk to one or the team, and edit avatars live.",
+    imports: ["MultiAgentChat"],
+    preview: () => <TemplatePreview template={TEMPLATES.MultiAgentChat} />,
+    demo: () => <TemplateFrame template={TEMPLATES.MultiAgentChat} />,
+  },
+  {
+    slug: "ai-image-generation",
+    isNew: true,
+    name: "AI Image Generation",
+    group: "Templates",
+    summary: "Prompts resolving into four variations, with a gallery and large preview.",
+    imports: ["AiImageGeneration"],
+    preview: () => <TemplatePreview template={TEMPLATES.AiImageGeneration} />,
+    demo: () => <TemplateFrame template={TEMPLATES.AiImageGeneration} />,
+  },
+  {
+    slug: "ai-profile",
+    isNew: true,
+    name: "AI Profile",
+    group: "Templates",
+    summary: "One person's year with AI tools: activity, strengths, busiest days and favourite tools.",
+    imports: ["AiProfile"],
+    preview: () => <TemplatePreview template={TEMPLATES.AiProfile} />,
+    demo: () => <TemplateFrame template={TEMPLATES.AiProfile} />,
+  },
+  {
+    slug: "home-dashboard",
+    isNew: true,
+    name: "Home Dashboard",
+    group: "Templates",
+    summary: "Sidebar, KPIs, revenue against last year, orders and the customers table.",
+    imports: ["HomeDashboard"],
+    preview: () => <TemplatePreview template={TEMPLATES.HomeDashboard} />,
+    demo: () => <TemplateFrame template={TEMPLATES.HomeDashboard} />,
+  },
+  {
+    slug: "finance-dashboard",
+    isNew: true,
+    name: "Finance Dashboard",
+    group: "Templates",
+    summary: "Balance and spending trends, cash flow as a Sankey, budget rings and transactions.",
+    imports: ["FinanceDashboard"],
+    preview: () => <TemplatePreview template={TEMPLATES.FinanceDashboard} />,
+    demo: () => <TemplateFrame template={TEMPLATES.FinanceDashboard} />,
+  },
+  {
+    slug: "marketing-dashboard",
+    isNew: true,
+    name: "Marketing Dashboard",
+    group: "Templates",
+    summary: "Spend and return, the acquisition funnel, channel traffic, lead stages and campaigns.",
+    imports: ["MarketingDashboard"],
+    preview: () => <TemplatePreview template={TEMPLATES.MarketingDashboard} />,
+    demo: () => <TemplateFrame template={TEMPLATES.MarketingDashboard} />,
+  },
+  {
+    slug: "medical-profile",
+    isNew: true,
+    name: "Medical Profile",
+    group: "Templates",
+    summary: "A fictional patient overview: vitals with trends, sleep, activity, alerts and medication.",
+    imports: ["MedicalProfile"],
+    preview: () => <TemplatePreview template={TEMPLATES.MedicalProfile} />,
+    demo: () => <TemplateFrame template={TEMPLATES.MedicalProfile} />,
+  },
+  {
+    slug: "project-board",
+    isNew: true,
+    name: "Project Board",
+    group: "Templates",
+    summary: "A sprint as a kanban board with a ticket panel, agent token usage and comments.",
+    imports: ["ProjectBoard"],
+    preview: () => <TemplatePreview template={TEMPLATES.ProjectBoard} />,
+    demo: () => <TemplateFrame template={TEMPLATES.ProjectBoard} />,
   },
 ];
 

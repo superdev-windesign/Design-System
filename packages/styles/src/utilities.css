@@ -149,3 +149,98 @@
     display: none;
   }
 }
+
+/* A swapped figure (count-up headline, hovered value) eases in rather than snapping. */
+@keyframes ds-number-fade {
+  from {
+    opacity: 0.35;
+  }
+}
+
+@utility animate-number-fade {
+  animation: ds-number-fade var(--ds-motion-duration-moderate) var(--ds-motion-easing-enter);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* List rows that enter and leave in place (Settings → Storage). The wrapper's
+   grid track grows from 0fr while the content slides out from under the row
+   above on the same clock, and fades in on a shorter one. Exits reverse it. */
+@keyframes ds-row-grow {
+  from {
+    grid-template-rows: 0fr;
+  }
+}
+
+@keyframes ds-row-collapse {
+  to {
+    grid-template-rows: 0fr;
+  }
+}
+
+@keyframes ds-row-slide-in {
+  from {
+    translate: 0 -100%;
+    opacity: 0;
+  }
+}
+
+@keyframes ds-row-slide-out {
+  to {
+    translate: 0 -100%;
+    opacity: 0;
+  }
+}
+
+@utility animate-row-grow-in {
+  animation: ds-row-grow var(--ds-motion-duration-row-enter) var(--ds-motion-easing-enter);
+}
+
+@utility animate-row-slide-in {
+  animation: ds-row-slide-in var(--ds-motion-duration-row-enter) var(--ds-motion-easing-enter);
+}
+
+@utility animate-row-collapse-out {
+  animation: ds-row-collapse var(--ds-motion-duration-row-exit) var(--ds-motion-easing-standard) forwards;
+}
+
+@utility animate-row-slide-out {
+  animation: ds-row-slide-out var(--ds-motion-duration-row-exit) var(--ds-motion-easing-standard) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-row-grow-in,
+  .animate-row-slide-in,
+  .animate-row-collapse-out,
+  .animate-row-slide-out {
+    animation-duration: 1ms;
+  }
+}
+
+/* Charts (recharts). Plot coordinates are physical, so the SVG keeps LTR order
+   inside RTL pages while headers and legends around it still mirror. Its
+   keyboard layer gets the system focus outline instead of the browser's box. */
+.recharts-wrapper {
+  direction: ltr;
+}
+
+.recharts-wrapper :focus:not(:focus-visible),
+.recharts-wrapper:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.recharts-wrapper :focus-visible,
+.recharts-wrapper:focus-visible {
+  outline: 2px solid var(--ds-color-border-focus);
+  outline-offset: 2px;
+}
+
+/* Axis and polar tick labels: caption size, secondary text for readable contrast. */
+.recharts-cartesian-axis-tick-value,
+.recharts-polar-angle-axis-tick-value,
+.recharts-polar-radius-axis-tick-value {
+  font-size: var(--ds-text-caption-size);
+  fill: var(--ds-color-text-secondary);
+}

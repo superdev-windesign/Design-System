@@ -168,6 +168,29 @@
   --color-status-success-text: var(--ds-color-status-success-text);
   --color-status-danger-text: var(--ds-color-status-danger-text);
 
+  /* Charts: categorical series (with hover shades), track, cursor, neutral */
+  --color-chart-track: var(--ds-color-chart-track);
+  --color-chart-cursor: var(--ds-color-chart-cursor);
+  --color-chart-neutral: var(--ds-color-chart-neutral);
+  --color-chart-1: var(--ds-color-chart-1);
+  --color-chart-1-active: var(--ds-color-chart-1-active);
+  --color-chart-2: var(--ds-color-chart-2);
+  --color-chart-2-active: var(--ds-color-chart-2-active);
+  --color-chart-3: var(--ds-color-chart-3);
+  --color-chart-3-active: var(--ds-color-chart-3-active);
+  --color-chart-4: var(--ds-color-chart-4);
+  --color-chart-4-active: var(--ds-color-chart-4-active);
+  --color-chart-5: var(--ds-color-chart-5);
+  --color-chart-5-active: var(--ds-color-chart-5-active);
+  --color-chart-6: var(--ds-color-chart-6);
+  --color-chart-6-active: var(--ds-color-chart-6-active);
+  --color-chart-7: var(--ds-color-chart-7);
+  --color-chart-7-active: var(--ds-color-chart-7-active);
+  --color-chart-8: var(--ds-color-chart-8);
+  --color-chart-8-active: var(--ds-color-chart-8-active);
+  --color-chart-9: var(--ds-color-chart-9);
+  --color-chart-9-active: var(--ds-color-chart-9-active);
+
   /* Tags (categorical, by hue) */
   --color-tag-blue: var(--ds-color-tag-blue-bg);
   --color-tag-blue-fg: var(--ds-color-tag-blue-fg);
@@ -207,6 +230,21 @@
   --color-avatar-lime-fg: var(--ds-component-avatar-lime-fg);
   --color-avatar-pink: var(--ds-component-avatar-pink-bg);
   --color-avatar-pink-fg: var(--ds-component-avatar-pink-fg);
+  --color-stat-icon-blue-start: var(--ds-component-stat-card-icon-blue-start);
+  --color-stat-icon-blue-end: var(--ds-component-stat-card-icon-blue-end);
+  --color-stat-icon-orange-start: var(--ds-component-stat-card-icon-orange-start);
+  --color-stat-icon-orange-end: var(--ds-component-stat-card-icon-orange-end);
+  --color-stat-icon-purple-start: var(--ds-component-stat-card-icon-purple-start);
+  --color-stat-icon-purple-end: var(--ds-component-stat-card-icon-purple-end);
+  --color-stat-icon-pink-start: var(--ds-component-stat-card-icon-pink-start);
+  --color-stat-icon-pink-end: var(--ds-component-stat-card-icon-pink-end);
+  --color-stat-icon-sky-start: var(--ds-component-stat-card-icon-sky-start);
+  --color-stat-icon-sky-end: var(--ds-component-stat-card-icon-sky-end);
+  --color-stat-icon-emerald-start: var(--ds-component-stat-card-icon-emerald-start);
+  --color-stat-icon-emerald-end: var(--ds-component-stat-card-icon-emerald-end);
+  --color-plan-art-orange: var(--ds-component-plan-art-orange);
+  --color-auth-card: var(--ds-component-auth-card-bg);
+  --color-sidebar-avatar: var(--ds-component-sidebar-avatar-bg);
   --color-badge-neutral: var(--ds-component-badge-neutral-bg);
   --color-file-upload-icon: var(--ds-component-file-upload-icon-bg);
   --color-file-upload-icon-fg: var(--ds-component-file-upload-icon-fg);
@@ -238,6 +276,8 @@
   /* Elevation and component effects */
   --shadow-hairline: var(--ds-elevation-hairline);
   --shadow-control-checked: var(--ds-elevation-control-checked);
+  --shadow-sidebar: var(--ds-component-sidebar-panel);
+  --shadow-nav-selected: var(--ds-component-sidebar-nav-selected);
   --shadow-radio-checked-sm: var(--ds-component-radio-checked-sm);
   --shadow-radio-checked-md: var(--ds-component-radio-checked-md);
   --shadow-slider-track: var(--ds-component-slider-track);
@@ -281,6 +321,14 @@
   --text-display-sm--line-height: var(--ds-text-display-sm-line-height);
   --text-display-sm--font-weight: var(--ds-text-display-sm-weight);
   --text-display-sm--letter-spacing: var(--ds-text-display-sm-tracking);
+  --text-title-md-strong: var(--ds-text-title-md-strong-size);
+  --text-title-md-strong--line-height: var(--ds-text-title-md-strong-line-height);
+  --text-title-md-strong--font-weight: var(--ds-text-title-md-strong-weight);
+  --text-title-md-strong--letter-spacing: var(--ds-text-title-md-strong-tracking);
+  --text-title-lg-strong: var(--ds-text-title-lg-strong-size);
+  --text-title-lg-strong--line-height: var(--ds-text-title-lg-strong-line-height);
+  --text-title-lg-strong--font-weight: var(--ds-text-title-lg-strong-weight);
+  --text-title-lg-strong--letter-spacing: var(--ds-text-title-lg-strong-tracking);
 
   --blur-enter-strong: var(--ds-motion-blur-enter-strong);
 

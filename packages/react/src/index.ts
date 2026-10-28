@@ -64,3 +64,80 @@ export { ChevronDownSmall, ChevronLeft16, ChevronRight16, ChevronRightSmall, Che
 export { easing, layoutSpring } from "./motion/tokens";
 export { focusRing, focusRingInset, focusRingNative } from "./recipes/focus-ring";
 export { cx } from "./utils/cx";
+
+// Blocks: BoardUI's MIT-licensed free blocks, converted by tools/boardui-port (see THIRD_PARTY_NOTICES.md).
+export * from "./blocks/agent-thinking/agent-thinking";
+export * from "./blocks/auth/auth-card";
+export * from "./blocks/auth/auth-media-carousel";
+export * from "./blocks/composer-loader/composer-loader";
+export * from "./blocks/data-grid/data-grid";
+export * from "./blocks/data-grid/data-grid-utils";
+export * from "./blocks/data-table/data-table";
+export * from "./blocks/notification-center/notification-center";
+export * from "./blocks/notification-center/notification-center-demo";
+export * from "./blocks/settings/settings-modal";
+export * from "./blocks/settings/settings-rows";
+export * from "./blocks/settings/settings-general";
+export * from "./blocks/settings/settings-profile";
+export * from "./blocks/settings/settings-storage";
+export * from "./blocks/settings/settings-tools";
+export * from "./blocks/sidebar/dashboard-sidebar";
+export * from "./blocks/sidebar/dashboard-team-menu";
+export * from "./blocks/sidebar/dashboard-user-menu";
+export * from "./blocks/stat-cards/stat-cards";
+export * from "./blocks/theme-toggle/theme-toggle";
+export { useCountUp } from "./hooks/use-count-up";
+
+// Charts: BoardUI's free revenue chart (MIT), on recharts.
+export * from "./charts/revenue-chart/revenue-chart-card";
+export * from "./charts/revenue-chart/orders-chart-card";
+export { DataGridExample } from "./blocks/data-grid/data-grid-example";
+
+// Charts: original cards designed for this system, on the shared chart shell.
+export * from "./charts/shared/chart-card";
+export * from "./charts/activity-rings/activity-rings-card";
+export * from "./charts/area-chart/area-chart-card";
+export * from "./charts/bar-list/bar-list-card";
+export * from "./charts/combo-chart/combo-chart-card";
+export * from "./charts/contributions/contributions-card";
+export * from "./charts/earnings-chart/earnings-chart-card";
+export * from "./charts/funnel-chart/funnel-chart-card";
+export * from "./charts/heatmap-chart/heatmap-chart-card";
+export * from "./charts/line-chart/line-chart-card";
+export * from "./charts/most-active-days/most-active-days-card";
+export * from "./charts/radar-chart/radar-chart-card";
+export * from "./charts/radial-chart/radial-chart-card";
+export * from "./charts/sankey-chart/sankey-chart-card";
+export * from "./charts/scatter-chart/scatter-chart-card";
+export * from "./charts/sleep-score/sleep-score-card";
+export * from "./charts/stage-bars/stage-bars-card";
+export * from "./charts/steps-chart/steps-chart-card";
+
+// Blocks: original agent and productivity blocks designed for this system.
+export * from "./blocks/composer/composer-panel";
+export * from "./blocks/composer/composer-attachments";
+export * from "./blocks/web-search/web-search";
+export * from "./blocks/task-list/task-list";
+export * from "./blocks/agent-limits/agent-limits";
+export * from "./blocks/questionnaire/questionnaire";
+export * from "./blocks/agent-creator/agent-creator";
+export * from "./blocks/month-calendar/month-calendar";
+export * from "./blocks/chat/chat-session";
+export * from "./blocks/chat/chat-message";
+export * from "./blocks/chat/chat-thread";
+export * from "./blocks/code-panel/code-panel";
+export * from "./blocks/kanban/kanban-board";
+export * from "./blocks/image-generation/generated-image";
+
+// Templates: whole screens assembled from the blocks and charts.
+export * from "./templates/shared";
+export * from "./templates/home-dashboard";
+export * from "./templates/finance-dashboard";
+export * from "./templates/marketing-dashboard";
+export * from "./templates/medical-profile";
+export * from "./templates/ai-profile";
+export * from "./templates/project-board";
+export * from "./templates/chat-starter";
+export * from "./templates/ai-chat";
+export * from "./templates/multi-agent-chat";
+export * from "./templates/ai-image-generation";

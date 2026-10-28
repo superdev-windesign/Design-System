@@ -4,6 +4,39 @@
 
 /** BoardUI semantic color name → [@ds utility color name, @ds CSS variable]. */
 export const COLORS = {
+  // Blocks (application components)
+  "background-inner-default": ["surface", "--ds-color-bg-surface"],
+  "notification-center-background": ["surface", "--ds-color-bg-surface"],
+  "stat-card-icon-background": ["surface", "--ds-color-bg-surface"],
+  "team-menu-count-background": ["muted", "--ds-color-bg-muted"],
+  "team-menu-count-foreground": ["fg-secondary", "--ds-color-text-secondary"],
+  "theme-toggle-sidebar-background": ["muted", "--ds-color-bg-muted"],
+  "theme-toggle-sidebar-selected-background": ["surface", "--ds-color-bg-surface"],
+  "border-button-white": ["surface", "--ds-color-bg-surface"],
+  "border-sidebar-profile-hover": ["line-hover", "--ds-color-border-hover"],
+  "border-table": ["line", "--ds-color-border-default"],
+  // Charts
+  "chart-track": ["chart-track", "--ds-color-chart-track"],
+  "chart-cursor": ["chart-cursor", "--ds-color-chart-cursor"],
+  "chart-neutral": ["chart-neutral", "--ds-color-chart-neutral"],
+  "chart-1": ["chart-1", "--ds-color-chart-1"],
+  "chart-1-active": ["chart-1-active", "--ds-color-chart-1-active"],
+  "chart-2": ["chart-2", "--ds-color-chart-2"],
+  "chart-2-active": ["chart-2-active", "--ds-color-chart-2-active"],
+  "chart-3": ["chart-3", "--ds-color-chart-3"],
+  "chart-3-active": ["chart-3-active", "--ds-color-chart-3-active"],
+  "chart-4": ["chart-4", "--ds-color-chart-4"],
+  "chart-4-active": ["chart-4-active", "--ds-color-chart-4-active"],
+  "chart-5": ["chart-5", "--ds-color-chart-5"],
+  "chart-5-active": ["chart-5-active", "--ds-color-chart-5-active"],
+  "chart-6": ["chart-6", "--ds-color-chart-6"],
+  "chart-6-active": ["chart-6-active", "--ds-color-chart-6-active"],
+  "chart-7": ["chart-7", "--ds-color-chart-7"],
+  "chart-7-active": ["chart-7-active", "--ds-color-chart-7-active"],
+  "chart-8": ["chart-8", "--ds-color-chart-8"],
+  "chart-8-active": ["chart-8-active", "--ds-color-chart-8-active"],
+  "chart-9": ["chart-9", "--ds-color-chart-9"],
+  "chart-9-active": ["chart-9-active", "--ds-color-chart-9-active"],
   // Surfaces
   "background-full": ["canvas", "--ds-color-bg-canvas"],
   "background-primary-default": ["surface", "--ds-color-bg-surface"],
@@ -107,6 +140,32 @@ for (const hue of ["blue", "cyan", "lime", "orange", "purple", "rose", "yellow"]
 
 /** Whole-class replacements for primitives and one-off values BoardUI used directly. */
 export const CLASSES = {
+  // Blocks (application components)
+  "shadow-card": "shadow-raised",
+  "rounded-notification-card": "rounded-2lg",
+  "bg-blue-200": "bg-tag-blue",
+  "text-blue-700": "text-tag-blue-fg",
+  "bg-amber-200": "bg-tag-yellow",
+  "text-amber-700": "text-tag-yellow-fg",
+  "text-pink-700": "text-avatar-pink-fg",
+  "bg-green-500": "bg-status-success-solid",
+  "bg-red-600": "bg-status-danger-solid",
+  "text-lime-600": "text-status-success-fg",
+  "bg-blue-400/70": "bg-chart-6/70",
+  "bg-lime-400/70": "bg-chart-2/70",
+  "bg-orange-400/70": "bg-plan-art-orange/70",
+  "from-blue-500": "from-stat-icon-blue-start",
+  "to-blue-600": "to-stat-icon-blue-end",
+  "from-orange-400": "from-stat-icon-orange-start",
+  "to-orange-500": "to-stat-icon-orange-end",
+  "from-purple-500": "from-stat-icon-purple-start",
+  "to-purple-600": "to-stat-icon-purple-end",
+  "from-pink-500": "from-stat-icon-pink-start",
+  "to-pink-600": "to-stat-icon-pink-end",
+  "from-sky-400": "from-stat-icon-sky-start",
+  "to-sky-500": "to-stat-icon-sky-end",
+  "from-emerald-500": "from-stat-icon-emerald-start",
+  "to-emerald-600": "to-stat-icon-emerald-end",
   rounded: "rounded-sm",
   "rounded-[3px]": "rounded-hairline",
   "text-white": "text-on-action",
@@ -151,6 +210,10 @@ export const CLASSES = {
 
 /** BoardUI composite text styles → @ds composite text styles. */
 export const TEXT = {
+  "title-1-medium": "title-lg-strong",
+  "title-2-medium": "title-md-strong",
+  "display-4-medium": "display-sm",
+  "headline-medium": "headline-emphasis",
   "body-medium": "body-md-strong",
   "body-regular": "body-md",
   "body-2-medium": "body-sm-strong",
@@ -176,6 +239,11 @@ export const IMPORTS = {
   "@/components/base/select/select": "components/select/select",
   "@/components/base/badges/status-dot": "components/status-dot/status-dot",
   "@/components/base/date-picker/shared": "components/date-picker/shared",
+  "@/hooks/use-count-up": "hooks/use-count-up",
+  "@/components/application/theme/theme-toggle": "blocks/theme-toggle/theme-toggle",
+  "@/components/application/settings/settings-modal": "blocks/settings/settings-modal",
+  "@/components/application/notification-center/notification-center": "blocks/notification-center/notification-center",
+  "@/components/application/auth/auth-media-carousel": "blocks/auth/auth-media-carousel",
 };
 
 /** Default imports from frameworks → named imports from this package (`<path>#<name>`). */
@@ -189,6 +257,72 @@ export const DEFAULT_IMPORTS = {
  * framework-specific pieces swapped for neutral ones.
  */
 export const PATCHES = {
+  // The class mapper renames Tailwind's bare `rounded`; here it's a variable name.
+  "charts/revenue-chart/revenue-chart-card.tsx": [
+    ["const rounded-sm = ", "const rounded = "],
+    ['`${rounded-sm > 0 ? "+" : ""}${rounded-sm}%`', '`${rounded > 0 ? "+" : ""}${rounded}%`'],
+    ["color: rounded-sm > 0 ?", "color: rounded > 0 ?"],
+  ],
+  "charts/revenue-chart/orders-chart-card.tsx": [
+    ["const rounded-sm = ", "const rounded = "],
+    ['`${rounded-sm > 0 ? "+" : ""}${rounded-sm}%`', '`${rounded > 0 ? "+" : ""}${rounded}%`'],
+    ["color: rounded-sm > 0 ?", "color: rounded > 0 ?"],
+  ],
+  // Blocks: fictional people instead of real ones, no BoardUI branding or site assets,
+  // this system's theme attribute, and tokens in place of dark: variants.
+  "blocks/data-table/data-table.tsx": [
+    ["const PHOTO_PEOPLE: { name: string; avatar: string }[] = [\n  { name: \"John Clarkson\", avatar: \"/avatars/john-clarkson.webp\" },\n  { name: \"Aspen Lubin\", avatar: \"/avatars/aspen-lubin.webp\" },\n  { name: \"Michael Ekstrom\", avatar: \"/avatars/michael-ekstrom.webp\" },\n  { name: \"Kianna Vaccaro\", avatar: \"/avatars/kianna-vaccaro.webp\" },\n  { name: \"Livia Saris\", avatar: \"/avatars/livia-saris.webp\" },\n  { name: \"Jaydon Aminoff\", avatar: \"/avatars/jaydon-aminoff.webp\" },\n  { name: \"Maria Lubin\", avatar: \"/avatars/maria-lubin.webp\" },\n  { name: \"Ann Press\", avatar: \"/avatars/ann-press.webp\" },\n];", "const PHOTO_PEOPLE: { name: string; avatar?: string }[] = [\n  { name: \"John Clarkson\" },\n  { name: \"Aspen Lubin\" },\n  { name: \"Michael Ekstrom\" },\n  { name: \"Kianna Vaccaro\" },\n  { name: \"Livia Saris\" },\n  { name: \"Jaydon Aminoff\" },\n  { name: \"Maria Lubin\" },\n  { name: \"Ann Press\" },\n];"],
+  ],
+  "blocks/notification-center/notification-center-demo.tsx": [
+    ["avatar: { src: \"/avatars/livia-saris.webp\", alt: \"Livia Saris\" },", "avatar: { initials: \"L\", alt: \"Livia Saris\", color: \"pink\" },"],
+    ["avatar: { src: \"/avatars/jaydon-aminoff.webp\", alt: \"Jaydon Aminoff\" },", "avatar: { initials: \"J\", alt: \"Jaydon Aminoff\", color: \"blue\" },"],
+  ],
+  "blocks/settings/settings-storage.tsx": [
+    ["} from \"@remixicon/react\";", "  RiFileExcel2Fill,\n  RiFileTextFill,\n  RiFileVideoFill,\n} from \"@remixicon/react\";"],
+    ["const FILE_ICONS: Record<FileKind, { light: string; dark?: string }> = {\n  document: {\n    light: \"/ai-chat/plugin-documents.svg\",\n    dark: \"/ai-chat/plugin-documents-dark.svg\",\n  },\n  spreadsheet: { light: \"/ai-chat/plugin-spreadsheets.svg\" },\n  video: { light: \"/ai-chat/plugin-videos.svg\" },\n};", "const FILE_ICONS: Record<FileKind, { icon: typeof RiFileTextFill; className: string }> = {\n  document: { icon: RiFileTextFill, className: \"bg-tag-blue text-tag-blue-fg\" },\n  spreadsheet: { icon: RiFileExcel2Fill, className: \"bg-tag-lime text-tag-lime-fg\" },\n  video: { icon: RiFileVideoFill, className: \"bg-tag-purple text-tag-purple-fg\" },\n};"],
+    ["function StoredFileIcon({ kind }: { kind: FileKind }) {\n  const localize = useTemplateCopy();\n  const { light, dark } = FILE_ICONS[kind];\n\n  if (dark) {\n    return localize((\n      <>\n        {/* eslint-disable-next-line @next/next/no-img-element -- decorative registry-packaged SVG */}\n        <img src={light} alt=\"\" className=\"theme-asset-light size-6 shrink-0 object-contain\" />\n        {/* eslint-disable-next-line @next/next/no-img-element -- decorative registry-packaged SVG */}\n        <img src={dark} alt=\"\" className=\"theme-asset-dark size-6 shrink-0 object-contain\" />\n      </>\n    ));\n  }\n\n  // eslint-disable-next-line @next/next/no-img-element -- decorative registry-packaged SVG\n  return localize(<img src={light} alt=\"\" className=\"size-6 shrink-0 object-contain\" />);\n}", "function StoredFileIcon({ kind }: { kind: FileKind }) {\n  const { icon: Icon, className } = FILE_ICONS[kind];\n  return (\n    <span aria-hidden className={cx(\"flex size-6 shrink-0 items-center justify-center rounded-md\", className)}>\n      <Icon className=\"size-3.5\" />\n    </span>\n  );\n}"],
+  ],
+  "blocks/sidebar/dashboard-sidebar.tsx": [
+    ["/** The Pro dashboard's navigation, the default set. */\nexport const DASHBOARD_NAV: DashboardNavItem[] = [\n  { key: \"home\", label: \"Home\", icon: RiHomeLine, href: \"/templates/dashboard\", badge: 152 },\n  { key: \"project-board\", label: \"Project board\", icon: RiKanbanView2, href: \"/templates/project-board\" },\n  { key: \"marketing\", label: \"Marketing\", icon: RiMegaphoneLine, href: \"/templates/marketing\" },\n  { key: \"calendar\", label: \"Calendar\", icon: RiCalendarLine, href: \"/templates/calendar\" },\n  { key: \"finance\", label: \"Finance\", icon: RiBankLine, href: \"/templates/finance\" },\n  { key: \"medical\", label: \"Medical Report\", icon: RiAsterisk, href: \"/templates/medical-profile\" },\n  { key: \"ai-chat\", label: \"AI Chat\", icon: RiChatAiLine, href: \"/templates/ai-chat\" },\n  { key: \"ai-image\", label: \"AI Image Generation\", icon: RiImageAiLine, href: \"/templates/ai-image-generation\" },\n  { key: \"profile\", label: \"Profile\", icon: RiUserSmileLine, href: \"/templates/ai-profile\" },\n];", "/** The default navigation set. Screens pass their own `items` with real routes. */\nexport const DASHBOARD_NAV: DashboardNavItem[] = [\n  { key: \"home\", label: \"Home\", icon: RiHomeLine, href: \"#dashboard\", badge: 152 },\n  { key: \"project-board\", label: \"Project board\", icon: RiKanbanView2, href: \"#project-board\" },\n  { key: \"marketing\", label: \"Marketing\", icon: RiMegaphoneLine, href: \"#marketing\" },\n  { key: \"calendar\", label: \"Calendar\", icon: RiCalendarLine, href: \"#calendar\" },\n  { key: \"finance\", label: \"Finance\", icon: RiBankLine, href: \"#finance\" },\n  { key: \"medical\", label: \"Medical Report\", icon: RiAsterisk, href: \"#medical-profile\" },\n  { key: \"ai-chat\", label: \"AI Chat\", icon: RiChatAiLine, href: \"#ai-chat\" },\n  { key: \"ai-image\", label: \"AI Image Generation\", icon: RiImageAiLine, href: \"#ai-image-generation\" },\n  { key: \"profile\", label: \"Profile\", icon: RiUserSmileLine, href: \"#ai-profile\" },\n];"],
+    ["        planArtSrc=\"/templates/settings-plan-art.png\"\n", ""],
+    ["\"bg-muted dark:bg-sunken\"", "\"bg-sidebar-avatar\""],
+  ],
+  "blocks/sidebar/dashboard-team-menu.tsx": [
+    ["<Avatar size=\"md\" color=\"blue\" src=\"/brand/boardui_logo_circle.webp\" alt=\"Board team\" />", "<Avatar size=\"md\" color=\"blue\" initials=\"A\" alt=\"Acme team\" />"],
+    ["<Avatar size=\"md\" color=\"blue\" src=\"/brand/boardui_logo_circle.webp\" alt=\"Board team\" />", "<Avatar size=\"md\" color=\"blue\" initials=\"A\" alt=\"Acme team\" />"],
+  ],
+  "blocks/sidebar/dashboard-user-menu.tsx": [
+    ["{ initials: \"M\", color: \"neutral\", name: \"Mertcan Esmergul\" },", "{ initials: \"A\", color: \"neutral\", name: \"Alex Morgan\" },"],
+    ["aria-label=\"Mertcan Esmergul\"", "aria-label=\"Alex Morgan\""],
+    [">Mertcan Esmergul</span>", ">Alex Morgan</span>"],
+  ],
+  "blocks/settings/settings-profile.tsx": [
+    ["initialValue=\"hi@mertcan.works\"", "initialValue=\"alex@example.com\""],
+    ["initialValue=\"Mertcan\"", "initialValue=\"Alex\""],
+    ["<SettingsRow label=\"BoardUI account\">", "<SettingsRow label=\"Account\">"],
+  ],
+  "blocks/auth/auth-card.tsx": [
+    ["\"Start building with BoardUI in a couple of minutes.\"", "\"Start building in a couple of minutes.\""],
+    ["bg-surface shadow-raised md:grid-cols-2 dark:bg-sunken", "bg-auth-card shadow-raised md:grid-cols-2"],
+    ["bg-surface p-6 shadow-raised sm:p-8 dark:bg-sunken", "bg-auth-card p-6 shadow-raised sm:p-8"],
+  ],
+  "blocks/settings/settings-general.tsx": [
+    [">Inside BoardUI</SelectItem>", ">Inside the app</SelectItem>"],
+    ["when BoardUI messages you", "when the app messages you"],
+  ],
+  "blocks/settings/settings-tools.tsx": [
+    ["{ id: \"boardui\", label: \"boardui\",", "{ id: \"acme\", label: \"acme\","],
+  ],
+  "blocks/theme-toggle/theme-toggle.tsx": [
+    ["export const THEME_STORAGE_KEY = \"boardui:theme\";", "export const THEME_STORAGE_KEY = \"ds-theme\";"],
+    ["export const THEME_CHANGE_EVENT = \"boardui:theme-change\";", "export const THEME_CHANGE_EVENT = \"ds:theme-change\";"],
+    ["const THEME_TRANSITION_STYLE_ID = \"boardui-theme-transition-style\";", "const THEME_TRANSITION_STYLE_ID = \"ds-theme-transition-style\";"],
+    ["document.documentElement.classList.toggle(\"dark\", theme === \"dark\");", "document.documentElement.dataset.theme = theme;"],
+    ["return document.documentElement.classList.contains(\"dark\") ? \"dark\" : \"light\";", "const set = document.documentElement.dataset.theme;\n  if (set === \"dark\" || set === \"light\") return set;\n  return window.matchMedia(\"(prefers-color-scheme: dark)\").matches ? \"dark\" : \"light\";"],
+    ["\"bg-white dark:bg-[#2e2e33]\"", "\"bg-surface\""],
+    ["\"text-black dark:text-on-action\"", "\"text-fg\""],
+    ["\"text-black/45 hover:text-black/70 dark:text-white/45 dark:hover:text-white/70\"", "\"text-fg-tertiary hover:text-fg-secondary\""],
+  ],
   "components/date-picker/meeting-scheduler.tsx": [
     ['const [h, m] = time.split(":").map(Number);', 'const [h = 0, m = 0] = time.split(":").map(Number);'],
     // A generic video icon instead of a third-party brand image from BoardUI's site assets.
@@ -263,3 +397,101 @@ const BASE = [
   "tree-view/tree-view.tsx",
 ];
 for (const file of BASE) FILES[`components/base/${file}`] = `components/${file}`;
+
+// Free blocks and charts (components/application in BoardUI).
+const APPLICATION = {
+  "agent-thinking/agent-thinking.tsx": "blocks/agent-thinking/agent-thinking.tsx",
+  "composer-loader/composer-loader.tsx": "blocks/composer-loader/composer-loader.tsx",
+  "auth/auth-card.tsx": "blocks/auth/auth-card.tsx",
+  "auth/auth-media-carousel.tsx": "blocks/auth/auth-media-carousel.tsx",
+  "data-grid/data-grid.tsx": "blocks/data-grid/data-grid.tsx",
+  "data-grid/data-grid-utils.ts": "blocks/data-grid/data-grid-utils.ts",
+  "data-table/data-table.tsx": "blocks/data-table/data-table.tsx",
+  "notification-center/notification-center.tsx": "blocks/notification-center/notification-center.tsx",
+  "notification-center/notification-center-demo.tsx": "blocks/notification-center/notification-center-demo.tsx",
+  "settings/plan-art-flame.tsx": "blocks/settings/plan-art-flame.tsx",
+  "settings/settings-general.tsx": "blocks/settings/settings-general.tsx",
+  "settings/settings-modal.tsx": "blocks/settings/settings-modal.tsx",
+  "settings/settings-profile.tsx": "blocks/settings/settings-profile.tsx",
+  "settings/settings-rows.tsx": "blocks/settings/settings-rows.tsx",
+  "settings/settings-storage.tsx": "blocks/settings/settings-storage.tsx",
+  "settings/settings-tools.tsx": "blocks/settings/settings-tools.tsx",
+  "dashboard/dashboard-sidebar.tsx": "blocks/sidebar/dashboard-sidebar.tsx",
+  "dashboard/dashboard-team-menu.tsx": "blocks/sidebar/dashboard-team-menu.tsx",
+  "dashboard/dashboard-user-menu.tsx": "blocks/sidebar/dashboard-user-menu.tsx",
+  "dashboard/stat-cards.tsx": "blocks/stat-cards/stat-cards.tsx",
+  "theme/theme-toggle.tsx": "blocks/theme-toggle/theme-toggle.tsx",
+  "dashboard/revenue-chart-card.tsx": "charts/revenue-chart/revenue-chart-card.tsx",
+  "dashboard/orders-chart-card.tsx": "charts/revenue-chart/orders-chart-card.tsx",
+};
+for (const [from, to] of Object.entries(APPLICATION)) FILES[`components/application/${from}`] = to;
+FILES["hooks/use-count-up.ts"] = "hooks/use-count-up.ts";
+
+/**
+ * Strict-mode fixes for the blocks (this repo enables noUncheckedIndexedAccess),
+ * and BoardUI's Button size names where blocks read the style map directly.
+ * Merged into PATCHES so files can carry both kinds.
+ */
+const STRICT_PATCHES = {
+  "blocks/composer-loader/composer-loader.tsx": [["hexTriplet(c2)[i]", "hexTriplet(c2)[i]!"]],
+  "blocks/data-grid/data-grid-utils.ts": [
+    ["rows[rows.length - 1].push(field);", "rows[rows.length - 1]!.push(field);"],
+    ["rows[rows.length - 1].push(field);", "rows[rows.length - 1]!.push(field);"],
+    ['rows[rows.length - 1].length === 1 && rows[rows.length - 1][0] === ""', 'rows[rows.length - 1]!.length === 1 && rows[rows.length - 1]![0] === ""'],
+  ],
+  "blocks/data-grid/data-grid.tsx": [
+    ["buttonStyles.size.small, buttonStyles.iconOnlySize.small", "buttonStyles.size.sm, buttonStyles.iconOnlySize.sm"],
+    ["buttonStyles.icon.small", "buttonStyles.icon.sm"],
+    ["{options[column.key].filter(", "{(options[column.key] ?? []).filter("],
+    ["getRowId(data[0]), columnKey: columns[0].key", "getRowId(data[0]!), columnKey: columns[0]!.key"],
+    ["([entry]) => setViewportWidth(entry.contentRect.width)", "([entry]) => entry && setViewportWidth(entry.contentRect.width)"],
+    ["rows[r][visibleColumns[c].key]", "rows[r]![visibleColumns[c]!.key]"],
+    ["getRowId(rows[r]), columnKey: visibleColumns[c].key", "getRowId(rows[r]!), columnKey: visibleColumns[c]!.key"],
+    ["(freezeFirstColumn ? columnWidths[0] : 0)", "(freezeFirstColumn ? columnWidths[0]! : 0)"],
+    [
+      "start + columnWidths[c] > offset + body.clientWidth) body.scrollLeft = (direction === \"rtl\" ? -1 : 1) * (start + columnWidths[c] - body.clientWidth)",
+      "start + columnWidths[c]! > offset + body.clientWidth) body.scrollLeft = (direction === \"rtl\" ? -1 : 1) * (start + columnWidths[c]! - body.clientWidth)",
+    ],
+    [
+      "anchor: { rowId: getRowId(rows[0]), columnKey: visibleColumns[0].key }, focus: { rowId: getRowId(rows[rows.length - 1]), columnKey: visibleColumns[visibleColumns.length - 1].key }",
+      "anchor: { rowId: getRowId(rows[0]!), columnKey: visibleColumns[0]!.key }, focus: { rowId: getRowId(rows[rows.length - 1]!), columnKey: visibleColumns[visibleColumns.length - 1]!.key }",
+    ],
+    ["c < matrix[r].length", "c < matrix[r]!.length"],
+    ["parseGridValue(matrix[r][c], column)", "parseGridValue(matrix[r]![c]!, column)"],
+    ["resizeColumn(column.key, columnWidths[c] + (", "resizeColumn(column.key, columnWidths[c]! + ("],
+    ["width = columnWidths[c];", "width = columnWidths[c]!;"],
+    ['{summary === null ? "—" :', '{summary == null ? "—" :'],
+  ],
+  "blocks/data-table/data-table.tsx": [
+    ["const pick = <T,>(arr: T[]) => arr[Math.floor(rng() * arr.length)];", "const pick = <T,>(arr: T[]) => arr[Math.floor(rng() * arr.length)]!;"],
+    ["name: PHOTO_PEOPLE[i].name, avatar: PHOTO_PEOPLE[i].avatar", "name: PHOTO_PEOPLE[i]!.name, avatar: PHOTO_PEOPLE[i]!.avatar"],
+    ["?? PRICE_BUCKETS[0];", "?? PRICE_BUCKETS[0]!;"],
+    ["table.getHeaderGroups()[0].headers", "table.getHeaderGroups()[0]!.headers"],
+  ],
+  "blocks/settings/settings-storage.tsx": [
+    ["const pick = <T,>(arr: T[]) => arr[Math.floor(rng() * arr.length)];", "const pick = <T,>(arr: T[]) => arr[Math.floor(rng() * arr.length)]!;"],
+    ["{ ...pinned[i], id:", "{ ...pinned[i]!, id:"],
+  ],
+  "blocks/settings/settings-tools.tsx": [
+    ["const SERVERS: Record<string, McpServer> = {", "const SERVERS = {"],
+    [
+      "};\n\n/** Per-scope server lists — switching a pill swaps the section below. */",
+      "} satisfies Record<string, McpServer>;\n\n/** Per-scope server lists — switching a pill swaps the section below. */",
+    ],
+    ["?? SCOPES[0];", "?? SCOPES[0]!;"],
+    ['{ id: "bereal", label: "BeReal Task",', '{ id: "daily", label: "Daily Task",'],
+  ],
+};
+for (const [file, patches] of Object.entries(STRICT_PATCHES)) (PATCHES[file] ??= []).push(...patches);
+
+// The free data-grid docs example doubles as the block's ready-made demo.
+IMPORTS["@/components/application/data-grid/data-grid"] = "blocks/data-grid/data-grid";
+FILES["components/application/docs/examples/data-grid-example.tsx"] = "blocks/data-grid/data-grid-example.tsx";
+(PATCHES["blocks/data-grid/data-grid-example.tsx"] ??= []).push([
+  "owner: OWNERS[(i * 3) % OWNERS.length], region: REGIONS[(i * 7) % REGIONS.length], stage: STAGES[(i * 13) % STAGES.length]",
+  "owner: OWNERS[(i * 3) % OWNERS.length]!, region: REGIONS[(i * 7) % REGIONS.length]!, stage: STAGES[(i * 13) % STAGES.length]!",
+]);
+PATCHES["blocks/sidebar/dashboard-user-menu.tsx"].push([
+  '<Avatar size="md" color="neutral" initials="M" className={avatarClassName} />',
+  '<Avatar size="md" color="neutral" initials="A" className={avatarClassName} />',
+]);

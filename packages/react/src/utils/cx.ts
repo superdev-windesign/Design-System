@@ -15,7 +15,7 @@ export const cx = extendTailwindMerge({
       text: [
         "body-md", "body-md-strong", "body-sm", "body-sm-strong",
         "caption", "caption-strong", "caption-emphasis",
-        "headline-emphasis", "title-sm-strong", "title-sm-emphasis", "micro-emphasis", "display-sm",
+        "headline-emphasis", "title-sm-strong", "title-sm-emphasis", "micro-emphasis", "display-sm", "title-md-strong", "title-lg-strong",
       ],
       radius: [
         "hairline", "control-xs", "control-sm", "control-md", "item", "tile", "chip", "surface", "overlay", "panel",
@@ -26,6 +26,7 @@ export const cx = extendTailwindMerge({
         "radio-checked-sm", "radio-checked-md",
         "slider-track", "slider-fill", "slider-thumb", "slider-thumb-active", "slider-highlight",
         "switch-on-sm", "switch-on-md", "switch-chip-sm", "switch-chip-md", "switch-chip-lg", "switch-thumb",
+        "sidebar", "nav-selected",
       ],
       blur: ["enter", "enter-strong"],
       ease: ["standard", "enter", "out", "default", "overshoot"],

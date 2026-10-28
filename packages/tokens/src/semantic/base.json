@@ -309,6 +309,44 @@
         "$type": "dimension",
         "$value": "{font.tracking.display}"
       }
+    },
+    "title-md-strong": {
+      "$description": "Card and dialog titles",
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.20}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.26}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.medium}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.0}"
+      }
+    },
+    "title-lg-strong": {
+      "$description": "Chart headline figures and page-level card values",
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.24}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.34}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.medium}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.0}"
+      }
     }
   },
   "motion": {
@@ -345,6 +383,16 @@
         "$type": "duration",
         "$value": "{duration.3400}",
         "$description": "One sweep of the in-progress text shimmer"
+      },
+      "row-enter": {
+        "$type": "duration",
+        "$value": "{duration.400}",
+        "$description": "A list row growing in and sliding from under the row above"
+      },
+      "row-exit": {
+        "$type": "duration",
+        "$value": "{duration.225}",
+        "$description": "A list row collapsing away"
       }
     },
     "easing": {

@@ -133,16 +133,19 @@ export function ShowcaseDetail({ slug }: { slug: string }) {
         <p className="max-w-prose text-body-md text-fg-secondary">{entry.summary}</p>
       </div>
 
-      <section aria-label="Live example" className="flex min-h-81.75 items-center justify-center rounded-panel border border-line bg-surface p-8">
+      <section aria-label="Live example" className="flex min-h-81.75 items-center justify-center rounded-panel border border-line bg-surface p-4 sm:p-8">
         <Demo />
       </section>
 
-      <section className="flex flex-col gap-2">
-        <h2 className="text-body-md-strong text-fg">Import</h2>
-        <pre className="overflow-x-auto rounded-surface border border-line bg-sunken p-4 font-mono text-body-sm text-fg">
-          <code>{snippet}</code>
-        </pre>
-      </section>
+      {/* Foundations document tokens; there's nothing to import. */}
+      {entry.imports.length > 0 && (
+        <section className="flex flex-col gap-2">
+          <h2 className="text-body-md-strong text-fg">Import</h2>
+          <pre className="overflow-x-auto rounded-surface border border-line bg-sunken p-4 font-mono text-body-sm text-fg">
+            <code>{snippet}</code>
+          </pre>
+        </section>
+      )}
 
       <nav aria-label="More components" className="flex items-center justify-between gap-4 border-t border-line pt-6">
         {previous ? (

@@ -77,6 +77,75 @@
     {
       "fg": "color.accent.500", "bg": "color.bg.surface", "min": 3,
       "usage": "Step wizard current-step ring and progress fill, sparkline stroke"
+    },
+    {
+      "fg": "color.chart.1", "bg": "color.bg.sunken", "min": 3,
+      "usage": "Chart series 1 on a chart card",
+      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+    },
+    {
+      "fg": "color.chart.2", "bg": "color.bg.sunken", "min": 3,
+      "usage": "Chart series 2 on a chart card",
+      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+    },
+    {
+      "fg": "color.chart.3", "bg": "color.bg.sunken", "min": 3,
+      "usage": "Chart series 3 on a chart card",
+      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+    },
+    {
+      "fg": "color.chart.4", "bg": "color.bg.sunken", "min": 3,
+      "usage": "Chart series 4 on a chart card",
+      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+    },
+    {
+      "fg": "color.chart.5", "bg": "color.bg.sunken", "min": 3,
+      "usage": "Chart series 5 on a chart card",
+      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+    },
+    {
+      "fg": "color.chart.6", "bg": "color.bg.sunken", "min": 3,
+      "usage": "Chart series 6 on a chart card",
+      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+    },
+    {
+      "fg": "color.chart.7", "bg": "color.bg.sunken", "min": 3,
+      "usage": "Chart series 7 on a chart card",
+      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+    },
+    {
+      "fg": "color.chart.8", "bg": "color.bg.sunken", "min": 3,
+      "usage": "Chart series 8 on a chart card",
+      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+    },
+    {
+      "fg": "color.chart.9", "bg": "color.bg.sunken", "min": 3,
+      "usage": "Chart series 9 on a chart card",
+      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+    },
+    {
+      "fg": "color.tag.blue.fg", "bg": "color.tag.blue.bg", "min": 4.5,
+      "usage": "Tag pill text: calendar events, attachment tiles, source marks (blue)"
+    },
+    {
+      "fg": "color.tag.lime.fg", "bg": "color.tag.lime.bg", "min": 4.5,
+      "usage": "Tag pill text: calendar events, attachment tiles, source marks (lime)"
+    },
+    {
+      "fg": "color.tag.purple.fg", "bg": "color.tag.purple.bg", "min": 4.5,
+      "usage": "Tag pill text: calendar events, attachment tiles, source marks (purple)"
+    },
+    {
+      "fg": "color.tag.rose.fg", "bg": "color.tag.rose.bg", "min": 4.5,
+      "usage": "Tag pill text: calendar events, attachment tiles, source marks (rose)"
+    },
+    {
+      "fg": "color.tag.cyan.fg", "bg": "color.tag.cyan.bg", "min": 4.5,
+      "usage": "Tag pill text: calendar events, attachment tiles, source marks (cyan)"
+    },
+    {
+      "fg": "color.tag.orange.fg", "bg": "color.tag.orange.bg", "min": 4.5,
+      "usage": "Tag pill text: calendar events, attachment tiles, source marks (orange)"
     }
   ]
 }

@@ -171,6 +171,11 @@ function convert(code, from, to) {
     if (!code.includes(find)) note(file, `patch did not apply: ${find.slice(0, 60)}`);
     code = code.replace(find, replace);
   }
+  // A patch may have replaced something noted during conversion; only report what's left.
+  for (const key of unmapped.keys()) {
+    const what = key.slice(file.length + 2);
+    if (key.startsWith(`${file}: `) && !what.startsWith("patch did not apply") && !code.includes(what)) unmapped.delete(key);
+  }
 
   const header = `// Adapted from BoardUI (MIT) — ${from}. See THIRD_PARTY_NOTICES.md.\n`;
   return code.startsWith('"use client"') ? code.replace(/^"use client";\n/, `"use client";\n${header}`) : header + code;

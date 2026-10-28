@@ -20,10 +20,26 @@ Adapted files carry a header comment naming their BoardUI source:
 | `packages/styles/src/utilities.css` (press motion, gradient buttons) | `styles/theme.css` |
 | Token values in `packages/tokens/src/semantic/*.json` and `packages/tokens/src/component/*.json` | `styles/theme.css` |
 | 39 further files under `packages/react/src/components/`, `foundations/` and `utils/` (Announcement, Avatar, Badge, Chip, Breadcrumb, Button Group, Close Button, Icon Button, Link Button, Carousel, Checkbox, Checkbox Card, Meeting Scheduler, Divider, Dropdown, File Upload, Input, Input OTP, Kbd, Notification, Pagination, Radio, Radio Card, Segmented Control, Slider, Social Button, Switch, Switch Card, Table, Tabs, Pill Tabs, Textarea, Tooltip, Tree View, direction and copy helpers) | `components/base/**`, `components/foundations/**`, `utils/**`; converted by `tools/boardui-port/port.mjs` |
+| 25 files under `packages/react/src/blocks/`, `charts/revenue-chart/` and `hooks/` (Agent Thinking, Composer Loader, Auth Card and media carousel, Data Grid and its example, Data Table, Notification Center, Settings Modal and its pages, Dashboard Sidebar with team and user menus, Stat Cards, Theme Toggle, Revenue and Orders chart cards, count-up hook) | `components/application/**`, `components/application/docs/examples/data-grid-example.tsx`, `hooks/use-count-up.ts`; converted by `tools/boardui-port/port.mjs` |
+| Chart palette tokens (`color.chart.*`) and the number-fade and row animations in `packages/styles/src/utilities.css` | `styles/theme.css`, `styles/globals.css` |
 
 Every adapted file starts with a header naming its BoardUI source. Demo
 defaults that held a real person's name and email were replaced with
-fictional ones, and a third-party logo image with a generic icon.
+fictional ones, and a third-party logo image with a generic icon. In the blocks, stock photo
+avatars became initials, BoardUI's logo, artwork and site images were removed, and
+links to BoardUI's template pages became neutral anchors.
+
+The other blocks and charts in `blocks/` and `charts/` (Composer Panel, Composer
+Attachments, Web Search, Task List, Agent Limits, Questionnaire, Agent Creator,
+Calendar, and the 17 chart cards other than Revenue) are original work for this
+repository; BoardUI sells blocks with those names in Pro, but no Pro code or design
+was used for them.
+
+The templates in `packages/react/src/templates/` and the chat, code panel, kanban
+and image pieces in `blocks/` are also original. BoardUI's free Chat Starter was not
+ported: it depends on Next.js routing, a server route and the Vercel AI SDK, and
+carries a BoardUI Pro upsell; this repository's Chat Starter is built on its own
+chat session hook instead.
 
 ## BoardUI Pro
 

@@ -12,6 +12,10 @@ for visual parity with [BoardUI](https://www.boardui.com/components):
   - **Toast**: call `toast.success(…)` from anywhere and mount one `<Toaster />`. Toasts rest as a stack, fan out on hover or focus and swipe away; `toast.promise` swaps a loading toast for the outcome.
   - **Step Wizard**: steps slide in the direction of travel, validate before moving on, and are announced to screen readers.
   - **Stat Card**: a rolling odometer number, a trend chip, and a sparkline you can scrub to read each point.
+- **Blocks** (17): BoardUI's nine free blocks ported (Agent Thinking, Composer Loader, Auth Card, Data Grid, Data Table, Notification Center, Settings Modal, Sidebar, Stat Cards), plus eight designed here: Composer Panel, Composer Attachments, Web Search, Task List, Agent Limits, Questionnaire, Agent Creator and Calendar.
+- **Charts** (18): BoardUI's free Revenue Chart ported, plus seventeen designed here on a shared chart shell (`ChartCard`, `ChartTooltip`, `seriesColor`): Activity Rings, Area, Bar List, Combo, Contributions, Earnings, Funnel, Heatmap, Line, Most Active Days, Radar, Radial, Sankey, Scatter, Sleep Score, Stage Bars and Steps. Cartesian and polar charts use [recharts](https://recharts.org).
+- **Templates** (10): whole screens assembled from the blocks and charts, laid out with container queries so they fit whatever space they're given: Chat Starter, AI Chat, Multi-agent Chat, AI Image Generation, AI Profile, and Home, Finance, Marketing, Medical Profile and Project Board dashboards. The chat templates share `useChatSession`: pass `respond` (an async generator of text chunks) to connect a model; without it a demo responder streams canned replies.
+- **Foundations**: Color and Typography pages in the playground, read live from the Tailwind bridge so they always match the tokens.
 
 Browse them at `#/components` in the playground: every card is a live
 preview, and each component has a page with an interactive demo and its

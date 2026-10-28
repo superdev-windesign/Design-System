@@ -184,6 +184,101 @@
         "$type": "shadow",
         "$value": "inset 0 1px 0 rgb(255 255 255 / 0.24)"
       }
+    },
+    "sidebar": {
+      "panel": {
+        "$type": "shadow",
+        "$value": "0 1px 0 0 rgb(0 0 0 / 0.0196), 0 1px 12px 0 rgb(0 0 0 / 0.0588), 0 0 1px 0 rgb(0 0 0 / 0.3216)",
+        "$description": "Floating app sidebar"
+      },
+      "nav-selected": {
+        "$type": "shadow",
+        "$value": "0 0 0 1px {color.accent.500}, inset 0 1px 0 0 rgb(255 255 255 / 0.251)",
+        "$description": "Selected nav item on the accent gradient"
+      },
+      "avatar-bg": {
+        "$type": "color",
+        "$value": "{color.bg.muted}",
+        "$description": "Flat sidebar profile avatar"
+      }
+    },
+    "stat-card": {
+      "icon": {
+        "blue": {
+          "start": {
+            "$type": "color",
+            "$value": "{color.blue.500}"
+          },
+          "end": {
+            "$type": "color",
+            "$value": "{color.blue.600}"
+          }
+        },
+        "orange": {
+          "start": {
+            "$type": "color",
+            "$value": "{color.orange.400}"
+          },
+          "end": {
+            "$type": "color",
+            "$value": "{color.orange.500}"
+          }
+        },
+        "purple": {
+          "start": {
+            "$type": "color",
+            "$value": "{color.purple.500}"
+          },
+          "end": {
+            "$type": "color",
+            "$value": "{color.purple.600}"
+          }
+        },
+        "pink": {
+          "start": {
+            "$type": "color",
+            "$value": "{color.pink.500}"
+          },
+          "end": {
+            "$type": "color",
+            "$value": "{color.pink.600}"
+          }
+        },
+        "sky": {
+          "start": {
+            "$type": "color",
+            "$value": "{color.sky.400}"
+          },
+          "end": {
+            "$type": "color",
+            "$value": "{color.sky.500}"
+          }
+        },
+        "emerald": {
+          "start": {
+            "$type": "color",
+            "$value": "{color.emerald.500}"
+          },
+          "end": {
+            "$type": "color",
+            "$value": "{color.emerald.600}"
+          }
+        }
+      }
+    },
+    "plan-art": {
+      "orange": {
+        "$type": "color",
+        "$value": "{color.orange.400}",
+        "$description": "Decorative glow in the settings plan artwork"
+      }
+    },
+    "auth-card": {
+      "bg": {
+        "$type": "color",
+        "$value": "{color.bg.surface}",
+        "$description": "Auth card surface (sits one step deeper in dark)"
+      }
     }
   }
 }

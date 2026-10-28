@@ -16,6 +16,8 @@ consumes them.
    `oklch()` or `bg-blue-500`-style classes. The one ramp exposed directly is
    `accent-50…950`, for interactive emphasis (checked controls, slider fill,
    selection); it follows the brand when the accent is re-pointed.
+   Charts take series colours from `seriesColor(n)` / `SERIES_SWATCH` (the
+   `color.chart.*` tokens) in `@ds/react`, and build cards on `ChartCard`.
 3. **No arbitrary design values.** No `p-[13px]`, `rounded-[7px]`,
    `shadow-[...]`, `text-[15px]`. Use the spacing scale (`p-2`, `gap-1.5`),
    radius roles (`rounded-control-md`), elevation (`shadow-raised`,
