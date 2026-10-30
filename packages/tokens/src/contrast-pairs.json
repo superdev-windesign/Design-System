@@ -1,5 +1,5 @@
 {
-  "$description": "Every intended foreground/background pairing used by the components. The contrast test checks each pair in each theme. `knownFailures` lists themes where BoardUI's values (copied for parity) miss the target; the test fails if one of them starts passing, so the entry gets removed once fixed.",
+  "$description": "Every intended foreground/background pairing used by the components. The contrast test checks each pair in each theme. `knownFailures` lists themes where a pairing misses the target on purpose, with a note saying why; the test fails if one of them starts passing, so the entry gets removed once fixed.",
   "pairs": [
     { "fg": "color.text.primary", "bg": "color.bg.surface", "min": 4.5, "usage": "Select trigger and options, day numbers, month titles" },
     { "fg": "color.text.primary", "bg": "color.bg.surface-hover", "backdrop": "color.bg.surface", "min": 4.5, "usage": "Focused/selected Select option" },
@@ -8,26 +8,22 @@
     { "fg": "color.text.primary", "bg": "color.selection.range", "min": 4.5, "usage": "Days inside a selected range" },
     { "fg": "color.text.primary", "bg": "color.selection.range-edge", "min": 4.5, "usage": "Range start/end day" },
     { "fg": "color.action.tertiary.fg", "bg": "color.action.tertiary.bg", "min": 4.5, "usage": "Tertiary (ghost) button" },
-    { "fg": "color.text.on-action", "bg": "color.accent.600", "min": 4.5, "usage": "Primary button, bottom gradient stop" },
+    { "fg": "color.text.on-action", "bg": "color.accent.600", "min": 4.5, "usage": "Primary button in dark mode (terracotta)" },
     {
-      "fg": "color.text.on-action", "bg": "color.accent.500", "min": 4.5,
-      "usage": "Primary button, top gradient stop",
-      "knownFailures": ["light", "dark"], "note": "BoardUI parity: the top stop of the primary gradient is 3.7:1 with white text."
+      "fg": "color.text.on-action", "bg": "color.paper.950", "min": 4.5,
+      "usage": "Primary button in light mode (ink)"
     },
     {
       "fg": "color.text.secondary", "bg": "color.bg.surface", "min": 4.5,
-      "usage": "Calendar weekday headers",
-      "knownFailures": ["dark"], "note": "BoardUI keeps text-secondary at neutral-500 in dark mode."
+      "usage": "Calendar weekday headers"
     },
     {
       "fg": "color.text.secondary", "bg": "color.bg.muted", "min": 4.5,
-      "usage": "'N days selected' pill",
-      "knownFailures": ["light", "dark"], "note": "BoardUI parity."
+      "usage": "'N days selected' pill"
     },
     {
       "fg": "color.text.secondary", "bg": "color.bg.sunken", "min": 4.5,
-      "usage": "Date range separator in the picker footer",
-      "knownFailures": ["light", "dark"], "note": "BoardUI parity."
+      "usage": "Date range separator in the picker footer"
     },
     { "fg": "color.text.secondary", "bg": "color.bg.surface", "min": 3, "usage": "Select chevron (meaningful icon)" },
     { "fg": "color.icon.primary", "bg": "color.bg.surface", "min": 3, "usage": "Calendar trigger icon" },
@@ -37,18 +33,11 @@
     { "fg": "color.text.primary", "bg": "color.bg.surface", "min": 4.5, "usage": "Agent Progress shimmer highlight" },
     {
       "fg": "color.icon.secondary", "bg": "color.bg.strong", "min": 3,
-      "usage": "Agent Progress check glyph on its filled circle",
-      "knownFailures": ["dark"], "note": "BoardUI parity: neutral-500 on neutral-700 in dark."
+      "usage": "Agent Progress check glyph on its filled circle"
     },
     {
-      "fg": "color.bg.strong", "bg": "color.bg.surface", "min": 3,
-      "usage": "Agent Progress pending (dashed) step marker",
-      "knownFailures": ["light", "dark"], "note": "BoardUI parity: pending state is also conveyed by position and the missing strike-through."
-    },
-    {
-      "fg": "color.border.default", "bg": "color.bg.surface", "min": 3,
-      "usage": "Trigger and input boundary",
-      "knownFailures": ["light", "dark"], "note": "BoardUI parity: hairline border; the control is also identified by its text, chevron and shadow."
+      "fg": "color.border.control", "bg": "color.bg.surface", "min": 3,
+      "usage": "Trigger, input and secondary button outlines"
     },
     {
       "fg": "color.status.success-text", "bg": "color.status.success-bg", "min": 4.5,
@@ -80,48 +69,39 @@
     },
     {
       "fg": "color.chart.1", "bg": "color.bg.sunken", "min": 3,
-      "usage": "Chart series 1 on a chart card",
-      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+      "usage": "Chart series 1 on a chart card"
     },
     {
       "fg": "color.chart.2", "bg": "color.bg.sunken", "min": 3,
-      "usage": "Chart series 2 on a chart card",
-      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+      "usage": "Chart series 2 on a chart card"
     },
     {
       "fg": "color.chart.3", "bg": "color.bg.sunken", "min": 3,
-      "usage": "Chart series 3 on a chart card",
-      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+      "usage": "Chart series 3 on a chart card"
     },
     {
       "fg": "color.chart.4", "bg": "color.bg.sunken", "min": 3,
-      "usage": "Chart series 4 on a chart card",
-      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+      "usage": "Chart series 4 on a chart card"
     },
     {
       "fg": "color.chart.5", "bg": "color.bg.sunken", "min": 3,
-      "usage": "Chart series 5 on a chart card",
-      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+      "usage": "Chart series 5 on a chart card"
     },
     {
       "fg": "color.chart.6", "bg": "color.bg.sunken", "min": 3,
-      "usage": "Chart series 6 on a chart card",
-      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+      "usage": "Chart series 6 on a chart card"
     },
     {
       "fg": "color.chart.7", "bg": "color.bg.sunken", "min": 3,
-      "usage": "Chart series 7 on a chart card",
-      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+      "usage": "Chart series 7 on a chart card"
     },
     {
       "fg": "color.chart.8", "bg": "color.bg.sunken", "min": 3,
-      "usage": "Chart series 8 on a chart card",
-      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+      "usage": "Chart series 8 on a chart card"
     },
     {
       "fg": "color.chart.9", "bg": "color.bg.sunken", "min": 3,
-      "usage": "Chart series 9 on a chart card",
-      "knownFailures": ["light"], "note": "BoardUI parity: the light palette uses the 400 shades. Every chart also states its values as text (headline, tooltip, figure description)."
+      "usage": "Chart series 9 on a chart card"
     },
     {
       "fg": "color.tag.blue.fg", "bg": "color.tag.blue.bg", "min": 4.5,
@@ -146,6 +126,14 @@
     {
       "fg": "color.tag.orange.fg", "bg": "color.tag.orange.bg", "min": 4.5,
       "usage": "Tag pill text: calendar events, attachment tiles, source marks (orange)"
+    },
+    {
+      "fg": "color.text.on-action", "bg": "color.accent.700", "min": 4.5,
+      "usage": "Primary button hover in dark mode"
+    },
+    {
+      "fg": "color.border.control", "bg": "color.bg.canvas", "min": 3,
+      "usage": "Control outlines on the page"
     }
   ]
 }

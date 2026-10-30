@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { RiAddLine, RiRestartLine } from "@remixicon/react";
 import {
   AgentCreator,
+  AgentProgress,
   AgentLimits,
   Button,
   ComposerAttachments,
@@ -348,5 +349,37 @@ export const CalendarDemo = () => <MonthCalendar defaultDate="2026-10-14" classN
 export const CalendarPreview = () => (
   <Fit width={720}>
     <MonthCalendar defaultDate="2026-10-14" />
+  </Fit>
+);
+
+// ─── Agent progress ────────────────────────────────────────────────────────
+
+export function AgentProgressDemo() {
+  const [run, setRun] = useState(0);
+  const [finished, setFinished] = useState(false);
+  return (
+    <div className="flex w-full max-w-md flex-col gap-3">
+      <AgentProgress key={run} stepDuration={1800} onFinished={() => setFinished(true)} />
+      <div className="flex items-center gap-3">
+        <Button
+          size="sm"
+          variant="secondary"
+          leadingIcon={RiRestartLine}
+          onPress={() => {
+            setFinished(false);
+            setRun((r) => r + 1);
+          }}
+        >
+          Replay
+        </Button>
+        <span className="text-body-sm text-fg-secondary">{finished ? "onFinished fired" : "Running…"}</span>
+      </div>
+    </div>
+  );
+}
+
+export const AgentProgressPreview = () => (
+  <Fit width={420} center>
+    <AgentProgress isPaused stepDuration={1800} />
   </Fit>
 );

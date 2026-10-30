@@ -1,0 +1,198 @@
+import { useEffect, useState } from "react";
+import { Dialog, Modal, ModalOverlay } from "react-aria-components";
+import { RiCloseLine, RiComputerLine, RiMenuLine, RiMoonLine, RiSearchLine, RiSunLine } from "@remixicon/react";
+import { CommandGroup, CommandItem, CommandPalette, IconButton, Kbd, cx, focusRingNative } from "@ds/react";
+import type { IconComponent } from "@ds/react";
+import { GROUPS } from "../showcase/catalog";
+import { NAV, entriesIn } from "./routes";
+import type { Route } from "./routes";
+
+/* -------------------------------------------------------------------------- */
+/*                                    Theme                                   */
+/* -------------------------------------------------------------------------- */
+
+type ThemeChoice = "light" | "dark" | "system";
+
+export function useTheme() {
+  const [theme, setTheme] = useState<ThemeChoice>(() => {
+    try {
+      const stored = localStorage.getItem("ds-theme");
+      return stored === "light" || stored === "dark" ? stored : "system";
+    } catch {
+      return "system";
+    }
+  });
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === "system") delete root.dataset.theme;
+    else root.dataset.theme = theme;
+    try {
+      if (theme === "system") localStorage.removeItem("ds-theme");
+      else localStorage.setItem("ds-theme", theme);
+    } catch {
+      // Storage can be unavailable (private mode); the theme still applies for this visit.
+    }
+  }, [theme]);
+  return [theme, setTheme] as const;
+}
+
+const THEMES: { id: ThemeChoice; label: string; icon: IconComponent }[] = [
+  { id: "light", label: "Light", icon: RiSunLine },
+  { id: "dark", label: "Dark", icon: RiMoonLine },
+  { id: "system", label: "System", icon: RiComputerLine },
+];
+
+function ThemeSwitch({ className }: { className?: string }) {
+  const [theme, setTheme] = useTheme();
+  return (
+    <div role="group" aria-label="Theme" className={cx("flex items-center rounded-control-md border border-line p-0.5", className)}>
+      {THEMES.map(({ id, label, icon: Icon }) => (
+        <button
+          key={id}
+          type="button"
+          aria-label={label}
+          aria-pressed={theme === id}
+          onClick={() => setTheme(id)}
+          className={cx(
+            "flex size-7 items-center justify-center rounded-xs transition-colors",
+            theme === id ? "bg-fg text-canvas" : "text-fg-secondary hover:text-fg",
+            focusRingNative,
+          )}
+        >
+          <Icon aria-hidden className="size-4" />
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Search                                   */
+/* -------------------------------------------------------------------------- */
+
+const isApple = () => typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.userAgent);
+
+/** Site search, on the system's own command palette. */
+export function SiteSearch({ isOpen, onOpenChange }: { isOpen: boolean; onOpenChange: (open: boolean) => void }) {
+  return (
+    <CommandPalette
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}
+      shortcut="k"
+      aria-label="Search the docs"
+      placeholder="Search components, blocks, charts…"
+      onAction={(key) => {
+        window.location.hash = `#/components/${String(key)}`;
+      }}
+    >
+      {GROUPS.map((group) => (
+        <CommandGroup key={group.name} title={group.name}>
+          {entriesIn(group.name).map((entry) => (
+            <CommandItem key={entry.slug} id={entry.slug} description={entry.summary} keywords={[group.name]}>
+              {entry.name}
+            </CommandItem>
+          ))}
+        </CommandGroup>
+      ))}
+    </CommandPalette>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/*                                   Header                                   */
+/* -------------------------------------------------------------------------- */
+
+export function Wordmark() {
+  return (
+    <a href="#/" className={cx("flex items-baseline gap-1.5 rounded-xs", focusRingNative)}>
+      <span className="font-display text-title-md-strong text-fg">Windesign</span>
+      <span className="font-mono text-caption tracking-wide text-accent-600 uppercase">ds</span>
+    </a>
+  );
+}
+
+export function SiteHeader({ route }: { route: Route }) {
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  // Any navigation closes the menu sheet.
+  useEffect(() => setMenuOpen(false), [route]);
+
+  return (
+    <header className="sticky top-0 z-40 border-b border-line bg-canvas/92 backdrop-blur-sm">
+      <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-5 sm:px-8">
+        <Wordmark />
+
+        <nav aria-label="Sections" className="hidden flex-1 items-center gap-6 md:flex">
+          {NAV.map((item) => {
+            const current = item.matches(route);
+            return (
+              <a
+                key={item.label}
+                href={item.href}
+                aria-current={current ? "page" : undefined}
+                className={cx(
+                  "rounded-xs py-1 text-body-md transition-colors",
+                  current ? "text-fg underline decoration-accent-500 decoration-2 underline-offset-8" : "text-fg-secondary hover:text-fg",
+                  focusRingNative,
+                )}
+              >
+                {item.label}
+              </a>
+            );
+          })}
+        </nav>
+
+        <div className="ms-auto flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setSearchOpen(true)}
+            aria-keyshortcuts="Meta+K Control+K"
+            className={cx(
+              "flex h-9 items-center gap-2 rounded-control-md border border-line-control bg-surface ps-2.5 pe-1.5 text-body-sm text-fg-secondary transition-colors hover:text-fg",
+              focusRingNative,
+            )}
+          >
+            <RiSearchLine aria-hidden className="size-4" />
+            <span className="hidden sm:inline">Search</span>
+            <Kbd className="hidden px-1.5 sm:inline-flex">{isApple() ? "⌘K" : "Ctrl K"}</Kbd>
+          </button>
+          <ThemeSwitch className="hidden sm:flex" />
+          <IconButton icon={RiMenuLine} size="small" aria-label="Open menu" onClick={() => setMenuOpen(true)} className="md:hidden" />
+        </div>
+      </div>
+
+      <SiteSearch isOpen={searchOpen} onOpenChange={setSearchOpen} />
+
+      {/* Small screens: the contents as a full-height sheet. */}
+      <ModalOverlay
+        isOpen={menuOpen}
+        onOpenChange={setMenuOpen}
+        isDismissable
+        className="fixed inset-0 z-50 bg-scrim transition-opacity data-[entering]:opacity-0 data-[exiting]:opacity-0 md:hidden"
+      >
+        <Modal className="fixed inset-y-0 end-0 w-full max-w-sm bg-canvas transition-transform duration-(--ds-motion-duration-slow) ease-enter data-[entering]:translate-x-full data-[exiting]:translate-x-full rtl:data-[entering]:-translate-x-full rtl:data-[exiting]:-translate-x-full motion-reduce:transition-none">
+          <Dialog aria-label="Menu" className="flex h-full flex-col gap-6 overflow-y-auto p-5">
+            <div className="flex items-center justify-between">
+              <Wordmark />
+              <IconButton icon={RiCloseLine} size="small" aria-label="Close menu" onClick={() => setMenuOpen(false)} />
+            </div>
+            <nav aria-label="Sections">
+              <ol className="flex flex-col">
+                {NAV.map((item, i) => (
+                  <li key={item.label} className="border-b border-line">
+                    <a href={item.href} className={cx("flex items-baseline gap-4 py-4", focusRingNative)}>
+                      <span className="font-mono text-caption text-fg-secondary">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="font-display text-title-md-strong text-fg">{item.label}</span>
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+            <ThemeSwitch className="self-start" />
+          </Dialog>
+        </Modal>
+      </ModalOverlay>
+    </header>
+  );
+}

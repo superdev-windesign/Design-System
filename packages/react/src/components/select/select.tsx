@@ -94,9 +94,9 @@ export function Select<T extends object>({
             ref={triggerRef}
             className={cx(
               "flex w-full cursor-pointer items-center justify-between rounded-control-md",
-              "border border-line bg-surface text-fg shadow-raised",
+              "border border-line-control bg-surface text-fg shadow-raised",
               "transition-[background-color,border-color,box-shadow,padding,font-size] duration-(--ds-motion-duration-moderate)",
-              "data-[hovered]:border-line-hover data-[hovered]:bg-surface-hover",
+              "data-[hovered]:border-line-control-hover data-[hovered]:bg-surface-hover",
               focusRing,
               "data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-disabled data-[disabled]:text-fg-tertiary data-[disabled]:shadow-none",
               size === "sm" ? "gap-1 px-1.75 py-1 text-body-sm-strong" : "gap-1.5 px-2.5 py-2 text-body-md-strong",

@@ -1,28 +1,28 @@
 # Windesign Design System
 
-A token-driven React design system, set up according to the blueprint in
-[docs/blueprint](docs/blueprint/README.md). The components so far, all rebuilt
-for visual parity with [BoardUI](https://www.boardui.com/components):
+A token-driven React design system with an editorial identity: paper and ink
+neutrals, a terracotta accent, Fraunces for display type and Instrument Sans for
+the interface, crisp corners and ruled layouts instead of floating cards. It was
+set up according to the blueprint in [docs/blueprint](docs/blueprint/README.md)
+and started from BoardUI's free MIT components, which have since been re-themed;
+the rest is original work. What's in it:
 
 - **Select** and **Date Range Picker**, plus the single-date **Date Picker** and the **Button** they depend on.
-- **All 31 of BoardUI's free base components** (Input, Checkbox, Switch, Tabs, Table, Tooltip, Tree View and more), converted onto the @ds tokens by [tools/boardui-port](tools/boardui-port/README.md).
-- **Agent Progress**: animated multi-step progress, adapted from BoardUI Pro under the owner's license. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). It is not shown in the public showcase.
+- **31 base components** (Input, Checkbox, Switch, Tabs, Table, Tooltip, Tree View and more), ported from BoardUI's free MIT components by [tools/boardui-port](tools/boardui-port/README.md) and re-themed.
 - **Pro tier**, designed for this system rather than ported:
   - **Command Palette**: Autocomplete + Menu in a modal with a gliding highlight. `CommandMenu` embeds the same list inline.
   - **Toast**: call `toast.success(…)` from anywhere and mount one `<Toaster />`. Toasts rest as a stack, fan out on hover or focus and swipe away; `toast.promise` swaps a loading toast for the outcome.
   - **Step Wizard**: steps slide in the direction of travel, validate before moving on, and are announced to screen readers.
   - **Stat Card**: a rolling odometer number, a trend chip, and a sparkline you can scrub to read each point.
-- **Blocks** (17): BoardUI's nine free blocks ported (Agent Thinking, Composer Loader, Auth Card, Data Grid, Data Table, Notification Center, Settings Modal, Sidebar, Stat Cards), plus eight designed here: Composer Panel, Composer Attachments, Web Search, Task List, Agent Limits, Questionnaire, Agent Creator and Calendar.
+- **Blocks** (18): BoardUI's nine free blocks ported (Agent Thinking, Composer Loader, Auth Card, Data Grid, Data Table, Notification Center, Settings Modal, Sidebar, Stat Cards), plus nine designed here: Agent Progress, Composer Panel, Composer Attachments, Web Search, Task List, Agent Limits, Questionnaire, Agent Creator and Calendar.
 - **Charts** (18): BoardUI's free Revenue Chart ported, plus seventeen designed here on a shared chart shell (`ChartCard`, `ChartTooltip`, `seriesColor`): Activity Rings, Area, Bar List, Combo, Contributions, Earnings, Funnel, Heatmap, Line, Most Active Days, Radar, Radial, Sankey, Scatter, Sleep Score, Stage Bars and Steps. Cartesian and polar charts use [recharts](https://recharts.org).
 - **Templates** (10): whole screens assembled from the blocks and charts, laid out with container queries so they fit whatever space they're given: Chat Starter, AI Chat, Multi-agent Chat, AI Image Generation, AI Profile, and Home, Finance, Marketing, Medical Profile and Project Board dashboards. The chat templates share `useChatSession`: pass `respond` (an async generator of text chunks) to connect a model; without it a demo responder streams canned replies.
 - **Foundations**: Color and Typography pages in the playground, read live from the Tailwind bridge so they always match the tokens.
 
-Browse them at `#/components` in the playground: every card is a live
-preview, and each component has a page with an interactive demo and its
-import line. A docs sidebar lists every page by group, with quick search
-(⌘K / Ctrl K). On small screens it becomes a slide-in drawer.
-
-Measurements are in [docs/components/parity-report.md](docs/components/parity-report.md).
+The playground is laid out like a book: a contents page, numbered chapters
+where every entry is a live figure ("Fig. 03.1"), and a page per entry with
+Preview and Code tabs and the rest of its chapter alongside. Search everything
+with ⌘K / Ctrl K; it runs on the system's own Command Palette.
 
 ## Packages
 
@@ -34,8 +34,7 @@ packages/
 apps/
   playground/  Vite app showing every component in light, dark and system themes
 docs/
-  blueprint/   the design-system blueprint and BoardUI audit
-  components/  per-component parity notes
+  blueprint/   the design-system blueprint and the original BoardUI audit
 ```
 
 The packages are internal workspace packages: `@ds/react` exports its
@@ -103,6 +102,6 @@ the no-flash theme script from `apps/playground/index.html` into your `<head>`.
   utilities only, no arbitrary design values, one focus style, React Aria for
   behavior.
 - `packages/tokens/src/contrast-pairs.json` lists every color pairing a
-  component uses. `knownFailures` records the contrast debt inherited from
-  BoardUI for parity; the test fails when one gets fixed so the entry is removed.
+  component uses. `knownFailures` records deliberate exceptions with a reason
+  (there are none now); the test fails if one starts passing so it gets removed.
 - Third-party code and licenses: [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

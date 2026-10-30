@@ -29,6 +29,26 @@
       "$type": "shadow",
       "$value": "0 1px rgb(0 0 0 / 0.16)",
       "$description": "CSS shorthand. Dark-theme counterpart of shadow.2xs."
+    },
+    "rule": {
+      "$type": "shadow",
+      "$value": "0 1px 0 0 rgb(26 23 20 / 0.05)",
+      "$description": "A one-pixel rule under a surface; cards and controls."
+    },
+    "rule-strong": {
+      "$type": "shadow",
+      "$value": "0 1px 0 0 rgb(0 0 0 / 0.35)",
+      "$description": "Dark-theme counterpart of shadow.rule."
+    },
+    "float": {
+      "$type": "shadow",
+      "$value": "0 24px 48px -24px rgb(26 23 20 / 0.3), 0 2px 8px -2px rgb(26 23 20 / 0.08)",
+      "$description": "Menus, popovers and dialogs lifting off the page."
+    },
+    "float-strong": {
+      "$type": "shadow",
+      "$value": "0 24px 48px -20px rgb(0 0 0 / 0.65), 0 2px 8px -2px rgb(0 0 0 / 0.4)",
+      "$description": "Dark-theme counterpart of shadow.float."
     }
   },
   "duration": {

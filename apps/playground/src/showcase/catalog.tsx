@@ -96,6 +96,8 @@ import {
   QuestionnairePreview,
   AgentCreatorDemo,
   AgentCreatorPreview,
+  AgentProgressDemo,
+  AgentProgressPreview,
   CalendarDemo,
   CalendarPreview,
 } from "./agent-blocks-demos";
@@ -998,6 +1000,16 @@ export const CATALOG: CatalogEntry[] = [
     imports: ["TaskList"],
     preview: () => <TaskListPreview />,
     demo: () => <TaskListDemo />,
+  },
+  {
+    slug: "agent-progress",
+    isNew: true,
+    name: "Agent Progress",
+    group: "Blocks",
+    summary: "A multi-step task as a ledger: a growing rule, a pen stroke under the current step, checks that draw in.",
+    imports: ["AgentProgress"],
+    preview: () => <AgentProgressPreview />,
+    demo: () => <AgentProgressDemo />,
   },
   {
     slug: "agent-limits",

@@ -130,8 +130,8 @@ const inputStyles = sortCx({
   field: [
     "relative flex w-full items-center",
     "rounded-2lg",
-    "bg-muted text-icon-tertiary",
-    "ring-2 ring-inset ring-transparent",
+    "bg-surface text-icon-tertiary",
+    "ring-1 ring-inset ring-line-control",
     "transition-[background-color,box-shadow,color] duration-[var(--input-transition-ms)] ease",
   ].join(" "),
 
@@ -192,12 +192,12 @@ export function InputBase({
             !isFocusWithin &&
             !isDisabled &&
             !isInvalid &&
-            "ring-line-hover",
+            "ring-line-control-hover",
           // Focus wins over hover
           isFocusWithin &&
             !isDisabled &&
             !isInvalid &&
-            "ring-line-pressed",
+            "ring-2 ring-focus",
           // Disabled
           isDisabled &&
             "bg-field-disabled text-field-icon-disabled",

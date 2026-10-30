@@ -29,6 +29,14 @@
     color: var(--ds-color-text-primary);
   }
 
+  /* Display and title styles are set in the serif; everything else in the UI sans.
+     Matching on the style names keeps components free of font choices. */
+  :where([class*="text-display-"], [class*="text-title-"]) {
+    font-family: var(--ds-font-family-display);
+    font-optical-sizing: auto;
+    letter-spacing: -0.01em;
+  }
+
   /* iOS Safari zooms into focused fields under 16px. Keep the 14px type scale
      everywhere else and only bump form controls on small screens. */
   @media (max-width: 639px) {

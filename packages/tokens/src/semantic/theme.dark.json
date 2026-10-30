@@ -4,47 +4,47 @@
     "bg": {
       "canvas": {
         "$type": "color",
-        "$value": "{color.neutral.925}"
+        "$value": "{color.paper.950}"
       },
       "surface": {
         "$type": "color",
-        "$value": "{color.neutral.800}"
+        "$value": "{color.paper.900}"
       },
       "surface-hover": {
         "$type": "color",
-        "$value": "color-mix(in srgb, {color.neutral.700} 60%, transparent)"
+        "$value": "color-mix(in srgb, {color.paper.700} 60%, transparent)"
       },
       "surface-pressed": {
         "$type": "color",
-        "$value": "{color.neutral.800}"
+        "$value": "{color.paper.800}"
       },
       "surface-disabled": {
         "$type": "color",
-        "$value": "{color.neutral.800}"
+        "$value": "{color.paper.900}"
       },
       "sunken": {
         "$type": "color",
-        "$value": "{color.neutral.900}"
+        "$value": "{color.paper.925}"
       },
       "sunken-hover": {
         "$type": "color",
-        "$value": "{color.neutral.800}"
+        "$value": "{color.paper.800}"
       },
       "muted": {
         "$type": "color",
-        "$value": "{color.neutral.800}"
+        "$value": "{color.paper.800}"
       },
       "strong": {
         "$type": "color",
-        "$value": "{color.neutral.700}"
+        "$value": "{color.paper.700}"
       },
       "muted-hover": {
         "$type": "color",
-        "$value": "{color.neutral.700}"
+        "$value": "{color.paper.700}"
       },
       "strong-hover": {
         "$type": "color",
-        "$value": "{color.neutral.600}"
+        "$value": "{color.paper.600}"
       },
       "danger-subtle": {
         "$type": "color",
@@ -54,23 +54,23 @@
     "text": {
       "primary": {
         "$type": "color",
-        "$value": "{color.neutral.50}"
+        "$value": "{color.paper.100}"
       },
       "secondary": {
         "$type": "color",
-        "$value": "{color.neutral.500}"
+        "$value": "{color.paper.400}"
       },
       "tertiary": {
         "$type": "color",
-        "$value": "{color.neutral.600}"
+        "$value": "{color.paper.500}"
       },
       "disabled": {
         "$type": "color",
-        "$value": "{color.neutral.800}"
+        "$value": "{color.paper.800}"
       },
       "on-action": {
         "$type": "color",
-        "$value": "{color.white}"
+        "$value": "{color.paper.50}"
       },
       "danger": {
         "$type": "color",
@@ -82,25 +82,25 @@
       },
       "placeholder": {
         "$type": "color",
-        "$value": "{color.neutral.400}"
+        "$value": "{color.paper.400}"
       }
     },
     "icon": {
       "primary": {
         "$type": "color",
-        "$value": "{color.neutral.50}"
+        "$value": "{color.paper.100}"
       },
       "secondary": {
         "$type": "color",
-        "$value": "{color.neutral.500}"
+        "$value": "{color.paper.400}"
       },
       "tertiary": {
         "$type": "color",
-        "$value": "{color.neutral.600}"
+        "$value": "{color.paper.600}"
       },
       "quaternary": {
         "$type": "color",
-        "$value": "{color.neutral.700}"
+        "$value": "{color.paper.700}"
       },
       "danger": {
         "$type": "color",
@@ -108,13 +108,13 @@
       },
       "disabled": {
         "$type": "color",
-        "$value": "{color.neutral.500}"
+        "$value": "{color.paper.500}"
       }
     },
     "progress": {
       "track": {
         "$type": "color",
-        "$value": "{color.neutral.700}"
+        "$value": "{color.paper.700}"
       },
       "fill": {
         "$type": "color",
@@ -124,15 +124,15 @@
     "border": {
       "default": {
         "$type": "color",
-        "$value": "{color.neutral.700}"
+        "$value": "{color.paper.700}"
       },
       "hover": {
         "$type": "color",
-        "$value": "{color.neutral.500}"
+        "$value": "{color.paper.500}"
       },
       "pressed": {
         "$type": "color",
-        "$value": "{color.neutral.600}"
+        "$value": "{color.paper.600}"
       },
       "focus": {
         "$type": "color",
@@ -140,7 +140,7 @@
       },
       "group": {
         "$type": "color",
-        "$value": "color-mix(in srgb, {color.neutral.600} 60%, transparent)"
+        "$value": "color-mix(in srgb, {color.paper.600} 60%, transparent)"
       },
       "danger": {
         "$type": "color",
@@ -148,15 +148,15 @@
       },
       "control": {
         "$type": "color",
-        "$value": "{color.neutral.700}"
+        "$value": "{color.paper.500}"
       },
       "control-hover": {
         "$type": "color",
-        "$value": "{color.neutral.500}"
+        "$value": "{color.paper.400}"
       },
       "separator": {
         "$type": "color",
-        "$value": "{color.neutral.800}"
+        "$value": "{color.paper.800}"
       }
     },
     "selection": {
@@ -173,7 +173,7 @@
       "primary": {
         "fg-disabled": {
           "$type": "color",
-          "$value": "{color.neutral.500}"
+          "$value": "{color.paper.500}"
         }
       },
       "danger": {
@@ -197,7 +197,7 @@
         },
         "bg-disabled": {
           "$type": "color",
-          "$value": "{color.neutral.800}"
+          "$value": "{color.paper.800}"
         },
         "fg": {
           "$type": "color",
@@ -205,7 +205,7 @@
         },
         "fg-disabled": {
           "$type": "color",
-          "$value": "{color.neutral.600}"
+          "$value": "{color.paper.600}"
         }
       }
     },
@@ -244,25 +244,25 @@
     "control": {
       "knob": {
         "$type": "color",
-        "$value": "{color.white}"
+        "$value": "{color.paper.100}"
       },
       "knob-shade": {
         "$type": "color",
-        "$value": "{color.neutral.100}"
+        "$value": "{color.paper.100}"
       }
     },
     "field": {
       "bg-disabled": {
         "$type": "color",
-        "$value": "color-mix(in srgb, {color.neutral.800} 30%, transparent)"
+        "$value": "color-mix(in srgb, {color.paper.800} 30%, transparent)"
       },
       "icon-disabled": {
         "$type": "color",
-        "$value": "{color.neutral.600}"
+        "$value": "{color.paper.600}"
       },
       "fg-disabled": {
         "$type": "color",
-        "$value": "color-mix(in srgb, {color.neutral.500} 40%, transparent)"
+        "$value": "color-mix(in srgb, {color.paper.500} 40%, transparent)"
       }
     },
     "status": {
@@ -279,38 +279,38 @@
       "success": {
         "bg": {
           "$type": "color",
-          "$value": "color-mix(in srgb, {color.lime.800} 50%, transparent)"
+          "$value": "color-mix(in srgb, {color.green.800} 50%, transparent)"
         },
         "fg": {
           "$type": "color",
-          "$value": "{color.lime.300}"
+          "$value": "{color.green.300}"
         },
         "solid": {
           "$type": "color",
-          "$value": "{color.lime.500}"
+          "$value": "{color.green.500}"
         },
         "text": {
           "$type": "color",
-          "$value": "{color.lime.300}",
+          "$value": "{color.green.300}",
           "$description": "Status-colored text and small icons on surfaces and on the matching status background"
         }
       },
       "danger": {
         "bg": {
           "$type": "color",
-          "$value": "color-mix(in srgb, {color.rose.800} 50%, transparent)"
+          "$value": "color-mix(in srgb, {color.red.800} 50%, transparent)"
         },
         "fg": {
           "$type": "color",
-          "$value": "{color.rose.300}"
+          "$value": "{color.red.300}"
         },
         "solid": {
           "$type": "color",
-          "$value": "{color.rose.500}"
+          "$value": "{color.red.500}"
         },
         "text": {
           "$type": "color",
-          "$value": "{color.rose.300}",
+          "$value": "{color.red.300}",
           "$description": "Status-colored text and small icons on surfaces and on the matching status background"
         }
       }
@@ -400,11 +400,11 @@
       },
       "2": {
         "$type": "color",
-        "$value": "{color.lime.400}"
+        "$value": "{color.terracotta.400}"
       },
       "3": {
         "$type": "color",
-        "$value": "{color.pink.400}"
+        "$value": "{color.yellow.400}"
       },
       "4": {
         "$type": "color",
@@ -416,15 +416,15 @@
       },
       "6": {
         "$type": "color",
-        "$value": "{color.blue.400}"
+        "$value": "{color.emerald.400}"
       },
       "7": {
         "$type": "color",
-        "$value": "{color.emerald.400}"
+        "$value": "{color.rose.400}"
       },
       "8": {
         "$type": "color",
-        "$value": "{color.yellow.400}"
+        "$value": "{color.lime.400}"
       },
       "9": {
         "$type": "color",
@@ -432,62 +432,62 @@
       },
       "track": {
         "$type": "color",
-        "$value": "{color.neutral.800}",
+        "$value": "{color.paper.800}",
         "$description": "Unfilled part of bars, rings and meters"
       },
       "cursor": {
         "$type": "color",
-        "$value": "{color.neutral.700}",
+        "$value": "{color.paper.700}",
         "$description": "Hover cursor band and guide lines"
       },
       "neutral": {
         "$type": "color",
-        "$value": "{color.neutral.800}",
+        "$value": "{color.paper.800}",
         "$description": "De-emphasized series, e.g. last period"
       },
       "1-active": {
         "$type": "color",
-        "$value": "{color.teal.500}",
+        "$value": "{color.teal.300}",
         "$description": "Hover emphasis for series 1"
       },
       "2-active": {
         "$type": "color",
-        "$value": "{color.lime.500}",
+        "$value": "{color.terracotta.300}",
         "$description": "Hover emphasis for series 2"
       },
       "3-active": {
         "$type": "color",
-        "$value": "{color.pink.500}",
+        "$value": "{color.yellow.300}",
         "$description": "Hover emphasis for series 3"
       },
       "4-active": {
         "$type": "color",
-        "$value": "{color.sky.500}",
+        "$value": "{color.sky.300}",
         "$description": "Hover emphasis for series 4"
       },
       "5-active": {
         "$type": "color",
-        "$value": "{color.purple.500}",
+        "$value": "{color.purple.300}",
         "$description": "Hover emphasis for series 5"
       },
       "6-active": {
         "$type": "color",
-        "$value": "{color.blue.500}",
+        "$value": "{color.emerald.300}",
         "$description": "Hover emphasis for series 6"
       },
       "7-active": {
         "$type": "color",
-        "$value": "{color.emerald.500}",
+        "$value": "{color.rose.300}",
         "$description": "Hover emphasis for series 7"
       },
       "8-active": {
         "$type": "color",
-        "$value": "{color.yellow.500}",
+        "$value": "{color.lime.300}",
         "$description": "Hover emphasis for series 8"
       },
       "9-active": {
         "$type": "color",
-        "$value": "{color.indigo.500}",
+        "$value": "{color.indigo.300}",
         "$description": "Hover emphasis for series 9"
       }
     }
@@ -497,19 +497,19 @@
       "primary": {
         "default": {
           "$type": "gradient",
-          "$value": "linear-gradient(180deg, {color.accent.500} 0%, {color.accent.600} 100%)"
+          "$value": "linear-gradient({color.accent.600}, {color.accent.600})"
         },
         "hover": {
           "$type": "gradient",
-          "$value": "linear-gradient(180deg, {color.accent.400} 0%, {color.accent.500} 100%)"
+          "$value": "linear-gradient({color.accent.700}, {color.accent.700})"
         },
         "pressed": {
           "$type": "gradient",
-          "$value": "linear-gradient(180deg, {color.accent.600} 0%, {color.accent.700} 100%)"
+          "$value": "linear-gradient({color.accent.800}, {color.accent.800})"
         },
         "disabled": {
           "$type": "gradient",
-          "$value": "linear-gradient(180deg, {color.neutral.700} 0%, {color.neutral.800} 100%)"
+          "$value": "linear-gradient({color.paper.800}, {color.paper.800})"
         }
       },
       "danger": {
@@ -535,15 +535,17 @@
   "elevation": {
     "raised": {
       "$type": "shadow",
-      "$value": "{shadow.xs-strong}"
+      "$value": "{shadow.rule-strong}",
+      "$description": "shadow-rule"
     },
     "overlay": {
       "$type": "shadow",
-      "$value": "{shadow.dropdown-strong}"
+      "$value": "{shadow.float-strong}",
+      "$description": "shadow-float"
     },
     "hairline": {
       "$type": "shadow",
-      "$value": "{shadow.2xs-strong}"
+      "$value": "{shadow.rule-strong}"
     },
     "control-checked": {
       "$type": "shadow",

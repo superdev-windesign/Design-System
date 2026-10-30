@@ -3,50 +3,50 @@
   "radius": {
     "hairline": {
       "$type": "dimension",
-      "$value": "{radius.3}",
+      "$value": "{radius.2}",
       "$description": "Tiny hover targets (calendar month chevrons)"
     },
     "control": {
       "xs": {
         "$type": "dimension",
-        "$value": "{radius.4}"
+        "$value": "{radius.2}"
       },
       "sm": {
         "$type": "dimension",
-        "$value": "{radius.8}"
+        "$value": "{radius.4}"
       },
       "md": {
         "$type": "dimension",
-        "$value": "{radius.10}"
+        "$value": "{radius.4}"
       }
     },
     "item": {
       "$type": "dimension",
-      "$value": "{radius.8}",
+      "$value": "{radius.4}",
       "$description": "Day cells, small selectable items"
     },
     "tile": {
       "$type": "dimension",
-      "$value": "{radius.4}",
+      "$value": "{radius.3}",
       "$description": "Small icon tiles (20px and under)"
     },
     "chip": {
       "$type": "dimension",
-      "$value": "{radius.12}"
+      "$value": "{radius.4}"
     },
     "surface": {
       "$type": "dimension",
-      "$value": "{radius.16}",
+      "$value": "{radius.6}",
       "$description": "Cards and month panels"
     },
     "overlay": {
       "$type": "dimension",
-      "$value": "{radius.16}",
+      "$value": "{radius.8}",
       "$description": "Menus, listboxes"
     },
     "panel": {
       "$type": "dimension",
-      "$value": "{radius.24}",
+      "$value": "{radius.10}",
       "$description": "Large popovers and dialogs"
     }
   },
@@ -84,11 +84,16 @@
     "family": {
       "sans": {
         "$type": "fontFamily",
-        "$value": "{font.family.inter}"
+        "$value": "{font.family.instrument-sans}"
       },
       "mono": {
         "$type": "fontFamily",
         "$value": "{font.family.jetbrains-mono}"
+      },
+      "display": {
+        "$type": "fontFamily",
+        "$value": "{font.family.fraunces}",
+        "$description": "Display and title styles"
       }
     }
   },
@@ -346,6 +351,44 @@
       "tracking": {
         "$type": "dimension",
         "$value": "{font.tracking.0}"
+      }
+    },
+    "display-md": {
+      "$description": "Page titles in the serif",
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.40}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.46}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.regular}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.headline}"
+      }
+    },
+    "display-lg": {
+      "$description": "Hero headlines in the serif",
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.56}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.60}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.regular}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.headline}"
       }
     }
   },

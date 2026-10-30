@@ -495,3 +495,45 @@ PATCHES["blocks/sidebar/dashboard-user-menu.tsx"].push([
   '<Avatar size="md" color="neutral" initials="M" className={avatarClassName} />',
   '<Avatar size="md" color="neutral" initials="A" className={avatarClassName} />',
 ]);
+
+/**
+ * The editorial theme: ported files restyled away from BoardUI's look (filled
+ * inputs, pill keycaps). Applied after the other patches on every run.
+ */
+const THEME_PATCHES = {
+  "components/input/input.tsx": [
+    [
+      "    \"rounded-2lg\",\n    \"bg-muted text-icon-tertiary\",\n    \"ring-2 ring-inset ring-transparent\",",
+      "    \"rounded-2lg\",\n    \"bg-surface text-icon-tertiary\",\n    \"ring-1 ring-inset ring-line-control\","
+    ],
+    [
+      "            \"ring-line-hover\",",
+      "            \"ring-line-control-hover\","
+    ],
+    [
+      "            \"ring-line-pressed\",",
+      "            \"ring-2 ring-focus\","
+    ]
+  ],
+  "components/textarea/textarea.tsx": [
+    [
+      "    \"rounded-2lg\",\n    \"bg-muted text-icon-tertiary\",\n    \"ring-2 ring-inset ring-transparent\",",
+      "    \"rounded-2lg\",\n    \"bg-surface text-icon-tertiary\",\n    \"ring-1 ring-inset ring-line-control\","
+    ],
+    [
+      "            \"ring-line-hover\",",
+      "            \"ring-line-control-hover\","
+    ],
+    [
+      "            \"ring-line-pressed\",",
+      "            \"ring-2 ring-focus\","
+    ]
+  ],
+  "components/kbd/kbd.tsx": [
+    [
+      "inline-flex items-center justify-center rounded-full bg-kbd",
+      "inline-flex items-center justify-center rounded-xs bg-kbd"
+    ]
+  ]
+};
+for (const [file, patches] of Object.entries(THEME_PATCHES)) (PATCHES[file] ??= []).push(...patches);

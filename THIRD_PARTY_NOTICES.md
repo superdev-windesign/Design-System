@@ -17,11 +17,11 @@ Adapted files carry a header comment naming their BoardUI source:
 | `packages/react/src/recipes/menu.ts` | `components/base/dropdown/menu-styles.ts` |
 | `packages/react/src/icons/chevrons.tsx` | `components/foundations/icons/chevrons.tsx`, `components/base/date-picker/shared.tsx` |
 | `packages/react/src/utils/use-dismiss-on-outside-press.ts` | `utils/use-dismiss-on-outside-press.ts` |
-| `packages/styles/src/utilities.css` (press motion, gradient buttons) | `styles/theme.css` |
-| Token values in `packages/tokens/src/semantic/*.json` and `packages/tokens/src/component/*.json` | `styles/theme.css` |
+| `packages/styles/src/utilities.css` (press motion, action button layers) | `styles/theme.css` |
+| The token structure in `packages/tokens/src/semantic/*.json`, and component token values for switch, slider and radio effects in `packages/tokens/src/component/*.json` | `styles/theme.css` |
 | 39 further files under `packages/react/src/components/`, `foundations/` and `utils/` (Announcement, Avatar, Badge, Chip, Breadcrumb, Button Group, Close Button, Icon Button, Link Button, Carousel, Checkbox, Checkbox Card, Meeting Scheduler, Divider, Dropdown, File Upload, Input, Input OTP, Kbd, Notification, Pagination, Radio, Radio Card, Segmented Control, Slider, Social Button, Switch, Switch Card, Table, Tabs, Pill Tabs, Textarea, Tooltip, Tree View, direction and copy helpers) | `components/base/**`, `components/foundations/**`, `utils/**`; converted by `tools/boardui-port/port.mjs` |
 | 25 files under `packages/react/src/blocks/`, `charts/revenue-chart/` and `hooks/` (Agent Thinking, Composer Loader, Auth Card and media carousel, Data Grid and its example, Data Table, Notification Center, Settings Modal and its pages, Dashboard Sidebar with team and user menus, Stat Cards, Theme Toggle, Revenue and Orders chart cards, count-up hook) | `components/application/**`, `components/application/docs/examples/data-grid-example.tsx`, `hooks/use-count-up.ts`; converted by `tools/boardui-port/port.mjs` |
-| Chart palette tokens (`color.chart.*`) and the number-fade and row animations in `packages/styles/src/utilities.css` | `styles/theme.css`, `styles/globals.css` |
+| The number-fade and row animations in `packages/styles/src/utilities.css` | `styles/theme.css`, `styles/globals.css` |
 
 Every adapted file starts with a header naming its BoardUI source. Demo
 defaults that held a real person's name and email were replaced with
@@ -41,19 +41,14 @@ ported: it depends on Next.js routing, a server route and the Vercel AI SDK, and
 carries a BoardUI Pro upsell; this repository's Chat Starter is built on its own
 chat session hook instead.
 
+The colour palette (paper, terracotta and the chart series), type pairing, corner
+scale, depth and the documentation site's design are this repository's own.
+
 ## BoardUI Pro
 
-`packages/react/src/components/agent-progress/agent-progress.tsx` is adapted
-from BoardUI Pro's **Agent Progress** block. It was rebuilt from the component
-code that boardui.com serves to the browser, under the repository owner's
-BoardUI Pro license (purchased per the owner; keep the Lemon Squeezy receipt
-with this repository's records).
-
-This file is **not** covered by the MIT notice below. Use it within the terms of
-the BoardUI Pro license. In particular, don't publish `@ds/react` publicly, or
-otherwise redistribute this component's source, unless the license allows it.
-Run `npx boardui@latest add agent-progress` with the license activated to get
-the canonical source if you need to compare.
+No BoardUI Pro code is included. An earlier Agent Progress, adapted from the
+Pro block of that name, was replaced by the original implementation in
+`packages/react/src/components/agent-progress/agent-progress.tsx`.
 
 ```
 MIT License

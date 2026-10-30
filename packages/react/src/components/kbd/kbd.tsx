@@ -19,7 +19,7 @@ export function Kbd({ className, ref, ...props }: KbdProps) {
     <kbd
       ref={ref}
       className={cx(
-        "inline-flex items-center justify-center rounded-full bg-kbd px-1 py-0.5 font-sans text-caption-emphasis tracking-normal whitespace-nowrap text-kbd-fg",
+        "inline-flex items-center justify-center rounded-xs bg-kbd px-1 py-0.5 font-sans text-caption-emphasis tracking-normal whitespace-nowrap text-kbd-fg",
         className,
       )}
       {...props}

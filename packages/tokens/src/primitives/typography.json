@@ -7,7 +7,15 @@
       },
       "jetbrains-mono": {
         "$type": "fontFamily",
-        "$value": "\"JetBrains Mono\", ui-monospace, \"SFMono-Regular\", Menlo, Consolas, \"Liberation Mono\", monospace"
+        "$value": "\"JetBrains Mono Variable\", \"JetBrains Mono\", ui-monospace, \"SFMono-Regular\", Menlo, Consolas, monospace"
+      },
+      "fraunces": {
+        "$type": "fontFamily",
+        "$value": "\"Fraunces Variable\", \"Fraunces\", ui-serif, Georgia, \"Times New Roman\", serif"
+      },
+      "instrument-sans": {
+        "$type": "fontFamily",
+        "$value": "\"Instrument Sans Variable\", \"Instrument Sans\", ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\""
       }
     },
     "size": {
@@ -50,6 +58,14 @@
       "28": {
         "$type": "dimension",
         "$value": "1.75rem"
+      },
+      "40": {
+        "$type": "dimension",
+        "$value": "2.5rem"
+      },
+      "56": {
+        "$type": "dimension",
+        "$value": "3.5rem"
       }
     },
     "line-height": {
@@ -84,6 +100,14 @@
       "34": {
         "$type": "dimension",
         "$value": "2.125rem"
+      },
+      "46": {
+        "$type": "dimension",
+        "$value": "2.875rem"
+      },
+      "60": {
+        "$type": "dimension",
+        "$value": "3.75rem"
       }
     },
     "weight": {
@@ -116,6 +140,10 @@
       "display": {
         "$type": "dimension",
         "$value": "-0.5px"
+      },
+      "headline": {
+        "$type": "dimension",
+        "$value": "-1px"
       }
     }
   }

@@ -1,20 +1,20 @@
 {
-  "$description": "Component-scoped tokens (light). Used by one component each; values match BoardUI's.",
+  "$description": "Component-scoped tokens (light). Used by one component each.",
   "component": {
     "kbd": {
       "bg": {
         "$type": "color",
-        "$value": "{color.neutral.300}"
+        "$value": "{color.paper.300}"
       },
       "fg": {
         "$type": "color",
-        "$value": "{color.neutral.500}"
+        "$value": "{color.paper.500}"
       }
     },
     "avatar": {
       "bg": {
         "$type": "color",
-        "$value": "{color.neutral.300}"
+        "$value": "{color.paper.300}"
       },
       "blue": {
         "bg": {
@@ -50,21 +50,21 @@
     "badge-neutral": {
       "bg": {
         "$type": "color",
-        "$value": "{color.neutral.200}"
+        "$value": "{color.paper.200}"
       }
     },
     "file-upload": {
       "icon-bg": {
         "$type": "color",
-        "$value": "{color.neutral.300}"
+        "$value": "{color.paper.300}"
       },
       "icon-fg": {
         "$type": "color",
-        "$value": "{color.neutral.400}"
+        "$value": "{color.paper.400}"
       },
       "icon-fg-hover": {
         "$type": "color",
-        "$value": "{color.neutral.500}"
+        "$value": "{color.paper.500}"
       }
     },
     "pill-tab": {
@@ -74,17 +74,17 @@
       },
       "hover-bg": {
         "$type": "color",
-        "$value": "{color.neutral.100}"
+        "$value": "{color.paper.100}"
       }
     },
     "segmented": {
       "bg": {
         "$type": "color",
-        "$value": "{color.neutral.100}"
+        "$value": "{color.paper.100}"
       },
       "selected-bg": {
         "$type": "color",
-        "$value": "{color.white}"
+        "$value": "{color.paper.50}"
       }
     },
     "tab-count": {
@@ -100,19 +100,19 @@
     "switch": {
       "off-start": {
         "$type": "color",
-        "$value": "{color.white}"
+        "$value": "{color.paper.50}"
       },
       "off-end": {
         "$type": "color",
-        "$value": "{color.neutral.100}"
+        "$value": "{color.paper.100}"
       },
       "on-start": {
         "$type": "color",
-        "$value": "color-mix(in oklab, {color.accent.500} 63%, {color.accent.600})"
+        "$value": "{color.accent.600}"
       },
       "on-end": {
         "$type": "color",
-        "$value": "color-mix(in oklab, {color.accent.600} 16%, {color.accent.700})"
+        "$value": "{color.accent.600}"
       },
       "on-sm": {
         "$type": "shadow",
@@ -142,15 +142,15 @@
     "social": {
       "dark-bg": {
         "$type": "color",
-        "$value": "{color.neutral.950}"
+        "$value": "{color.paper.950}"
       },
       "dark-bg-hover": {
         "$type": "color",
-        "$value": "{color.neutral.800}"
+        "$value": "{color.paper.800}"
       },
       "dark-bg-pressed": {
         "$type": "color",
-        "$value": "{color.neutral.900}"
+        "$value": "{color.paper.900}"
       }
     },
     "radio": {

@@ -30,6 +30,7 @@
 @theme inline {
   --font-sans: var(--ds-font-family-sans);
   --font-mono: var(--ds-font-family-mono);
+  --font-display: var(--ds-font-family-display);
 
   /* Surfaces → bg-* */
   --color-canvas: var(--ds-color-bg-canvas);
@@ -264,14 +265,15 @@
   --color-social-dark-pressed: var(--ds-component-social-dark-bg-pressed);
 
   /* Radius scale for component internals (prefer the role names above when one fits) */
+  /* Editorial corners: the size names step up gently and top out at 10px. */
   --radius-xs: var(--ds-radius-2);
   --radius-sm: var(--ds-radius-4);
-  --radius-md: var(--ds-radius-6);
-  --radius-lg: var(--ds-radius-8);
-  --radius-2lg: var(--ds-radius-10);
-  --radius-xl: var(--ds-radius-12);
-  --radius-2xl: var(--ds-radius-16);
-  --radius-3xl: var(--ds-radius-24);
+  --radius-md: var(--ds-radius-4);
+  --radius-lg: var(--ds-radius-4);
+  --radius-2lg: var(--ds-radius-6);
+  --radius-xl: var(--ds-radius-6);
+  --radius-2xl: var(--ds-radius-8);
+  --radius-3xl: var(--ds-radius-10);
 
   /* Elevation and component effects */
   --shadow-hairline: var(--ds-elevation-hairline);
@@ -321,6 +323,14 @@
   --text-display-sm--line-height: var(--ds-text-display-sm-line-height);
   --text-display-sm--font-weight: var(--ds-text-display-sm-weight);
   --text-display-sm--letter-spacing: var(--ds-text-display-sm-tracking);
+  --text-display-md: var(--ds-text-display-md-size);
+  --text-display-md--line-height: var(--ds-text-display-md-line-height);
+  --text-display-md--font-weight: var(--ds-text-display-md-weight);
+  --text-display-md--letter-spacing: var(--ds-text-display-md-tracking);
+  --text-display-lg: var(--ds-text-display-lg-size);
+  --text-display-lg--line-height: var(--ds-text-display-lg-line-height);
+  --text-display-lg--font-weight: var(--ds-text-display-lg-weight);
+  --text-display-lg--letter-spacing: var(--ds-text-display-lg-tracking);
   --text-title-md-strong: var(--ds-text-title-md-strong-size);
   --text-title-md-strong--line-height: var(--ds-text-title-md-strong-line-height);
   --text-title-md-strong--font-weight: var(--ds-text-title-md-strong-weight);

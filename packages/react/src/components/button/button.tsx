@@ -97,8 +97,8 @@ const styles = {
       "data-[disabled]:text-action-danger-fg-disabled data-[disabled]:shadow-none",
     ].join(" "),
     secondary: [
-      "border border-line bg-surface text-fg shadow-raised",
-      "data-[hovered]:not-data-[pressed]:border-line-hover data-[hovered]:not-data-[pressed]:bg-surface-hover",
+      "border border-line-control bg-surface text-fg shadow-raised",
+      "data-[hovered]:not-data-[pressed]:border-line-control-hover data-[hovered]:not-data-[pressed]:bg-surface-hover",
       "data-[pressed]:border-line-pressed data-[pressed]:bg-surface-pressed",
       "data-[disabled]:border-line data-[disabled]:bg-surface-disabled data-[disabled]:text-fg-tertiary data-[disabled]:shadow-none",
     ].join(" "),

@@ -232,7 +232,7 @@ export function DateChipInput({
       }}
       aria-label={label}
       className={cx(
-        "w-26 rounded-control-md border border-line bg-surface p-2 text-body-md-strong text-fg shadow-raised outline-none",
+        "w-26 rounded-control-md border border-line-control bg-surface p-2 text-body-md-strong text-fg shadow-raised outline-none",
         "transition-colors duration-(--ds-motion-duration-fast) ease-out focus-visible:border-line-pressed",
       )}
     />
@@ -254,9 +254,9 @@ export function CalendarActions({ children }: { children: ReactNode }) {
 
 /** Trigger chrome shared by both pickers: calendar icon + value on a raised surface. */
 export const triggerButtonClassName = cx(
-  "inline-flex shrink-0 cursor-pointer items-center gap-0.5 rounded-control-md border border-line bg-surface p-2 shadow-raised",
+  "inline-flex shrink-0 cursor-pointer items-center gap-0.5 rounded-control-md border border-line-control bg-surface p-2 shadow-raised",
   "transition-[background-color,border-color,box-shadow] duration-(--ds-motion-duration-base)",
-  "hover:border-line-hover hover:bg-surface-hover",
+  "hover:border-line-control-hover hover:bg-surface-hover",
   focusRingNative,
   "disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-fg-tertiary disabled:shadow-none",
 );
