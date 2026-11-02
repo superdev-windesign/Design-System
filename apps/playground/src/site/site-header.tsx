@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { Dialog, Modal, ModalOverlay } from "react-aria-components";
 import { RiCloseLine, RiComputerLine, RiMenuLine, RiMoonLine, RiSearchLine, RiSunLine } from "@remixicon/react";
-import { CommandGroup, CommandItem, CommandPalette, IconButton, Kbd, cx, focusRingNative } from "@ds/react";
-import type { IconComponent } from "@ds/react";
+import { CommandGroup, CommandItem, CommandPalette, IconButton, Kbd, cx, focusRingNative, useTheme } from "@ds/react";
+import type { IconComponent, ThemeChoice } from "@ds/react";
 import { GROUPS } from "../showcase/catalog";
 import { NAV, entriesIn } from "./routes";
 import type { Route } from "./routes";
@@ -11,31 +11,6 @@ import type { Route } from "./routes";
 /*                                    Theme                                   */
 /* -------------------------------------------------------------------------- */
 
-type ThemeChoice = "light" | "dark" | "system";
-
-export function useTheme() {
-  const [theme, setTheme] = useState<ThemeChoice>(() => {
-    try {
-      const stored = localStorage.getItem("ds-theme");
-      return stored === "light" || stored === "dark" ? stored : "system";
-    } catch {
-      return "system";
-    }
-  });
-  useEffect(() => {
-    const root = document.documentElement;
-    if (theme === "system") delete root.dataset.theme;
-    else root.dataset.theme = theme;
-    try {
-      if (theme === "system") localStorage.removeItem("ds-theme");
-      else localStorage.setItem("ds-theme", theme);
-    } catch {
-      // Storage can be unavailable (private mode); the theme still applies for this visit.
-    }
-  }, [theme]);
-  return [theme, setTheme] as const;
-}
-
 const THEMES: { id: ThemeChoice; label: string; icon: IconComponent }[] = [
   { id: "light", label: "Light", icon: RiSunLine },
   { id: "dark", label: "Dark", icon: RiMoonLine },
@@ -43,7 +18,8 @@ const THEMES: { id: ThemeChoice; label: string; icon: IconComponent }[] = [
 ];
 
 function ThemeSwitch({ className }: { className?: string }) {
-  const [theme, setTheme] = useTheme();
+  // From the library's ThemeProvider, so the header and the menu sheet share one choice.
+  const { theme, setTheme } = useTheme();
   return (
     <div role="group" aria-label="Theme" className={cx("flex items-center rounded-control-md border border-line p-0.5", className)}>
       {THEMES.map(({ id, label, icon: Icon }) => (

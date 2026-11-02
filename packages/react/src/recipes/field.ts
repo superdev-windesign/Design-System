@@ -53,3 +53,11 @@ export const FIELD_BUTTON = cx(
 export const FIELD_LABEL = "flex items-center gap-0.5 text-body-md-strong text-fg";
 export const FIELD_DESCRIPTION = "pt-px text-caption-strong text-fg-secondary";
 export const FIELD_ERROR = "pt-px text-caption-strong text-fg-danger";
+
+/** One segment of a date or time input. The highlighted segment is its focus indicator. */
+export const FIELD_SEGMENT = cx(
+  "rounded-xs px-0.5 text-end tabular-nums text-fg caret-transparent outline-none",
+  "data-[placeholder]:text-fg-tertiary data-[type=literal]:px-0 data-[type=literal]:text-fg-tertiary",
+  "data-[focused]:bg-accent-600 data-[focused]:text-on-action data-[focused]:data-[placeholder]:text-on-action",
+  "data-[disabled]:text-field-fg-disabled",
+);

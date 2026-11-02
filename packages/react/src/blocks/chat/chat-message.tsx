@@ -15,14 +15,14 @@ import type { ChatMessageData } from "./chat-session";
  * Formatting is parsed into React elements, never injected as HTML.
  */
 
-export interface CodeBlock {
+export interface ChatCodeBlock {
   language: string;
   code: string;
 }
 
 /** Splits text into prose and ``` fenced blocks. */
-export function parseBlocks(content: string): ({ kind: "text"; text: string } | ({ kind: "code" } & CodeBlock))[] {
-  const parts: ({ kind: "text"; text: string } | ({ kind: "code" } & CodeBlock))[] = [];
+export function parseBlocks(content: string): ({ kind: "text"; text: string } | ({ kind: "code" } & ChatCodeBlock))[] {
+  const parts: ({ kind: "text"; text: string } | ({ kind: "code" } & ChatCodeBlock))[] = [];
   const fence = /```([a-z0-9+-]*)\n([\s\S]*?)(```|$)/gi;
   let last = 0;
   for (const m of content.matchAll(fence)) {
@@ -88,7 +88,7 @@ function CopyButton({ text, label = "Copy" }: { text: string; label?: string }) 
   );
 }
 
-function CodeFence({ block, onOpen }: { block: CodeBlock; onOpen?: (block: CodeBlock) => void }) {
+function CodeFence({ block, onOpen }: { block: ChatCodeBlock; onOpen?: (block: ChatCodeBlock) => void }) {
   return (
     <figure className="overflow-hidden rounded-xl border border-line bg-sunken">
       <figcaption className="flex items-center justify-between gap-2 border-b border-line py-1 ps-3 pe-1">
@@ -120,7 +120,7 @@ export interface ChatMessageProps {
   avatar?: ReactNode;
   /** Show copy under the message (assistant only). */
   showActions?: boolean;
-  onOpenCode?: (block: CodeBlock) => void;
+  onOpenCode?: (block: ChatCodeBlock) => void;
   /** A cursor at the end while the reply streams. */
   isStreaming?: boolean;
   className?: string;

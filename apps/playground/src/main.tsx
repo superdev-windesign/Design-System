@@ -3,11 +3,15 @@ import "@fontsource-variable/instrument-sans";
 import "@fontsource-variable/jetbrains-mono";
 import "./styles.css";
 import { StrictMode } from "react";
+import { ThemeProvider } from "@ds/react";
 import { createRoot } from "react-dom/client";
 import { App } from "./app";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
+    {/* One theme choice for the whole site; index.html applies it before first paint. */}
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
   </StrictMode>,
 );

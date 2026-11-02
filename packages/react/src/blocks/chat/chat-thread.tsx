@@ -6,7 +6,7 @@ import { AgentThinking } from "../agent-thinking/agent-thinking";
 import { focusRingNative } from "../../recipes/focus-ring";
 import { cx } from "../../utils/cx";
 import { ChatMessage } from "./chat-message";
-import type { CodeBlock } from "./chat-message";
+import type { ChatCodeBlock } from "./chat-message";
 import type { ChatMessageData, ChatStatus } from "./chat-session";
 
 /**
@@ -21,7 +21,7 @@ export interface ChatThreadProps {
   status?: ChatStatus;
   /** Avatar for assistant messages; receives the message for multi-agent threads. */
   renderAvatar?: (message: ChatMessageData) => ReactNode;
-  onOpenCode?: (block: CodeBlock) => void;
+  onOpenCode?: (block: ChatCodeBlock) => void;
   empty?: { title: ReactNode; description?: ReactNode; suggestions?: string[]; onSuggest?: (text: string) => void };
   /** Label for the thinking indicator. */
   thinkingLabel?: string;

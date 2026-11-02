@@ -106,6 +106,24 @@ import { TEMPLATES, TemplateFrame, TemplatePreview } from "./templates-demos";
 import { ACTION_ENTRIES, NAVIGATION_ENTRIES, OVERLAY_ENTRIES } from "./overlay-demos";
 import { DATE_ENTRIES, FORM_ENTRIES, SELECTION_ENTRIES } from "./form-demos";
 import { DATA_DISPLAY_ENTRIES, FEEDBACK_ENTRIES, LAYOUT_ENTRIES } from "./display-demos";
+import { MORE_ENTRIES } from "./more-demos";
+import { NINE_ENTRIES } from "./nine-demos";
+import {
+  BreakpointsFoundation,
+  BreakpointsPreview,
+  ElevationFoundation,
+  ElevationPreview,
+  IconsFoundation,
+  IconsPreview,
+  MotionFoundation,
+  MotionPreview,
+  RadiusFoundation,
+  RadiusPreview,
+  SpacingFoundation,
+  SpacingPreview,
+  ThemingFoundation,
+  ThemingPreview,
+} from "./more-foundations";
 import {
   AgentThinkingDemo,
   AuthCardDemo,
@@ -165,7 +183,7 @@ export type Group =
   | "Templates";
 
 export const GROUPS: { name: Group; blurb: string }[] = [
-  { name: "Foundations", blurb: "The colour and type tokens everything is built on." },
+  { name: "Foundations", blurb: "The tokens everything is built on, and how theming works." },
   { name: "Pro", blurb: "Advanced, animated components designed for this system." },
   { name: "Actions", blurb: "Things people press to make something happen." },
   { name: "Forms", blurb: "Collecting text, codes and files." },
@@ -292,6 +310,76 @@ const BASE_CATALOG: CatalogEntry[] = [
     imports: [],
     preview: () => <TypographyPreview />,
     demo: () => <TypographyFoundation />,
+  },
+  {
+    slug: "spacing",
+    isNew: true,
+    name: "Spacing",
+    group: "Foundations",
+    summary: "The 4px spacing scale and the control and icon sizes built on it.",
+    imports: [],
+    preview: () => <SpacingPreview />,
+    demo: () => <SpacingFoundation />,
+  },
+  {
+    slug: "radius",
+    isNew: true,
+    name: "Radius",
+    group: "Foundations",
+    summary: "Corner roles from hairline to panel, and the scale for component internals.",
+    imports: [],
+    preview: () => <RadiusPreview />,
+    demo: () => <RadiusFoundation />,
+  },
+  {
+    slug: "elevation",
+    isNew: true,
+    name: "Elevation",
+    group: "Foundations",
+    summary: "Rules first, a soft lift for controls, one shadow for anything floating.",
+    imports: [],
+    preview: () => <ElevationPreview />,
+    demo: () => <ElevationFoundation />,
+  },
+  {
+    slug: "motion",
+    isNew: true,
+    name: "Motion",
+    group: "Foundations",
+    summary: "Durations and easing curves, with a side-by-side comparison you can play.",
+    imports: [],
+    preview: () => <MotionPreview />,
+    demo: () => <MotionFoundation />,
+  },
+  {
+    slug: "icons",
+    isNew: true,
+    name: "Icons",
+    group: "Foundations",
+    summary: "Remix Icon, line style, in three sizes, with the rules for naming and hiding them.",
+    imports: [],
+    preview: () => <IconsPreview />,
+    demo: () => <IconsFoundation />,
+  },
+  {
+    slug: "breakpoints",
+    isNew: true,
+    name: "Breakpoints",
+    group: "Foundations",
+    summary: "Mobile-first viewport breakpoints and container queries, with this window's size.",
+    imports: [],
+    preview: () => <BreakpointsPreview />,
+    demo: () => <BreakpointsFoundation />,
+  },
+  {
+    slug: "theming",
+    isNew: true,
+    name: "Theming",
+    group: "Foundations",
+    summary: "ThemeProvider, useTheme and ThemeScope: light, dark and system, remembered.",
+    imports: ["ThemeProvider", "useTheme", "ThemeScope"],
+    preview: () => <ThemingPreview />,
+    demo: () => <ThemingFoundation />,
   },
 
   // Pro
@@ -1428,6 +1516,8 @@ export const CATALOG: CatalogEntry[] = [
   ...DATA_DISPLAY_ENTRIES,
   ...LAYOUT_ENTRIES,
   ...DATE_ENTRIES,
+  ...MORE_ENTRIES,
+  ...NINE_ENTRIES,
 ].sort((x, y) => groupIndex(x) - groupIndex(y));
 
 export const findEntry = (slug: string) => CATALOG.find((entry) => entry.slug === slug);

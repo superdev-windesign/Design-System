@@ -115,7 +115,7 @@ export function ColorFoundation() {
             </h2>
             <p className="text-body-sm text-fg-secondary">{group.blurb}</p>
           </div>
-          <ul className="grid gap-1 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-1 sm:grid-cols-2 lg:grid-cols-3">
             {group.tokens.map((token) => (
               <Swatch key={token.name} token={token} version={version} />
             ))}
@@ -141,7 +141,7 @@ export function ColorFoundation() {
           </button>
         </div>
         {showComponent && (
-          <ul className="grid gap-1 sm:grid-cols-2 lg:grid-cols-3">
+          <ul className="grid grid-cols-1 gap-1 sm:grid-cols-2 lg:grid-cols-3">
             {componentTokens.map((token) => (
               <Swatch key={token.name} token={token} version={version} />
             ))}
@@ -256,7 +256,7 @@ export function TypographyFoundation() {
         <code className="font-mono text-fg">--ds-text-*</code> tokens.
       </p>
 
-      <section aria-labelledby="type-families" className="grid gap-4 sm:grid-cols-2">
+      <section aria-labelledby="type-families" className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         <h2 id="type-families" className="sr-only">
           Families
         </h2>

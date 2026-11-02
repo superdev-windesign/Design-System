@@ -15,6 +15,8 @@ the rest is original work. What's in it:
   - Forms and selection: Combobox, Multi-select, Tag Group, Checkbox Group, Number Field, Search Field, Password Field (with a strength gauge), Date Field, Time Field, Color Picker, Rating, and Form with Field Error.
   - Feedback: Progress Bar, Meter, Spinner, Skeleton, Empty State and Alert.
   - Layout and data display: Card, Accordion, List, Description List, Timeline, Resizable Panels, Scroll Area, and Image with Aspect Ratio.
+- **17 more**: Calendar and Range Calendar, Time Picker, Date-Time Picker, Link, Avatar Group, Progress Circle, Code Block, Copy Button, typography (Heading, Text, Code, Blockquote, Prose), layout (Stack, Inline, Grid, Container), ThemeProvider with `useTheme` and ThemeScope, Skip Link and Visually Hidden, Editable Text, Phone Field, Tour, Bottom Navigation, Virtual List, Truncate, and Relative Time / Formatted Number.
+- **Specialised**: Side Navigation, Table of Contents (scroll-spy), Mentions Input, Tree Select, Floating Action Button and Back to Top, Countdown and Stopwatch, a draggable Bottom Sheet, a Week / Day Schedule, and a Donut Chart (19 charts in all).
 - **Pro tier**, designed for this system rather than ported:
   - **Command Palette**: Autocomplete + Menu in a modal with a gliding highlight. `CommandMenu` embeds the same list inline.
   - **Toast**: call `toast.success(…)` from anywhere and mount one `<Toaster />`. Toasts rest as a stack, fan out on hover or focus and swipe away; `toast.promise` swaps a loading toast for the outcome.

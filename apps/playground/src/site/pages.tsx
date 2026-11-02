@@ -26,7 +26,7 @@ function NewMark() {
  */
 function Figure({ entry, tall = false }: { entry: CatalogEntry; tall?: boolean }) {
   return (
-    <figure className="group relative flex flex-col gap-3 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-4 has-[a:focus-visible]:outline-focus">
+    <figure className="group relative flex min-w-0 flex-col gap-3 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-4 has-[a:focus-visible]:outline-focus">
       <div
         inert
         className={cx(
@@ -60,7 +60,8 @@ function Chapter({ group }: { group: Group }) {
   const entries = entriesIn(group);
   const wide = group === "Templates" || group === "Blocks" || group === "Charts";
   return (
-    <section aria-labelledby={`ch-${groupSlug(group)}`} className="grid gap-8 border-t border-line pt-8 lg:grid-cols-12">
+    // grid-cols-1 is minmax(0, 1fr): a wide preview is clipped by its figure instead of widening the page on phones.
+    <section aria-labelledby={`ch-${groupSlug(group)}`} className="grid grid-cols-1 gap-8 border-t border-line pt-8 lg:grid-cols-12">
       <header className="flex flex-col gap-2 lg:col-span-3">
         <span className="font-mono text-caption text-accent-600">{groupNumber(group)}</span>
         <h2 id={`ch-${groupSlug(group)}`} className="font-display text-title-lg-strong text-fg">
@@ -73,7 +74,7 @@ function Chapter({ group }: { group: Group }) {
           {entries.length} {entries.length === 1 ? "entry" : "entries"}
         </p>
       </header>
-      <div className={cx("grid gap-x-8 gap-y-12 lg:col-span-9", wide ? "sm:grid-cols-1 xl:grid-cols-2" : "sm:grid-cols-2")}>
+      <div className={cx("grid grid-cols-1 gap-x-8 gap-y-12 lg:col-span-9", wide ? "sm:grid-cols-1 xl:grid-cols-2" : "sm:grid-cols-2")}>
         {entries.map((entry) => (
           <Figure key={entry.slug} entry={entry} tall={group === "Templates"} />
         ))}
@@ -167,7 +168,7 @@ export function HomePage() {
             From the collection
           </h2>
         </div>
-        <div className="grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((entry) => (
             <Figure key={entry.slug} entry={entry} />
           ))}
@@ -237,7 +238,7 @@ export function DetailPage({ entry }: { entry: CatalogEntry }) {
 
   return (
     <Page className="gap-12 py-10 sm:py-14">
-      <div className="grid gap-10 lg:grid-cols-12">
+      <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
         <article className="flex min-w-0 flex-col gap-8 lg:col-span-9">
           <header className="flex flex-col gap-3 border-b border-line pb-8">
             <Kicker>

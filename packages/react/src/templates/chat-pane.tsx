@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import { ComposerPanel } from "../blocks/composer/composer-panel";
 import type { ComposerModel, ComposerMode } from "../blocks/composer/composer-panel";
 import { ChatThread } from "../blocks/chat/chat-thread";
-import type { CodeBlock } from "../blocks/chat/chat-message";
+import type { ChatCodeBlock } from "../blocks/chat/chat-message";
 import { useChatSession } from "../blocks/chat/chat-session";
 import type { ChatMessageData, ChatRespond } from "../blocks/chat/chat-session";
 import { cx } from "../utils/cx";
@@ -36,7 +36,7 @@ export function ChatPane({
   /** Who answers the user directly (multi-agent threads). */
   replyAs?: ChatMessageData["author"];
   renderAvatar?: (message: ChatMessageData) => ReactNode;
-  onOpenCode?: (block: CodeBlock) => void;
+  onOpenCode?: (block: ChatCodeBlock) => void;
   suggestions?: string[];
   emptyTitle?: ReactNode;
   emptyDescription?: ReactNode;

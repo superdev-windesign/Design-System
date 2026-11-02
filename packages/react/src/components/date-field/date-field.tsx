@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 import { DateField as AriaDateField, DateInput, DateSegment, TimeField as AriaTimeField } from "react-aria-components";
 import type { DateFieldProps as AriaDateFieldProps, DateValue, TimeFieldProps as AriaTimeFieldProps, TimeValue, ValidationResult } from "react-aria-components";
 import { RiCalendarLine, RiTimeLine } from "@remixicon/react";
-import { fieldShell, type FieldSize } from "../../recipes/field";
+import { FIELD_SEGMENT, fieldShell, type FieldSize } from "../../recipes/field";
 import { cx } from "../../utils/cx";
 import { FieldDescription, FieldError, FieldLabel } from "../form/form";
 
@@ -28,18 +28,10 @@ interface SharedProps {
   className?: string;
 }
 
-const SEGMENT = cx(
-  "rounded-xs px-0.5 text-end tabular-nums text-fg caret-transparent outline-none",
-  "data-[placeholder]:text-fg-tertiary data-[type=literal]:px-0 data-[type=literal]:text-fg-tertiary",
-  // The highlighted segment is the focus indicator.
-  "data-[focused]:bg-accent-600 data-[focused]:text-on-action data-[focused]:data-[placeholder]:text-on-action",
-  "data-[disabled]:text-field-fg-disabled",
-);
-
 function Segments({ size, hasIcon }: { size: FieldSize; hasIcon: boolean }) {
   return (
     <DateInput className={(state) => cx(fieldShell(state, size), "gap-0 text-body-md", hasIcon && "pe-9")}>
-      {(segment) => <DateSegment segment={segment} className={SEGMENT} />}
+      {(segment) => <DateSegment segment={segment} className={FIELD_SEGMENT} />}
     </DateInput>
   );
 }
