@@ -274,6 +274,11 @@
         "fg": {
           "$type": "color",
           "$value": "{color.blue.300}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.blue.300}",
+          "$description": "Status-colored text and small icons on surfaces and on the matching status background"
         }
       },
       "success": {
@@ -292,6 +297,25 @@
         "text": {
           "$type": "color",
           "$value": "{color.green.300}",
+          "$description": "Status-colored text and small icons on surfaces and on the matching status background"
+        }
+      },
+      "warning": {
+        "bg": {
+          "$type": "color",
+          "$value": "color-mix(in srgb, {color.amber.800} 50%, transparent)"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.amber.300}"
+        },
+        "solid": {
+          "$type": "color",
+          "$value": "{color.amber.400}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.amber.300}",
           "$description": "Status-colored text and small icons on surfaces and on the matching status background"
         }
       },

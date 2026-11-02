@@ -9,6 +9,12 @@ the rest is original work. What's in it:
 
 - **Select** and **Date Range Picker**, plus the single-date **Date Picker** and the **Button** they depend on.
 - **31 base components** (Input, Checkbox, Switch, Tabs, Table, Tooltip, Tree View and more), ported from BoardUI's free MIT components by [tools/boardui-port](tools/boardui-port/README.md) and re-themed.
+- **38 standard components**, designed here on React Aria:
+  - Overlays: Dialog (with Modal), Alert Dialog, Drawer, Popover, Hover Card, Menu (sections, shortcuts, submenus, checkable items) and Context Menu.
+  - Navigation and actions: Menubar, Navigation Menu, Stepper, Toolbar and Toggle Button.
+  - Forms and selection: Combobox, Multi-select, Tag Group, Checkbox Group, Number Field, Search Field, Password Field (with a strength gauge), Date Field, Time Field, Color Picker, Rating, and Form with Field Error.
+  - Feedback: Progress Bar, Meter, Spinner, Skeleton, Empty State and Alert.
+  - Layout and data display: Card, Accordion, List, Description List, Timeline, Resizable Panels, Scroll Area, and Image with Aspect Ratio.
 - **Pro tier**, designed for this system rather than ported:
   - **Command Palette**: Autocomplete + Menu in a modal with a gliding highlight. `CommandMenu` embeds the same list inline.
   - **Toast**: call `toast.success(…)` from anywhere and mount one `<Toaster />`. Toasts rest as a stack, fan out on hover or focus and swipe away; `toast.promise` swaps a loading toast for the outcome.

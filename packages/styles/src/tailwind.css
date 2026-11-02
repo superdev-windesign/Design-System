@@ -160,9 +160,14 @@
   /* Status (by meaning) */
   --color-status-info: var(--ds-color-status-info-bg);
   --color-status-info-fg: var(--ds-color-status-info-fg);
+  --color-status-info-text: var(--ds-color-status-info-text);
   --color-status-success: var(--ds-color-status-success-bg);
   --color-status-success-fg: var(--ds-color-status-success-fg);
   --color-status-success-solid: var(--ds-color-status-success-solid);
+  --color-status-warning: var(--ds-color-status-warning-bg);
+  --color-status-warning-fg: var(--ds-color-status-warning-fg);
+  --color-status-warning-solid: var(--ds-color-status-warning-solid);
+  --color-status-warning-text: var(--ds-color-status-warning-text);
   --color-status-danger: var(--ds-color-status-danger-bg);
   --color-status-danger-fg: var(--ds-color-status-danger-fg);
   --color-status-danger-solid: var(--ds-color-status-danger-solid);

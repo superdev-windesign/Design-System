@@ -310,6 +310,11 @@
         "fg": {
           "$type": "color",
           "$value": "{color.blue.600}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.blue.700}",
+          "$description": "Status-colored text and small icons on surfaces and on the matching status background"
         }
       },
       "success": {
@@ -328,6 +333,25 @@
         "text": {
           "$type": "color",
           "$value": "{color.green.800}",
+          "$description": "Status-colored text and small icons on surfaces and on the matching status background"
+        }
+      },
+      "warning": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.amber.100}"
+        },
+        "fg": {
+          "$type": "color",
+          "$value": "{color.amber.800}"
+        },
+        "solid": {
+          "$type": "color",
+          "$value": "{color.amber.700}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.amber.800}",
           "$description": "Status-colored text and small icons on surfaces and on the matching status background"
         }
       },

@@ -134,6 +134,18 @@
     {
       "fg": "color.border.control", "bg": "color.bg.canvas", "min": 3,
       "usage": "Control outlines on the page"
-    }
+    },
+    {"fg": "color.status.info-text", "bg": "color.status.info-bg", "min": 4.5, "usage": "Info alert title and icon"},
+    {"fg": "color.status.info-text", "bg": "color.bg.surface", "min": 4.5, "usage": "Info status text"},
+    {"fg": "color.status.warning-text", "bg": "color.status.warning-bg", "min": 4.5, "usage": "Warning alert title and icon"},
+    {"fg": "color.status.warning-text", "bg": "color.bg.surface", "min": 4.5, "usage": "Warning meter value, warning status text"},
+    {"fg": "color.status.warning-solid", "bg": "color.bg.surface", "min": 3, "usage": "Warning meter fill and timeline marker"},
+    {"fg": "color.status.success-solid", "bg": "color.bg.surface", "min": 3, "usage": "Healthy meter fill, completed stepper marker"},
+    {"fg": "color.text.primary", "bg": "color.status.info-bg", "min": 4.5, "usage": "Info alert body"},
+    {"fg": "color.text.primary", "bg": "color.status.success-bg", "min": 4.5, "usage": "Success alert body"},
+    {"fg": "color.text.primary", "bg": "color.status.warning-bg", "min": 4.5, "usage": "Warning alert body"},
+    {"fg": "color.text.primary", "bg": "color.status.danger-bg", "min": 4.5, "usage": "Danger alert body"},
+    {"fg": "color.accent.600", "bg": "color.bg.surface", "min": 3, "usage": "Rating stars, checked menu items, current stepper step"},
+    {"fg": "color.border.control", "bg": "color.bg.surface", "min": 3, "usage": "Empty rating stars, scroll area thumb"}
   ]
 }

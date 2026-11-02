@@ -244,3 +244,75 @@
   font-size: var(--ds-text-caption-size);
   fill: var(--ds-color-text-secondary);
 }
+
+/* Skeleton placeholders: a slow sweep of the surface colour across muted paper. */
+@keyframes ds-skeleton-sweep {
+  from {
+    background-position: 150% 0;
+  }
+  to {
+    background-position: -50% 0;
+  }
+}
+
+@utility animate-skeleton {
+  background-color: var(--ds-color-bg-muted);
+  background-image: linear-gradient(
+    90deg,
+    transparent 30%,
+    color-mix(in srgb, var(--ds-color-bg-surface) 70%, transparent) 50%,
+    transparent 70%
+  );
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: ds-skeleton-sweep calc(var(--ds-motion-duration-shimmer) * 0.6) linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    background-image: none;
+    animation: none;
+  }
+}
+
+/* Indeterminate progress: a third of the track slides across and wraps. */
+@keyframes ds-progress-indeterminate {
+  from {
+    translate: -100% 0;
+  }
+  to {
+    translate: 300% 0;
+  }
+}
+
+@utility animate-progress-indeterminate {
+  animation: ds-progress-indeterminate calc(var(--ds-motion-duration-shimmer) * 0.45) var(--ds-motion-easing-standard) infinite;
+
+  &:dir(rtl) {
+    animation-direction: reverse;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: calc(var(--ds-motion-duration-shimmer) * 1.5);
+  }
+}
+
+/* Spinner: one turn per beat. Reduced motion slows it rather than stopping it,
+   so the control still reads as busy. */
+@keyframes ds-spin {
+  to {
+    rotate: 1turn;
+  }
+}
+
+@utility animate-spinner {
+  animation: ds-spin calc(var(--ds-motion-duration-shimmer) * 0.25) linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation-duration: calc(var(--ds-motion-duration-shimmer) * 0.75);
+  }
+}
+
+/* Thin scrollbars in the control-border colour, for ScrollArea. */
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ds-color-border-control) transparent;
+}

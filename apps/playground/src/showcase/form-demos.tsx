@@ -1,0 +1,436 @@
+import { useState } from "react";
+import { CalendarDate, Time, today, getLocalTimeZone } from "@internationalized/date";
+import { RiFlagLine, RiMapPinLine, RiUserLine } from "@remixicon/react";
+import {
+  Button,
+  Checkbox,
+  CheckboxGroup,
+  ColorPicker,
+  ColorSwatch,
+  ComboBox,
+  ComboBoxItem,
+  ComboBoxSection,
+  DateField,
+  Form,
+  FormActions,
+  FormSection,
+  MultiSelect,
+  NumberField,
+  PasswordField,
+  Rating,
+  RatingValue,
+  SearchField,
+  Tag,
+  TagGroup,
+  TimeField,
+  toast,
+} from "@ds/react";
+import type { Key } from "react-aria-components";
+import type { CatalogEntry } from "./catalog";
+
+const PEOPLE = [
+  { id: "ada", label: "Ada Lovelace", description: "Engineering" },
+  { id: "alan", label: "Alan Turing", description: "Research" },
+  { id: "grace", label: "Grace Hopper", description: "Platform" },
+  { id: "katherine", label: "Katherine Johnson", description: "Data" },
+  { id: "margaret", label: "Margaret Hamilton", description: "Reliability" },
+  { id: "radia", label: "Radia Perlman", description: "Networking" },
+];
+
+const CITIES = {
+  Europe: ["Lisbon", "Berlin", "Copenhagen", "Ljubljana"],
+  Asia: ["Kyoto", "Seoul", "Pune", "Hanoi"],
+  Americas: ["Montréal", "Oaxaca", "Valparaíso"],
+};
+
+// ─── Demos ─────────────────────────────────────────────────────────────────
+
+function ComboBoxDemo({ compact = false }: { compact?: boolean }) {
+  return (
+    <div className="flex w-full max-w-xs flex-col gap-5">
+      <ComboBox label="Assignee" placeholder="Search people" defaultItems={PEOPLE} leadingIcon={RiUserLine}>
+        {(person) => (
+          <ComboBoxItem id={person.id} description={compact ? undefined : person.description}>
+            {person.label}
+          </ComboBoxItem>
+        )}
+      </ComboBox>
+      {!compact && (
+        <ComboBox label="Office" placeholder="Pick a city" description="Grouped by region. Type to filter." allowsCustomValue leadingIcon={RiMapPinLine}>
+          {Object.entries(CITIES).map(([region, cities]) => (
+            <ComboBoxSection key={region} title={region}>
+              {cities.map((city) => (
+                <ComboBoxItem key={city} id={city}>
+                  {city}
+                </ComboBoxItem>
+              ))}
+            </ComboBoxSection>
+          ))}
+        </ComboBox>
+      )}
+    </div>
+  );
+}
+
+function MultiSelectDemo() {
+  const [items, setItems] = useState(PEOPLE);
+  const [selected, setSelected] = useState<Key[]>(["ada", "grace"]);
+  return (
+    <div className="w-full max-w-sm">
+      <MultiSelect
+        label="Reviewers"
+        items={items}
+        selectedKeys={selected}
+        onSelectionChange={setSelected}
+        description="Type to find people. Enter a new name to invite them."
+        allowsCreate
+        onCreate={(label) => {
+          const person = { id: label.toLowerCase().replace(/\s+/g, "-"), label, description: "Invited" };
+          setItems((list) => [...list, person]);
+          toast.success(`Invited ${label}`);
+          return person;
+        }}
+      />
+    </div>
+  );
+}
+
+const SKILLS = ["Typography", "Research", "Motion", "Accessibility", "Prototyping"];
+
+function TagGroupDemo() {
+  const [tags, setTags] = useState(["Design", "Q3", "High priority", "Web"]);
+  return (
+    <div className="flex w-full max-w-sm flex-col gap-6">
+      <TagGroup label="Applied filters" description="Delete or Backspace removes the focused tag." onRemove={(keys) => setTags((t) => t.filter((x) => !keys.has(x)))}>
+        {tags.map((tag) => (
+          <Tag key={tag} id={tag}>
+            {tag}
+          </Tag>
+        ))}
+      </TagGroup>
+      <TagGroup label="Skills" selectionMode="multiple" defaultSelectedKeys={["Typography", "Accessibility"]} size="sm">
+        {SKILLS.map((skill) => (
+          <Tag key={skill} id={skill}>
+            {skill}
+          </Tag>
+        ))}
+      </TagGroup>
+    </div>
+  );
+}
+
+function CheckboxGroupDemo() {
+  return (
+    <div className="flex flex-col gap-6 sm:flex-row sm:gap-12">
+      <CheckboxGroup label="Notify me about" defaultValue={["mentions", "assigned"]} description="Sent to your inbox and the app.">
+        <Checkbox value="mentions">Mentions</Checkbox>
+        <Checkbox value="assigned">Assigned to me</Checkbox>
+        <Checkbox value="replies">Replies to my comments</Checkbox>
+        <Checkbox value="digest">Weekly digest</Checkbox>
+      </CheckboxGroup>
+      <CheckboxGroup label="Platforms" orientation="horizontal" isRequired errorMessage="Choose at least one." isInvalid>
+        <Checkbox value="web">Web</Checkbox>
+        <Checkbox value="ios">iOS</Checkbox>
+        <Checkbox value="android">Android</Checkbox>
+      </CheckboxGroup>
+    </div>
+  );
+}
+
+function ColorPickerDemo() {
+  const [color, setColor] = useState<string>("#c2410c");
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <ColorPicker label="Accent" value={color} onChange={(c) => setColor(c.toString("hex"))} />
+      <div className="flex items-center gap-2 font-mono text-caption text-fg-secondary">
+        <ColorSwatch color={color} className="size-5 rounded-xs" />
+        {color.toUpperCase()}
+      </div>
+    </div>
+  );
+}
+
+function RatingDemo() {
+  const [value, setValue] = useState(4);
+  return (
+    <div className="flex flex-col items-center gap-6">
+      <Rating label="How was your stay?" value={value} onChange={setValue} size="lg" labels={["Poor", "Fair", "Good", "Very good", "Excellent"]} />
+      <div className="flex flex-col items-center gap-1">
+        <RatingValue value={4.6} count={1204} />
+        <span className="text-caption text-fg-secondary">Read-only, with halves</span>
+      </div>
+    </div>
+  );
+}
+
+function NumberFieldDemo() {
+  return (
+    <div className="flex w-full max-w-xs flex-col gap-5">
+      <NumberField label="Seats" defaultValue={5} minValue={1} maxValue={50} description="Between 1 and 50." />
+      <NumberField label="Monthly budget" defaultValue={1200} step={50} minValue={0} formatOptions={{ style: "currency", currency: "EUR", maximumFractionDigits: 0 }} />
+      <NumberField label="Discount" defaultValue={0.15} step={0.05} minValue={0} maxValue={1} formatOptions={{ style: "percent" }} size="sm" />
+    </div>
+  );
+}
+
+function SearchFieldDemo() {
+  const [last, setLast] = useState<string | null>(null);
+  return (
+    <div className="flex w-full max-w-xs flex-col gap-3">
+      <SearchField aria-label="Search the docs" placeholder="Search the docs" onSubmit={(q) => setLast(q)} onClear={() => setLast(null)} />
+      <p className="text-caption text-fg-secondary">{last ? `Searched for “${last}”` : "Enter searches, Escape clears."}</p>
+    </div>
+  );
+}
+
+function PasswordFieldDemo() {
+  return (
+    <div className="flex w-full max-w-xs flex-col gap-5">
+      <PasswordField label="Current password" autoComplete="current-password" />
+      <PasswordField label="New password" autoComplete="new-password" showStrength description="At least 10 characters. A phrase works well." minLength={10} />
+    </div>
+  );
+}
+
+function DateFieldDemo() {
+  return (
+    <div className="flex w-full max-w-xs flex-col gap-5">
+      <DateField label="Start date" defaultValue={new CalendarDate(2026, 11, 2)} />
+      <DateField label="Date of birth" description="Day, month and year in your locale's order." maxValue={today(getLocalTimeZone())} />
+      <DateField label="Deadline" isRequired isInvalid errorMessage="Pick a date after the start date." />
+    </div>
+  );
+}
+
+function TimeFieldDemo() {
+  return (
+    <div className="flex w-full max-w-xs flex-col gap-5">
+      <TimeField label="Meeting starts" defaultValue={new Time(9, 30)} />
+      <TimeField label="Quiet hours from" defaultValue={new Time(22, 0)} hourCycle={24} description="24-hour clock." />
+    </div>
+  );
+}
+
+function FormDemo() {
+  return (
+    <Form
+      className="w-full max-w-md"
+      onSubmit={(event) => {
+        event.preventDefault();
+        const data = Object.fromEntries(new FormData(event.currentTarget));
+        toast.success(`Saved ${String(data.workspace)}`);
+      }}
+    >
+      <FormSection title="Workspace" description="The name and address your team will see.">
+        <SearchField label="Find a template" name="template" placeholder="Search templates" />
+        <ComboBox label="Region" name="region" isRequired defaultItems={Object.values(CITIES).flat().map((c) => ({ id: c, label: c }))} placeholder="Choose a city">
+          {(city) => <ComboBoxItem id={city.id}>{city.label}</ComboBoxItem>}
+        </ComboBox>
+        <NumberField label="Seats" name="seats" isRequired minValue={1} maxValue={10} defaultValue={12} description="Your plan allows 10." />
+      </FormSection>
+      <FormSection title="Security">
+        <PasswordField label="Admin password" name="password" isRequired minLength={10} showStrength autoComplete="new-password" />
+        <CheckboxGroup label="Require" name="require" defaultValue={["2fa"]}>
+          <Checkbox value="2fa">Two-factor sign-in</Checkbox>
+          <Checkbox value="sso">Single sign-on</Checkbox>
+        </CheckboxGroup>
+      </FormSection>
+      <input type="hidden" name="workspace" value="Atlas" />
+      <FormActions>
+        <Button variant="secondary" type="reset">
+          Reset
+        </Button>
+        <Button type="submit">Create workspace</Button>
+      </FormActions>
+    </Form>
+  );
+}
+
+// ─── Entries ───────────────────────────────────────────────────────────────
+
+export const FORM_ENTRIES: CatalogEntry[] = [
+  {
+    slug: "number-field",
+    isNew: true,
+    name: "Number Field",
+    group: "Forms",
+    summary: "A number with steppers; formats currency, percent and units, and clamps to a range.",
+    imports: ["NumberField"],
+    preview: () => (
+      <div className="w-full max-w-60">
+        <NumberField label="Seats" defaultValue={5} minValue={1} maxValue={50} />
+      </div>
+    ),
+    demo: () => <NumberFieldDemo />,
+  },
+  {
+    slug: "search-field",
+    isNew: true,
+    name: "Search Field",
+    group: "Forms",
+    summary: "A search box with a clear button. Enter submits, Escape clears.",
+    imports: ["SearchField"],
+    preview: () => (
+      <div className="w-full max-w-60">
+        <SearchField aria-label="Search" defaultValue="type scale" />
+      </div>
+    ),
+    demo: () => <SearchFieldDemo />,
+  },
+  {
+    slug: "password-field",
+    isNew: true,
+    name: "Password Field",
+    group: "Forms",
+    summary: "A password input with show / hide and an optional strength gauge.",
+    imports: ["PasswordField", "scorePassword"],
+    preview: () => (
+      <div className="w-full max-w-60">
+        <PasswordField label="New password" defaultValue="paper-and-ink-42" showStrength />
+      </div>
+    ),
+    demo: () => <PasswordFieldDemo />,
+  },
+  {
+    slug: "form",
+    isNew: true,
+    name: "Form",
+    group: "Forms",
+    summary: "Sections, validation on submit, server errors per field and an action row.",
+    imports: ["Form", "FormSection", "FormActions", "FieldError", "FieldLabel", "FieldDescription"],
+    preview: () => (
+      <div className="flex w-full max-w-64 flex-col gap-3">
+        <span className="font-display text-body-md-strong text-fg">Workspace</span>
+        <NumberField label="Seats" defaultValue={12} isInvalid errorMessage="Your plan allows 10 seats." size="sm" />
+        <div className="flex justify-end gap-1.5 border-t border-line pt-2">
+          <Button size="xs" variant="secondary">
+            Reset
+          </Button>
+          <Button size="xs">Create</Button>
+        </div>
+      </div>
+    ),
+    demo: () => <FormDemo />,
+  },
+];
+
+export const DATE_ENTRIES: CatalogEntry[] = [
+  {
+    slug: "date-field",
+    isNew: true,
+    name: "Date Field",
+    group: "Dates",
+    summary: "A typed date, one segment at a time, in the locale's order.",
+    imports: ["DateField"],
+    preview: () => (
+      <div className="w-full max-w-60">
+        <DateField label="Start date" defaultValue={new CalendarDate(2026, 11, 2)} />
+      </div>
+    ),
+    demo: () => <DateFieldDemo />,
+  },
+  {
+    slug: "time-field",
+    isNew: true,
+    name: "Time Field",
+    group: "Dates",
+    summary: "A typed time with hour, minute and, where the locale uses one, the period.",
+    imports: ["TimeField"],
+    preview: () => (
+      <div className="w-full max-w-60">
+        <TimeField label="Meeting starts" defaultValue={new Time(9, 30)} />
+      </div>
+    ),
+    demo: () => <TimeFieldDemo />,
+  },
+];
+
+export const SELECTION_ENTRIES: CatalogEntry[] = [
+  {
+    slug: "combobox",
+    isNew: true,
+    name: "Combobox",
+    group: "Selection",
+    summary: "A text field with suggestions that filter as you type.",
+    imports: ["ComboBox", "ComboBoxItem", "ComboBoxSection"],
+    preview: () => <ComboBoxDemo compact />,
+    demo: () => <ComboBoxDemo />,
+  },
+  {
+    slug: "multi-select",
+    isNew: true,
+    name: "Multi-select",
+    group: "Selection",
+    summary: "Pick several options by typing; choices sit as removable tags.",
+    imports: ["MultiSelect"],
+    preview: () => (
+      <div className="w-full max-w-72">
+        <MultiSelect label="Reviewers" items={PEOPLE} defaultSelectedKeys={["ada", "grace", "alan"]} />
+      </div>
+    ),
+    demo: () => <MultiSelectDemo />,
+  },
+  {
+    slug: "tag-group",
+    isNew: true,
+    name: "Tag Group",
+    group: "Selection",
+    summary: "Tags that can be removed, selected, or both, with full keyboard support.",
+    imports: ["TagGroup", "Tag"],
+    preview: () => (
+      <TagGroup aria-label="Filters" onRemove={() => {}} className="max-w-72">
+        <Tag id="design" icon={RiFlagLine}>
+          Design
+        </Tag>
+        <Tag id="q3">Q3</Tag>
+        <Tag id="web">Web</Tag>
+      </TagGroup>
+    ),
+    demo: () => <TagGroupDemo />,
+  },
+  {
+    slug: "checkbox-group",
+    isNew: true,
+    name: "Checkbox Group",
+    group: "Selection",
+    summary: "Several checkboxes that make up one answer, with a label and validation.",
+    imports: ["CheckboxGroup", "Checkbox"],
+    preview: () => (
+      <CheckboxGroup label="Notify me about" defaultValue={["mentions"]}>
+        <Checkbox value="mentions">Mentions</Checkbox>
+        <Checkbox value="replies">Replies</Checkbox>
+        <Checkbox value="digest">Weekly digest</Checkbox>
+      </CheckboxGroup>
+    ),
+    demo: () => <CheckboxGroupDemo />,
+  },
+  {
+    slug: "color-picker",
+    isNew: true,
+    name: "Color Picker",
+    group: "Selection",
+    summary: "A swatch that opens an area, a hue slider, a hex field and presets.",
+    imports: ["ColorPicker", "ColorArea", "ColorSlider", "ColorField", "ColorSwatch", "ColorSwatchPicker"],
+    preview: () => (
+      <div className="flex items-center gap-3">
+        <ColorPicker label="Accent" defaultValue="#c2410c" />
+      </div>
+    ),
+    demo: () => <ColorPickerDemo />,
+  },
+  {
+    slug: "rating",
+    isNew: true,
+    name: "Rating",
+    group: "Selection",
+    summary: "A score out of five stars as a radio group, plus a read-only value with halves.",
+    imports: ["Rating", "RatingValue"],
+    preview: () => (
+      <div className="flex flex-col items-center gap-3">
+        <Rating aria-label="Rate this" defaultValue={4} size="lg" />
+        <RatingValue value={4.5} count={86} />
+      </div>
+    ),
+    demo: () => <RatingDemo />,
+  },
+];

@@ -5,7 +5,7 @@ import { RiDownloadLine, RiImageAddLine } from "@remixicon/react";
 import { Button } from "../components/button/button";
 import { ComposerPanel } from "../blocks/composer/composer-panel";
 import { GeneratedImage } from "../blocks/image-generation/generated-image";
-import type { AspectRatio } from "../blocks/image-generation/generated-image";
+import type { ImageAspect } from "../blocks/image-generation/generated-image";
 import { focusRingNative } from "../recipes/focus-ring";
 import { cx } from "../utils/cx";
 import { TemplateRoot } from "./shared";
@@ -22,7 +22,7 @@ import type { TemplateProps } from "./shared";
 interface Generation {
   id: string;
   prompt: string;
-  aspect: AspectRatio;
+  aspect: ImageAspect;
   style: string;
   progress?: number;
 }
@@ -57,7 +57,7 @@ export function AiImageGeneration({ className }: TemplateProps) {
 
   const generate = (prompt: string, aspect: string, style: string) => {
     const id = `g-${Date.now()}`;
-    setGenerations((list) => [...list, { id, prompt, aspect: aspect as AspectRatio, style, progress: 0 }]);
+    setGenerations((list) => [...list, { id, prompt, aspect: aspect as ImageAspect, style, progress: 0 }]);
     let progress = 0;
     const timer = setInterval(() => {
       progress += 0.08;

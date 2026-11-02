@@ -12,9 +12,9 @@ import { cx } from "../../utils/cx";
  * Pass `src` to show a real image in the same frame.
  */
 
-export type AspectRatio = "1:1" | "3:2" | "2:3" | "16:9";
+export type ImageAspect = "1:1" | "3:2" | "2:3" | "16:9";
 
-const RATIO: Record<AspectRatio, string> = { "1:1": "aspect-square", "3:2": "aspect-3/2", "2:3": "aspect-2/3", "16:9": "aspect-video" };
+const RATIO: Record<ImageAspect, string> = { "1:1": "aspect-square", "3:2": "aspect-3/2", "2:3": "aspect-2/3", "16:9": "aspect-video" };
 
 function hash(text: string) {
   let h = 2166136261;
@@ -42,7 +42,7 @@ export function promptArt(prompt: string) {
 
 export interface GeneratedImageProps {
   prompt: string;
-  aspect?: AspectRatio;
+  aspect?: ImageAspect;
   /** 0–1 while generating. */
   progress?: number;
   /** A real image; the prompt art shows until it loads. */

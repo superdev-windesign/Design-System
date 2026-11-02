@@ -103,6 +103,9 @@ import {
 } from "./agent-blocks-demos";
 import { ColorFoundation, ColorPreview, TypographyFoundation, TypographyPreview } from "./foundations";
 import { TEMPLATES, TemplateFrame, TemplatePreview } from "./templates-demos";
+import { ACTION_ENTRIES, NAVIGATION_ENTRIES, OVERLAY_ENTRIES } from "./overlay-demos";
+import { DATE_ENTRIES, FORM_ENTRIES, SELECTION_ENTRIES } from "./form-demos";
+import { DATA_DISPLAY_ENTRIES, FEEDBACK_ENTRIES, LAYOUT_ENTRIES } from "./display-demos";
 import {
   AgentThinkingDemo,
   AuthCardDemo,
@@ -155,6 +158,7 @@ export type Group =
   | "Feedback"
   | "Overlays"
   | "Data display"
+  | "Layout"
   | "Dates"
   | "Blocks"
   | "Charts"
@@ -170,6 +174,7 @@ export const GROUPS: { name: Group; blurb: string }[] = [
   { name: "Feedback", blurb: "Messages about what just happened." },
   { name: "Overlays", blurb: "Content that floats above the page." },
   { name: "Data display", blurb: "Showing people, labels and records." },
+  { name: "Layout", blurb: "Panels, sections and regions that hold the rest." },
   { name: "Dates", blurb: "Picking days, ranges and meeting slots." },
   { name: "Blocks", blurb: "Larger assemblies, ready to drop into a screen." },
   { name: "Charts", blurb: "Data cards built on the chart palette." },
@@ -266,7 +271,7 @@ function SlideCard({ title, body }: { title: string; body: string }) {
 
 // ─── Catalog ───────────────────────────────────────────────────────────────
 
-export const CATALOG: CatalogEntry[] = [
+const BASE_CATALOG: CatalogEntry[] = [
   // Foundations
   {
     slug: "color",
@@ -1404,5 +1409,25 @@ export const CATALOG: CatalogEntry[] = [
     demo: () => <TemplateFrame template={TEMPLATES.ProjectBoard} />,
   },
 ];
+
+const groupIndex = (entry: CatalogEntry) => GROUPS.findIndex((g) => g.name === entry.group);
+
+/**
+ * Every entry, in book order: by chapter, and within a chapter the originals
+ * first. (The sort is stable, so each list keeps its own order.) Previous /
+ * next links walk this order.
+ */
+export const CATALOG: CatalogEntry[] = [
+  ...BASE_CATALOG,
+  ...ACTION_ENTRIES,
+  ...FORM_ENTRIES,
+  ...SELECTION_ENTRIES,
+  ...NAVIGATION_ENTRIES,
+  ...FEEDBACK_ENTRIES,
+  ...OVERLAY_ENTRIES,
+  ...DATA_DISPLAY_ENTRIES,
+  ...LAYOUT_ENTRIES,
+  ...DATE_ENTRIES,
+].sort((x, y) => groupIndex(x) - groupIndex(y));
 
 export const findEntry = (slug: string) => CATALOG.find((entry) => entry.slug === slug);
