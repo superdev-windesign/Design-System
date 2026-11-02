@@ -37,16 +37,21 @@ export interface TableProps extends Omit<AriaTableProps, "className"> {
   className?: string;
   /** Class for the scroll container that wraps the table. */
   containerClassName?: string;
+  /**
+   * Keep the header row in view while the body scrolls. Give the container a
+   * height (`containerClassName="max-h-96"`) so the table scrolls inside it.
+   */
+  stickyHeader?: boolean;
   ref?: Ref<HTMLTableElement>;
 }
 
-export function Table({ size = "md", className, containerClassName, ref, ...props }: TableProps) {
+export function Table({ size = "md", className, containerClassName, stickyHeader = false, ref, ...props }: TableProps) {
   return (
-    <div className={cx("w-full overflow-x-auto", containerClassName)}>
+    <div className={cx("scrollbar-thin w-full overflow-x-auto", stickyHeader && "overflow-y-auto", containerClassName)}>
       <AriaTable
         ref={ref}
         {...props}
-        className={cx("bui-table", size === "sm" && "bui-table-sm", className)}
+        className={cx("bui-table", size === "sm" && "bui-table-sm", stickyHeader && "bui-table-sticky", className)}
       />
     </div>
   );

@@ -113,13 +113,25 @@ export function RevenueChartCard({
 
   const yMax = Math.max(...data.map((d) => Math.max(d.current, d.previous)));
 
+  // A stable name and a written summary, so the chart reads as a figure with its data in words.
+  const summaryId = useId();
+  const best = data.reduce((a, b) => (b.current > a.current ? b : a), data[0] ?? { label: "", current: 0, previous: 0 });
+  const amount = (v: number) => `${Math.round(v).toLocaleString("en-US")}`;
+  const summary = `${title}: ${amount(totalCurrent)} this year against ${amount(totalPrevious)} last year (${describeDelta(totalCurrent, totalPrevious).label}). Highest month ${best.label}, ${amount(best.current)}.`;
+
   return (
     <section
+      role="figure"
+      aria-label={title}
+      aria-describedby={summaryId}
       className={cx(
         "flex h-86 min-w-0 flex-1 flex-col gap-6 rounded-2xl bg-sunken px-4 pt-4 pb-3",
         className,
       )}
     >
+      <p id={summaryId} className="sr-only">
+        {summary}
+      </p>
       {/* Header: label over the count-up figure and its delta; legend on the right */}
       <div className="flex w-full flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div className="flex min-w-0 flex-col gap-0.5">

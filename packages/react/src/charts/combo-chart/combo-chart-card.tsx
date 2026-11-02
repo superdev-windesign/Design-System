@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Bar, CartesianGrid, ComposedChart, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { ChartCard, ChartTooltip, SERIES_SWATCH, chartColors, describeChange, format, quietAxis, seriesActiveColor, seriesColor } from "../shared/chart-card";
+import { ChartTiles, ChartCard, ChartTooltip, SERIES_SWATCH, chartColors, describeChange, format, quietAxis, seriesActiveColor, seriesColor } from "../shared/chart-card";
 
 /**
  * Combo Chart: a count as bars and a rate as a line, each on its own axis
@@ -30,6 +30,8 @@ export interface ComboChartCardProps {
   title?: string;
   countLabel?: string;
   rateLabel?: string;
+  /** Show totals under the chart: the count summed, the average rate, the best month. Default true. */
+  showTiles?: boolean;
   className?: string;
 }
 
@@ -38,8 +40,12 @@ export function ComboChartCard({
   title = "Signups and conversion",
   countLabel = "Signups",
   rateLabel = "Converted",
+  showTiles = true,
   className,
 }: ComboChartCardProps) {
+  const totalCount = data.reduce((sum, d) => sum + d.count, 0);
+  const averageRate = data.reduce((sum, d) => sum + d.rate, 0) / Math.max(1, data.length);
+  const best = data.reduce((a, b) => (b.count > a.count ? b : a), data[0] ?? { label: "", count: 0, rate: 0 });
   const [active, setActive] = useState<number | null>(null);
   const point = active !== null ? data[active] : data[data.length - 1];
   const previous = active !== null ? data[active - 1] : data[data.length - 2];
@@ -58,6 +64,17 @@ export function ComboChartCard({
       summary={`${title}: ${countLabel.toLowerCase()} grew from ${format.number(data[0]?.count ?? 0)} to ${format.number(
         data[data.length - 1]?.count ?? 0,
       )} while ${rateLabel.toLowerCase()} moved from ${format.percent(data[0]?.rate ?? 0)} to ${format.percent(data[data.length - 1]?.rate ?? 0)}.`}
+      footer={
+        showTiles ? (
+          <ChartTiles
+            tiles={[
+              { label: `${countLabel}, total`, value: format.number(totalCount) },
+              { label: `${rateLabel}, average`, value: format.percent(averageRate) },
+              { label: "Best month", value: best.label },
+            ]}
+          />
+        ) : undefined
+      }
       className={className}
     >
       <ResponsiveContainer width="100%" height="100%">

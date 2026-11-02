@@ -211,3 +211,6 @@ export * from "./components/floating-button/floating-button";
 export * from "./components/countdown/countdown";
 export * from "./components/bottom-sheet/bottom-sheet";
 export * from "./components/schedule/schedule";
+export * from "./blocks/composer/composer";
+export * from "./templates/calendar-template";
+export * from "./components/accent-picker/accent-picker";

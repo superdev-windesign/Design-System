@@ -33,7 +33,13 @@ import {
   RiUploadLine,
   RiUserLine,
 } from "@remixicon/react";
-import { Button, CodeBlock, Grid, Stack, Text, ThemeScope, cx, useTheme } from "@ds/react";
+import { AccentPicker, Button, CodeBlock, Grid, Stack, Text, ThemeScope, cx, useTheme } from "@ds/react";
+import { AccentSpecimen } from "../site/accent-section";
+
+const centreOf = (el: Element) => {
+  const r = el.getBoundingClientRect();
+  return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
+};
 import type { IconComponent, ThemeChoice } from "@ds/react";
 
 /**
@@ -497,15 +503,17 @@ export function BreakpointsPreview() {
 /*                                   Theming                                  */
 /* -------------------------------------------------------------------------- */
 
-const THEME_USAGE = `import { ThemeProvider, ThemeScope, useTheme } from "@ds/react";
+const THEME_USAGE = `import { AccentPicker, ThemeProvider, ThemeScope, useTheme } from "@ds/react";
 
 <ThemeProvider defaultTheme="system">
   <App />
 </ThemeProvider>
 
 function ThemeMenu() {
-  const { theme, resolvedTheme, setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme, accent, setAccent } = useTheme();
   // theme: "light" | "dark" | "system"; resolvedTheme: what's showing
+  // setTheme("dark", { x, y }) reveals the change in a circle from that point
+  // setAccent("blue"), setAccent("#2f6f4f"), or drop in <AccentPicker />
 }
 
 // One region in a fixed theme:
@@ -530,7 +538,7 @@ export function ThemingFoundation() {
       <Section title="This page" blurb="The site runs inside ThemeProvider. Switching here is the same as the switch in the header.">
         <Stack direction="row" gap={2} wrap>
           {(["light", "dark", "system"] as ThemeChoice[]).map((choice) => (
-            <Button key={choice} size="sm" variant={theme === choice ? "primary" : "secondary"} onPress={() => setTheme(choice)} aria-pressed={theme === choice}>
+            <Button key={choice} size="sm" variant={theme === choice ? "primary" : "secondary"} onPress={(e) => setTheme(choice, centreOf(e.target))} aria-pressed={theme === choice}>
               {choice[0]!.toUpperCase() + choice.slice(1)}
             </Button>
           ))}
@@ -538,6 +546,10 @@ export function ThemingFoundation() {
         <Text size="sm" tone="secondary" mono>
           theme: {theme} · resolvedTheme: {resolvedTheme}
         </Text>
+      </Section>
+      <Section title="Accent" blurb="One ramp, --ds-color-accent-50…950, colours every interactive mark. Pick a preset or any colour; the change spreads out from where you clicked.">
+        <AccentPicker />
+        <AccentSpecimen />
       </Section>
       <Section title="Scopes" blurb="ThemeScope pins a region to one theme, whatever the page is using.">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">

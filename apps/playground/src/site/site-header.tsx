@@ -28,7 +28,11 @@ function ThemeSwitch({ className }: { className?: string }) {
           type="button"
           aria-label={label}
           aria-pressed={theme === id}
-          onClick={() => setTheme(id)}
+          // The new theme spreads out from the click (or the button's centre, from the keyboard).
+          onClick={(event) => {
+            const r = event.currentTarget.getBoundingClientRect();
+            setTheme(id, event.detail ? { x: event.clientX, y: event.clientY } : { x: r.left + r.width / 2, y: r.top + r.height / 2 });
+          }}
           className={cx(
             "flex size-7 items-center justify-center rounded-xs transition-colors",
             theme === id ? "bg-fg text-canvas" : "text-fg-secondary hover:text-fg",
@@ -64,7 +68,7 @@ export function SiteSearch({ isOpen, onOpenChange }: { isOpen: boolean; onOpenCh
       {GROUPS.map((group) => (
         <CommandGroup key={group.name} title={group.name}>
           {entriesIn(group.name).map((entry) => (
-            <CommandItem key={entry.slug} id={entry.slug} description={entry.summary} keywords={[group.name]}>
+            <CommandItem key={entry.slug} id={entry.slug} description={entry.summary} keywords={[group.name, ...(entry.aliases ?? [])]}>
               {entry.name}
             </CommandItem>
           ))}

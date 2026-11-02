@@ -4,11 +4,23 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Windesign DS · Playground</title>
-    <!-- Apply the stored theme before first paint so dark mode never flashes white. -->
+    <!-- Apply the stored theme and accent before first paint, so neither flashes.
+         Mirrors applyAccent in @ds/react (foundations/theme.tsx). -->
     <script>
       try {
+        var root = document.documentElement;
         var t = localStorage.getItem("ds-theme");
-        if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+        if (t === "light" || t === "dark") root.dataset.theme = t;
+        var a = localStorage.getItem("ds-accent");
+        var presets = { red: ["red", 0], orange: ["orange", 100], emerald: ["emerald", 100], teal: ["teal", 100], blue: ["blue", 0], purple: ["purple", 0], fuchsia: ["fuchsia", 0] };
+        var mix = { 50: "white 92%", 100: "white 84%", 200: "white 68%", 300: "white 50%", 400: "white 32%", 500: "white 16%", 600: "", 700: "black 16%", 800: "black 32%", 900: "black 48%", 950: "black 62%" };
+        if (a && a !== "terracotta") {
+          [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950].forEach(function (s) {
+            var p = presets[a];
+            var v = p ? "var(--ds-color-" + p[0] + "-" + Math.min(950, s + p[1]) + ")" : mix[s] ? "color-mix(in oklab, " + a + ", " + mix[s] + ")" : a;
+            root.style.setProperty("--ds-color-accent-" + s, v);
+          });
+        }
       } catch (e) {}
     </script>
   </head>

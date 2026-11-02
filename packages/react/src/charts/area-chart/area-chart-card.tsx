@@ -51,6 +51,8 @@ export interface AreaChartCardProps {
   series?: AreaSeries[];
   title?: string;
   defaultMode?: Mode;
+  /** `smooth` (default) eases between points; `linear` draws straight segments. */
+  curve?: "smooth" | "linear";
   className?: string;
 }
 
@@ -59,6 +61,7 @@ export function AreaChartCard({
   series = AREA_SERIES,
   title = "Visitors by channel",
   defaultMode = "stacked",
+  curve = "smooth",
   className,
 }: AreaChartCardProps) {
   const [mode, setMode] = useState<Mode>(defaultMode);
@@ -106,7 +109,7 @@ export function AreaChartCard({
               key={s.key}
               dataKey={s.key}
               name={s.label}
-              type="monotone"
+              type={curve === "smooth" ? "monotone" : "linear"}
               stackId={mode === "overlap" ? undefined : "total"}
               stroke={seriesColor(i + 1)}
               strokeWidth={2}

@@ -10,7 +10,8 @@ import { cx } from "../../utils/cx";
  *
  * Skeletons are hidden from screen readers. Mark the region that's loading
  * with `SkeletonGroup` (which sets `aria-busy` and announces a label), or
- * pass `isLoaded` and children to swap in the real content.
+ * pass `isLoaded` and children to swap in the real content, which arrives
+ * through a short blur (a plain cut under reduced motion).
  */
 
 export interface SkeletonProps {
@@ -23,7 +24,8 @@ export interface SkeletonProps {
 }
 
 export function Skeleton({ className, shape = "block", isLoaded, children }: SkeletonProps) {
-  if (isLoaded) return <>{children}</>;
+  // Loaded content comes in from a soft blur rather than snapping into place.
+  if (isLoaded) return <div className="animate-reveal">{children}</div>;
   return (
     <span
       aria-hidden

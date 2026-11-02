@@ -70,7 +70,7 @@ export function BarListCard({ data = BAR_LIST_DATA, title = "Top sources", barCl
       value={format.number(total)}
       valueKey={tab}
       caption={`Visits from the top ${rows.length} ${data[tab]?.label.toLowerCase()}`}
-      actions={<ChartToggle label="Breakdown" value={tab} onChange={setTab} options={keys.map((k) => ({ id: k, label: data[k]!.label }))} />}
+      actions={keys.length > 1 ? <ChartToggle label="Breakdown" value={tab} onChange={setTab} options={keys.map((k) => ({ id: k, label: data[k]!.label }))} /> : undefined}
       summary={`${title} by ${data[tab]?.label.toLowerCase()}: ${rows.map((r) => `${r.label} ${format.number(r.value)}`).join(", ")}.`}
       plotClassName="h-auto"
       className={className}

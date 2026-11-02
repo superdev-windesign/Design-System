@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChartCard, format } from "../shared/chart-card";
+import { ChartCard, format, SERIES_RAMP } from "../shared/chart-card";
 import { cx } from "../../utils/cx";
 
 /**
@@ -10,7 +10,6 @@ import { cx } from "../../utils/cx";
  * cell names it and its value in the header.
  */
 
-const RAMP = ["bg-chart-6/10", "bg-chart-6/25", "bg-chart-6/45", "bg-chart-6/65", "bg-chart-6/85", "bg-chart-6-active"] as const;
 
 export const HEATMAP_ROWS = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
 export const HEATMAP_COLUMNS = ["0", "2", "4", "6", "8", "10", "12", "14", "16", "18", "20", "22"];
@@ -32,6 +31,8 @@ export interface HeatmapChartCardProps {
   columns?: string[];
   title?: string;
   unit?: string;
+  /** Series colour (1–9) the cells are shaded in. Default 6. */
+  color?: number;
   className?: string;
 }
 
@@ -41,8 +42,10 @@ export function HeatmapChartCard({
   columns = HEATMAP_COLUMNS,
   title = "Orders by hour",
   unit = "orders",
+  color = 6,
   className,
 }: HeatmapChartCardProps) {
+  const RAMP = SERIES_RAMP[(Math.max(1, Math.min(9, color)) - 1)]!;
   const [hover, setHover] = useState<[number, number] | null>(null);
   const flat = data.flat();
   const max = Math.max(1, ...flat);

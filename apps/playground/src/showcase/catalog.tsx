@@ -108,6 +108,8 @@ import { DATE_ENTRIES, FORM_ENTRIES, SELECTION_ENTRIES } from "./form-demos";
 import { DATA_DISPLAY_ENTRIES, FEEDBACK_ENTRIES, LAYOUT_ENTRIES } from "./display-demos";
 import { MORE_ENTRIES } from "./more-demos";
 import { NINE_ENTRIES } from "./nine-demos";
+import { ALIASES, BreadcrumbDemo, PARITY_ENTRIES, SelectDemo, TableDemo } from "./parity-demos";
+import { ActivityDaysDemo, AreaDemo, ContributionsDemo, HeatmapDemo, RadialDemo } from "./chart-demos";
 import {
   BreakpointsFoundation,
   BreakpointsPreview,
@@ -206,6 +208,8 @@ export interface CatalogEntry {
   summary: string;
   /** Import names shown on the detail page. */
   imports: string[];
+  /** Other names people search by ("Modal" for Dialog). */
+  aliases?: string[];
   /** Shows a "New" badge in the sidebar. Clear it a release or two after adding. */
   isNew?: boolean;
   /** Compact demo for the index card. */
@@ -376,8 +380,8 @@ const BASE_CATALOG: CatalogEntry[] = [
     isNew: true,
     name: "Theming",
     group: "Foundations",
-    summary: "ThemeProvider, useTheme and ThemeScope: light, dark and system, remembered.",
-    imports: ["ThemeProvider", "useTheme", "ThemeScope"],
+    summary: "ThemeProvider, useTheme, ThemeScope and AccentPicker: light, dark and system, any accent, remembered.",
+    imports: ["ThemeProvider", "useTheme", "ThemeScope", "AccentPicker", "ACCENT_PRESETS", "startThemeTransition"],
     preview: () => <ThemingPreview />,
     demo: () => <ThemingFoundation />,
   },
@@ -574,6 +578,7 @@ const BASE_CATALOG: CatalogEntry[] = [
         <SelectItem id="research" textValue="Research">Research</SelectItem>
       </Select>
     ),
+    demo: () => <SelectDemo />,
   },
   {
     slug: "checkbox",
@@ -717,6 +722,7 @@ const BASE_CATALOG: CatalogEntry[] = [
         <BreadcrumbItem current>Roadmap</BreadcrumbItem>
       </Breadcrumb>
     ),
+    demo: () => <BreadcrumbDemo />,
   },
   {
     slug: "pagination",
@@ -914,6 +920,7 @@ const BASE_CATALOG: CatalogEntry[] = [
     summary: "Rows and columns with keyboard navigation.",
     imports: ["Table", "TableHeader", "TableColumn", "TableBody", "TableRow", "TableCell"],
     preview: () => <OrdersTable />,
+    demo: () => <TableDemo />,
   },
   {
     slug: "carousel",
@@ -1135,7 +1142,7 @@ const BASE_CATALOG: CatalogEntry[] = [
     demo: () => <AgentCreatorDemo />,
   },
   {
-    slug: "calendar",
+    slug: "month-calendar",
     isNew: true,
     name: "Calendar",
     group: "Blocks",
@@ -1152,7 +1159,7 @@ const BASE_CATALOG: CatalogEntry[] = [
     name: "Revenue Chart",
     group: "Charts",
     summary: "This year against last: an area over a dashed line, plus an orders bar card.",
-    imports: ["RevenueChartCard", "OrdersChartCard"],
+    imports: ["RevenueChartCard"],
     preview: () => <RevenueChartPreview />,
     demo: () => <RevenueChartDemo />,
   },
@@ -1168,7 +1175,7 @@ const BASE_CATALOG: CatalogEntry[] = [
         <ActivityRingsCard />
       </Fit>
     ),
-    demo: () => <ActivityRingsCard className="w-full max-w-2xl" />,
+    demo: () => <ActivityDaysDemo />,
   },
   {
     slug: "area-chart",
@@ -1182,7 +1189,7 @@ const BASE_CATALOG: CatalogEntry[] = [
         <AreaChartCard />
       </Fit>
     ),
-    demo: () => <AreaChartCard className="w-full max-w-2xl" />,
+    demo: () => <AreaDemo />,
   },
   {
     slug: "bar-list",
@@ -1224,7 +1231,7 @@ const BASE_CATALOG: CatalogEntry[] = [
         <ContributionsCard />
       </Fit>
     ),
-    demo: () => <ContributionsCard className="w-full max-w-2xl" />,
+    demo: () => <ContributionsDemo />,
   },
   {
     slug: "earnings-chart",
@@ -1266,7 +1273,7 @@ const BASE_CATALOG: CatalogEntry[] = [
         <HeatmapChartCard />
       </Fit>
     ),
-    demo: () => <HeatmapChartCard className="w-full max-w-2xl" />,
+    demo: () => <HeatmapDemo />,
   },
   {
     slug: "line-chart",
@@ -1294,7 +1301,7 @@ const BASE_CATALOG: CatalogEntry[] = [
         <MostActiveDaysCard />
       </Fit>
     ),
-    demo: () => <MostActiveDaysCard className="w-full max-w-2xl" />,
+    demo: () => <ActivityDaysDemo />,
   },
   {
     slug: "radar-chart",
@@ -1322,7 +1329,7 @@ const BASE_CATALOG: CatalogEntry[] = [
         <RadialChartCard />
       </Fit>
     ),
-    demo: () => <RadialChartCard className="w-full max-w-2xl" />,
+    demo: () => <RadialDemo />,
   },
   {
     slug: "sankey-chart",
@@ -1518,6 +1525,18 @@ export const CATALOG: CatalogEntry[] = [
   ...DATE_ENTRIES,
   ...MORE_ENTRIES,
   ...NINE_ENTRIES,
-].sort((x, y) => groupIndex(x) - groupIndex(y));
+  ...PARITY_ENTRIES,
+]
+  .map((entry) => ({ ...entry, aliases: entry.aliases ?? ALIASES[entry.slug] }))
+  .sort((x, y) => groupIndex(x) - groupIndex(y));
 
-export const findEntry = (slug: string) => CATALOG.find((entry) => entry.slug === slug);
+// Two entries with one slug would leave one page unreachable; say so while developing.
+if (import.meta.env.DEV) {
+  const seen = new Set<string>();
+  for (const entry of CATALOG) {
+    if (seen.has(entry.slug)) console.error(`Catalog: duplicate slug "${entry.slug}"`);
+    seen.add(entry.slug);
+  }
+}
+
+export const findEntry =(slug: string) => CATALOG.find((entry) => entry.slug === slug);

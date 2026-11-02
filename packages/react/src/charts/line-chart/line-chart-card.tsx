@@ -30,13 +30,39 @@ export const LINE_DATA: LinePoint[] = [
   { label: "Oct 14", value: 208 },
 ];
 
+export interface LineRange {
+  id: string;
+  label: string;
+  data: LinePoint[];
+}
+
+const dayLabel = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric" });
+
+/** Last 7, 14 and 30 days of the demo series, for the period switch. */
+export const LINE_RANGES: LineRange[] = (() => {
+  const end = new Date(2026, 9, 14);
+  const month = Array.from({ length: 30 }, (_, i) => {
+    const date = new Date(end);
+    date.setDate(end.getDate() - 29 + i);
+    return { label: dayLabel.format(date), value: Math.round(372 - i * 5.2 + Math.sin(i * 1.7) * 22) };
+  });
+  return [
+    { id: "7d", label: "7 days", data: LINE_DATA.slice(-7) },
+    { id: "14d", label: "14 days", data: LINE_DATA },
+    { id: "30d", label: "30 days", data: month },
+  ];
+})();
+
 const SHAPES = [
   { id: "curved", label: "Curved" },
   { id: "sharp", label: "Sharp" },
 ] as const;
 
 export interface LineChartCardProps {
+  /** One series. Without `data` or `ranges`, the demo periods are shown. */
   data?: LinePoint[];
+  /** Several periods to switch between (7 days, 30 days…). Takes precedence over `data`. */
+  ranges?: LineRange[];
   title?: string;
   unit?: string;
   /** Draws a dashed reference line, e.g. an SLO. */
@@ -49,7 +75,8 @@ export interface LineChartCardProps {
 }
 
 export function LineChartCard({
-  data = LINE_DATA,
+  data: dataProp,
+  ranges: rangesProp,
   title = "API latency (p95)",
   unit = "ms",
   target = 250,
@@ -57,6 +84,9 @@ export function LineChartCard({
   color = 4,
   className,
 }: LineChartCardProps) {
+  const ranges = rangesProp ?? (dataProp ? undefined : LINE_RANGES);
+  const [rangeId, setRangeId] = useState(ranges?.[1]?.id ?? ranges?.[0]?.id ?? "");
+  const data = ranges ? (ranges.find((r) => r.id === rangeId) ?? ranges[0]!).data : (dataProp ?? LINE_DATA);
   const [shape, setShape] = useState<"curved" | "sharp">("curved");
   const [active, setActive] = useState<number | null>(null);
   const gradientId = useId().replace(/:/g, "");
@@ -74,7 +104,12 @@ export function LineChartCard({
       valueKey={active ?? "latest"}
       delta={describeChange(shown, first, { lowerIsBetter })}
       caption={point ? `vs ${withUnit(first)} on ${data[0]?.label}` : `Latest, target ${withUnit(target)}`}
-      actions={<ChartToggle label="Line shape" value={shape} onChange={setShape} options={SHAPES} />}
+      actions={
+        <div className="flex flex-wrap justify-end gap-2">
+          {ranges && ranges.length > 1 && <ChartToggle label="Period" value={rangeId} onChange={setRangeId} options={ranges.map(({ id, label }) => ({ id, label }))} />}
+          <ChartToggle label="Line shape" value={shape} onChange={setShape} options={SHAPES} />
+        </div>
+      }
       summary={`${title} over ${data.length} days, from ${withUnit(first)} to ${withUnit(last)}. Target ${withUnit(target)}.`}
       className={className}
     >

@@ -5,6 +5,7 @@ import { Button, Tab, TabList, TabPanel, Tabs, cx, focusRing, focusRingNative } 
 import { CATALOG, GROUPS, findEntry } from "../showcase/catalog";
 import type { CatalogEntry, Group } from "../showcase/catalog";
 import { COMPONENT_GROUPS, entriesIn, entryNumber, groupNumber, groupSlug } from "./routes";
+import { AccentSection } from "./accent-section";
 
 /* -------------------------------------------------------------------------- */
 /*                                    Parts                                   */
@@ -134,6 +135,8 @@ export function HomePage() {
         </dl>
       </section>
 
+      <AccentSection />
+
       <section aria-labelledby="contents" className="flex flex-col gap-6">
         <div className="flex items-end justify-between gap-4">
           <h2 id="contents" className="font-display text-title-lg-strong text-fg">
@@ -249,6 +252,9 @@ export function DetailPage({ entry }: { entry: CatalogEntry }) {
             </Kicker>
             <h1 className="font-display text-display-md text-fg">{entry.name}</h1>
             <p className="max-w-2xl text-body-md text-fg-secondary">{entry.summary}</p>
+            {entry.aliases?.length ? (
+              <p className="font-mono text-caption text-fg-secondary">Also called: {entry.aliases.join(", ")}</p>
+            ) : null}
           </header>
 
           {isFoundation ? (

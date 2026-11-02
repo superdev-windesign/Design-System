@@ -49,8 +49,13 @@ export interface ScheduleProps {
   view?: "week" | "day";
   defaultView?: "week" | "day";
   onViewChange?: (view: "week" | "day") => void;
-  /** Any day in the period to show. Default today. */
+  /** Any day in the period to show (controlled). */
+  date?: Date;
+  /** Any day in the period to show first. Default today. */
   defaultDate?: Date;
+  onDateChange?: (date: Date) => void;
+  /** Show the Day / Week switch in the header. Default true. */
+  showViewSwitch?: boolean;
   /** First and last hours on the grid. Default 8 and 19. */
   startHour?: number;
   endHour?: number;
@@ -92,7 +97,10 @@ export function Schedule({
   view: controlledView,
   defaultView = "week",
   onViewChange,
+  date,
   defaultDate,
+  onDateChange,
+  showViewSwitch = true,
   startHour = 8,
   endHour = 19,
   onEventPress,
@@ -104,7 +112,12 @@ export function Schedule({
   const tz = getLocalTimeZone();
   const [uncontrolledView, setUncontrolledView] = useState(defaultView);
   const view = controlledView ?? uncontrolledView;
-  const [anchor, setAnchor] = useState<CalendarDate>(() => (defaultDate ? toCalendarDate(fromDate(defaultDate, tz)) : today(tz)));
+  const [uncontrolledAnchor, setUncontrolledAnchor] = useState<CalendarDate>(() => (defaultDate ? toCalendarDate(fromDate(defaultDate, tz)) : today(tz)));
+  const anchor = date ? toCalendarDate(fromDate(date, tz)) : uncontrolledAnchor;
+  const setAnchor = (next: CalendarDate) => {
+    setUncontrolledAnchor(next);
+    onDateChange?.(next.toDate(tz));
+  };
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
@@ -131,7 +144,7 @@ export function Schedule({
     setUncontrolledView(next);
     onViewChange?.(next);
   };
-  const step = (direction: 1 | -1) => setAnchor((a) => a.add(view === "week" ? { weeks: direction } : { days: direction }));
+  const step = (direction: 1 | -1) => setAnchor(anchor.add(view === "week" ? { weeks: direction } : { days: direction }));
 
   const onColumnClick = (event: MouseEvent<HTMLDivElement>, day: CalendarDate) => {
     if (!onSlotPress || event.target !== event.currentTarget) return;
@@ -151,14 +164,16 @@ export function Schedule({
         </Button>
         <Button size="sm" variant="tertiary" iconOnly leadingIcon={RiArrowLeftSLine} aria-label={view === "week" ? "Previous week" : "Previous day"} onPress={() => step(-1)} className="rtl:-scale-x-100" />
         <Button size="sm" variant="tertiary" iconOnly leadingIcon={RiArrowRightSLine} aria-label={view === "week" ? "Next week" : "Next day"} onPress={() => step(1)} className="rtl:-scale-x-100" />
-        <ToggleButtonGroup aria-label="View" selectionMode="single" disallowEmptySelection selectedKeys={[view]} onSelectionChange={(keys) => setView([...keys][0] as "week" | "day")}>
-          <ToggleButton id="day" size="sm">
-            Day
-          </ToggleButton>
-          <ToggleButton id="week" size="sm">
-            Week
-          </ToggleButton>
-        </ToggleButtonGroup>
+        {showViewSwitch && (
+          <ToggleButtonGroup aria-label="View" selectionMode="single" disallowEmptySelection selectedKeys={[view]} onSelectionChange={(keys) => setView([...keys][0] as "week" | "day")}>
+            <ToggleButton id="day" size="sm">
+              Day
+            </ToggleButton>
+            <ToggleButton id="week" size="sm">
+              Week
+            </ToggleButton>
+          </ToggleButtonGroup>
+        )}
       </header>
 
       <div className="scrollbar-thin max-h-120 overflow-auto">

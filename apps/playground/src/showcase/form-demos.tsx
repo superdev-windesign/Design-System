@@ -1,6 +1,7 @@
 import { useState } from "react";
+import type { ReactNode } from "react";
 import { CalendarDate, Time, today, getLocalTimeZone } from "@internationalized/date";
-import { RiFlagLine, RiMapPinLine, RiUserLine } from "@remixicon/react";
+import { RiAlarmLine, RiFlagLine, RiMapPinLine, RiUserLine } from "@remixicon/react";
 import {
   Button,
   Checkbox,
@@ -11,6 +12,9 @@ import {
   ComboBoxItem,
   ComboBoxSection,
   DateField,
+  DescriptionItem,
+  DescriptionList,
+  DirectionProvider,
   Form,
   FormActions,
   FormSection,
@@ -202,11 +206,100 @@ function DateFieldDemo() {
   );
 }
 
+/** Minutes from `start` to `end`, rolling past midnight for overnight shifts. */
+const shiftMinutes = (start: Time, end: Time) => {
+  const diff = end.hour * 60 + end.minute - (start.hour * 60 + start.minute);
+  return diff < 0 ? diff + 24 * 60 : diff;
+};
+
+function DemoSection({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section className="flex flex-col gap-3 border-t border-line pt-5 first:border-t-0 first:pt-0">
+      <h3 className="font-mono text-caption tracking-wide text-fg-secondary uppercase">{title}</h3>
+      {children}
+    </section>
+  );
+}
+
+function ShiftTimes() {
+  const [start, setStart] = useState<Time | null>(new Time(22, 0));
+  const [end, setEnd] = useState<Time | null>(new Time(6, 30));
+  const minutes = start && end ? shiftMinutes(start, end) : null;
+  return (
+    <div className="flex flex-col gap-3 rounded-surface border border-line bg-surface p-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        <TimeField label="Shift starts" value={start} onChange={setStart} />
+        <TimeField label="Shift ends" value={end} onChange={setEnd} />
+      </div>
+      <p className="flex items-baseline justify-between border-t border-line pt-3 text-body-sm text-fg-secondary">
+        Shift length
+        <span aria-live="polite" className="font-mono text-body-md-strong tabular-nums text-fg">
+          {minutes === null ? "—" : `${Math.floor(minutes / 60)} h ${String(minutes % 60).padStart(2, "0")} min`}
+          {start && end && end.compare(start) < 0 && <span className="ms-2 font-sans text-caption text-fg-secondary">overnight</span>}
+        </span>
+      </p>
+    </div>
+  );
+}
+
+const TIME_KEYS: [string, string][] = [
+  ["0–9", "Types into the focused part, then moves to the next"],
+  ["↑ ↓", "Steps the focused part up or down"],
+  ["← →", "Moves between hour, minute and period"],
+  ["Backspace", "Clears the focused part"],
+  ["A / P", "Sets AM or PM on a 12-hour clock"],
+];
+
 function TimeFieldDemo() {
   return (
-    <div className="flex w-full max-w-xs flex-col gap-5">
-      <TimeField label="Meeting starts" defaultValue={new Time(9, 30)} />
-      <TimeField label="Quiet hours from" defaultValue={new Time(22, 0)} hourCycle={24} description="24-hour clock." />
+    <div className="flex w-full max-w-md flex-col gap-6">
+      <DemoSection title="In use">
+        <ShiftTimes />
+      </DemoSection>
+
+      <DemoSection title="Clock and seconds">
+        <TimeField label="Train departs" defaultValue={new Time(21, 45)} hourCycle={24} description="24-hour clock, whatever the locale." />
+        <TimeField label="Split time" defaultValue={new Time(0, 4, 32)} granularity="second" hourCycle={24} icon={null} />
+        <TimeField label="Wake-up alarm" defaultValue={new Time(6, 45)} icon={RiAlarmLine} />
+      </DemoSection>
+
+      <DemoSection title="Size and state">
+        <TimeField label="Reminder" defaultValue={new Time(8, 30)} size="sm" />
+        <TimeField label="Reminder" defaultValue={new Time(8, 30)} size="sm" isDisabled description="Turn on reminders to change this." />
+      </DemoSection>
+
+      <DemoSection title="Limits">
+        <TimeField
+          label="Delivery slot"
+          defaultValue={new Time(21, 30)}
+          minValue={new Time(8)}
+          maxValue={new Time(20)}
+          validationBehavior="aria"
+          description="We deliver between 8:00 AM and 8:00 PM."
+        />
+        <p className="text-body-sm text-fg-secondary">
+          Outside the limits, the error takes the description's place. Set it to 7:30 PM and the description comes back.
+        </p>
+      </DemoSection>
+
+      <DemoSection title="Right to left">
+        <DirectionProvider locale="ar-EG">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+            <TimeField label="يبدأ الدوام" defaultValue={new Time(9)} />
+            <TimeField label="ينتهي الدوام" defaultValue={new Time(17)} />
+          </div>
+        </DirectionProvider>
+      </DemoSection>
+
+      <DemoSection title="Keyboard">
+        <DescriptionList>
+          {TIME_KEYS.map(([keys, action]) => (
+            <DescriptionItem key={keys} term={<span className="font-mono">{keys}</span>}>
+              {action}
+            </DescriptionItem>
+          ))}
+        </DescriptionList>
+      </DemoSection>
     </div>
   );
 }

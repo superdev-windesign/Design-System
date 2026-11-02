@@ -2,13 +2,19 @@
 import { createContext, useContext, useRef, useState } from "react";
 import type { ReactNode, Ref } from "react";
 import {
+  Autocomplete,
   Button as AriaButton,
+  Group,
+  Input,
   ListBox as AriaListBox,
   ListBoxItem as AriaListBoxItem,
   Popover as AriaPopover,
+  SearchField,
   Select as AriaSelect,
   SelectValue as AriaSelectValue,
 } from "react-aria-components";
+import { useFilter } from "react-aria";
+import { RiSearchLine } from "@remixicon/react";
 import type {
   ListBoxItemProps as AriaListBoxItemProps,
   SelectProps as AriaSelectProps,
@@ -16,6 +22,7 @@ import type {
 } from "react-aria-components";
 import { ChevronDownSmall } from "../../icons/chevrons";
 import { focusRing } from "../../recipes/focus-ring";
+import { FIELD_INPUT, fieldShell } from "../../recipes/field";
 import {
   MENU_ITEM,
   MENU_ITEM_ACTIVE,
@@ -57,6 +64,13 @@ export interface SelectProps<T extends object> extends Omit<AriaSelectProps<T>, 
   size?: SelectSize;
   children: ReactNode;
   items?: Iterable<T>;
+  /**
+   * Put a search field at the top of the list that filters the options as
+   * you type (by each option's `textValue`). Worth it past a dozen options.
+   */
+  isSearchable?: boolean;
+  /** Placeholder for the search field. Default "Search". */
+  searchPlaceholder?: string;
   /** Custom trigger content. Falls back to the selected item's own content. */
   renderValue?: ReactNode | ((values: AriaSelectValueRenderProps<T>) => ReactNode);
   ref?: Ref<HTMLDivElement>;
@@ -70,9 +84,12 @@ export function Select<T extends object>({
   children,
   items,
   renderValue,
+  isSearchable = false,
+  searchPlaceholder = "Search",
   ref,
   ...props
 }: SelectProps<T>) {
+  const { contains } = useFilter({ sensitivity: "base" });
   const triggerRef = useRef<HTMLButtonElement>(null);
   const popoverRef = useRef<HTMLElement>(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -128,9 +145,27 @@ export function Select<T extends object>({
               popoverClassName,
             )}
           >
-            <AriaListBox items={items} className={cx(MENU_ITEMS_CONTAINER, "max-h-60 overflow-auto")}>
-              <SelectSizeContext.Provider value={size}>{children}</SelectSizeContext.Provider>
-            </AriaListBox>
+            {isSearchable ? (
+              <Autocomplete filter={contains}>
+                <SearchField aria-label={searchPlaceholder} autoFocus className="mb-1.5">
+                  <Group className={(state) => fieldShell(state, "sm")}>
+                    <RiSearchLine aria-hidden className="size-4 shrink-0" />
+                    <Input placeholder={searchPlaceholder} className={cx(FIELD_INPUT, "text-body-sm [&::-webkit-search-cancel-button]:hidden")} />
+                  </Group>
+                </SearchField>
+                <AriaListBox
+                  items={items}
+                  renderEmptyState={() => <p className="px-2 py-3 text-center text-body-sm text-fg-secondary">No matches</p>}
+                  className={cx(MENU_ITEMS_CONTAINER, "max-h-60 overflow-auto")}
+                >
+                  <SelectSizeContext.Provider value={size}>{children}</SelectSizeContext.Provider>
+                </AriaListBox>
+              </Autocomplete>
+            ) : (
+              <AriaListBox items={items} className={cx(MENU_ITEMS_CONTAINER, "max-h-60 overflow-auto")}>
+                <SelectSizeContext.Provider value={size}>{children}</SelectSizeContext.Provider>
+              </AriaListBox>
+            )}
           </AriaPopover>
         </>
       )}

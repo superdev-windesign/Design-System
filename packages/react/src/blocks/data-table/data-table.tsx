@@ -422,19 +422,19 @@ export function DataTableExample({
     <div className="flex w-full flex-col items-center gap-5">
     <section
       className={cx(
-        "flex w-full flex-col rounded-2xl border border-line pt-2",
-        totalPages > 1 ? "pb-3" : "pb-0",
+        "flex w-full flex-col rounded-2xl border border-line pt-4",
+        totalPages > 1 ? "pb-4" : "pb-0",
       )}
     >
       {/* Toolbar */}
-      <div className="flex w-full flex-col items-start gap-3 px-3 py-1 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex w-full flex-col items-start gap-3 px-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col justify-center">
           <p className="text-body-md-strong whitespace-nowrap text-fg-tertiary">Total Results</p>
           <p className="text-body-md-strong whitespace-nowrap text-fg">
             {data.length.toLocaleString()} customers
           </p>
         </div>
-        <div className="-mx-3 flex w-[calc(100%+1.5rem)] items-center gap-2.5 overflow-x-auto px-3 sm:mx-0 sm:w-auto sm:flex-wrap sm:justify-end sm:overflow-visible sm:px-0">
+        <div className="scrollbar-thin -mx-4 flex w-[calc(100%+2rem)] items-center gap-2.5 overflow-x-auto px-4 pb-1 sm:mx-0 sm:w-auto sm:flex-wrap sm:justify-end sm:overflow-visible sm:px-0 sm:pb-0">
           <Select
             aria-label="Filter by price"
             className="shrink-0"
@@ -505,7 +505,7 @@ export function DataTableExample({
       </div>
 
       {/* Table */}
-      <div className="mt-2">
+      <div className="mt-4">
         <Table aria-label="Customers" size={size} selectionMode="none" className="min-w-250">
           <TableHeader>
             {headers.map((header) => {
@@ -581,7 +581,7 @@ export function DataTableExample({
 
       {/* Pagination footer */}
       {totalPages > 1 && (
-        <div className="border-t border-separator px-3 pt-3">
+        <div className="border-t border-separator px-4 pt-4">
           <Pagination
             page={pagination.pageIndex + 1}
             totalPages={totalPages}

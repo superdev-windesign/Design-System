@@ -1,16 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { ChartCard, format } from "../shared/chart-card";
+import { ChartCard, SERIES_RAMP, format } from "../shared/chart-card";
 import { cx } from "../../utils/cx";
 
 /**
- * Contributions: daily activity over half a year as a calendar grid, one
- * column per week, shaded in five steps. Hovering a day shows its date and
- * count in the header.
+ * Contributions: daily activity as a calendar grid, one column per week
+ * (half a year by default; `weeks={53}` for a full year), shaded in five
+ * steps of any series colour. Hovering a day shows its date and count in the
+ * header.
  */
 
-const LEVEL_CLASS = ["bg-chart-track", "bg-chart-7/35", "bg-chart-7/60", "bg-chart-7/85", "bg-chart-7-active"] as const;
 const WEEKDAYS = ["Mon", "", "Wed", "", "Fri", "", ""];
 
 /** Deterministic demo activity: weekday-heavy, with a few busy streaks. */
@@ -36,6 +36,10 @@ export function demoContributions(weeks = 26, end = new Date(2026, 9, 25)) {
 
 export interface ContributionsCardProps {
   days?: { date: Date; count: number }[];
+  /** Weeks of demo data when `days` isn't given. Default 26; 53 is a year. */
+  weeks?: number;
+  /** Series colour (1–9) for the shading. Default 7. */
+  color?: number;
   title?: string;
   unit?: string;
   className?: string;
@@ -44,8 +48,10 @@ export interface ContributionsCardProps {
 const dayFormat = new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", weekday: "short" });
 const monthFormat = new Intl.DateTimeFormat("en-US", { month: "short" });
 
-export function ContributionsCard({ days: given, title = "Contributions", unit = "commits", className }: ContributionsCardProps) {
-  const days = useMemo(() => given ?? demoContributions(), [given]);
+export function ContributionsCard({ days: given, weeks: demoWeeks = 26, color = 7, title = "Contributions", unit = "commits", className }: ContributionsCardProps) {
+  const days = useMemo(() => given ?? demoContributions(demoWeeks), [given, demoWeeks]);
+  const ramp = SERIES_RAMP[Math.max(1, Math.min(9, color)) - 1]!;
+  const LEVEL_CLASS = ["bg-chart-track", ramp[1], ramp[3], ramp[4], ramp[5]] as const;
   const [hover, setHover] = useState<number | null>(null);
   const max = Math.max(1, ...days.map((d) => d.count));
   const total = days.reduce((s, d) => s + d.count, 0);

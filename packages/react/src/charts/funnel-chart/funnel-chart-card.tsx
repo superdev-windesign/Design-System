@@ -2,7 +2,7 @@
 
 import { useLayoutEffect, useRef, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
-import { ChartCard, format, seriesColor } from "../shared/chart-card";
+import { ChartToggle, ChartCard, format, seriesColor } from "../shared/chart-card";
 import { easing } from "../../motion/tokens";
 
 /**
@@ -32,10 +32,18 @@ export interface FunnelChartCardProps {
   title?: string;
   /** Chart palette index, 1–9. */
   color?: number;
+  /** `flow` (default) joins the stages with tapered bands; `bars` stands them on a baseline. */
+  defaultShape?: "flow" | "bars";
   className?: string;
 }
 
-export function FunnelChartCard({ data = FUNNEL_DATA, title = "Checkout funnel", color = 6, className }: FunnelChartCardProps) {
+const SHAPES = [
+  { id: "flow", label: "Flow" },
+  { id: "bars", label: "Bars" },
+] as const;
+
+export function FunnelChartCard({ data = FUNNEL_DATA, title = "Checkout funnel", color = 6, defaultShape = "flow", className }: FunnelChartCardProps) {
+  const [shape, setShape] = useState<"flow" | "bars">(defaultShape);
   const ref = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [active, setActive] = useState<number | null>(null);
@@ -68,6 +76,7 @@ export function FunnelChartCard({ data = FUNNEL_DATA, title = "Checkout funnel",
           ? `${format.percent(stage.value / top)} of ${data[0]?.label.toLowerCase()}`
           : `End to end, ${format.number(top)} → ${format.number(data[data.length - 1]?.value ?? 0)}`
       }
+      actions={<ChartToggle label="Shape" value={shape} onChange={setShape} options={SHAPES} />}
       summary={`${title}: ${data.map((s) => `${s.label} ${format.number(s.value)}`).join(", ")}. ${format.percent(overall)} convert end to end.`}
       plotClassName="h-auto"
       className={className}
@@ -78,7 +87,8 @@ export function FunnelChartCard({ data = FUNNEL_DATA, title = "Checkout funnel",
             {data.map((s, i) => {
               const x = i * slot + (slot - col) / 2;
               const height = h(s.value);
-              const y = (PLOT_HEIGHT - height) / 2;
+              // Flow centres each column on the axis; bars stand them on the baseline.
+              const y = shape === "bars" ? PLOT_HEIGHT - height : (PLOT_HEIGHT - height) / 2;
               const next = data[i + 1];
               const nh = next ? h(next.value) : 0;
               const ny = (PLOT_HEIGHT - nh) / 2;
@@ -87,7 +97,7 @@ export function FunnelChartCard({ data = FUNNEL_DATA, title = "Checkout funnel",
               const dim = active !== null && active !== i;
               return (
                 <g key={s.label} onMouseEnter={() => setActive(i)} className="cursor-default">
-                  {next && (
+                  {next && shape === "flow" && (
                     <motion.path
                       d={`M${x + col},${y} C${mid},${y} ${mid},${ny} ${nx},${ny} L${nx},${ny + nh} C${mid},${ny + nh} ${mid},${y + height} ${x + col},${y + height} Z`}
                       fill={seriesColor(color)}

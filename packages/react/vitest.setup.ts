@@ -25,3 +25,12 @@ if (hasWindow && !window.ResizeObserver) {
     disconnect() {}
   };
 }
+
+if (hasWindow && !Element.prototype.scrollIntoView) {
+  Element.prototype.scrollIntoView = () => {};
+}
+
+if (hasWindow) {
+  // jsdom defines scrollTo but only to log "Not implemented".
+  window.scrollTo = () => {};
+}

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Bar, BarChart, Cell, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { ChartCard, ChartTooltip, SERIES_SWATCH, chartColors, format, quietAxis, seriesActiveColor, seriesColor } from "../shared/chart-card";
+import { ChartToggle, ChartCard, ChartTooltip, SERIES_SWATCH, chartColors, format, quietAxis, seriesActiveColor, seriesColor } from "../shared/chart-card";
 
 /**
  * Steps Chart: a daily count against a goal. Days that hit the goal take the
@@ -30,6 +30,7 @@ export const STEPS_DATA: StepsPoint[] = [
 ];
 
 export interface StepsChartCardProps {
+  /** Daily counts, oldest first. Longer than a week, it splits into weeks with a switch. */
   data?: StepsPoint[];
   goal?: number;
   title?: string;
@@ -37,15 +38,36 @@ export interface StepsChartCardProps {
   className?: string;
 }
 
-export function StepsChartCard({ data = STEPS_DATA, goal = 10000, title = "Daily steps", unit = "steps", className }: StepsChartCardProps) {
+export function StepsChartCard({ data: all = STEPS_DATA, goal = 10000, title = "Daily steps", unit = "steps", className }: StepsChartCardProps) {
   const [active, setActive] = useState<number | null>(null);
+  // Whole weeks, newest last; the switch shows one at a time.
+  const weeks = all.length > 7 ? Array.from({ length: Math.ceil(all.length / 7) }, (_, i) => all.slice(Math.max(0, all.length - (Math.ceil(all.length / 7) - i) * 7), all.length - (Math.ceil(all.length / 7) - 1 - i) * 7)) : [all];
+  const weekOptions = weeks.map((_, i) => {
+    const back = weeks.length - 1 - i;
+    return { id: String(i), label: back === 0 ? "This week" : back === 1 ? "Last week" : `${back} weeks ago` };
+  });
+  const [week, setWeek] = useState(String(weeks.length - 1));
+  const data = weeks[Number(week)] ?? all;
   const average = data.reduce((sum, d) => sum + d.value, 0) / Math.max(1, data.length);
   const hits = data.filter((d) => d.value >= goal).length;
   const point = active !== null ? data[active] : undefined;
 
   return (
     <ChartCard
-      title={point ? `Day ${active! + 1}` : title}
+      title={point ? (point.label.length > 1 ? point.label : `Day ${active! + 1}`) : title}
+      actions={
+        weeks.length > 1 ? (
+          <ChartToggle
+            label="Week"
+            value={week}
+            onChange={(next) => {
+              setWeek(next);
+              setActive(null);
+            }}
+            options={weekOptions}
+          />
+        ) : undefined
+      }
       value={`${format.number(point?.value ?? average)} ${unit}`}
       valueKey={active ?? "avg"}
       caption={point ? (point.value >= goal ? "Goal reached" : `${format.number(goal - point.value)} short of the goal`) : `Daily average · goal met ${hits} of ${data.length} days`}

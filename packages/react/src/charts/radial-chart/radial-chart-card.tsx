@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { PolarAngleAxis, RadialBar, RadialBarChart, ResponsiveContainer } from "recharts";
-import { ChartCard, ChartToggle, SERIES_SWATCH, chartColors, format, seriesColor } from "../shared/chart-card";
+import { ChartTiles, ChartCard, ChartToggle, SERIES_SWATCH, chartColors, format, seriesColor } from "../shared/chart-card";
 
 /**
  * Radial Chart: parts of a quota, as concentric rings (each part against its
@@ -29,10 +29,12 @@ export interface RadialChartCardProps {
   unit?: string;
   /** Formats amounts; defaults to the number followed by `unit`. Use it for currency. */
   formatValue?: (value: number) => string;
+  /** Show each part's use against its limit as tiles under the chart. */
+  showTiles?: boolean;
   className?: string;
 }
 
-export function RadialChartCard({ data = RADIAL_DATA, title = "Storage used", unit = "GB", formatValue, className }: RadialChartCardProps) {
+export function RadialChartCard({ data = RADIAL_DATA, title = "Storage used", unit = "GB", formatValue, showTiles = false, className }: RadialChartCardProps) {
   const fmt = formatValue ?? ((v: number) => `${format.number(v)} ${unit}`);
   const [view, setView] = useState<"rings" | "gauge">("rings");
   const used = data.reduce((s, d) => s + d.used, 0);
@@ -61,6 +63,7 @@ export function RadialChartCard({ data = RADIAL_DATA, title = "Storage used", un
         .map((d) => `${d.label} ${fmt(d.used)} of ${fmt(d.limit)}`)
         .join(", ")}.`}
       plotClassName="h-60"
+      footer={showTiles ? <ChartTiles tiles={data.map((d) => ({ label: d.label, value: `${fmt(d.used)} / ${fmt(d.limit)}` }))} /> : undefined}
       className={className}
     >
       <div className="relative size-full">

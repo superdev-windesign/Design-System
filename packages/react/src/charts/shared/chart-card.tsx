@@ -43,6 +43,37 @@ export const SERIES_SWATCH = [
   "bg-chart-9",
 ] as const;
 
+/**
+ * Six steps from faint to full for each series colour, for grids that shade by
+ * value (heatmaps, contribution calendars). `SERIES_RAMP[n - 1]` is series n.
+ * Literal strings so Tailwind generates them.
+ */
+export const SERIES_RAMP = [
+  ["bg-chart-1/15", "bg-chart-1/30", "bg-chart-1/50", "bg-chart-1/70", "bg-chart-1/85", "bg-chart-1-active"],
+  ["bg-chart-2/15", "bg-chart-2/30", "bg-chart-2/50", "bg-chart-2/70", "bg-chart-2/85", "bg-chart-2-active"],
+  ["bg-chart-3/15", "bg-chart-3/30", "bg-chart-3/50", "bg-chart-3/70", "bg-chart-3/85", "bg-chart-3-active"],
+  ["bg-chart-4/15", "bg-chart-4/30", "bg-chart-4/50", "bg-chart-4/70", "bg-chart-4/85", "bg-chart-4-active"],
+  ["bg-chart-5/15", "bg-chart-5/30", "bg-chart-5/50", "bg-chart-5/70", "bg-chart-5/85", "bg-chart-5-active"],
+  ["bg-chart-6/15", "bg-chart-6/30", "bg-chart-6/50", "bg-chart-6/70", "bg-chart-6/85", "bg-chart-6-active"],
+  ["bg-chart-7/15", "bg-chart-7/30", "bg-chart-7/50", "bg-chart-7/70", "bg-chart-7/85", "bg-chart-7-active"],
+  ["bg-chart-8/15", "bg-chart-8/30", "bg-chart-8/50", "bg-chart-8/70", "bg-chart-8/85", "bg-chart-8-active"],
+  ["bg-chart-9/15", "bg-chart-9/30", "bg-chart-9/50", "bg-chart-9/70", "bg-chart-9/85", "bg-chart-9-active"],
+] as const;
+
+/** A row of small stat tiles for a chart's footer. */
+export function ChartTiles({ tiles, className }: { tiles: { label: string; value: ReactNode }[]; className?: string }) {
+  return (
+    <dl className={cx("grid gap-2", className)} style={{ gridTemplateColumns: `repeat(${tiles.length}, minmax(0, 1fr))` }}>
+      {tiles.map((t) => (
+        <div key={t.label} className="flex min-w-0 flex-col gap-0.5 rounded-xl bg-surface px-3 py-2">
+          <dt className="truncate text-caption-strong text-fg-secondary">{t.label}</dt>
+          <dd className="truncate text-body-md-strong text-fg tabular-nums">{t.value}</dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
+
 /* -------------------------------------------------------------------------- */
 /*                                 Formatting                                 */
 /* -------------------------------------------------------------------------- */
@@ -121,6 +152,8 @@ export interface ChartCardProps {
   className?: string;
   /** Height class for the plot area. */
   plotClassName?: string;
+  /** Under the plot: stat tiles, a note, a link. */
+  footer?: ReactNode;
 }
 
 export function ChartCard({
@@ -135,6 +168,7 @@ export function ChartCard({
   children,
   className,
   plotClassName = "h-56",
+  footer,
 }: ChartCardProps) {
   const titleId = useId();
   const summaryId = useId();
@@ -172,6 +206,7 @@ export function ChartCard({
         )}
       </div>
       <div className={cx("min-h-0 w-full", plotClassName)}>{children}</div>
+      {footer}
       <p id={summaryId} className="sr-only">
         {summary}
       </p>

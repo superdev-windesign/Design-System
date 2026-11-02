@@ -316,3 +316,141 @@
   scrollbar-width: thin;
   scrollbar-color: var(--ds-color-border-control) transparent;
 }
+
+/* Table (packages/react/src/components/table/table.tsx). React Aria's Column,
+   Row and Cell can't be wrapped without losing their collection behaviour, so
+   they're styled here, scoped to the Table root. Cells get 12px of side
+   padding and the first and last 16px, so content never touches the frame. */
+@layer components {
+  /* In the components layer, so utilities on a column or cell (text-end, a width) still win. */
+  .bui-table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: start;
+  }
+
+  .bui-table th {
+    padding: 0.625rem 0.75rem;
+    text-align: start;
+    vertical-align: middle;
+    white-space: nowrap;
+    font-size: var(--ds-text-body-md-strong-size);
+    line-height: var(--ds-text-body-md-strong-line-height);
+    font-weight: var(--ds-text-body-md-strong-weight);
+    letter-spacing: var(--ds-text-body-md-strong-tracking);
+    color: var(--ds-color-text-secondary);
+    background-color: var(--ds-color-bg-sunken);
+    border-top: 1px solid var(--ds-color-border-separator);
+    border-bottom: 1px solid var(--ds-color-border-separator);
+    outline: none;
+    transition: padding var(--ds-motion-duration-moderate) ease;
+  }
+
+  .bui-table td {
+    padding: 0.625rem 0.75rem;
+    vertical-align: middle;
+    font-size: var(--ds-text-body-md-size);
+    line-height: var(--ds-text-body-md-line-height);
+    font-weight: var(--ds-text-body-md-weight);
+    letter-spacing: var(--ds-text-body-md-tracking);
+    color: var(--ds-color-text-primary);
+    outline: none;
+    transition: padding var(--ds-motion-duration-moderate) ease;
+  }
+
+  .bui-table :is(th, td):first-child {
+    padding-inline-start: 1rem;
+  }
+
+  .bui-table :is(th, td):last-child {
+    padding-inline-end: 1rem;
+  }
+
+  /* Rules sit between rows only; whatever follows the table (the frame's edge,
+     a pagination footer) draws the last boundary, so lines never double up. */
+  .bui-table tbody tr:not(:last-child) {
+    border-bottom: 1px solid var(--ds-color-border-separator);
+  }
+
+  .bui-table tbody tr {
+    transition: background-color var(--ds-motion-duration-base) ease;
+  }
+
+  .bui-table tbody tr[data-hovered] {
+    background-color: var(--ds-color-bg-surface-hover);
+  }
+
+  /* Keyboard focus on a row or cell: the system focus colour, drawn inside so
+     neighbouring rows don't cover it. */
+  .bui-table tbody tr[data-focus-visible],
+  .bui-table td[data-focus-visible],
+  .bui-table th[data-focus-visible] {
+    outline: 2px solid var(--ds-color-border-focus);
+    outline-offset: -2px;
+  }
+
+  .bui-table.bui-table-sm th,
+  .bui-table.bui-table-sm td {
+    padding: 0.375rem 0.625rem;
+    font-size: var(--ds-text-body-sm-strong-size);
+    line-height: var(--ds-text-body-sm-strong-line-height);
+  }
+
+  .bui-table.bui-table-sm :is(th, td):first-child {
+    padding-inline-start: 0.75rem;
+  }
+
+  .bui-table.bui-table-sm :is(th, td):last-child {
+    padding-inline-end: 0.75rem;
+  }
+}
+
+/* Sticky table header (Table stickyHeader). Collapsed borders don't travel
+   with a sticky cell, so the rule under the header is drawn inside it. */
+@layer components {
+  .bui-table-sticky th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    border-bottom-color: transparent;
+    box-shadow: inset 0 -1px 0 var(--ds-color-border-separator);
+  }
+}
+
+/* Content arriving after a skeleton: a short fade up out of a blur. */
+@keyframes ds-reveal {
+  from {
+    opacity: 0;
+    filter: blur(var(--ds-motion-blur-enter-strong));
+  }
+}
+
+@utility animate-reveal {
+  animation: ds-reveal var(--ds-motion-duration-slow) var(--ds-motion-easing-out);
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Theme and accent changes (startThemeTransition in @ds/react): the new look
+   spreads out from the point that changed it, as a circle over the old one.
+   Only while that transition runs, so other view transitions keep the default. */
+@keyframes ds-theme-reveal {
+  from {
+    clip-path: circle(0 at var(--ds-reveal-x) var(--ds-reveal-y));
+  }
+  to {
+    clip-path: circle(var(--ds-reveal-r) at var(--ds-reveal-x) var(--ds-reveal-y));
+  }
+}
+
+:root[data-theme-transition]::view-transition-old(root),
+:root[data-theme-transition]::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+:root[data-theme-transition]::view-transition-new(root) {
+  animation: ds-theme-reveal calc(var(--ds-motion-duration-slow) * 1.6) var(--ds-motion-easing-enter);
+}

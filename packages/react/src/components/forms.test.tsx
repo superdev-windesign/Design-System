@@ -1,6 +1,6 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { CalendarDate } from "@internationalized/date";
+import { CalendarDate, Time } from "@internationalized/date";
 import { Button } from "./button/button";
 import { Checkbox } from "./checkbox/checkbox";
 import { CheckboxGroup } from "./checkbox/checkbox-group";
@@ -10,7 +10,7 @@ import { NumberField } from "./number-field/number-field";
 import { SearchField } from "./search-field/search-field";
 import { PasswordField, scorePassword } from "./password-field/password-field";
 import { MultiSelect } from "./multi-select/multi-select";
-import { DateField } from "./date-field/date-field";
+import { DateField, TimeField } from "./date-field/date-field";
 import { ColorPicker } from "./color-picker/color-picker";
 import { Form, FormActions } from "./form/form";
 import { Rating, RatingValue } from "./rating/rating";
@@ -145,6 +145,41 @@ describe("DateField", () => {
     render(<DateField label="Start date" defaultValue={new CalendarDate(2026, 3, 14)} />);
     const group = screen.getByRole("group", { name: "Start date" });
     expect(within(group).getAllByRole("spinbutton").length).toBeGreaterThanOrEqual(3);
+  });
+});
+
+describe("TimeField", () => {
+  it("swaps the description for the error while out of range", async () => {
+    const user = userEvent.setup();
+    render(
+      <TimeField
+        label="Delivery slot"
+        defaultValue={new Time(21, 30)}
+        minValue={new Time(8)}
+        maxValue={new Time(20)}
+        validationBehavior="aria"
+        description="Between 8:00 AM and 8:00 PM."
+        errorMessage="Pick a slot between 8:00 AM and 8:00 PM."
+      />,
+    );
+    const group = screen.getByRole("group", { name: "Delivery slot" });
+    expect(screen.queryByText("Between 8:00 AM and 8:00 PM.")).not.toBeInTheDocument();
+    expect(screen.getByText("Pick a slot between 8:00 AM and 8:00 PM.")).toBeInTheDocument();
+
+    // Bring the hour back inside the limits: the description returns.
+    const [hour] = within(group).getAllByRole("spinbutton");
+    await user.click(hour!);
+    await user.keyboard("{ArrowDown}{ArrowDown}");
+    expect(screen.getByText("Between 8:00 AM and 8:00 PM.")).toBeInTheDocument();
+    expect(screen.queryByText("Pick a slot between 8:00 AM and 8:00 PM.")).not.toBeInTheDocument();
+  });
+
+  it("shows a custom icon, or none", () => {
+    const Bell = (props: { className?: string }) => <svg data-testid="bell" {...props} />;
+    const { container, rerender } = render(<TimeField label="Alarm" icon={Bell} />);
+    expect(screen.getByTestId("bell")).toBeInTheDocument();
+    rerender(<TimeField label="Alarm" icon={null} />);
+    expect(container.querySelector("svg")).toBeNull();
   });
 });
 
