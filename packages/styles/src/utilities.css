@@ -564,3 +564,106 @@
     }
   }
 }
+
+/* Agent Thinking (blocks/agent-thinking): the stars twinkle in turn and the
+   comet runs the figure-eight. Each element sets its own duration and delay
+   inline, so only the name, curve and repeat are set here. */
+@keyframes ds-agent-twinkle {
+  0%,
+  100% {
+    opacity: 0.15;
+    scale: 0.6;
+  }
+  50% {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes ds-agent-comet {
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+@layer components {
+  .bui-agent-thinking-star {
+    opacity: 0.15;
+    animation-name: ds-agent-twinkle;
+    animation-timing-function: var(--ds-motion-easing-standard);
+    animation-iteration-count: infinite;
+  }
+
+  .bui-agent-thinking-comet {
+    animation-name: ds-agent-comet;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bui-agent-thinking-star {
+      opacity: 0.6;
+      animation: none;
+    }
+    .bui-agent-thinking-comet {
+      animation: none;
+    }
+  }
+}
+
+/* Composer Loader (blocks/composer-loader): the pen line runs once round the
+   rim per lap. Each layer sets its duration, phase and direction inline. */
+@keyframes bui-composer-loader-dash {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The animation is set inline, so it takes !important to rest it. */
+  .bui-composer-loader-rect {
+    animation: none !important;
+  }
+}
+
+/* Auth media (blocks/auth/auth-media-carousel): the next plate is drawn
+   across the last by a crisp wipe from the inline-end edge. */
+@keyframes ds-plate-in {
+  from {
+    clip-path: inset(0 0 0 100%);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+@keyframes ds-plate-in-rtl {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0);
+  }
+}
+
+@utility animate-plate-in {
+  animation: ds-plate-in calc(var(--ds-motion-duration-row-enter) * 2) var(--ds-motion-easing-enter) both;
+
+  &:dir(rtl) {
+    animation-name: ds-plate-in-rtl;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* A checkerboard behind translucent colour (the colour picker's opacity rail),
+   in the paper and muted fills so it follows the theme. */
+@utility bg-checker {
+  background-image: repeating-conic-gradient(var(--ds-color-bg-muted) 0 25%, var(--ds-color-bg-surface) 0 50%);
+  background-size: 8px 8px;
+}

@@ -21,6 +21,7 @@ import {
   ButtonGroupItem,
   Carousel,
   CarouselItem,
+  promptArt,
   Checkbox,
   CheckboxCard,
   Chip,
@@ -282,11 +283,74 @@ function OrdersTable() {
   );
 }
 
-function SlideCard({ title, body }: { title: string; body: string }) {
+/** Plates for the Carousel demos: each title paints its own artwork (promptArt), so no images ship. */
+const GALLERY = [
+  { title: "Harbour at dusk", medium: "Gouache" },
+  { title: "Salt marsh", medium: "Linocut" },
+  { title: "Paper lanterns", medium: "Collage" },
+  { title: "Night ferry", medium: "Ink wash" },
+  { title: "Orchard study", medium: "Pastel" },
+  { title: "Tide tables", medium: "Letterpress" },
+  { title: "North light", medium: "Oil on board" },
+];
+
+function ArtCard({ title, medium }: { title: string; medium: string }) {
   return (
-    <div className="flex h-32 w-56 flex-col justify-between rounded-surface border border-line bg-surface p-4 shadow-raised">
-      <span className="text-body-md-strong text-fg">{title}</span>
-      <span className="text-body-sm text-fg-secondary">{body}</span>
+    <figure className="flex w-full flex-col gap-2">
+      <div aria-hidden className="aspect-4/5 w-full rounded-surface" style={{ background: promptArt(title) }} />
+      <figcaption className="flex items-baseline justify-between gap-2">
+        <span className="truncate font-display text-body-md-strong text-fg">{title}</span>
+        <span className="shrink-0 font-mono text-caption uppercase text-fg-tertiary">{medium}</span>
+      </figcaption>
+    </figure>
+  );
+}
+
+function CarouselDemo() {
+  return (
+    <div className="flex w-full max-w-120 flex-col gap-10">
+      <section className="flex flex-col gap-2">
+        <p className="text-body-sm text-fg-secondary">One plate per slide, the default.</p>
+        <Carousel aria-label="Gallery" className="w-full max-w-72 self-center">
+          {GALLERY.map((plate) => (
+            <CarouselItem key={plate.title}>
+              <ArtCard {...plate} />
+            </CarouselItem>
+          ))}
+        </Carousel>
+      </section>
+      <section className="flex flex-col gap-2">
+        <p className="text-body-sm text-fg-secondary">Narrower items show a peek of the next one.</p>
+        <Carousel aria-label="Gallery with a peek" gap={12}>
+          {GALLERY.map((plate) => (
+            <CarouselItem key={plate.title} className="w-3/5">
+              <ArtCard {...plate} />
+            </CarouselItem>
+          ))}
+        </Carousel>
+      </section>
+      <section className="flex flex-col gap-2">
+        <p className="text-body-sm text-fg-secondary">align="center" rests each card in the middle of the track.</p>
+        <Carousel aria-label="Centred gallery" align="center" gap={16}>
+          {GALLERY.map((plate) => (
+            <CarouselItem key={plate.title} className="w-44">
+              <ArtCard {...plate} />
+            </CarouselItem>
+          ))}
+        </Carousel>
+      </section>
+      <section className="flex flex-col gap-2">
+        <p className="text-body-sm text-fg-secondary">A bare track: no arrows, no ruler, swipe and scroll only.</p>
+        <Carousel aria-label="Mediums" showArrows={false} showDots={false} gap={8}>
+          {GALLERY.map((plate) => (
+            <CarouselItem key={plate.title} className="w-auto">
+              <span className="block rounded-chip border border-line px-2.5 py-1 font-mono text-caption uppercase text-fg-secondary">
+                {plate.medium}
+              </span>
+            </CarouselItem>
+          ))}
+        </Carousel>
+      </section>
     </div>
   );
 }
@@ -927,21 +991,18 @@ const BASE_CATALOG: CatalogEntry[] = [
     isNew: true,
     name: "Carousel",
     group: "Data display",
-    summary: "A scrolling row of cards with arrows and dots.",
+    summary: "A gallery you slide through on native scroll-snap: arrows, a ruler with a folio, centred or peeking cards.",
     imports: ["Carousel", "CarouselItem"],
     preview: () => (
-      <Carousel aria-label="Highlights" className="w-80">
-        <CarouselItem>
-          <SlideCard title="Faster search" body="Results as you type." />
-        </CarouselItem>
-        <CarouselItem>
-          <SlideCard title="Shared views" body="Save a filter for the team." />
-        </CarouselItem>
-        <CarouselItem>
-          <SlideCard title="Audit log" body="See who changed what." />
-        </CarouselItem>
+      <Carousel aria-label="Highlights" className="w-64">
+        {GALLERY.slice(0, 4).map((plate) => (
+          <CarouselItem key={plate.title}>
+            <ArtCard {...plate} />
+          </CarouselItem>
+        ))}
       </Carousel>
     ),
+    demo: () => <CarouselDemo />,
   },
 
   // Dates
@@ -1076,8 +1137,8 @@ const BASE_CATALOG: CatalogEntry[] = [
     isNew: true,
     name: "Composer Attachments",
     group: "Blocks",
-    summary: "File tiles that slide in above the prompt with upload progress.",
-    imports: ["ComposerAttachments"],
+    summary: "File chips above the prompt in six kinds, with thumbnails, a pen-rule progress line and an upload queue that lands files one by one.",
+    imports: ["ComposerWithAttachments", "ComposerAttachments", "ComposerAttachmentTile", "useUploadQueue", "attachmentFromFile"],
     preview: () => <ComposerAttachmentsPreview />,
     demo: () => <ComposerAttachmentsDemo />,
   },
@@ -1136,8 +1197,8 @@ const BASE_CATALOG: CatalogEntry[] = [
     isNew: true,
     name: "Agent Creator",
     group: "Blocks",
-    summary: "Name, job, animated avatar and voice, with a live preview.",
-    imports: ["AgentCreator"],
+    summary: "An agent's identity: name and role, a paper-cutout avatar in six shapes and five expressions, tone, language, notifications and a spoken voice preview; as a card or a sidebar.",
+    imports: ["AgentCreator", "AgentAvatar"],
     preview: () => <AgentCreatorPreview />,
     demo: () => <AgentCreatorDemo />,
   },

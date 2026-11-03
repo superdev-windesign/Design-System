@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/application/composer-loader/composer-loader.tsx. See THIRD_PARTY_NOTICES.md.
+// The rim-orbit mechanics were first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own: one pen line in the accent, no iridescent glow.
 
 import { useTemplateCopy } from "../../foundations/template-copy";
 
@@ -9,14 +10,15 @@ import { cx } from "../../utils/cx";
 
 /**
  * Composer Loader — a loading state that wraps a chat composer while the agent
- * works: an iridescent light band orbiting the pill's rim with a soft bloom
- * bleeding inward.
+ * works: a single pen line in the accent, tracing the composer's rim, the
+ * way a pen rule draws along a focused field.
  *
- * The band is dash segments on an SVG stroke of the pill shape
+ * The line is a dash segment on an SVG stroke of the composer's shape
  * (pathLength-normalized, so it travels at constant speed and bends around
- * the end caps), drawn at three scales — crisp line, tight glow, wide bloom —
- * with the sharp line leading and every soft layer's head pulled back behind
- * the tip.
+ * the corners). Two softer layers are available for louder placements — a
+ * tight glow (`glow`) and a wide bloom (`bloom`) — with every soft layer's
+ * head pulled back behind the tip; both are off by default. Pass `colors`
+ * for a four-colour gradient instead of the accent.
  *
  * The component paints the pill surface itself and layers the light above
  * it, so the wrapped composer must not paint its own background:
@@ -33,13 +35,15 @@ export interface ComposerLoaderProps {
   children: ReactNode;
   /** Show the light. Fades in/out — flip it while awaiting a response. */
   active?: boolean;
-  /** Four gradient colors, spread across the pill left → right. */
+  /** Four gradient colours, spread across the pill left → right. Defaults to the solid accent. */
   colors?: [string, string, string, string];
+  /** Add the tight glow layer around the line. Off by default. */
+  glow?: boolean;
   /** Seconds per full lap. */
   speed?: number;
   /** Overall light opacity. */
   intensity?: number;
-  /** How far the bloom bleeds inward from the rim, px. */
+  /** How far the bloom bleeds inward from the rim, px. 0 (the default) draws no bloom. */
   bloom?: number;
   /** Bloom layer opacity. */
   bloomStrength?: number;
@@ -73,13 +77,6 @@ export interface ComposerLoaderProps {
   className?: string;
 }
 
-const DEFAULT_COLORS: [string, string, string, string] = [
-  "#5eead4",
-  "#46baec",
-  "#e633a4",
-  "#00faa7",
-];
-
 function hexTriplet(hex: string) {
   return [
     parseInt(hex.slice(1, 3), 16),
@@ -91,15 +88,16 @@ function hexTriplet(hex: string) {
 export function ComposerLoader({
   children,
   active = true,
-  colors = DEFAULT_COLORS,
+  colors,
+  glow = false,
   speed = 4.5,
-  intensity = 0.7,
-  bloom = 16,
+  intensity = 1,
+  bloom = 0,
   bloomStrength = 0.3,
   arc = 120,
   reverse = false,
   radius,
-  line = 2.5,
+  line = 2,
   bloomOnly = false,
   surface = true,
   taper = 0,
@@ -122,12 +120,14 @@ export function ComposerLoader({
     return () => observer.disconnect();
   }, []);
 
-  const [c0, c1, c2, c3] = colors;
-  // Gradient center: pure blend of the middle colors, so the band never
-  // washes out to white.
-  const mid = `rgb(${hexTriplet(c1)
-    .map((v, i) => Math.round((v + hexTriplet(c2)[i]!) / 2))
-    .join(",")})`;
+  // Gradient centre (custom colours only): a pure blend of the middle two,
+  // so the band never washes out to white.
+  const mid = colors
+    ? `rgb(${hexTriplet(colors[1])
+        .map((v, i) => Math.round((v + hexTriplet(colors[2])[i]!) / 2))
+        .join(",")})`
+    : undefined;
+  const ink = colors ? `url(#${gradientId})` : "var(--ds-color-accent-600)";
 
   const band = (arc / 360) * 100;
   const rx = radius ?? box.h / 2;
@@ -150,7 +150,7 @@ export function ComposerLoader({
   // end is a staircase with one step per copy, so it takes many copies and
   // a little blur on the crisp line for the steps to melt into a gradient.
   const TAPER_STEPS = 14;
-  const CRISP_BLUR = taper > 0 ? Math.max(0.5, line * 0.8) : 0.5;
+  const CRISP_BLUR = taper > 0 ? Math.max(0.5, line * 0.8) : 0;
   const stroke = (width: number, blur: number, opacity: number, dashLen: number, backPx: number) => {
     const copies = taper > 0 ? TAPER_STEPS : 1;
     return Array.from({ length: copies }, (_, index) => {
@@ -169,7 +169,7 @@ export function ComposerLoader({
           rx={rx}
           pathLength={100}
           fill="none"
-          stroke={`url(#${gradientId})`}
+          stroke={ink}
           strokeWidth={width}
           strokeLinecap="round"
           strokeDasharray={`${len} ${100 - len}`}
@@ -208,7 +208,7 @@ export function ComposerLoader({
       {surface && (
         <span
           aria-hidden
-          className="absolute inset-0 bg-surface shadow-raised"
+          className="absolute inset-0 bg-surface ring-1 ring-line ring-inset"
           style={{ borderRadius: cornerRadius }}
         />
       )}
@@ -232,20 +232,22 @@ export function ComposerLoader({
           style={{ opacity: intensity }}
         >
           <defs>
-            <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor={c0} />
-              <stop offset="30%" stopColor={c1} />
-              <stop offset="50%" stopColor={mid} />
-              <stop offset="70%" stopColor={c2} />
-              <stop offset="100%" stopColor={c3} />
-            </linearGradient>
-            {[14, 6, CRISP_BLUR].map(blurFilter)}
+            {colors && (
+              <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor={colors[0]} />
+                <stop offset="30%" stopColor={colors[1]} />
+                <stop offset="50%" stopColor={mid} />
+                <stop offset="70%" stopColor={colors[2]} />
+                <stop offset="100%" stopColor={colors[3]} />
+              </linearGradient>
+            )}
+            {[14, 6, CRISP_BLUR].filter((radius) => radius > 0).map(blurFilter)}
           </defs>
           {/* wide bloom bleeding inward (outer half clipped by the pill) */}
           {bloom > 0 && stroke(bloom * 2, 14, bloomStrength, band * 0.9, bloom + 16)}
-          {/* tight glow */}
-          {!bloomOnly && stroke(line * 3.2, 6, 0.8, band * 0.95, 10)}
-          {/* crisp refraction line, tip leading */}
+          {/* tight glow, on request */}
+          {glow && !bloomOnly && stroke(line * 3.2, 6, 0.8, band * 0.95, 10)}
+          {/* the pen line, tip leading */}
           {!bloomOnly && stroke(line, CRISP_BLUR, 1, band, 0)}
         </svg>
       </span>

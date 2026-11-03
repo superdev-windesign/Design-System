@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/application/agent-thinking/agent-thinking.tsx. See THIRD_PARTY_NOTICES.md.
+// The four indicator variants were first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look and motion are Windesign's own.
 
 import { useTemplateCopy } from "../../foundations/template-copy";
 
@@ -17,9 +18,12 @@ import { cx } from "../../utils/cx";
  * - `stars`    sparkles twinkling in and out with a stagger
  * - `infinity` a comet trail sweeping a figure-eight
  *
- * Every variant pairs the indicator with a shimmering label and an elapsed
- * timer that starts when the loader mounts. Shimmer and CSS animations fall
- * back to static rendering under `prefers-reduced-motion` (see globals.css).
+ * Every variant pairs the indicator with a shimmering label (the system's
+ * `text-shimmer`) and an elapsed timer in mono figures that starts when the
+ * loader mounts. The dot grids are square ink dots, like a printer's dot
+ * matrix. The twinkle and the comet are defined in packages/styles
+ * (utilities.css) and, like the shimmer, rest static under
+ * `prefers-reduced-motion`.
  */
 
 export type AgentThinkingVariant = "wave" | "spin" | "stars" | "infinity";
@@ -42,7 +46,7 @@ const TONE_COLORS: Record<AgentThinkingTone, string> = {
   subtle: "var(--ds-color-text-tertiary)",
   default: "var(--ds-color-text-secondary)",
   primary: "var(--ds-color-text-primary)",
-  accent: "var(--ds-color-blue-500)",
+  accent: "var(--ds-color-accent-600)",
 };
 
 const VARIANT_TONE: Record<AgentThinkingVariant, AgentThinkingTone> = {
@@ -117,7 +121,7 @@ function DotsIndicator({ variant }: { variant: "wave" | "spin" }) {
       {opacities.map((opacity, i) => (
         <span
           key={i}
-          className="rounded-[1px] bg-current"
+          className="bg-current"
           style={{
             width: DOTS_SIZE,
             height: DOTS_SIZE,
@@ -268,7 +272,7 @@ export function AgentThinking({
       {variant === "infinity" && <InfinityIndicator />}
       <span
         aria-label={label}
-        className={cx("text-body-md-strong", shimmer && "bui-agent-thinking-label")}
+        className={cx("text-body-md-strong", shimmer && "text-shimmer")}
       >
         {label}
       </span>

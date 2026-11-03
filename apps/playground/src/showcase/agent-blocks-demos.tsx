@@ -6,6 +6,7 @@ import {
   AgentLimits,
   Button,
   ComposerAttachments,
+  ComposerWithAttachments,
   ComposerPanel,
   MonthCalendar,
   Questionnaire,
@@ -14,7 +15,8 @@ import {
   attachmentKind,
   toast,
 } from "@ds/react";
-import type { ComposerAttachment, Question, ResearchStep, TaskItem } from "@ds/react";
+import { PICTURE } from "./display-demos";
+import type { AgentConfig, ComposerAttachment, Question, ResearchStep, TaskItem } from "@ds/react";
 import { Fit } from "./blocks-demos";
 
 /** Runs `steps` one after another with `delay` ms between them; restarts when `run` changes. */
@@ -92,32 +94,59 @@ export const ComposerPanelPreview = () => (
   </Fit>
 );
 
+/** One of each kind: the image carries a thumbnail, the rest their kind swatch. */
+const KIND_SAMPLES: ComposerAttachment[] = [
+  { id: "k1", name: "harbour.png", size: 1_310_000, kind: "image", src: PICTURE },
+  { id: "k2", name: "payroll-2026.docx", size: 92_000 },
+  { id: "k3", name: "timetable.xlsx", size: 41_000 },
+  { id: "k4", name: "launch.key", size: 6_200_000 },
+  { id: "k5", name: "types.tsx", size: 8_400 },
+  { id: "k6", name: "birthday.mp4", size: 48_000_000 },
+];
+
+let queuedSeq = 0;
+
 export function ComposerAttachmentsDemo() {
-  const attachments = useAttachments();
+  const [files, setFiles] = useState<ComposerAttachment[]>([]);
+  const queueSamples = () =>
+    setFiles((list) => [
+      ...list,
+      ...SAMPLE_FILES.map((file) => ({ ...file, id: `q${++queuedSeq}`, kind: attachmentKind(file.name), progress: 0 })),
+    ]);
   return (
-    <div className="flex w-full max-w-xl flex-col items-center gap-4">
-      <div className="min-h-18 w-full rounded-2xl border border-dashed border-line p-2">
-        {attachments.items.length === 0 ? (
-          <p className="py-4 text-center text-body-sm text-fg-secondary">No files yet</p>
-        ) : (
-          <ComposerAttachments items={attachments.items} onRemove={attachments.remove} />
-        )}
-      </div>
-      <div className="flex gap-2">
-        <Button leadingIcon={RiAddLine} onPress={() => attachments.add(SAMPLE_FILES)}>
+    <div className="flex w-full max-w-xl flex-col gap-8">
+      <section className="flex flex-col gap-3">
+        <p className="text-body-sm text-fg-secondary">
+          ComposerWithAttachments owns the queue: files land one after another, and the attach button feeds it too.
+        </p>
+        <ComposerWithAttachments
+          attachments={files}
+          onAttachmentsChange={setFiles}
+          onUploadComplete={(file) => toast.show(`${file.name} uploaded`)}
+          onAllUploaded={() => toast.success("All files uploaded")}
+          onSubmit={() => setFiles([])}
+        />
+        <Button size="sm" variant="secondary" leadingIcon={RiAddLine} onPress={queueSamples} className="self-start">
           Attach three files
         </Button>
-        <Button variant="secondary" onPress={attachments.clear}>
-          Clear
-        </Button>
-      </div>
+      </section>
+      <section className="flex flex-col gap-3">
+        <p className="text-body-sm text-fg-secondary">Six kinds; an image shows its thumbnail.</p>
+        <ComposerAttachments items={KIND_SAMPLES} onRemove={() => {}} className="flex-wrap" />
+      </section>
     </div>
   );
 }
 
 export const ComposerAttachmentsPreview = () => (
   <Fit width={460} center>
-    <ComposerAttachments items={SAMPLE_FILES.map((f, i) => ({ ...f, id: String(i), progress: i === 2 ? 0.6 : undefined }))} />
+    <ComposerAttachments
+      items={[
+        { ...KIND_SAMPLES[0]! },
+        { id: "p2", name: "q3-revenue.xlsx", size: 284_000, progress: 0.6 },
+        { id: "p3", name: "brand-guidelines.pdf", size: 4_820_000, progress: 0 },
+      ]}
+    />
   </Fit>
 );
 
@@ -328,17 +357,56 @@ export const QuestionnairePreview = () => (
 
 // ─── Agent creator ─────────────────────────────────────────────────────────
 
+const SAMPLE_AGENT: AgentConfig = {
+  name: "Nimbus",
+  label: "Cloud engineer",
+  description: "Watches the deploys and explains what broke, in plain words.",
+  color: 1,
+  shape: "shield",
+  expression: "focused",
+  tone: "concise",
+  language: "auto",
+  notifications: true,
+  voice: "calm",
+  speed: 1,
+};
+
+function AgentSidebarDemo() {
+  const [agent, setAgent] = useState<AgentConfig>(SAMPLE_AGENT);
+  const [open, setOpen] = useState(true);
+  return open ? (
+    <div className="h-160 w-full max-w-sm">
+      <AgentCreator
+        layout="sidebar"
+        title="Edit agent"
+        submitLabel="Save changes"
+        agent={agent}
+        onChange={setAgent}
+        onClose={() => setOpen(false)}
+        onCreate={(c) => toast.success(`${c.name} saved`)}
+      />
+    </div>
+  ) : (
+    <Button variant="secondary" onPress={() => setOpen(true)}>
+      Reopen the sidebar
+    </Button>
+  );
+}
+
 export const AgentCreatorDemo = () => (
-  <AgentCreator
-    className="max-w-3xl"
-    defaultValue={{ name: "Release helper", description: "Drafts release notes from merged pull requests." }}
-    onCreate={(c) => toast.success(`${c.name} created`, { description: `${c.tone} tone · ${c.voice} voice` })}
-  />
+  <div className="flex w-full flex-col items-center gap-10">
+    <AgentCreator
+      className="max-w-3xl"
+      defaultValue={{ name: "Release helper", label: "Release manager", description: "Drafts release notes from merged pull requests.", shape: "tile", expression: "happy" }}
+      onCreate={(c) => toast.success(`${c.name} created`, { description: `${c.tone} tone · ${c.voice} voice` })}
+    />
+    <AgentSidebarDemo />
+  </div>
 );
 
 export const AgentCreatorPreview = () => (
   <Fit width={760} center>
-    <AgentCreator defaultValue={{ name: "Release helper", description: "Drafts release notes from merged pull requests." }} />
+    <AgentCreator defaultValue={{ name: "Release helper", label: "Release manager", description: "Drafts release notes from merged pull requests.", shape: "tile", expression: "happy" }} />
   </Fit>
 );
 

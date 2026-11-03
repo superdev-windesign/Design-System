@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/application/auth/auth-card.tsx. See THIRD_PARTY_NOTICES.md.
+// The provider layouts were first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import type { FormEvent, ReactNode } from "react";
 import { useState } from "react";
@@ -220,7 +221,7 @@ export function AuthCard({
       ) : null}
 
       <div className={cx("flex flex-col gap-1.5", centerContent && "text-center")}>
-        <TitleHeading className="text-title-md-strong text-fg">
+        <TitleHeading className="font-display text-title-md-strong text-fg">
           {title ?? copy.title}
         </TitleHeading>
         <p className="text-body-md text-fg-secondary">
@@ -357,7 +358,7 @@ export function AuthCard({
   const card = media ? (
     <div
       className={cx(
-        "grid w-full max-w-220 overflow-hidden rounded-3xl border border-line bg-auth-card shadow-raised md:grid-cols-2",
+        "grid w-full max-w-220 overflow-hidden rounded-panel border border-line bg-auth-card md:grid-cols-2",
         className,
       )}
     >
@@ -369,7 +370,7 @@ export function AuthCard({
   ) : (
     <div
       className={cx(
-        "flex w-full max-w-100 flex-col rounded-3xl border border-line bg-auth-card p-6 shadow-raised sm:p-8",
+        "flex w-full max-w-100 flex-col rounded-panel border border-line bg-auth-card p-6 sm:p-8",
         className,
       )}
     >

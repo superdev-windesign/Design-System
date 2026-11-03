@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/application/theme/theme-toggle.tsx. See THIRD_PARTY_NOTICES.md.
+// The view-transition plumbing was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own (a crisp reveal circle, an ink thumb).
 
 import { useTemplateCopy } from "../../foundations/template-copy";
 
@@ -32,12 +33,11 @@ type ViewTransitionDocument = Document & {
 
 let themeTransitionRunning = false;
 
-function createBlurCircleMask() {
+/** The reveal mask: a crisp circle, the same edge as startThemeTransition's reveal. */
+function createCircleMask() {
   const svg = [
     '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">',
-    '<defs><filter id="blur" x="-50%" y="-50%" width="200%" height="200%">',
-    '<feGaussianBlur stdDeviation="2" /></filter></defs>',
-    '<circle cx="50" cy="50" r="42" fill="white" filter="url(#blur)" />',
+    '<circle cx="50" cy="50" r="42" fill="white" />',
     "</svg>",
   ].join("");
 
@@ -51,7 +51,7 @@ function installThemeTransitionStyle(
 ) {
   document.getElementById(THEME_TRANSITION_STYLE_ID)?.remove();
 
-  const mask = createBlurCircleMask();
+  const mask = createCircleMask();
   const finalMaskSize = radius * 2.5;
   const finalMaskX = x - finalMaskSize / 2;
   const finalMaskY = y - finalMaskSize / 2;
@@ -263,7 +263,7 @@ export function ThemeToggle({
         role="group"
         aria-label="Theme"
         className={cx(
-          "relative inline-flex w-fit items-center gap-1 rounded-full p-1",
+          "relative inline-flex w-fit items-center gap-1 rounded-control-md p-1",
           // Mobile: 2px padding + 28px segments = 32px tall, matching the
           // small icon buttons beside it. Desktop keeps the roomier 40px.
           glass && "p-0.5 sm:p-1",
@@ -282,15 +282,13 @@ export function ThemeToggle({
         <span
           aria-hidden
           className={cx(
-            "pointer-events-none absolute top-1 start-1 size-8 rounded-full",
-            "shadow-raised transition-transform duration-200 ease",
+            "pointer-events-none absolute top-1 start-1 size-8 rounded-control-sm",
+            "transition-transform duration-(--ds-motion-duration-moderate) ease-standard motion-reduce:transition-none",
             glass && "top-0.5 start-0.5 size-7 sm:top-1 sm:start-1 sm:size-8",
             small && "top-0.5 start-0.5 size-6",
-            glass
-              ? "bg-surface"
-              : sidebarSurface
-                ? "bg-surface"
-                : "bg-surface",
+            // The ink thumb, like the Segmented Control's; the glass variant
+            // keeps paper, since its host supplies the surface around it.
+            glass ? "bg-surface" : "bg-fg",
             // Segment width + the 4px gap: 28+4 on mobile, 32+4 above it.
             dark && (small ? "translate-x-6.5 rtl:-translate-x-6.5" : glass ? "translate-x-8 rtl:-translate-x-8 sm:translate-x-9 sm:rtl:-translate-x-9" : "translate-x-9 rtl:-translate-x-9"),
           )}
@@ -317,19 +315,19 @@ export function ThemeToggle({
                 });
               }}
               className={cx(
-                "relative z-10 grid size-8 cursor-pointer place-items-center rounded-full outline-none",
+                "relative z-10 grid size-8 cursor-pointer place-items-center rounded-control-sm outline-none",
                 glass && "size-7 sm:size-8",
                 small && "size-6",
                 "transition-colors duration-150 ease",
                 "focus-visible:outline-2 focus-visible:outline-focus",
                 glass
                   ? selected
-                    ? // Reads against the selected pill, which is white in
-                      // light and dark grey in dark — so it flips with it.
+                    ? // Reads against the selected paper thumb, which is
+                      // light in light and dark in dark — so it flips with it.
                       "text-fg"
                     : "text-fg-tertiary hover:text-fg-secondary"
                   : selected
-                    ? "text-icon"
+                    ? "text-canvas"
                     : "text-icon-secondary hover:text-icon",
               )}
             >
@@ -361,7 +359,7 @@ export function ThemeToggle({
           });
         }}
         className={cx(
-          "flex size-9 cursor-pointer items-center justify-center rounded-2lg",
+          "flex size-9 cursor-pointer items-center justify-center rounded-control-md",
           "text-icon-secondary transition-colors duration-150 ease",
           "hover:bg-sunken-hover hover:text-icon",
           "focus-visible:outline-2 focus-visible:outline-focus",
@@ -392,7 +390,7 @@ export function ThemeToggle({
       aria-label="Dark mode"
       className={({ isFocusVisible }) =>
         cx(
-          "flex w-full cursor-pointer items-center justify-between rounded-2lg p-2",
+          "flex w-full cursor-pointer items-center justify-between rounded-control-md p-2",
           "transition-colors duration-150 ease hover:bg-sunken-hover",
           isFocusVisible && "outline-2 -outline-offset-2 outline-focus",
           className,

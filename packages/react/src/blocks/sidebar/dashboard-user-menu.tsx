@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/application/dashboard/dashboard-user-menu.tsx. See THIRD_PARTY_NOTICES.md.
+// The account menu structure was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import { useTemplateCopy, useTemplateLanguageSelector } from "../../foundations/template-copy";
 
@@ -15,16 +16,15 @@ import {
 import { Avatar } from "../../components/avatar/avatar";
 import { Button } from "../../components/button/button";
 import { ChevronUpDownSmall } from "../../icons/chevrons";
+import { MENU_POPOVER_SURFACE } from "../../recipes/menu";
 import { cx } from "../../utils/cx";
 
 /**
- * Figma source: Board UI → sidebar account menu (node 3828:3895).
- *
  * Dropdown opened from the sidebar's workspace switcher (avatar + name +
- * chevron) at the top. Floats to the right of the sidebar with the same panel
- * surface and appear animation as the team menu: white, 1px border, radius 16,
- * p 10, shadow/dropdown. Lists the users with access (20px tinted-initial
- * avatars + name), a full-bleed divider, then "Add user" / "Manage" actions.
+ * chevron) at the top. Floats to the right of the sidebar on the same shared
+ * menu panel as the team menu (recipes/menu.ts). Lists the users with access
+ * (20px tinted-initial avatars + name), a full-bleed divider, then
+ * "Add user" / "Manage" actions.
  */
 
 type AvatarColor = "neutral" | "lime" | "pink";
@@ -49,7 +49,7 @@ function Collapsible({ collapsed, children }: { collapsed: boolean; children: Re
     <span
       className={cx(
         "flex min-w-0 items-center overflow-hidden transition-[max-width,opacity,filter] duration-300 ease-in-out",
-        collapsed ? "max-w-0 opacity-0 blur-[3px]" : "max-w-40 opacity-100 blur-0",
+        collapsed ? "max-w-0 opacity-0" : "max-w-40 opacity-100",
       )}
     >
       {children}
@@ -65,7 +65,7 @@ function UserMenuItem({ initials, color, name, isSelected, onSelect }: UserRow &
       aria-current={isSelected ? "page" : undefined}
       onPress={onSelect}
       className={cx(
-        "flex w-full cursor-pointer items-center gap-2 rounded-2lg px-2 py-1.5 text-start outline-none transition-colors",
+        "flex w-full cursor-pointer items-center gap-2 rounded-control-sm px-2 py-1.5 text-start outline-none transition-colors",
         isSelected
           ? "bg-surface-hover"
           : "hover:bg-surface-hover focus-visible:bg-surface-hover",
@@ -156,12 +156,12 @@ export function DashboardUserMenu({
           if (suppressHover) onHoverSuppressionEnd?.();
         }}
         className={cx(
-          "relative flex min-w-0 cursor-pointer items-center gap-2 rounded-full outline-none",
+          "relative flex min-w-0 cursor-pointer items-center gap-2 rounded-control-md outline-none",
           "focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline-offset-2",
-          // Hover pill (Figma node 3829:4063): a fully-rounded 2px border/button/hover
-          // outline drawn via a pseudo-element so it never shifts the layout.
-          "before:pointer-events-none before:absolute before:-inset-x-1.5 before:-inset-y-1.25 before:rounded-full before:border-2 before:border-transparent before:transition-colors before:duration-150",
-          !suppressHover && "hover:before:border-line-hover",
+          // Hover frame: a crisp 1px control outline drawn via a pseudo-element
+          // so it never shifts the layout.
+          "before:pointer-events-none before:absolute before:-inset-x-1.5 before:-inset-y-1.25 before:rounded-control-md before:border before:border-transparent before:transition-colors before:duration-(--ds-motion-duration-base)",
+          !suppressHover && "hover:before:border-line-control-hover",
           // Collapsed, the trigger takes the rail's own 36px column and centres
           // the 32px avatar in it, instead of sizing to the avatar plus a gap
           // held open for a label that's shrunk to nothing. That gap made the
@@ -187,11 +187,9 @@ export function DashboardUserMenu({
         placement={isMobile ? "bottom start" : direction === "rtl" ? "left top" : "right top"}
         offset={8}
         className={cx(
-          "w-66.25 max-w-[calc(100vw-32px)] origin-top-left overflow-y-auto",
-          "rounded-2xl border border-line bg-surface p-2.5 shadow-overlay",
-          "transition duration-150 ease-out",
-          "data-[entering]:opacity-0 data-[entering]:scale-95 data-[entering]:blur-enter",
-          "data-[exiting]:opacity-0 data-[exiting]:scale-95 data-[exiting]:blur-enter",
+          // The shared menu panel: lifted, 8px corners, slides out from the trigger.
+          "w-66.25",
+          MENU_POPOVER_SURFACE,
         )}
       >
         <AriaDialog aria-label="Account menu" className="flex flex-col outline-none">

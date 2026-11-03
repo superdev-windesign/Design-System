@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/application/dashboard/stat-cards.tsx. See THIRD_PARTY_NOTICES.md.
+// The stat data model was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import { useTemplateCopy } from "../../foundations/template-copy";
 
@@ -24,16 +25,13 @@ import { Tooltip, TooltipTrigger } from "../../components/tooltip/tooltip";
 import { cx } from "../../utils/cx";
 
 /**
- * Figma source: Board UI → dashboard 1 → Frame 20 (node 3731:3160) for the
- * plain cards; the footer variant follows the same inner-tile recipe as the
- * recent hires card.
- *
- * KPI stat cards in two looks:
+ * KPI stat cards, set like ledger entries on the sunken page: crisp 6px
+ * cards, figures in tabular numerals, no shadows. Two looks:
  *
  *   plain   icon tile, label, value, delta chip — the compact dashboard row
- *   footer  tinted gradient icon tile beside the label (plus an optional
- *           info tooltip), a display-size value, and a white footer band
- *           carrying the comparison caption and a delta pill
+ *   footer  a flat tone tile beside the label (plus an optional info
+ *           tooltip), a display-size value, and a footer below a hairline
+ *           rule carrying the comparison caption and a delta chip
  */
 
 type IconComponent = ComponentType<{
@@ -106,14 +104,14 @@ const DEFAULT_FOOTER_STATS: Stat[] = [
   },
 ];
 
-/** Gradient stops for the footer variant's icon tile, keyed by tone. */
+/** Flat fill for the footer variant's icon tile, keyed by tone. */
 const TILE_TONES: Record<StatTone, string> = {
-  blue: "from-stat-icon-blue-start to-stat-icon-blue-end",
-  orange: "from-stat-icon-orange-start to-stat-icon-orange-end",
-  purple: "from-stat-icon-purple-start to-stat-icon-purple-end",
-  pink: "from-stat-icon-pink-start to-stat-icon-pink-end",
-  sky: "from-stat-icon-sky-start to-stat-icon-sky-end",
-  emerald: "from-stat-icon-emerald-start to-stat-icon-emerald-end",
+  blue: "bg-stat-icon-blue-end",
+  orange: "bg-stat-icon-orange-end",
+  purple: "bg-stat-icon-purple-end",
+  pink: "bg-stat-icon-pink-end",
+  sky: "bg-stat-icon-sky-end",
+  emerald: "bg-stat-icon-emerald-end",
 };
 
 const DELTA_STYLES: Record<
@@ -137,15 +135,15 @@ const DELTA_STYLES: Record<
   },
 };
 
-/** Tinted pill with a direction glyph — the footer band's delta readout, in
- *  the same lime and rose the chart cards use for their trend chips. */
+/** Tinted chip with a direction glyph — the footer's delta readout, in the
+ *  same lime and rose the chart cards use for their trend chips. */
 function DeltaPill({ delta, deltaColor }: Pick<Stat, "delta" | "deltaColor">) {
   const localize = useTemplateCopy();
   const { icon: Icon, className, pill } = DELTA_STYLES[deltaColor];
   return localize((
     <span
       className={cx(
-        "flex shrink-0 items-center gap-1 rounded-full py-0.5 pe-2 ps-1",
+        "flex shrink-0 items-center gap-1 rounded-chip py-0.5 pe-1.5 ps-1",
         pill,
       )}
     >
@@ -170,7 +168,7 @@ function StatHint({ label, hint }: { label: string; hint: string }) {
           type="button"
           aria-label={`About ${label}`}
           onClick={() => setOpen((isOpen) => !isOpen)}
-          className="flex shrink-0 cursor-pointer items-center justify-center rounded-full text-icon-secondary transition-colors duration-150 ease hover:text-icon focus-visible:outline-2 focus-visible:outline-focus"
+          className="flex shrink-0 cursor-pointer items-center justify-center rounded-control-xs text-icon-secondary transition-colors duration-(--ds-motion-duration-base) ease-out hover:text-icon focus-visible:outline-2 focus-visible:outline-focus"
         >
           <RiInformationFill className="size-5" aria-hidden />
         </button>
@@ -183,14 +181,14 @@ function StatHint({ label, hint }: { label: string; hint: string }) {
 function PlainStatCard({ stat }: { stat: Stat }) {
   const localize = useTemplateCopy();
   return localize((
-    <section className="flex h-33 min-w-0 flex-col items-start justify-between rounded-2xl bg-sunken p-4">
-      <span className="flex items-center rounded-md bg-surface p-1.5">
+    <section className="flex h-33 min-w-0 flex-col items-start justify-between rounded-surface bg-sunken p-4">
+      <span className="flex items-center rounded-control-md bg-surface p-1.5">
         <stat.icon className="size-5 shrink-0 text-icon" aria-hidden />
       </span>
       <div className="flex w-full flex-col gap-0.5">
         <p className="w-full text-body-md-strong text-fg-secondary">{stat.label}</p>
         <div className="flex w-full flex-wrap items-center gap-2">
-          <p className="text-title-lg-strong whitespace-nowrap text-fg">{stat.value}</p>
+          <p className="text-title-lg-strong whitespace-nowrap text-fg tabular-nums">{stat.value}</p>
           <Chip variant="bold" color={stat.deltaColor}>
             {stat.delta}
           </Chip>
@@ -203,12 +201,12 @@ function PlainStatCard({ stat }: { stat: Stat }) {
 function FooterStatCard({ stat }: { stat: Stat }) {
   const localize = useTemplateCopy();
   return localize((
-    <section className="flex min-w-0 flex-col rounded-2xl bg-sunken p-2">
+    <section className="flex min-w-0 flex-col rounded-surface bg-sunken p-2">
       {/* Icon tile + optional info glyph, both hanging from the same top inset */}
       <div className="flex w-full items-start justify-between gap-2.5 p-2">
         <span
           className={cx(
-            "flex size-10 shrink-0 items-center justify-center rounded-2lg bg-linear-to-b",
+            "flex size-10 shrink-0 items-center justify-center rounded-control-md",
             TILE_TONES[stat.tone ?? "blue"],
           )}
         >
@@ -225,8 +223,8 @@ function FooterStatCard({ stat }: { stat: Stat }) {
         </p>
       </div>
 
-      {/* Footer band: comparison caption + delta pill on an inner tile */}
-      <div className="mt-auto flex w-full items-center justify-between gap-2 rounded-2lg bg-surface py-1.5 pe-1.5 ps-2.5 shadow-raised">
+      {/* Footer: comparison caption + delta chip, below a hairline rule */}
+      <div className="mt-auto flex w-full items-center justify-between gap-2 border-t border-line px-2 pt-2 pb-1">
         <p className="truncate text-body-md text-fg-secondary">
           {stat.caption ?? "From last month"}
         </p>

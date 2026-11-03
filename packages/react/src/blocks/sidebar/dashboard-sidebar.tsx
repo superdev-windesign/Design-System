@@ -56,8 +56,8 @@ type IconComponent = ComponentType<{
 }>;
 
 /**
- * Collapsible text/badge slot: blurs + fades + shrinks away when the rail
- * closes, and blurs back in on expand. The icons/rows themselves stay pinned in
+ * Collapsible text/badge slot: fades and shrinks away when the rail closes,
+ * and fades back in on expand. The icons/rows themselves stay pinned in
  * place — only these label/badge slots animate — so nothing jumps to center.
  */
 function Collapsible({ collapsed, children, className }: { collapsed: boolean; children: ReactNode; className?: string }) {
@@ -65,10 +65,10 @@ function Collapsible({ collapsed, children, className }: { collapsed: boolean; c
   return localize((
     <span
       className={cx(
-        "flex min-w-0 items-center overflow-hidden transition-[max-width,opacity,filter] duration-300 ease-in-out",
+        "flex min-w-0 items-center overflow-hidden transition-[max-width,opacity] duration-300 ease-in-out",
         // Expanded, the cap is the row itself: a fixed cap (it was 160px)
         // clipped any label wider than it, "Components and Blocks" included.
-        collapsed ? "max-w-0 opacity-0 blur-[3px]" : "max-w-full opacity-100 blur-0",
+        collapsed ? "max-w-0 opacity-0" : "max-w-full opacity-100",
         className,
       )}
     >

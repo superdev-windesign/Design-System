@@ -7,6 +7,7 @@ import {
   Checkbox,
   CheckboxGroup,
   ColorPicker,
+  ColorWell,
   ColorSwatch,
   ComboBox,
   ComboBoxItem,
@@ -141,15 +142,34 @@ function CheckboxGroupDemo() {
   );
 }
 
+const LABEL_COLOURS = [
+  { name: "Bug", color: "#b91c1c" },
+  { name: "Feature", color: "#15803d" },
+  { name: "Docs", color: "#1d4ed8" },
+];
+
 function ColorPickerDemo() {
   const [color, setColor] = useState<string>("#c2410c");
   return (
-    <div className="flex flex-col items-center gap-4">
-      <ColorPicker label="Accent" value={color} onChange={(c) => setColor(c.toString("hex"))} />
-      <div className="flex items-center gap-2 font-mono text-caption text-fg-secondary">
-        <ColorSwatch color={color} className="size-5 rounded-xs" />
-        {color.toUpperCase()}
+    <div className="flex w-full flex-col items-center gap-8">
+      {/* Inline: the whole editor in place, with the value read out. */}
+      <ColorPicker variant="inline" label="Brand colour" value={color} onChange={(c) => setColor(c.toString("hex"))} />
+
+      {/* Popover trigger, and the same with an opacity rail. */}
+      <div className="flex flex-wrap items-center justify-center gap-3">
+        <ColorPicker label="Accent" value={color} onChange={(c) => setColor(c.toString("hex"))} />
+        <ColorPicker label="Overlay" defaultValue="rgba(194, 65, 12, 0.6)" showAlpha />
       </div>
+
+      {/* Wells: just the swatch, for a tight row of labels. */}
+      <ul className="flex flex-col gap-2">
+        {LABEL_COLOURS.map((label) => (
+          <li key={label.name} className="flex items-center gap-3">
+            <ColorWell aria-label={`${label.name} colour`} defaultValue={label.color} wellClassName="size-6" />
+            <span className="text-body-md text-fg">{label.name}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -502,8 +522,8 @@ export const SELECTION_ENTRIES: CatalogEntry[] = [
     isNew: true,
     name: "Color Picker",
     group: "Selection",
-    summary: "A swatch that opens an area, a hue slider, a hex field and presets.",
-    imports: ["ColorPicker", "ColorArea", "ColorSlider", "ColorField", "ColorSwatch", "ColorSwatchPicker"],
+    summary: "Pick by eye, by hex or from presets: inline, in a popover or from a compact well, with an optional opacity rail and HEX/RGB/HSL readouts.",
+    imports: ["ColorPicker", "ColorWell", "ColorEditor", "ColorArea", "ColorSlider", "ColorField", "ColorSwatch", "ColorSwatchPicker"],
     preview: () => (
       <div className="flex items-center gap-3">
         <ColorPicker label="Accent" defaultValue="#c2410c" />

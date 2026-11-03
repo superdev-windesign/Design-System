@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/application/dashboard/dashboard-team-menu.tsx. See THIRD_PARTY_NOTICES.md.
+// The menu structure was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import { useTemplateCopy, useTemplateLanguageSelector } from "../../foundations/template-copy";
 
@@ -28,18 +29,16 @@ import { ThemeToggle } from "../theme-toggle/theme-toggle";
 import { Avatar } from "../../components/avatar/avatar";
 import { Badge } from "../../components/badges/badge";
 import { ChevronDownSmall } from "../../icons/chevrons";
+import { MENU_POPOVER_SURFACE } from "../../recipes/menu";
 import { cx } from "../../utils/cx";
 
 /**
- * Figma source: Board UI → sidebar profile menu (node 3823:3699).
- *
  * Dropdown opened from the sidebar's "Board team" card. Floats to the right of
- * the sidebar: white panel, 1px border/button/default, radius 16, p 10,
- * shadow/dropdown. Header (team avatar + name/email), three grouped sections of
- * sidebar-style rows separated by full-bleed dividers, and a "BoardUI" + version
- * footer. Rows mirror the sidebar nav item pattern (icon + label + optional
- * counter) but use the menu tokens from Figma (text/primary label,
- * background/primary/hover on hover + the selected row).
+ * the sidebar on the shared menu panel (recipes/menu.ts). Header (team avatar
+ * + name/email), three grouped sections of sidebar-style rows separated by
+ * full-bleed dividers, and a product + version footer. Rows mirror the
+ * sidebar nav item pattern (icon + label + optional count in mono figures),
+ * with the hover surface on hover and on the selected row.
  */
 
 type IconComponent = ComponentType<{
@@ -97,7 +96,7 @@ function Collapsible({ collapsed, children }: { collapsed: boolean; children: Re
     <span
       className={cx(
         "flex min-w-0 items-center overflow-hidden transition-[max-width,opacity,filter] duration-300 ease-in-out",
-        collapsed ? "max-w-0 opacity-0 blur-[3px]" : "max-w-40 opacity-100 blur-0",
+        collapsed ? "max-w-0 opacity-0" : "max-w-40 opacity-100",
       )}
     >
       {children}
@@ -113,7 +112,7 @@ function TeamMenuItem({ icon: Icon, label, badge, isSelected, onSelect }: MenuRo
       aria-current={isSelected ? "page" : undefined}
       onPress={onSelect}
       className={cx(
-        "flex w-full cursor-pointer items-center gap-2.5 rounded-2lg p-2 text-start outline-none transition-colors",
+        "flex w-full cursor-pointer items-center gap-2.5 rounded-control-sm p-2 text-start outline-none transition-colors",
         isSelected
           ? "bg-surface-hover"
           : "hover:bg-surface-hover focus-visible:bg-surface-hover",
@@ -168,12 +167,12 @@ export function DashboardTeamMenu({
         aria-label="Board team"
         className={cx(
           "flex cursor-pointer items-center overflow-hidden outline-none",
-          "border-2 border-transparent hover:border-line-hover",
+          "border border-transparent hover:border-line-control-hover",
           "transition-[width,background-color,border-color,padding] duration-300 ease-in-out",
           "focus-visible:outline-2 focus-visible:outline-focus focus-visible:outline-offset-2",
           collapsed
             ? "size-9 justify-start rounded-full bg-transparent p-0"
-            : "w-full justify-between rounded-xl bg-muted py-2 pe-4 ps-2.5",
+            : "w-full justify-between rounded-control-md bg-muted py-2 pe-4 ps-2.5",
           className,
         )}
       >
@@ -199,11 +198,9 @@ export function DashboardTeamMenu({
         placement={isMobile ? "bottom start" : direction === "rtl" ? "left bottom" : "right bottom"}
         offset={8}
         className={cx(
-          "w-66.25 max-w-[calc(100vw-32px)] origin-bottom-left overflow-y-auto",
-          "rounded-2xl border border-line bg-surface p-2.5 shadow-overlay",
-          "transition duration-150 ease-out",
-          "data-[entering]:opacity-0 data-[entering]:scale-95 data-[entering]:blur-enter",
-          "data-[exiting]:opacity-0 data-[exiting]:scale-95 data-[exiting]:blur-enter",
+          // The shared menu panel: lifted, 8px corners, slides out from the trigger.
+          "w-66.25",
+          MENU_POPOVER_SURFACE,
         )}
       >
         <AriaDialog aria-label="Board team menu" className="flex flex-col gap-1.75 outline-none">
@@ -221,7 +218,7 @@ export function DashboardTeamMenu({
             {GROUPS.map((group, index) => (
               <Group key={group.id} group={group} showDivider={index > 0} onSelect={() => setIsOpen(false)}>
                 {showThemeToggle && group.id === "personal" && (
-                  <div className="flex w-full items-center justify-between gap-2.5 rounded-2lg px-2 py-1">
+                  <div className="flex w-full items-center justify-between gap-2.5 rounded-control-sm px-2 py-1">
                     <span className="flex min-w-0 flex-1 items-center gap-2">
                       <RiPaletteLine className="size-5 shrink-0 text-icon-secondary" aria-hidden />
                       <span className="truncate text-body-md-strong text-fg">Appearance</span>
@@ -237,7 +234,7 @@ export function DashboardTeamMenu({
           {/* Footer */}
           <div className="flex w-full items-center justify-between px-2 pt-1 pb-2">
             <span className="text-body-sm-strong whitespace-nowrap text-fg-tertiary">BoardUI</span>
-            <span className="inline-flex items-center justify-center rounded-sm bg-muted px-1 py-px text-body-sm-strong whitespace-nowrap text-fg-tertiary">
+            <span className="inline-flex items-center justify-center font-mono text-caption tabular-nums whitespace-nowrap text-fg-secondary">
               v1.0.1
             </span>
           </div>

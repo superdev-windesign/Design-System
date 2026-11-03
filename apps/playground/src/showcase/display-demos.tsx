@@ -39,6 +39,7 @@ import {
   SkeletonGroup,
   SkeletonText,
   Spinner,
+  SpinnerGlyph,
   Timeline,
   TimelineItem,
   toast,
@@ -48,7 +49,7 @@ import type { CatalogEntry } from "./catalog";
 
 // A generated picture, so the image demos need no network: paper, a sun and two hills.
 // The hex values are the picture's own content, not interface styling.
-const PICTURE = `data:image/svg+xml;utf8,${encodeURIComponent(
+export const PICTURE = `data:image/svg+xml;utf8,${encodeURIComponent(
   `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400"><rect width="640" height="400" fill="#efe7da"/><circle cx="470" cy="130" r="56" fill="#c2410c"/><path d="M0 300 C140 200 260 220 380 290 S560 330 640 260 V400 H0Z" fill="#7c6f64"/><path d="M0 340 C160 280 300 300 420 350 S580 380 640 340 V400 H0Z" fill="#1f1a17"/></svg>`,
 )}`;
 
@@ -83,15 +84,20 @@ function SpinnerDemo() {
   const [busy, setBusy] = useState(false);
   return (
     <div className="flex flex-col items-center gap-5">
-      <div className="flex items-center gap-5 text-fg-secondary">
+      <div className="flex items-end gap-5">
         <Spinner size="xs" />
         <Spinner size="sm" />
         <Spinner size="md" />
-        <Spinner size="lg" className="text-accent-600" />
+        <Spinner size="lg" />
+        <Spinner size="xl" />
+      </div>
+      <div className="flex items-center gap-5">
+        <Spinner size="lg" className="text-fg-secondary" aria-label="Loading, muted" />
+        <Spinner size="lg" track={false} aria-label="Loading, no track" />
       </div>
       <Button
         isPending={busy}
-        leadingIcon={busy ? Spinner : undefined}
+        leadingIcon={busy ? SpinnerGlyph : undefined}
         onPress={() => {
           setBusy(true);
           setTimeout(() => setBusy(false), 1600);
@@ -478,13 +484,14 @@ export const FEEDBACK_ENTRIES: CatalogEntry[] = [
     isNew: true,
     name: "Spinner",
     group: "Feedback",
-    summary: "A busy indicator in the colour of its surroundings; fits Button's icon slot.",
-    imports: ["Spinner"],
+    summary: "A pen-nib arc turning on a faint track: five sizes, the accent by default, and a bare glyph for Button's icon slot.",
+    imports: ["Spinner", "SpinnerGlyph"],
     preview: () => (
-      <div className="flex items-center gap-5 text-fg-secondary">
+      <div className="flex items-end gap-5">
         <Spinner size="sm" />
         <Spinner size="md" />
-        <Spinner size="lg" className="text-accent-600" />
+        <Spinner size="lg" />
+        <Spinner size="lg" className="text-fg-secondary" aria-label="Loading, muted" />
       </div>
     ),
     demo: () => <SpinnerDemo />,
