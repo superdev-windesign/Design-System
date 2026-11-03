@@ -298,7 +298,7 @@ function StepIndicator({
       aria-hidden
       className={cx(
         "relative flex size-7 shrink-0 items-center justify-center rounded-full text-body-sm-strong transition-[background-color,border-color,color,box-shadow] duration-(--ds-motion-duration-moderate)",
-        state === "done" && "bg-gradient-to-b from-accent-500 to-accent-600 text-on-action shadow-control-checked group-data-[hovered]:from-accent-600 group-data-[hovered]:to-accent-700",
+        state === "done" && "bg-accent-600 text-on-action group-data-[hovered]:bg-accent-700",
         state === "current" && "border-2 border-accent-500 bg-surface text-fg",
         state === "upcoming" && "border border-line-control bg-surface text-fg-tertiary",
       )}

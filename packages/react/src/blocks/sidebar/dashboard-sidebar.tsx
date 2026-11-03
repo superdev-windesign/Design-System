@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/application/dashboard/dashboard-sidebar.tsx. See THIRD_PARTY_NOTICES.md.
+// The collapsible rail behaviour was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import { useTemplateCopy } from "../../foundations/template-copy";
 
@@ -29,23 +30,20 @@ import {
 } from "@remixicon/react";
 import { SettingsModal } from "../settings/settings-modal";
 import { ThemeToggle } from "../theme-toggle/theme-toggle";
-import { Badge } from "../../components/badges/badge";
 import { CloseButton } from "../../components/buttons/close-button";
 import { Kbd } from "../../components/kbd/kbd";
+import { FIELD_RULE } from "../../recipes/field";
 import { cx } from "../../utils/cx";
 import { DashboardTeamMenu } from "./dashboard-team-menu";
 import { DashboardUserMenu } from "./dashboard-user-menu";
 
 /**
- * Figma sources:
- *   expanded  → Board UI → dashboard 1 → Sidebar (node 3731:2934)
- *   collapsed → Board UI → Sidebar (node 3768:3382)
- *
- * Floating sidebar panel. Expanded: 260px wide, p 12, radius/3xl (24px),
- * white 1px border, "Background/Sidebar Elevation" shadow, bg
- * background/secondary. Collapsed: 60px wide (36px icon items + 12px
- * padding); collapse button sits centered above the workspace avatar, quick
- * search becomes a 36px neutral-200 square, nav items become icon-only
+ * Sidebar panel, set like the margin of a ledger. Expanded: 260px wide, p 12,
+ * rounded-panel, a hairline border on the sunken fill, no shadow. The current
+ * page is a paper row with a short accent rule in its margin, an accent icon
+ * and ink text; counts are mono figures. Collapsed: 60px wide (36px icon
+ * items + 12px padding); collapse button sits centered above the workspace
+ * avatar, quick search becomes a 36px square, nav items become icon-only
  * squares, the team card reduces to its avatar.
  *
  * The two states morph into each other: the panel width animates while
@@ -113,24 +111,26 @@ function NavItem({
       aria-label={label}
       title={collapsed ? label : undefined}
       className={cx(
-        "flex items-center justify-between overflow-hidden rounded-2lg p-2",
+        "relative flex items-center justify-between overflow-hidden rounded-control-md p-2",
         "transition-[width,background-color] duration-300 ease-in-out",
         collapsed ? "w-9" : "w-full",
+        // The current page: a paper row lifted off the sunken rail, marked by
+        // a short accent rule in its margin (the same mark as a chosen Select option).
         isSelected
-          ? "bg-linear-to-b from-accent-500 to-accent-600 shadow-nav-selected"
+          ? "bg-surface before:absolute before:inset-y-2 before:start-0 before:w-0.5 before:rounded-full before:bg-accent-600"
           : "hover:bg-sunken-hover",
       )}
     >
       <span className="flex min-w-0 items-center gap-2">
         <Icon
-          className={cx("size-5 shrink-0", isSelected ? "text-on-action" : "text-icon-secondary")}
+          className={cx("size-5 shrink-0", isSelected ? "text-accent-600" : "text-icon-secondary")}
           aria-hidden
         />
         <Collapsible collapsed={collapsed}>
           <span
             className={cx(
               "text-body-md-strong whitespace-nowrap",
-              isSelected ? "text-on-action" : "text-fg-secondary",
+              isSelected ? "text-fg" : "text-fg-secondary",
             )}
           >
             {label}
@@ -204,7 +204,10 @@ function NavRows({
           collapsed={collapsed}
           badge={
             item.badge !== undefined ? (
-              <Badge color={isSelected ? "primary" : "neutral"}>{item.badge}</Badge>
+              // Counts are set as quiet mono figures, like Tab counts, not pills.
+              <span className={cx("font-mono text-caption tabular-nums", isSelected ? "text-fg" : "text-fg-secondary")}>
+                {item.badge}
+              </span>
             ) : undefined
           }
         />
@@ -233,7 +236,7 @@ export function DashboardSidebar({
   fluid?: boolean;
   /** Hide the app-level theme control when the sidebar is used as marketing artwork. */
   showThemeToggle?: boolean;
-  /** Which nav item shows the selected (filled blue) state. */
+  /** Which nav item shows the current-page state. */
   selected?: DashboardNavKey;
   /** Primary navigation rows. The Pro dashboard's set unless a screen brings its own. */
   items?: DashboardNavItem[];
@@ -306,7 +309,7 @@ export function DashboardSidebar({
         "flex h-full shrink-0 flex-col justify-between overflow-hidden",
         flat
           ? "bg-canvas"
-          : "rounded-3xl border border-surface bg-sunken shadow-sidebar",
+          : "rounded-panel border border-line bg-sunken",
         "transition-[width] duration-300 ease-in-out",
         // Collapsed rail keeps the 60px spec: 1px border + 11px padding on each
         // side leaves an exactly 36px column so the w-9 (36px) icon items center.
@@ -319,9 +322,8 @@ export function DashboardSidebar({
       )}
     >
       {/* `overflow-y: auto` forces the x axis to clip too, and this box hugs
-          its contents on every side — so the selected item's 1px ring, the
-          profile's hover pill (which outsets 6px) and focus rings all landed
-          outside it. Padding moves the clip edge out; the matching negative
+          its contents on every side — so the profile's hover pill (which
+          outsets 6px) and focus rings landed outside it. Padding moves the clip edge out; the matching negative
           margin borrows that space back from the rail's own padding, leaving
           every child exactly where it was. */}
       <div
@@ -364,10 +366,11 @@ export function DashboardSidebar({
             <div
               ref={searchFieldRef}
               className={cx(
-                "flex h-9 items-center overflow-hidden rounded-full bg-muted transition-[width,box-shadow] duration-300 ease-in-out",
+                "relative flex h-9 items-center overflow-hidden rounded-control-md transition-[width,box-shadow,background-color] duration-300 ease-in-out",
+                FIELD_RULE,
                 searchActive
-                  ? "w-full gap-2 pe-2.5 ps-2 ring-2 ring-inset ring-line-pressed"
-                  : "w-9 gap-0 px-2",
+                  ? "w-full gap-2 bg-surface pe-2.5 ps-2 ring-1 ring-inset ring-focus after:scale-x-100"
+                  : "w-9 gap-0 bg-muted px-2",
               )}
             >
               <button
@@ -449,7 +452,12 @@ export function DashboardSidebar({
           {!flat && (searchActive && !collapsed ? (
             <div
               ref={searchFieldRef}
-              className="flex w-full items-center gap-2 rounded-full bg-muted py-2 pe-2.5 ps-2 ring-2 ring-inset ring-line-pressed transition-[background-color,box-shadow] duration-[var(--input-transition-ms)] ease"
+              className={cx(
+                "relative flex w-full items-center gap-2 rounded-control-md bg-surface py-2 pe-2.5 ps-2 ring-1 ring-inset ring-focus",
+                "transition-[background-color,box-shadow] duration-(--ds-motion-duration-base) ease-out",
+                FIELD_RULE,
+                "after:scale-x-100",
+              )}
             >
               <RiSearchLine className="size-5 shrink-0 text-icon-secondary" aria-hidden />
               <input
@@ -482,11 +490,9 @@ export function DashboardSidebar({
               title={collapsed ? "Quick Search" : undefined}
               onClick={activateSearch}
               className={cx(
-                "flex cursor-pointer items-center gap-2 p-2 hover:bg-muted-hover/55",
-                "transition-[width,border-radius,background-color] duration-300 ease-in-out",
-                collapsed
-                  ? "w-9 rounded-full bg-muted"
-                  : "w-full rounded-full bg-muted",
+                "flex cursor-pointer items-center gap-2 rounded-control-md bg-muted p-2 hover:bg-muted-hover",
+                "transition-[width,background-color] duration-300 ease-in-out",
+                collapsed ? "w-9" : "w-full",
               )}
             >
               <span className={cx("flex min-w-0 items-center gap-2", !collapsed && "flex-1")}>
