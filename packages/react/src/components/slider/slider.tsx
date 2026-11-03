@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/slider/slider.tsx. See THIRD_PARTY_NOTICES.md.
+// The value model wiring was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look and motion are Windesign's own.
 
 import type { ReactNode } from "react";
 import {
@@ -44,8 +45,11 @@ type SliderBaseInternalProps<T extends SliderValue> = SliderBaseProps<T> & {
  * Shared single and multi-thumb slider presentation.
  *
  * React Aria owns the value model, drag behavior, hidden range inputs,
- * keyboard controls, RTL handling, and collision rules. BoardUI owns the
- * visual track, selected range, thumbs, and exact-value bubbles.
+ * keyboard controls, RTL handling, and collision rules. This draws a ruler:
+ * a fine rule with end ticks, an accent ink stroke (swelling towards a single
+ * thumb, an even band for a range), paper thumbs ringed in the accent that
+ * take an ink drop on hover and fill while dragged, and the value in mono
+ * numerals on a hairline leader above each thumb.
  */
 function SliderBase<T extends SliderValue>({
   className,
@@ -83,26 +87,35 @@ function SliderBase<T extends SliderValue>({
             <AriaSliderTrack
               className={cx(
                 "relative h-8 w-full touch-none",
-                showTooltip && "mt-8",
+                showTooltip && "mt-6",
               )}
             >
               {({ isHovered }) => (
                 <>
+                  {/* The rule, with a short tick at each end like a ruler. */}
                   <span
                     aria-hidden
                     className={cx(
-                      "absolute top-1/2 end-0 start-0 h-1.5 -translate-y-1/2 rounded-full",
-                      "bg-muted shadow-slider-track",
-                      "transition-colors duration-150 ease",
-                      isHovered && "bg-muted-hover",
+                      "absolute top-1/2 end-0 start-0 h-0.5 -translate-y-1/2 rounded-full",
+                      "transition-colors duration-(--ds-motion-duration-base) ease-standard",
+                      isHovered ? "bg-line-control-hover" : "bg-line-control",
                     )}
                   />
+                  {(["start-0", "end-0"] as const).map((edge) => (
+                    <span
+                      key={edge}
+                      aria-hidden
+                      className={cx("absolute top-1/2 h-2 w-px -translate-y-1/2", edge, isHovered ? "bg-line-control-hover" : "bg-line-control")}
+                    />
+                  ))}
+                  {/* The ink: one value swells from a hairline to full width
+                      under the thumb, like a nib gathering pressure; a range
+                      is an even band between its thumbs. */}
                   <span
                     aria-hidden
                     className={cx(
-                      "absolute top-1/2 h-1.5 -translate-y-1/2 rounded-full",
-                      "bg-linear-to-r from-accent-500 to-accent-600",
-                      "shadow-slider-fill",
+                      "absolute top-1/2 -translate-y-1/2 bg-accent-600",
+                      isRange ? "h-1 rounded-full" : "h-1.5 ink-swell",
                     )}
                     style={{
                       insetInlineStart: `${startPercent * 100}%`,
@@ -123,50 +136,40 @@ function SliderBase<T extends SliderValue>({
                           thumbLabels[index] ??
                           (isRange ? `Value ${index + 1}` : "Value")
                         }
-                        className={({
-                          isDragging,
-                          isHovered: isThumbHovered,
-                          isFocusVisible,
-                          isDisabled,
-                        }) =>
+                        className={({ isDragging, isFocusVisible, isDisabled }) =>
                           cx(
-                            "top-1/2 size-5 rounded-full border border-line outline-none",
-                            "flex items-center justify-center bg-control-knob",
-                            "shadow-slider-thumb",
-                            "transition-[scale,box-shadow,border-color] duration-150 ease",
-                            isThumbHovered && !isDragging && "scale-105 border-line-hover",
-                            isDragging && "z-20 scale-110 border-accent-500 shadow-slider-thumb-active",
+                            "top-1/2 flex size-4.5 items-center justify-center rounded-full border-2 border-accent-600 bg-surface outline-none",
+                            "transition-[scale] duration-(--ds-motion-duration-base) ease-standard motion-reduce:transition-none",
+                            isDragging && "z-20 scale-110",
                             isFocusVisible && "outline-2 outline-focus outline-offset-2",
                             isDisabled ? "cursor-not-allowed" : "cursor-grab active:cursor-grabbing",
                           )
                         }
                       >
-                        {({ isDragging, isFocused }) => (
+                        {({ isDragging, isFocused, isHovered: isThumbHovered }) => (
                           <>
                             {showTooltip && (
                               <span
                                 aria-hidden
-                                className={cx(
-                                  "pointer-events-none absolute bottom-[calc(100%+9px)] left-1/2 -translate-x-1/2",
-                                  "flex h-7 min-w-8 items-center justify-center rounded-lg border border-line",
-                                  "bg-surface px-2 text-caption-strong whitespace-nowrap text-fg shadow-raised",
-                                  "transition-[translate,box-shadow] duration-150 ease",
-                                  (isDragging || isFocused) && "-translate-y-0.5 shadow-overlay",
-                                )}
+                                className="pointer-events-none absolute bottom-full left-1/2 mb-0.5 flex -translate-x-1/2 flex-col items-center gap-0.5"
                               >
-                                {valueLabel}
                                 <span
-                                  aria-hidden
-                                  className="absolute -bottom-[4.5px] left-1/2 size-2 -translate-x-1/2 rotate-45 border-r border-b border-line bg-surface"
-                                />
+                                  className={cx(
+                                    "font-mono tabular-nums whitespace-nowrap transition-colors duration-(--ds-motion-duration-base)",
+                                    isDragging || isFocused ? "text-caption-strong text-fg" : "text-caption text-fg-secondary",
+                                  )}
+                                >
+                                  {valueLabel}
+                                </span>
+                                <span className="h-1.5 w-px bg-line-control" />
                               </span>
                             )}
+                            {/* The radio's ink drop: shows on hover, fills while held. */}
                             <span
                               aria-hidden
                               className={cx(
-                                "size-2 rounded-full bg-linear-to-b from-accent-500 to-accent-600",
-                                "shadow-slider-highlight transition-[filter] duration-150 ease",
-                                (isDragging || isFocused) && "brightness-110",
+                                "size-2 rounded-full bg-accent-600 transition-[scale] duration-(--ds-motion-duration-base) ease-overshoot motion-reduce:transition-none",
+                                isDragging ? "scale-150" : isThumbHovered || isFocused ? "scale-100" : "scale-0",
                               )}
                             />
                           </>

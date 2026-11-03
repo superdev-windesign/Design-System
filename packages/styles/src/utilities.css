@@ -81,9 +81,11 @@
   }
 }
 
-/* Gradient action surfaces. CSS can't interpolate background-image, so the
-   hover gradient sits on ::before and fades in; pressed and disabled swap
-   instantly. `isolation: isolate` keeps ::before behind the label and icons. */
+/* Action fills (primary and danger). The hover shade sits on ::before and
+   wicks up from the bottom edge, like ink drawn into paper; pressed and
+   disabled swap instantly. Fills are background-image so a theme can use a
+   gradient, but Windesign's are flat. `isolation: isolate` keeps ::before
+   behind the label and icons. */
 @utility bg-action-primary {
   position: relative;
   isolation: isolate;
@@ -97,11 +99,16 @@
     pointer-events: none;
     border-radius: inherit;
     background-image: var(--ds-gradient-action-primary-hover);
-    opacity: 0;
-    transition: opacity var(--ds-motion-duration-base) ease;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path var(--ds-motion-duration-moderate) var(--ds-motion-easing-out);
   }
   &[data-hovered]:not([data-disabled])::before {
-    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::before {
+      transition: none;
+    }
   }
   &[data-pressed]:not([data-disabled]) {
     background-image: var(--ds-gradient-action-primary-pressed);
@@ -130,11 +137,16 @@
     pointer-events: none;
     border-radius: inherit;
     background-image: var(--ds-gradient-action-danger-hover);
-    opacity: 0;
-    transition: opacity var(--ds-motion-duration-base) ease;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path var(--ds-motion-duration-moderate) var(--ds-motion-easing-out);
   }
   &[data-hovered]:not([data-disabled])::before {
-    opacity: 1;
+    clip-path: inset(0 0 0 0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    &::before {
+      transition: none;
+    }
   }
   &[data-pressed]:not([data-disabled]) {
     background-image: var(--ds-gradient-action-danger-pressed);
@@ -453,4 +465,38 @@
 
 :root[data-theme-transition]::view-transition-new(root) {
   animation: ds-theme-reveal calc(var(--ds-motion-duration-slow) * 1.6) var(--ds-motion-easing-enter);
+}
+
+/* Checkbox mark: inked in from the left, just after the box fills with the accent. */
+@keyframes ds-check-ink {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@utility animate-check-ink {
+  animation: ds-check-ink var(--ds-motion-duration-slow) var(--ds-motion-easing-out) var(--ds-motion-duration-fast) both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Pen strokes for selection marks: a broad nib swells and thins as it moves.
+   ink-swell grows from a hairline at the start to full height at the end
+   (the slider fill, thickest under the thumb); ink-lens is thin at both ends
+   and full in the middle (the tab underline). */
+@utility ink-swell {
+  clip-path: polygon(0 40%, 100% 0, 100% 100%, 0 60%);
+
+  &:dir(rtl) {
+    clip-path: polygon(0 0, 100% 40%, 100% 60%, 0 100%);
+  }
+}
+
+@utility ink-lens {
+  clip-path: polygon(0 50%, 14% 0, 86% 0, 100% 50%, 86% 100%, 14% 100%);
 }

@@ -146,6 +146,13 @@
     {"fg": "color.text.primary", "bg": "color.status.warning-bg", "min": 4.5, "usage": "Warning alert body"},
     {"fg": "color.text.primary", "bg": "color.status.danger-bg", "min": 4.5, "usage": "Danger alert body"},
     {"fg": "color.accent.600", "bg": "color.bg.surface", "min": 3, "usage": "Rating stars, checked menu items, current stepper step"},
+    {"fg": "color.bg.surface", "bg": "color.accent.600", "min": 3, "usage": "Switch knob on its inked track"},
+    {"fg": "color.text.on-action", "bg": "color.red.600", "min": 4.5, "usage": "Danger button"},
+    {"fg": "color.text.on-action", "bg": "color.red.700", "min": 4.5, "usage": "Danger button, hovered"},
+    {"fg": "color.action.tertiary.fg", "bg": "color.bg.surface", "min": 4.5, "usage": "Tertiary button at rest (no fill until hover)"},
+    {"fg": "color.action.tertiary.fg", "bg": "color.bg.canvas", "min": 4.5, "usage": "Tertiary button at rest on the page"},
+    {"fg": "color.border.danger", "bg": "color.bg.surface", "min": 3, "usage": "Invalid field outline and rule"},
+    {"fg": "color.border.focus", "bg": "color.bg.surface", "min": 3, "usage": "Focused field outline and pen rule"},
     {"fg": "color.border.control", "bg": "color.bg.surface", "min": 3, "usage": "Empty rating stars, scroll area thumb"}
   ]
 }

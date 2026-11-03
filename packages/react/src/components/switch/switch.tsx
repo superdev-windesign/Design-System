@@ -1,87 +1,76 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/switch/switch.tsx. See THIRD_PARTY_NOTICES.md.
+// Sizes, shapes and the track/card split were first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look and motion are Windesign's own.
 
 import type { ReactNode, Ref } from "react";
 import { Switch as AriaSwitch } from "react-aria-components";
 import type { SwitchProps as AriaSwitchProps } from "react-aria-components";
 import { cx, sortCx } from "../../utils/cx";
+import { CHECK_TICK_PATH, useInkIn } from "../checkbox/checkbox-glyph";
 
 /**
- * Figma source: Board UI → "Toogles" (node 3856:3807).
+ * Switch: an outlined paper track that fills with ink behind the knob.
  *
- * Two shapes × three sizes, plus off / on:
- *   shape   pill        (Figma "fully rounded-sm") — track & thumb rounded-full
- *           rectangle   (Figma "rectangle")     — track radius/md-scale, thumb radius/xs-scale
- *   size    sm 28×16 · md 42×24 · lg 56×32   (track w×h; thumb = h − 2·pad)
+ * Two shapes × three sizes:
+ *   shape   pill (rounded-full) or rectangle (2px corners)
+ *   size    sm 28×16 · md 42×24 · lg 56×32   (track w×h)
  *
- * Anatomy (all values 1:1 with Figma):
- *   track   off → bg background/tertiary/default (#ebebeb, no border)
- *           on  → Button/Primary gradient (blue/500 → blue/600) + an inset
- *                 ring + top highlight that scales with size. lg is exactly
- *                 the shared `--shadow-checkbox-selected` token; md/sm scale
- *                 the ring (0.75px / 0.5px) and highlight (1.5px / 1px).
- *   thumb   theme-stable white gradient + contact shadow,
- *           slides by (w − thumb − 2·pad) between states.
- *   chip    small embossed inset in the thumb centre:
- *           off → white→neutral-100 in light mode; in dark mode it matches
- *                 the track so the mark reads like a hole through the thumb;
- *           on  → switch-on-chip-start→end (accent mixes matching Figma's
- *                 raw #2473fe→#0450e2 for blue), accent/600 border.
+ *   off   flat paper track with a 1px control border; the knob is a solid
+ *         control-ink disc sitting at the start
+ *   on    accent ink floods the track from the start edge as the knob
+ *         slides across; the knob turns to paper and carries the pen-nib
+ *         tick from Checkbox, so on reads without relying on colour
+ *   hover the border and the off knob darken
  *
- * The track visual lives in `SwitchTrack` so `Switch` and `SwitchCard` share it
- * (mirrors how Checkbox / CheckboxCard share `CheckboxGlyph`). Built on
- * react-aria Switch: native toggle semantics, keyboard support, focus-visible
- * ring, optional label via `children`.
+ * The track lives in `SwitchTrack` so `Switch`, `SwitchCard` and ThemeToggle
+ * share it. Built on react-aria Switch: native toggle semantics, keyboard
+ * support, focus-visible ring, optional label via `children`.
  */
 
 export type SwitchSize = "sm" | "md" | "lg";
 export type SwitchShape = "pill" | "rectangle";
 
+// The track has a 1px border; the knob sits inside it with an even gap and
+// travels the remaining width.
 export const switchSizes = sortCx({
   sm: {
     track: "h-4 w-7",
-    trackRadius: { pill: "rounded-full", rectangle: "rounded-hairline" },
-    onShadow: "shadow-switch-on-sm",
     thumb: "size-3",
-    thumbRadius: { pill: "rounded-full", rectangle: "rounded-[1px]" },
-    offset: "start-0.5 top-0.5",
+    offset: "start-px top-px",
     travel: "translate-x-3 rtl:-translate-x-3",
-    chip: "size-1.25 border-[0.25px] shadow-switch-chip-sm",
-    chipRadius: { pill: "rounded-full", rectangle: "rounded-[0.5px]" },
+    tick: "size-2",
   },
   md: {
     track: "h-6 w-10.5",
-    trackRadius: { pill: "rounded-full", rectangle: "rounded-[4.5px]" },
-    onShadow: "shadow-switch-on-md",
     thumb: "size-4.5",
-    thumbRadius: { pill: "rounded-full", rectangle: "rounded-[1.5px]" },
-    offset: "start-0.75 top-0.75",
+    offset: "start-0.5 top-0.5",
     travel: "translate-x-4.5 rtl:-translate-x-4.5",
-    chip: "size-[7.5px] border-[0.375px] shadow-switch-chip-md",
-    chipRadius: { pill: "rounded-full", rectangle: "rounded-[0.75px]" },
+    tick: "size-3",
   },
   lg: {
     track: "h-8 w-14",
-    trackRadius: { pill: "rounded-full", rectangle: "rounded-md" },
-    onShadow: "shadow-control-checked",
     thumb: "size-6",
-    thumbRadius: { pill: "rounded-full", rectangle: "rounded-xs" },
-    offset: "start-1 top-1",
+    offset: "start-0.75 top-0.75",
     travel: "translate-x-6 rtl:-translate-x-6",
-    chip: "size-2.5 border-[0.5px] shadow-switch-chip-lg",
-    chipRadius: { pill: "rounded-full", rectangle: "rounded-[1px]" },
+    tick: "size-4",
   },
 });
+
+const shapes = {
+  pill: { track: "rounded-full", thumb: "rounded-full" },
+  rectangle: { track: "rounded-control-xs", thumb: "rounded-hairline" },
+};
 
 export interface SwitchVisualState {
   isSelected: boolean;
   isDisabled: boolean;
   isFocusVisible: boolean;
+  isHovered?: boolean;
 }
 
 /**
- * The track + thumb + chip visual. Pure presentation — the react-aria Switch
- * (in `Switch` or `SwitchCard`) owns the input and passes its render state in.
+ * The track, ink and knob. Pure presentation: the react-aria Switch (in
+ * `Switch` or `SwitchCard`) owns the input and passes its render state in.
  */
 export function SwitchTrack({
   state,
@@ -93,48 +82,51 @@ export function SwitchTrack({
   shape?: SwitchShape;
 }) {
   const s = switchSizes[size];
+  const r = shapes[shape];
+  const on = state.isSelected;
+  const hover = state.isHovered && !state.isDisabled;
+  const inkIn = useInkIn(on);
+  const motion = "duration-(--ds-motion-duration-moderate) ease-standard motion-reduce:transition-none";
 
   return (
     <span
       aria-hidden
+      data-selected={on || undefined}
       className={cx(
-        "relative shrink-0 transition-colors duration-200 ease",
+        "relative shrink-0 overflow-hidden border bg-surface transition-[border-color]",
+        motion,
         s.track,
-        s.trackRadius[shape],
-        state.isSelected
-          ? cx("bg-linear-to-b from-accent-500 to-accent-600", s.onShadow)
-          : "bg-muted",
+        r.track,
+        on ? (hover ? "border-accent-700" : "border-accent-600") : hover ? "border-line-control-hover" : "border-line-control",
         state.isDisabled && "opacity-50",
         state.isFocusVisible && "outline-2 outline-focus outline-offset-2",
       )}
     >
-      {/* Thumb */}
+      {/* The ink: floods from the start edge as the knob moves across. */}
       <span
         className={cx(
-          "absolute flex items-center justify-center",
-          "bg-linear-to-b from-control-knob from-[43.837%] to-control-knob-shade",
-          "shadow-switch-thumb",
-          "transition-transform duration-200 ease",
+          "absolute inset-0 origin-left transition-[scale,background-color] rtl:origin-right",
+          motion,
+          hover ? "bg-accent-700" : "bg-accent-600",
+          on ? "scale-x-100" : "scale-x-0",
+        )}
+      />
+      {/* Knob */}
+      <span
+        className={cx(
+          "absolute flex items-center justify-center transition-[translate,background-color]",
+          motion,
           s.thumb,
-          s.thumbRadius[shape],
           s.offset,
-          state.isSelected && s.travel,
+          r.thumb,
+          on ? cx("bg-surface text-accent-600", s.travel) : hover ? "bg-line-control-hover" : "bg-line-control",
         )}
       >
-        {/* Embossed inner chip. Gradient runs bottom→top (`to-t`) — equivalent
-            to the Figma layer's vertical flip — but WITHOUT a transform, so the
-            chip stays pixel-snapped/centred (no blurry 1px shift at sub-pixel
-            sizes) and its drop shadow points down instead of up. */}
-        <span
-          className={cx(
-            "border-solid bg-linear-to-t from-[43.837%]",
-            s.chip,
-            s.chipRadius[shape],
-            state.isSelected
-              ? "border-accent-600 from-switch-on-start to-switch-on-end"
-              : "border-line/50 from-switch-off-start to-switch-off-end",
-          )}
-        />
+        {on && (
+          <svg viewBox="0 0 16 16" className={s.tick}>
+            <path d={CHECK_TICK_PATH} fill="currentColor" className={cx(inkIn && "animate-check-ink")} />
+          </svg>
+        )}
       </span>
     </span>
   );

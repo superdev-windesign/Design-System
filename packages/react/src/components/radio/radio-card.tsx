@@ -8,13 +8,14 @@ import { cx } from "../../utils/cx";
 import { RadioDot } from "./radio";
 
 /**
- * Selectable radio card — the radio flavor of CheckboxCard (Figma checkbox
- * items, node 3793:2966): title + optional description on the left, the
- * radio dot on the right.
- *   card    radius/2lg (10px), 1px border/button/default, pl 16 pr 20 py 12
- *   hover   bg background/primary/hover (#f7f7f7)
- *   title   Body 1/Medium, text/primary
- *   desc    Body 1/Regular, text/secondary
+ * Selectable radio card, the radio flavour of CheckboxCard: title and
+ * optional description on the left, the radio dot on the right.
+ *
+ * Card chrome (shared by CheckboxCard, RadioCard and SwitchCard):
+ *   card    rounded-surface, 1px line border, pl 16 pr 20 py 12
+ *   hover   surface-hover fill
+ *   chosen  border takes the accent, matching the mark inside
+ *   title   text-body-md-strong, fg; description text-body-md, fg-secondary
  *
  * The whole card selects the radio (react-aria Radio renders the label).
  * Must live inside a `RadioGroup`, which provides single-selection and
@@ -34,7 +35,8 @@ export function RadioCard({ className, title, description, ref, ...props }: Radi
       {...props}
       className={(state) =>
         cx(
-          "group flex w-full items-center justify-between gap-3 rounded-2lg border border-line py-3 pe-5 ps-4 select-none",
+          "group flex w-full items-center justify-between gap-3 rounded-surface border py-3 pe-5 ps-4 select-none",
+          state.isSelected ? "border-accent-600" : "border-line",
           "transition-colors duration-150 ease",
           state.isHovered && !state.isDisabled
             ? "bg-surface-hover"
@@ -53,7 +55,7 @@ export function RadioCard({ className, title, description, ref, ...props }: Radi
             )}
           </span>
           <span className="flex shrink-0 items-center py-1">
-            <RadioDot size="md" selected={state.isSelected} focusVisible={state.isFocusVisible} />
+            <RadioDot size="md" selected={state.isSelected} focusVisible={state.isFocusVisible} hovered={state.isHovered && !state.isDisabled} />
           </span>
         </>
       )}

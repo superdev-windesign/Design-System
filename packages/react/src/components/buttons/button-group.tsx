@@ -35,7 +35,7 @@ type IconComponent = ComponentType<{
 const styles = sortCx({
   group: [
     "inline-flex items-stretch isolate",
-    "rounded-2lg border border-line-group bg-surface shadow-raised",
+    "rounded-control-md border border-line-control bg-surface",
     // Hairlines between items, outer corners rounded-sm on the first/last item
     "divide-x divide-line overflow-hidden",
   ].join(" "),

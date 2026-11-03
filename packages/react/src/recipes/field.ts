@@ -3,9 +3,12 @@ import { cx } from "../utils/cx";
 /**
  * The text-field shell shared by every field built after Input: ComboBox,
  * NumberField, SearchField, PasswordField, DateField, TimeField, ColorField
- * and MultiSelect. It matches Input's look: a surface with an inset control
- * ring that darkens on hover, a 2px focus ring while anything inside has
- * focus, a danger tint when invalid and a flat fill when disabled.
+ * and MultiSelect. It matches Input's look, a ledger field: a surface with a
+ * crisp 1px control outline that darkens on hover. Focus turns the outline
+ * to the focus colour and draws a pen rule along the bottom edge from the
+ * start; an invalid field holds that rule in danger red (thickening the
+ * outline while focused) instead of tinting the whole field. Disabled is a
+ * flat fill.
  *
  * Pass the render state of the React Aria `Group` (or field) that wraps the
  * input; every flag is optional so plain elements can use it too.
@@ -20,16 +23,27 @@ export interface FieldShellState {
 
 export type FieldSize = "md" | "sm";
 
+/**
+ * The pen rule along a field's bottom edge, drawn from the start. Add
+ * `after:scale-x-100` to show it; `after:bg-line-danger` recolours it.
+ */
+export const FIELD_RULE = cx(
+  "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:rounded-b-control-md after:bg-focus",
+  "after:origin-left after:scale-x-0 after:transition-[scale] after:duration-(--ds-motion-duration-moderate) after:ease-out",
+  "rtl:after:origin-right motion-reduce:after:transition-none",
+);
+
 export function fieldShell(state: FieldShellState, size: FieldSize = "md") {
   const focused = (state.isFocusWithin || state.isFocused) && !state.isDisabled;
   return cx(
-    "relative flex w-full items-center rounded-2lg bg-surface text-icon-tertiary ring-1 ring-inset ring-line-control",
+    "relative flex w-full items-center rounded-control-md bg-surface text-icon-tertiary ring-1 ring-inset ring-line-control",
     "transition-[background-color,box-shadow,color] duration-(--ds-motion-duration-base) ease-out",
+    FIELD_RULE,
     size === "md" ? "min-h-control-md gap-1.5 px-2.5" : "min-h-control-sm gap-1 px-2",
     state.isHovered && !focused && !state.isDisabled && !state.isInvalid && "ring-line-control-hover",
-    focused && !state.isInvalid && "ring-2 ring-focus",
-    state.isInvalid && "bg-danger-subtle text-icon-danger",
-    state.isInvalid && focused && "ring-2 ring-line-danger",
+    focused && !state.isInvalid && "ring-focus after:scale-x-100",
+    state.isInvalid && "ring-line-danger text-icon-danger after:scale-x-100 after:bg-line-danger",
+    state.isInvalid && focused && "ring-2",
     state.isDisabled && "cursor-not-allowed bg-field-disabled text-field-icon-disabled",
   );
 }

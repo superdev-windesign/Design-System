@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/textarea/textarea.tsx. See THIRD_PARTY_NOTICES.md.
+// The shell and auto-grow structure were first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look and motion are Windesign's own (the same ledger field as Input).
 
 import {
   useContext,
@@ -20,6 +21,7 @@ import {
   type TextFieldProps,
 } from "../input/input";
 import { cx, sortCx } from "../../utils/cx";
+import { FIELD_RULE } from "../../recipes/field";
 
 /**
  * Multiline sibling of `Input` — same React Aria plumbing, same field shell,
@@ -74,10 +76,11 @@ export interface TextareaBaseProps
 const textareaStyles = sortCx({
   field: [
     "relative flex w-full flex-col",
-    "rounded-2lg",
+    "rounded-control-md",
     "bg-surface text-icon-tertiary",
     "ring-1 ring-inset ring-line-control",
-    "transition-[background-color,box-shadow,color] duration-[var(--input-transition-ms)] ease",
+    "transition-[background-color,box-shadow,color] duration-(--ds-motion-duration-base) ease-out",
+    FIELD_RULE,
   ].join(" "),
 
   // Matches Input's insets, so a stacked input and textarea share one edge:
@@ -91,7 +94,6 @@ const textareaStyles = sortCx({
     "block w-full min-w-0 bg-transparent border-0 outline-none m-0 p-0 px-1",
     "font-sans text-body-md text-fg",
     "placeholder:text-fg-tertiary",
-    "focus:placeholder:text-fg",
     "disabled:text-field-fg-disabled disabled:placeholder:text-field-fg-disabled",
     "disabled:cursor-not-allowed",
     "aria-invalid:placeholder:text-fg-danger-placeholder",
@@ -176,12 +178,13 @@ export function TextareaBase({
           isFocusWithin &&
             !isDisabled &&
             !isInvalid &&
-            "ring-2 ring-focus",
+            "ring-focus after:scale-x-100",
           // Disabled
           isDisabled &&
             "bg-field-disabled text-field-icon-disabled",
           // Invalid
-          isInvalid && "bg-danger-subtle text-icon-danger",
+          isInvalid && "ring-line-danger text-icon-danger after:scale-x-100 after:bg-line-danger",
+          isInvalid && isFocusWithin && !isDisabled && "ring-2",
           ctx.fieldClassName,
           fieldClassName,
         )

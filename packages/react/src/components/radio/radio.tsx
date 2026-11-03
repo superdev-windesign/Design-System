@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/radio/radio.tsx. See THIRD_PARTY_NOTICES.md.
+// Sizes and the group/dot split were first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look and motion are Windesign's own.
 
 import type { ReactNode, Ref } from "react";
 import {
@@ -13,18 +14,17 @@ import type {
 import { cx } from "../../utils/cx";
 
 /**
- * Figma source: Board UI → radio_default_sm / radio_selected_sm (used in the
- * AI chat model picker, node 4035:6925) and the checkbox family tokens.
+ * Radio: a paper ring that takes a drop of ink.
  *
  * Two sizes:
- *   md  16×16 dot, 6px inner, label Body 1/Medium (14)
- *   sm  14×14 dot, 5px inner, label Body 2/Medium (13)
+ *   md  16×16 ring, 8px drop, label text-body-md-strong
+ *   sm  14×14 ring, 6px drop, label text-body-sm-strong
  *
  * States:
- *   default   bg background/primary/default, 1px border/checkbox/default,
- *             shadow/xs
- *   selected  Button/Primary gradient (blue/500 → blue/600) with an inset
- *             blue ring + top highlight, white inner dot
+ *   default   flat ring on the surface, 1px control border
+ *   hover     border darkens and a faint drop shows where the ink will land
+ *   selected  the ring takes the accent and an accent drop lands in the
+ *             centre with a small overshoot (the checkbox's ink, in a circle)
  *   disabled  50% opacity, not-allowed cursor
  *
  * `RadioGroup` + `Radio` are built on React Aria (keyboard arrows, form
@@ -36,24 +36,8 @@ import { cx } from "../../utils/cx";
 export type RadioSize = "sm" | "md";
 
 const dotStyles = {
-  sm: {
-    dot: "size-3.5",
-    inner: "size-1.25",
-    selected:
-      "bg-gradient-to-b from-accent-500 to-accent-600 shadow-radio-checked-sm",
-    border: "border-[0.875px]",
-    gap: "gap-2",
-    label: "text-body-sm-strong",
-  },
-  md: {
-    dot: "size-4",
-    inner: "size-1.5",
-    selected:
-      "bg-gradient-to-b from-accent-500 to-accent-600 shadow-radio-checked-md",
-    border: "border",
-    gap: "gap-2",
-    label: "text-body-md-strong",
-  },
+  sm: { dot: "size-3.5", drop: "size-1.5", gap: "gap-2", label: "text-body-sm-strong" },
+  md: { dot: "size-4", drop: "size-2", gap: "gap-2", label: "text-body-md-strong" },
 };
 
 export interface RadioDotProps {
@@ -61,55 +45,38 @@ export interface RadioDotProps {
   size?: RadioSize;
   /** Draws the keyboard focus ring around the glyph. */
   focusVisible?: boolean;
+  /** Shows the hover preview. */
+  hovered?: boolean;
   className?: string;
 }
 
-/**
- * The bare radio glyph — presentation only, no interaction or semantics.
- *
- * Select/deselect animates: the default bordered surface and the selected
- * gradient are stacked layers cross-fading over 200ms (a gradient background
- * can't transition directly), while the white inner dot scales in and out.
- */
-export function RadioDot({ selected = false, size = "sm", focusVisible = false, className }: RadioDotProps) {
+/** The bare radio glyph: presentation only, no interaction or semantics. */
+export function RadioDot({ selected = false, size = "sm", focusVisible = false, hovered = false, className }: RadioDotProps) {
   const s = dotStyles[size];
   return (
     <span
       aria-hidden
+      data-selected={selected || undefined}
       className={cx(
-        "relative flex shrink-0 items-center justify-center rounded-full",
+        "relative flex shrink-0 items-center justify-center rounded-full border bg-surface",
+        "transition-[border-color] duration-(--ds-motion-duration-base) ease-standard motion-reduce:transition-none",
         s.dot,
+        selected ? "border-accent-600" : hovered ? "border-line-control-hover" : "border-line-control",
         focusVisible && "outline-2 outline-focus outline-offset-2",
         className,
       )}
     >
-      {/* Default surface */}
+      {/* The drop: absolutely centred, since flex centring of small sizes can land on a subpixel. */}
       <span
         className={cx(
-          "absolute inset-0 rounded-full border-line-control bg-surface shadow-raised",
-          "transition-opacity duration-200 ease",
-          s.border,
-          selected && "opacity-0",
-        )}
-      />
-      {/* Selected gradient surface */}
-      <span
-        className={cx(
-          "absolute inset-0 rounded-full",
-          "transition-opacity duration-200 ease",
-          s.selected,
-          !selected && "opacity-0",
-        )}
-      />
-      {/* Inner dot: absolutely centered (flex centering of fractional sizes can
-          land on subpixels) and no drop shadow — a downward shadow makes the
-          dot read as sitting below center. */}
-      <span
-        className={cx(
-          "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-control-knob",
-          "transition-[scale,opacity] duration-200 ease",
-          s.inner,
-          selected ? "scale-100 opacity-100" : "scale-0 opacity-0",
+          "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full",
+          "transition-[scale,background-color] motion-reduce:transition-none",
+          s.drop,
+          selected
+            ? "scale-100 bg-accent-600 duration-(--ds-motion-duration-slow) ease-overshoot"
+            : hovered
+              ? "scale-50 bg-line-control duration-(--ds-motion-duration-base) ease-standard"
+              : "scale-0 bg-line-control duration-(--ds-motion-duration-base) ease-standard",
         )}
       />
     </span>
@@ -167,7 +134,12 @@ export function Radio({ className, children, size = "md", ref, ...props }: Radio
     >
       {(state) => (
         <>
-          <RadioDot selected={state.isSelected} size={size} focusVisible={state.isFocusVisible} />
+          <RadioDot
+            selected={state.isSelected}
+            size={size}
+            focusVisible={state.isFocusVisible}
+            hovered={state.isHovered && !state.isDisabled}
+          />
           {children !== undefined && children !== null && (
             <span className={cx(s.label, "text-fg")}>{children}</span>
           )}

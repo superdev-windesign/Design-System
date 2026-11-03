@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/input/input.tsx. See THIRD_PARTY_NOTICES.md.
+// The TextField / InputBase architecture was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look and motion are Windesign's own.
 
 import {
   createContext,
@@ -21,10 +22,9 @@ import type {
 import { Label } from "./label";
 import { HintText } from "./hint-text";
 import { cx, sortCx } from "../../utils/cx";
+import { FIELD_RULE } from "../../recipes/field";
 
 /**
- * Figma source: Board UI → Input (node 3665:1849).
- *
  * Architecture (mirrors the Untitled UI / React Aria pattern):
  *
  *   InputBase   — the styled field shell. Renders <AriaGroup> + adornments
@@ -44,7 +44,10 @@ import { cx, sortCx } from "../../utils/cx";
  *   - Render-prop state surfaces `isFocusWithin`, `isHovered`, `isDisabled`,
  *     `isInvalid`, `isRequired` — no CSS pseudo gymnastics
  *
- * Visuals stay 1:1 with Figma — see `styles/theme.css` for the tokens.
+ * Look: a ledger field, shared with every field through `fieldShell`
+ * (recipes/field.ts): a crisp outline that darkens on hover, a pen rule drawn
+ * along the bottom edge on focus, and that rule held in danger red when
+ * invalid.
  */
 
 export type InputSize = "medium" | "small";
@@ -129,10 +132,11 @@ export interface InputBaseProps extends Omit<AriaInputProps, "size" | "className
 const inputStyles = sortCx({
   field: [
     "relative flex w-full items-center",
-    "rounded-2lg",
+    "rounded-control-md",
     "bg-surface text-icon-tertiary",
     "ring-1 ring-inset ring-line-control",
-    "transition-[background-color,box-shadow,color] duration-[var(--input-transition-ms)] ease",
+    "transition-[background-color,box-shadow,color] duration-(--ds-motion-duration-base) ease-out",
+    FIELD_RULE,
   ].join(" "),
 
   fieldSize: {
@@ -153,7 +157,6 @@ const inputStyles = sortCx({
     "min-w-0 flex-1 bg-transparent border-0 outline-none p-0 m-0",
     "font-sans text-body-md text-fg",
     "placeholder:text-fg-tertiary",
-    "focus:placeholder:text-fg",
     "disabled:text-field-fg-disabled disabled:placeholder:text-field-fg-disabled",
     "disabled:cursor-not-allowed",
     "aria-invalid:placeholder:text-fg-danger-placeholder",
@@ -197,12 +200,13 @@ export function InputBase({
           isFocusWithin &&
             !isDisabled &&
             !isInvalid &&
-            "ring-2 ring-focus",
+            "ring-focus after:scale-x-100",
           // Disabled
           isDisabled &&
             "bg-field-disabled text-field-icon-disabled",
           // Invalid
-          isInvalid && "bg-danger-subtle text-icon-danger",
+          isInvalid && "ring-line-danger text-icon-danger after:scale-x-100 after:bg-line-danger",
+          isInvalid && isFocusWithin && !isDisabled && "ring-2",
           ctx.fieldClassName,
           fieldClassName,
         )

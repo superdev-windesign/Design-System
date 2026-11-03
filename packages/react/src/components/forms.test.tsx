@@ -4,6 +4,8 @@ import { CalendarDate, Time } from "@internationalized/date";
 import { Button } from "./button/button";
 import { Checkbox } from "./checkbox/checkbox";
 import { CheckboxGroup } from "./checkbox/checkbox-group";
+import { Radio, RadioGroup } from "./radio/radio";
+import { Switch } from "./switch/switch";
 import { ComboBox, ComboBoxItem } from "./combobox/combobox";
 import { Tag, TagGroup } from "./tag-group/tag-group";
 import { NumberField } from "./number-field/number-field";
@@ -99,6 +101,62 @@ describe("PasswordField", () => {
     expect(scorePassword("abc")).toBe(1);
     expect(scorePassword("abcdefgh12")).toBe(2);
     expect(scorePassword("Abcdefghijkl-34")).toBe(4);
+  });
+});
+
+describe("Checkbox", () => {
+  it("inks the tick in only when someone checks it", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<Checkbox defaultSelected>Saved</Checkbox>);
+    const tick = () => container.querySelector("label > span[aria-hidden] path");
+    expect(tick()).not.toHaveClass("animate-check-ink");
+    const box = screen.getByRole("checkbox", { name: "Saved" });
+    await user.click(box);
+    await user.click(box);
+    expect(tick()).toHaveClass("animate-check-ink");
+  });
+
+  it("inks a tick when checked and a dash when indeterminate", async () => {
+    const user = userEvent.setup();
+    const { container, rerender } = render(<Checkbox>Agree</Checkbox>);
+    const box = () => container.querySelector("label > span[aria-hidden]")!;
+    expect(box()).not.toHaveAttribute("data-marked");
+    expect(box().querySelector("svg")).toBeNull();
+
+    await user.click(screen.getByRole("checkbox", { name: "Agree" }));
+    expect(box()).toHaveAttribute("data-marked");
+    const tick = box().querySelector("path")!.getAttribute("d");
+
+    rerender(<Checkbox isIndeterminate>Agree</Checkbox>);
+    expect(screen.getByRole("checkbox", { name: "Agree" })).toBePartiallyChecked();
+    expect(box().querySelector("path")!.getAttribute("d")).not.toBe(tick);
+  });
+});
+
+describe("Switch and Radio marks", () => {
+  it("puts the tick on the switch knob only while on", async () => {
+    const user = userEvent.setup();
+    const { container } = render(<Switch>Wi-Fi</Switch>);
+    const track = () => container.querySelector("label > span[aria-hidden]")!;
+    expect(track()).not.toHaveAttribute("data-selected");
+    expect(track().querySelector("svg")).toBeNull();
+    await user.click(screen.getByRole("switch", { name: "Wi-Fi" }));
+    expect(track()).toHaveAttribute("data-selected");
+    expect(track().querySelector("svg path")).toBeInTheDocument();
+  });
+
+  it("drops ink only in the chosen radio", async () => {
+    const user = userEvent.setup();
+    const { container } = render(
+      <RadioGroup aria-label="Plan" defaultValue="solo">
+        <Radio value="solo">Solo</Radio>
+        <Radio value="team">Team</Radio>
+      </RadioGroup>,
+    );
+    const marked = () => [...container.querySelectorAll("label > span[data-selected]")].map((dot) => dot.closest("label")!.textContent);
+    expect(marked()).toEqual(["Solo"]);
+    await user.click(screen.getByRole("radio", { name: "Team" }));
+    expect(marked()).toEqual(["Team"]);
   });
 });
 

@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/tabs/tabs.tsx. See THIRD_PARTY_NOTICES.md.
+// The sliding-underline measurement was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look and motion are Windesign's own.
 
 import { useDirection } from "../../foundations/direction";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -21,17 +22,14 @@ import { cx } from "../../utils/cx";
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /**
- * Figma source: Board UI → Tab (node 3793:2942).
- *
- * Underline tabs. The tab strip sits on a 1px border/button/default baseline;
- * the active tab paints a 2px color/blue/600 underline over it.
- *   tab       px 10, py 8, gap 10 (label ↔ count), Body 1 (14/20)
- *     active     text color/blue/600, Medium weight, 2px blue underline
- *     inactive   text/primary, Regular weight, transparent underline
- *   count     radius/sm, px 4, py 1, Caption 1/Medium (12/16)
- *     active     bg color/blue/100, text color/blue/600
- *     inactive   bg black/10 @ 50% opacity, text/primary
- *   icon      optional 16px leading glyph, inherits the label color
+ * Tabs, set like chapter heads on a page. The strip sits on a 1px separator
+ * rule; under the active tab the accent is drawn as a pen stroke that is
+ * thin at both ends and full in the middle, and slides between tabs.
+ *   tab       px 10, py 8, gap 8 (label and count), text-body-md
+ *     active     fg, strong weight
+ *     inactive   fg-secondary, darkening to fg on hover
+ *   count     mono numerals, no badge: fg-tertiary, fg when active
+ *   icon      optional 16px leading glyph, inherits the label colour
  *
  * Built on react-aria Tabs: roving-tabindex arrow-key navigation, automatic
  * activation, and TabList/TabPanel association.
@@ -111,7 +109,7 @@ export function TabList<T extends object>({ className, ref, ...props }: TabListP
       {underline && (
         <span
           aria-hidden
-          className="pointer-events-none absolute bottom-0 left-0 h-0.5 bg-accent-600 transition-[transform,width] duration-200 ease"
+          className="pointer-events-none absolute -bottom-px left-0 h-1 bg-accent-600 ink-lens transition-[transform,width] duration-(--ds-motion-duration-moderate) ease-standard motion-reduce:transition-none"
           style={{
             transform: `translateX(${underline.left}px)`,
             width: underline.width,
@@ -138,8 +136,8 @@ export function Tab({ className, children, icon: Icon, count, ref, ...props }: T
       {...props}
       className={(state) =>
         cx(
-          "relative inline-flex cursor-pointer items-center gap-2.5 px-2.5 py-2 whitespace-nowrap",
-          "outline-none transition-colors duration-150 ease",
+          "group/tab relative inline-flex cursor-pointer items-center gap-2 px-2.5 py-2 whitespace-nowrap",
+          "outline-none transition-colors duration-(--ds-motion-duration-base) ease-standard",
           "focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-focus",
           state.isDisabled && "cursor-not-allowed opacity-50",
           typeof className === "function" ? className(state) : className,
@@ -152,8 +150,8 @@ export function Tab({ className, children, icon: Icon, count, ref, ...props }: T
             className={cx(
               "inline-flex items-center gap-1.5",
               isSelected
-                ? "text-body-md-strong text-accent-600"
-                : "text-body-md text-fg",
+                ? "text-body-md-strong text-fg"
+                : "text-body-md text-fg-secondary group-data-[hovered]/tab:text-fg",
             )}
           >
             {Icon && <Icon className="size-4 shrink-0" aria-hidden />}
@@ -162,10 +160,8 @@ export function Tab({ className, children, icon: Icon, count, ref, ...props }: T
           {count != null && (
             <span
               className={cx(
-                "inline-flex items-center justify-center rounded-sm px-1 py-px text-caption-strong whitespace-nowrap",
-                isSelected
-                  ? "bg-tab-count-selected text-accent-600"
-                  : "bg-tab-count text-fg opacity-50",
+                "inline-flex items-center font-mono text-caption tabular-nums whitespace-nowrap",
+                isSelected ? "text-fg" : "text-fg-tertiary",
               )}
             >
               {count}

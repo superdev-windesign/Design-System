@@ -576,19 +576,19 @@
       "danger": {
         "default": {
           "$type": "gradient",
-          "$value": "linear-gradient(180deg, {color.red.500} 0%, {color.red.600} 100%)"
+          "$value": "linear-gradient({color.red.600}, {color.red.600})"
         },
         "hover": {
           "$type": "gradient",
-          "$value": "linear-gradient(180deg, {color.red.400} 0%, {color.red.500} 100%)"
+          "$value": "linear-gradient({color.red.700}, {color.red.700})"
         },
         "pressed": {
           "$type": "gradient",
-          "$value": "linear-gradient(180deg, {color.red.600} 0%, {color.red.700} 100%)"
+          "$value": "linear-gradient({color.red.800}, {color.red.800})"
         },
         "disabled": {
           "$type": "gradient",
-          "$value": "linear-gradient(180deg, {color.red.100} 0%, {color.red.200} 100%)"
+          "$value": "linear-gradient({color.red.100}, {color.red.100})"
         }
       }
     }

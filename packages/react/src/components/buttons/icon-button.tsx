@@ -9,18 +9,12 @@ import { cx, sortCx } from "../../utils/cx";
 import { directionalIconClass } from "../../utils/directional-icon";
 
 /**
- * Figma source: Board UI → dashboard 1 icon-only buttons (notification button
- * node 3731:3035, table row actions nodes 3731:3284/3287/3290).
+ * Square icon-only button, the icon twin of Button's secondary variant: a
+ * flat paper square with a control outline that inks in on hover. No shadow.
  *
- * Square icon-only button. Unlike `Button` (whose small size is radius/lg with
- * an 18px icon), the icon button keeps radius/2lg (10px) at both sizes:
- *
- *            container   padding   icon
- *   medium   36×36       8         20×20
- *   small    32×32       8         16×16
- *
- * One variant in the designs: secondary (white fill, border/button/default,
- * shadow/xs). Hover/active/disabled states reuse the secondary Button tokens.
+ *            container   icon
+ *   medium   36×36       20×20
+ *   small    32×32       16×16
  */
 
 type IconButtonSize = "medium" | "small";
@@ -50,15 +44,15 @@ export interface IconLinkButtonProps
 
 const styles = sortCx({
   base: [
-    "relative inline-flex shrink-0 items-center justify-center overflow-visible rounded-2lg",
+    "relative inline-flex shrink-0 items-center justify-center overflow-visible rounded-control-md",
     "bg-surface text-icon",
-    "border border-line shadow-raised",
+    "border border-line-control",
     "select-none cursor-pointer",
-    "transition-[background-color,border-color,box-shadow,color] duration-150 ease",
+    "transition-[background-color,border-color,color] duration-(--ds-motion-duration-base) ease-out",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
-    "hover:bg-surface-hover hover:border-line-hover",
-    "active:bg-surface-pressed active:border-line-pressed",
-    "disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:border-line disabled:text-icon-disabled disabled:opacity-60 disabled:shadow-none",
+    "hover:border-fg hover:text-fg",
+    "active:bg-surface-pressed active:border-fg",
+    "disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:border-line disabled:text-icon-disabled disabled:opacity-60",
   ].join(" "),
   size: {
     medium: "size-9",

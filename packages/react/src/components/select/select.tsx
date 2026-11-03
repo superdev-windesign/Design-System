@@ -1,4 +1,5 @@
-// Adapted from BoardUI (MIT) — components/base/select/select.tsx. See THIRD_PARTY_NOTICES.md.
+// The non-modal popover handling was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look and motion are Windesign's own.
 import { createContext, useContext, useRef, useState } from "react";
 import type { ReactNode, Ref } from "react";
 import {
@@ -22,7 +23,7 @@ import type {
 } from "react-aria-components";
 import { ChevronDownSmall } from "../../icons/chevrons";
 import { focusRing } from "../../recipes/focus-ring";
-import { FIELD_INPUT, fieldShell } from "../../recipes/field";
+import { FIELD_INPUT, FIELD_RULE, fieldShell } from "../../recipes/field";
 import {
   MENU_ITEM,
   MENU_ITEM_ACTIVE,
@@ -34,12 +35,14 @@ import { cx } from "../../utils/cx";
 import { useDismissOnOutsidePress, useTriggerToggle } from "../../utils/use-dismiss-on-outside-press";
 
 /**
- * Visual parity with BoardUI's Select (Figma nodes 3731:3208 / 3731:3264).
+ * Select, set as a ledger field like Input:
  *
- *   trigger  surface + 1px border + raised shadow, px 10 py 8, radius 10, gap 6,
- *            body-md-strong text, 16px chevron in text.secondary (rotates when open)
- *   popover  shared menu recipe: radius 16 panel, p 8, overlay shadow,
- *            150ms fade/scale/blur, radius 10 rows with the hover surface
+ *   trigger  the field outline (no shadow), px 10, body-md value text, a 16px
+ *            chevron that turns while open; open draws the same pen rule
+ *            along the bottom edge that a focused field does
+ *   popover  shared menu recipe (recipes/menu.ts)
+ *   option   the focused row takes the hover surface; the chosen row carries
+ *            a short accent rule in its margin and the strong weight
  *
  * The popover is `isNonModal` (as in BoardUI): React Aria's modal scroll lock
  * sets `overflow: hidden` on <html>, which jumps sticky layouts. Non-modal
@@ -110,13 +113,15 @@ export function Select<T extends object>({
           <AriaButton
             ref={triggerRef}
             className={cx(
-              "flex w-full cursor-pointer items-center justify-between rounded-control-md",
-              "border border-line-control bg-surface text-fg shadow-raised",
-              "transition-[background-color,border-color,box-shadow,padding,font-size] duration-(--ds-motion-duration-moderate)",
-              "data-[hovered]:border-line-control-hover data-[hovered]:bg-surface-hover",
+              "relative flex w-full cursor-pointer items-center justify-between rounded-control-md",
+              "border border-line-control bg-surface text-fg",
+              "transition-[background-color,border-color,padding,font-size] duration-(--ds-motion-duration-moderate)",
+              "data-[hovered]:border-line-control-hover",
+              FIELD_RULE,
+              isOpen && "border-focus after:scale-x-100",
               focusRing,
-              "data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-disabled data-[disabled]:text-fg-tertiary data-[disabled]:shadow-none",
-              size === "sm" ? "gap-1 px-1.75 py-1 text-body-sm-strong" : "gap-1.5 px-2.5 py-2 text-body-md-strong",
+              "data-[disabled]:cursor-not-allowed data-[disabled]:bg-surface-disabled data-[disabled]:text-fg-tertiary",
+              size === "sm" ? "gap-1 px-1.75 py-1 text-body-sm" : "gap-1.5 px-2.5 py-2 text-body-md",
               triggerClassName,
             )}
           >
@@ -185,8 +190,14 @@ export function SelectItem({ className, children, ...props }: SelectItemProps) {
       className={(state) =>
         cx(
           MENU_ITEM,
-          size === "sm" ? "px-2 py-1.5 text-body-sm-strong" : "text-body-md-strong",
-          (state.isFocused || state.isSelected) && MENU_ITEM_ACTIVE,
+          "relative",
+          size === "sm" && "px-2 py-1.5",
+          state.isSelected
+            ? size === "sm" ? "text-body-sm-strong" : "text-body-md-strong"
+            : size === "sm" ? "text-body-sm" : "text-body-md",
+          state.isFocused && MENU_ITEM_ACTIVE,
+          // The chosen option: a short accent rule in the row's margin.
+          state.isSelected && "before:absolute before:inset-y-2 before:start-0.5 before:w-0.5 before:rounded-full before:bg-accent-600",
           state.isDisabled && "cursor-not-allowed text-fg-disabled",
           typeof className === "function" ? className(state) : className,
         )

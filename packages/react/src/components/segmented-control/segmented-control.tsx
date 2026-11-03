@@ -1,8 +1,9 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/segmented-control/segmented-control.tsx. See THIRD_PARTY_NOTICES.md.
+// The sliding-thumb measurement was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look and motion are Windesign's own.
 
 import { useDirection } from "../../foundations/direction";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import type { ReactNode, Ref } from "react";
 import {
   ToggleButton as AriaToggleButton,
@@ -16,25 +17,26 @@ import { cx } from "../../utils/cx";
 
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
+// Lets each item pick text that reads on the ink (solid) or on the paper (plain).
+const SegmentedVariantContext = createContext<SegmentedControlVariant>("solid");
+
 /**
- * Figma source: Board UI → dashboard 1 Weekly/Monthly/Yearly switch
- * (node 3731:3096).
- *
- * Single-select segmented control.
- *   track    bg background/tertiary/default, p 4, radius 10 (radius/2lg), gap 2
- *   segment  px 10, py 4, radius/md (6px)
- *     selected    bg segmented-control/selected (white in light), shadow/2xs, Body 1/Medium,
- *                 text/primary
- *     unselected  transparent, Body 1/Regular, text/secondary
+ * Single-select segmented control, set like a printed index: an outlined
+ * paper track, and a block of ink that slides under the chosen segment.
+ *   track    surface fill, 1px line border, p 2, rounded-control-md
+ *   segment  px 10, py 4, rounded-control-sm
+ *     selected    canvas-coloured text on the ink (the body-text pairing,
+ *                 reversed), text-body-md-strong
+ *     unselected  fg-secondary, darkening to fg on hover
  *
  * Built on react-aria ToggleButtonGroup with single selection that can't be
  * emptied — arrow keys move focus, Space/Enter selects.
  */
 
 /**
- * `solid` (default) is the Figma design — tertiary track, white thumb behind
- * the selected segment. `plain` drops the track background and the thumb; the
- * selected segment reads only through its text weight/color.
+ * `solid` (default) draws the track and the ink. `plain` drops both; the
+ * selected segment reads through its weight and colour, with a short accent
+ * rule beneath it.
  */
 export type SegmentedControlVariant = "solid" | "plain";
 
@@ -93,8 +95,8 @@ export function SegmentedControl({ className, children, variant = "solid", ref, 
       {...props}
       className={(state) =>
         cx(
-          "relative inline-flex items-start gap-0.5 rounded-2lg",
-          variant === "solid" && "bg-segmented p-1",
+          "relative inline-flex items-start gap-0.5 rounded-control-md",
+          variant === "solid" && "border border-line bg-surface p-0.5",
           typeof className === "function" ? className(state) : className,
         )
       }
@@ -102,7 +104,7 @@ export function SegmentedControl({ className, children, variant = "solid", ref, 
       {variant === "solid" && thumb && (
         <span
           aria-hidden
-          className="pointer-events-none absolute left-0 top-0 rounded-md bg-segmented-selected shadow-hairline transition-[transform,width,height] duration-200 ease"
+          className="pointer-events-none absolute left-0 top-0 rounded-control-sm bg-fg transition-[transform,width,height] duration-(--ds-motion-duration-moderate) ease-standard motion-reduce:transition-none"
           style={{
             transform: `translate(${thumb.left}px, ${thumb.top}px)`,
             width: thumb.width,
@@ -110,7 +112,7 @@ export function SegmentedControl({ className, children, variant = "solid", ref, 
           }}
         />
       )}
-      {children}
+      <SegmentedVariantContext.Provider value={variant}>{children}</SegmentedVariantContext.Provider>
     </AriaToggleButtonGroup>
   );
 }
@@ -126,18 +128,23 @@ export function SegmentedControlItem({
   ref,
   ...props
 }: SegmentedControlItemProps) {
+  const variant = useContext(SegmentedVariantContext);
   return (
     <AriaToggleButton
       ref={ref}
       {...props}
       className={(state) =>
         cx(
-          "relative z-10 inline-flex cursor-pointer items-center justify-center rounded-md px-2.5 py-1 text-center whitespace-nowrap",
-          "transition-colors duration-200 ease",
-          "focus-visible:outline-2 focus-visible:outline-focus",
+          "relative z-10 inline-flex cursor-pointer items-center justify-center rounded-control-sm px-2.5 py-1 text-center whitespace-nowrap",
+          "transition-colors duration-(--ds-motion-duration-moderate) ease-standard motion-reduce:transition-none",
+          "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
           state.isSelected
-            ? "text-body-md-strong text-fg"
+            ? cx("text-body-md-strong", variant === "solid" ? "text-canvas" : "text-fg")
             : "text-body-md text-fg-secondary hover:text-fg",
+          // Plain segments mark the choice with a short accent rule.
+          variant === "plain" &&
+            "after:absolute after:inset-x-2.5 after:bottom-0 after:h-0.5 after:rounded-full after:bg-accent-600 after:transition-[scale] after:duration-(--ds-motion-duration-moderate)",
+          variant === "plain" && (state.isSelected ? "after:scale-x-100" : "after:scale-x-0"),
           state.isDisabled && "cursor-not-allowed opacity-50",
           typeof className === "function" ? className(state) : className,
         )

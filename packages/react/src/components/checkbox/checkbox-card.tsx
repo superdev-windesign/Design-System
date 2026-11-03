@@ -8,13 +8,13 @@ import { cx } from "../../utils/cx";
 import { CheckboxGlyph } from "./checkbox-glyph";
 
 /**
- * Figma source: Board UI → Checkbox items (node 3793:2966).
- *
  * Selectable card: title + description on the left, checkbox on the right.
- *   card    radius/2lg (10px), 1px border/button/default, pl 16 pr 20 py 12
- *   hover   bg background/primary/hover (#f7f7f7)
- *   title   Body 1/Medium, text/primary
- *   desc    Body 1/Regular, text/secondary
+ *
+ * Card chrome (shared by CheckboxCard, RadioCard and SwitchCard):
+ *   card    rounded-surface, 1px line border, pl 16 pr 20 py 12
+ *   hover   surface-hover fill
+ *   checked border takes the accent, matching the mark inside
+ *   title   text-body-md-strong, fg; description text-body-md, fg-secondary
  *
  * The whole card toggles the checkbox (react-aria Checkbox renders the label),
  * so a click anywhere flips the state.
@@ -39,7 +39,8 @@ export function CheckboxCard({
       {...props}
       className={(state) =>
         cx(
-          "group flex w-full items-center justify-between gap-3 rounded-2lg border border-line py-3 pe-5 ps-4 select-none",
+          "group flex w-full items-center justify-between gap-3 rounded-surface border py-3 pe-5 ps-4 select-none",
+          state.isSelected || state.isIndeterminate ? "border-accent-600" : "border-line",
           "transition-colors duration-150 ease",
           state.isHovered && !state.isDisabled
             ? "bg-surface-hover"

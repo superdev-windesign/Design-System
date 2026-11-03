@@ -9,21 +9,17 @@ import { CheckboxGlyph, checkboxSizes } from "./checkbox-glyph";
 import type { CheckboxSize } from "./checkbox-glyph";
 
 /**
- * Figma source: Board UI → Checkbox (node 3699:2557 family; used in
- * dashboard 1 table, nodes 3731:3258 etc.).
+ * Checkbox. Two sizes:
+ *   md  16×16, label text-body-md-strong
+ *   sm  14×14, label text-body-sm-strong
  *
- * radius/sm (4px). Two sizes:
- *   md  16×16, label Body 1/Medium (14)
- *   sm  14×14, label Body 2/Medium (13)
- *
- * States (per Figma):
- *   default        bg background/primary/default, 1px border/checkbox/default,
- *                  shadow/xs
- *   hover          border darkens to neutral/400
- *   checked /      Button/Primary gradient (blue/500 → blue/600) with the
- *   indeterminate  checkbox inner highlight (see --shadow-checkbox-selected),
- *                  white 2px rounded-sm stroke glyph; on hover the gradient
- *                  lightens to blue/400 → blue/500
+ * States (drawn by CheckboxGlyph):
+ *   default        a flat ledger box: surface fill, 1px control border, 2px radius
+ *   hover          border darkens
+ *   checked        accent ink spreads from the centre, then a pen-nib tick
+ *                  (thick short stroke, long stroke thinning to a point) inks in
+ *   indeterminate  the same nib as a dash, thick to thin
+ *   pressed        the box presses in slightly
  *
  * Built on react-aria Checkbox: keyboard toggling, aria-checked="mixed" for
  * indeterminate, label association when `children` is passed.
