@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/date-picker/meeting-scheduler.tsx. See THIRD_PARTY_NOTICES.md.
+// The booking-panel structure was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
@@ -15,8 +16,6 @@ import { cx } from "../../utils/cx";
 import { useDismissOnOutsidePress } from "../../utils/use-dismiss-on-outside-press";
 
 /**
- * Figma source: Board UI → "Meeting" (node 3881:7618).
- *
  * A Calendly/Cal.com-style booking panel: host card + meeting summary on the
  * left, a single-month calendar in the middle (reusing `MonthPanel` from
  * `./shared`), and a timezone / hour-format / time-slot sidebar on the
@@ -24,8 +23,8 @@ import { useDismissOnOutsidePress } from "../../utils/use-dismiss-on-outside-pre
  * `Popover` — but since there's no `DialogTrigger` here (the trigger is a
  * plain button, not a `Dialog`), it's wired up via `triggerRef` + controlled
  * `isOpen` instead. That keeps the panel a portaled overlay that never
- * affects layout, so the trigger (Figma's own top-right chip, repurposed
- * from a static readout into the open/close control) can sit compactly
+ * affects layout, so the trigger (a compact chip that opens and closes the
+ * panel) can sit compactly
  * next to other trigger buttons instead of dragging a whole row wide.
  *
  * Two deliberate departures from the raw Figma frame:
@@ -134,7 +133,7 @@ function GoogleMeetIcon() {
 
 function HourFormatToggle({ use24h, onChange }: { use24h: boolean; onChange: (use24h: boolean) => void }) {
   return (
-    <div className="flex shrink-0 items-start gap-0.5 rounded-2lg">
+    <div className="flex shrink-0 items-start gap-0.5 rounded-control-md">
       {(["12h", "24h"] as const).map((label, i) => {
         const selected = i === 1 ? use24h : !use24h;
         return (
@@ -269,7 +268,7 @@ export function MeetingScheduler({
               <div className="flex flex-col gap-3 pt-2 pb-3">
                 <MonthPanel offset={0} showPrev showNext />
                 <div className="flex items-center justify-between">
-                  <span className="flex items-center gap-1.5 rounded-2lg border border-line bg-surface px-2 py-2 text-body-md-strong text-fg shadow-raised">
+                  <span className="flex items-center gap-1.5 rounded-control-md border border-line-control bg-surface px-2 py-2 text-body-md-strong text-fg">
                     {chip && (
                       <>
                         <span>{chip.date}</span>
@@ -287,7 +286,7 @@ export function MeetingScheduler({
               <div className="flex h-full w-42.5 shrink-0 flex-col gap-3 overflow-hidden pt-4 pe-4">
                 <button
                   type="button"
-                  className="flex cursor-pointer items-center justify-between rounded-2lg outline-none"
+                  className="flex cursor-pointer items-center justify-between rounded-control-md outline-none"
                 >
                   <span className="flex items-center gap-1.25 text-body-md-strong text-fg">
                     <RiGlobalLine className="size-5 shrink-0 text-icon" aria-hidden />
@@ -298,7 +297,7 @@ export function MeetingScheduler({
 
                 <div className="flex items-center justify-between">
                   {dayChip && (
-                    <span className="inline-flex items-center gap-0.75 rounded-2lg bg-muted px-2 py-1 text-body-md-strong">
+                    <span className="inline-flex items-center gap-0.75 rounded-control-sm bg-muted px-2 py-1 text-body-md-strong">
                       <span className="text-fg">{dayChip.weekday}</span>
                       <span className="text-fg-secondary">{dayChip.day}</span>
                     </span>
@@ -321,10 +320,11 @@ export function MeetingScheduler({
                         setPendingValue((prev) => ({ date: prev?.date ?? today(getLocalTimeZone()), time: slot }))
                       }
                       className={cx(
-                        "w-full shrink-0 cursor-pointer rounded-2lg px-2 py-1.5 text-center text-body-md-strong text-fg transition-colors duration-150 ease",
+                        // Times in mono figures; the chosen slot is a block of ink.
+                        "w-full shrink-0 cursor-pointer rounded-control-sm px-2 py-1.5 text-center font-mono text-body-sm tabular-nums transition-colors duration-(--ds-motion-duration-base) ease-out",
                         pendingValue?.time === slot
-                          ? "bg-muted"
-                          : "hover:bg-sunken-hover",
+                          ? "bg-fg text-canvas"
+                          : "text-fg hover:bg-sunken-hover",
                       )}
                     >
                       {formatTime(slot, use24h)}

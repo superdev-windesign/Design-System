@@ -1,4 +1,5 @@
-// Adapted from BoardUI (MIT) — components/base/buttons/button-group.tsx. See THIRD_PARTY_NOTICES.md.
+// The group structure was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 import type {
   ButtonHTMLAttributes,
   ComponentType,

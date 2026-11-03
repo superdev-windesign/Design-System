@@ -1,16 +1,13 @@
-// Adapted from BoardUI (MIT) — components/base/badges/badge.tsx. See THIRD_PARTY_NOTICES.md.
+// The counter API was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 import type { HTMLAttributes, Ref } from "react";
 import { cx, sortCx } from "../../utils/cx";
 
 /**
- * Figma source: Board UI → dashboard 1 sidebar counters (nodes 3731:2964,
- * 3731:2982).
- *
- * Small numeric counter pill (nav item counts, unread totals).
- *   - 12/16 semibold, tracking 0 (Figma uses font/size/xs + font/leading/4)
- *   - px 4, py 1, radius/sm (4px)
- *   - primary → bg color/blue/400, white text (sits on the selected nav item)
- *   - neutral → bg color/neutral/200, text/secondary
+ * A small count (unread totals, items waiting), set as mono figures on a
+ * crisp 2px chip, so a column of counts lines up digit for digit.
+ *   primary → accent fill with on-action figures, for counts that want attention
+ *   neutral → quiet fill with secondary figures
  */
 
 type BadgeColor = "primary" | "neutral";
@@ -21,9 +18,9 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const styles = sortCx({
-  base: "inline-flex items-center justify-center rounded-sm px-1 py-px text-caption-emphasis tracking-normal whitespace-nowrap",
+  base: "inline-flex items-center justify-center rounded-control-xs px-1 py-px font-mono text-caption tabular-nums whitespace-nowrap",
   color: {
-    primary: "bg-accent-400 text-on-action",
+    primary: "bg-accent-600 text-on-action",
     neutral: "bg-badge-neutral text-fg-secondary",
   },
 });

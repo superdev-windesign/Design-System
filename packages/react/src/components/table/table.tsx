@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/table/table.tsx. See THIRD_PARTY_NOTICES.md.
+// The collection re-export approach was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import type { Ref } from "react";
 import {
@@ -20,9 +21,11 @@ import { cx } from "../../utils/cx";
  * React Aria's `Column`, `Row`, `Cell`, `TableHeader` and `TableBody` are
  * *collection* components: React Aria introspects them at build time, so they
  * can't be wrapped in custom components without losing that behaviour. We
- * therefore re-export them as-is and apply BoardUI styling through scoped CSS
- * keyed on `.bui-table` (see styles/globals.css). Only the root `<Table>` is
- * wrapped — to add the scroll container and the size flag.
+ * therefore re-export them as-is and style them through scoped CSS keyed on
+ * `.bui-table` (see styles/src/utilities.css): a printed-ledger look with
+ * mono header labels, an ink rule under the header and tabular figures. Only
+ * the root `<Table>` is wrapped — to add the scroll container and the size
+ * flag.
  *
  * Sizes: `md` (h-16 rows) and `sm` (h-12 rows), set once via `data-size`.
  *

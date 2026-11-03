@@ -11,11 +11,8 @@ import { cx } from "../../utils/cx";
  * Field label. Wraps `react-aria-components`' Label so the parent `TextField`
  * automatically wires `htmlFor` / `aria-labelledby`.
  *
- * Visuals come from Figma:
- *   - Inter Medium 14/20, color text/primary
- *   - 2px gap between label + required asterisk + info icon
- *   - asterisk is text/error-primary (red/500)
- *   - info icon is 16×16 in foreground/icon/quaternary
+ * Look: text-body-md-strong in fg; a 2px gap between the label, the
+ * required asterisk (fg-danger) and the 16px info icon (icon-quaternary).
  *
  * Pass `isRequired` to show the asterisk. Pass `tooltip` to show the info
  * icon (currently a static glyph — when the Tooltip component lands it'll

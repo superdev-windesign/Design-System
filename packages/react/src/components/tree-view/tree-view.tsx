@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/tree-view/tree-view.tsx. See THIRD_PARTY_NOTICES.md.
+// The guide-line geometry was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import { useContext, useState } from "react";
 import type { ComponentProps, ComponentType, ContextType, KeyboardEventHandler, ReactNode, Ref } from "react";
@@ -20,7 +21,7 @@ import type {
   TreeItemProps as AriaTreeItemProps,
 } from "react-aria-components";
 import { useDirection } from "../../foundations/direction";
-import { MENU_ITEM_ACTIVE } from "../../recipes/menu";
+import { MENU_ITEM_ACTIVE, MENU_ITEM_CHOSEN } from "../../recipes/menu";
 import { cx } from "../../utils/cx";
 
 type IconComponent = ComponentType<{
@@ -97,7 +98,7 @@ export function TreeView<T extends object>({
           data-show-guides={showGuides}
           renderEmptyState={renderEmptyState}
           className={(state) => cx(
-            "group/tree-view flex w-full min-w-0 flex-col rounded-3xl border border-line bg-surface p-2 outline-none",
+            "group/tree-view flex w-full min-w-0 flex-col rounded-surface border border-line bg-surface p-2 outline-none",
             renderer === TREE_VIEW_RENDERER ? "gap-0" : "gap-0.5",
             "data-[empty]:px-4 data-[empty]:py-8 data-[empty]:text-center data-[empty]:text-body-md data-[empty]:text-fg-tertiary",
             "data-[focus-visible]:outline-2 data-[focus-visible]:outline-focus",
@@ -151,11 +152,11 @@ export function TreeViewItem<T extends object = object>({
         ...(typeof style === "function" ? style(state) : style),
       })}
       className={(state) => cx(
-        "relative flex min-h-9 min-w-0 cursor-pointer items-center gap-2 rounded-xl pe-2 text-body-md text-fg outline-none",
+        "relative flex min-h-9 min-w-0 cursor-pointer items-center gap-2 rounded-control-sm pe-2 text-body-md text-fg outline-none",
         "transition-[background-color,color,box-shadow] duration-150 motion-reduce:transition-none",
         "group-data-[size=sm]/tree-view:min-h-8 group-data-[size=sm]/tree-view:text-body-sm",
         (state.isHovered || state.isPressed || state.isFocusVisible) && !state.isDisabled && MENU_ITEM_ACTIVE,
-        state.isSelected && MENU_ITEM_ACTIVE,
+        state.isSelected && cx(MENU_ITEM_CHOSEN, "text-body-md-strong group-data-[size=sm]/tree-view:text-body-sm-strong"),
         state.isFocusVisible && "outline-2 -outline-offset-2 outline-focus",
         state.isDisabled && "cursor-default text-fg-placeholder",
         typeof className === "function" ? className(state) : className,
@@ -177,7 +178,7 @@ export function TreeViewItem<T extends object = object>({
                   <AriaButton
                     slot="chevron"
                     isDisabled={isDisabled}
-                    className="flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-md text-icon-tertiary transition-colors hover:text-icon data-[focus-visible]:outline-2 data-[focus-visible]:outline-focus"
+                    className="flex size-5 shrink-0 cursor-pointer items-center justify-center rounded-control-xs text-icon-tertiary transition-colors hover:text-icon data-[focus-visible]:outline-2 data-[focus-visible]:outline-focus"
                   >
                     <RiArrowRightSLine
                       aria-hidden
@@ -200,7 +201,7 @@ export function TreeViewItem<T extends object = object>({
               </span>
               <span className="min-w-0 flex-1 truncate text-start"><bdi>{label}</bdi></span>
               {trailingContent != null && (
-                <span className="ms-auto shrink-0 text-caption text-fg-tertiary">{trailingContent}</span>
+                <span className="ms-auto shrink-0 font-mono text-caption tabular-nums text-fg-tertiary">{trailingContent}</span>
               )}
             </>
           );

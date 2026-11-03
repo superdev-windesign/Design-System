@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/radio/radio-card.tsx. See THIRD_PARTY_NOTICES.md.
+// The card structure was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import type { ReactNode, Ref } from "react";
 import { Radio as AriaRadio } from "react-aria-components";

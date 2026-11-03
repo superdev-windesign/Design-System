@@ -1,4 +1,5 @@
-// Adapted from BoardUI (MIT) — components/base/date-picker/date-range-picker.tsx. See THIRD_PARTY_NOTICES.md.
+// The pending-range behaviour was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 import { useMemo, useRef, useState } from "react";
 import { Button as AriaButton, Dialog, DialogTrigger, Popover, RangeCalendar, useLocale } from "react-aria-components";
 import {
@@ -28,7 +29,7 @@ import {
 } from "./shared";
 
 /**
- * Visual parity with BoardUI's DateRangePicker (Figma node 3871:5738).
+ * Date range picker, on the shared flat chrome (./shared).
  *
  * The trigger opens a popover with a quick-select sidebar, two adjacent months
  * (`visibleDuration={{ months: 2 }}`) and a footer with editable date chips, an
@@ -141,7 +142,7 @@ function Footer({
                   onCommit={(end) => onChange({ start: end.compare(value.start) < 0 ? end : value.start, end })}
                 />
               </div>
-              <span className="rounded-chip bg-muted p-2 text-body-md-strong text-fg-secondary">
+              <span className="rounded-chip bg-muted p-2 font-mono text-body-sm tabular-nums text-fg-secondary">
                 {`${daysInRange(value)} day${daysInRange(value) === 1 ? "" : "s"} selected`}
               </span>
             </motion.div>

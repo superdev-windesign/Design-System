@@ -27,6 +27,7 @@ import { FIELD_INPUT, FIELD_RULE, fieldShell } from "../../recipes/field";
 import {
   MENU_ITEM,
   MENU_ITEM_ACTIVE,
+  MENU_ITEM_CHOSEN,
   MENU_ITEMS_CONTAINER,
   MENU_POPOVER_SURFACE,
   MENU_POPOVER_WIDTH,
@@ -190,14 +191,13 @@ export function SelectItem({ className, children, ...props }: SelectItemProps) {
       className={(state) =>
         cx(
           MENU_ITEM,
-          "relative",
           size === "sm" && "px-2 py-1.5",
           state.isSelected
             ? size === "sm" ? "text-body-sm-strong" : "text-body-md-strong"
             : size === "sm" ? "text-body-sm" : "text-body-md",
           state.isFocused && MENU_ITEM_ACTIVE,
           // The chosen option: a short accent rule in the row's margin.
-          state.isSelected && "before:absolute before:inset-y-2 before:start-0.5 before:w-0.5 before:rounded-full before:bg-accent-600",
+          state.isSelected && MENU_ITEM_CHOSEN,
           state.isDisabled && "cursor-not-allowed text-fg-disabled",
           typeof className === "function" ? className(state) : className,
         )

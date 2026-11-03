@@ -1,4 +1,5 @@
-// Adapted from BoardUI (MIT) — components/base/buttons/icon-button.tsx. See THIRD_PARTY_NOTICES.md.
+// The icon-button API was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 import type {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,

@@ -1,9 +1,11 @@
-// Adapted from BoardUI (MIT) — components/base/buttons/close-button.tsx. See THIRD_PARTY_NOTICES.md.
+// The per-size glyph approach was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 import type { ButtonHTMLAttributes, Ref } from "react";
 import { cx, sortCx } from "../../utils/cx";
 
 /**
- * Compact circular dismiss control — the "X" used to close announcements,
+ * Compact square dismiss control (a muted tile with crisp 2px corners, which
+ * deepens on hover) — the "X" used to close announcements,
  * toasts, modals, and drawers. Companion to `IconButton`, but ships its own
  * glyph (rather than taking an `icon` prop) so every consumer gets an
  * identical X with a stroke that's a true CSS pixel value per size, not a
@@ -63,11 +65,11 @@ const GLYPH_INSET: Record<CloseButtonSize, number> = {
 
 const styles = sortCx({
   base: [
-    "inline-flex shrink-0 items-center justify-center rounded-full",
+    "inline-flex shrink-0 items-center justify-center rounded-control-xs",
     "bg-muted text-icon-secondary",
     "select-none cursor-pointer",
-    "transition-colors duration-150 ease",
-    "hover:text-fg",
+    "transition-colors duration-(--ds-motion-duration-base) ease-out",
+    "hover:bg-muted-hover hover:text-fg",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
   ].join(" "),
   container: {

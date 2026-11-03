@@ -1,4 +1,5 @@
-// Adapted from BoardUI (MIT) — components/base/social-button/social-button.tsx. See THIRD_PARTY_NOTICES.md.
+// The provider set and brand handling were first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode, Ref } from "react";
 import { cx, sortCx } from "../../utils/cx";
 import { SOCIAL_COLOR_LOGOS } from "./social-color-logos";
@@ -85,7 +86,7 @@ const styles = sortCx({
     "inline-flex items-center justify-center gap-2 whitespace-nowrap overflow-hidden",
     "font-sans select-none cursor-pointer",
     "button-press-motion",
-    "transition-[background-color,border-color,box-shadow,color,filter] duration-150 ease",
+    "transition-[background-color,border-color,color,filter] duration-(--ds-motion-duration-base) ease-out",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
     "disabled:cursor-not-allowed disabled:opacity-60 aria-disabled:cursor-not-allowed aria-disabled:opacity-60",
   ].join(" "),
@@ -95,12 +96,12 @@ const styles = sortCx({
   // of providers should line up without a wrapper doing the work, and
   // `fullWidth` opts out.
   size: {
-    medium: "h-9 w-75 rounded-2lg px-3 text-body-md-strong",
-    small: "h-8 w-62.5 rounded-lg px-2.5 text-body-md-strong",
+    medium: "h-9 w-75 rounded-control-md px-3 text-body-md-strong",
+    small: "h-8 w-62.5 rounded-control-sm px-2.5 text-body-md-strong",
   },
   iconOnlySize: {
-    medium: "size-9 w-9 rounded-2lg px-0",
-    small: "size-8 w-8 rounded-lg px-0",
+    medium: "size-9 w-9 rounded-control-md px-0",
+    small: "size-8 w-8 rounded-control-sm px-0",
   },
   // A touch under the base Button's icon sizes (20/18): a brand mark is
   // denser than a line icon and reads heavier at the same box.
@@ -109,20 +110,18 @@ const styles = sortCx({
     small: "size-4 shrink-0",
   },
   appearance: {
-    // The same recipe as `bg-button-primary`: a 180deg gradient from the
-    // brand colour into a darker stop, with the system's own button shadow.
-    // A flat fill read as a foreign control next to BoardUI's own buttons.
-    // The gradient itself is set inline, since it is per-brand.
-    colorful: "text-on-action shadow-raised",
+    // Flat brand fill, like the system's flat primary button; no shadow.
+    // The fill itself is set inline, since it is per-brand.
+    colorful: "text-on-action hover:brightness-95 active:brightness-90",
     black:
-      "bg-social-dark text-on-action shadow-raised hover:bg-social-dark-hover active:bg-social-dark-pressed",
-    // Matches the system's secondary button, so it sits in a form beside the
-    // rest of BoardUI without looking like a different family.
+      "bg-social-dark text-on-action hover:bg-social-dark-hover active:bg-social-dark-pressed",
+    // Matches the system's secondary button: a paper outline that inks in on
+    // hover, so it sits in a form beside a Button as one family.
     white: [
       "bg-surface text-fg",
-      "border border-line shadow-raised",
-      "hover:bg-surface-hover hover:border-line-hover",
-      "active:bg-surface-pressed active:border-line-pressed",
+      "border border-line-control",
+      "hover:border-fg",
+      "active:bg-surface-pressed active:border-fg",
     ].join(" "),
   },
 });
@@ -221,7 +220,7 @@ export function SocialButton({ href, ...props }: SocialButtonProps | SocialButto
   const inlineStyle =
     appearance === "colorful" && !systemFill
       ? {
-          backgroundImage: `linear-gradient(180deg, ${fill} 0%, oklch(from ${fill} calc(l - 0.04) calc(c + 0.01) h) 100%)`,
+          backgroundColor: fill,
         }
       : undefined;
 

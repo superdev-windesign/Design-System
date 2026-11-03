@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/notification/notification.tsx. See THIRD_PARTY_NOTICES.md.
+// The stacking and auto-dismiss behaviour were first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import { useDirection } from "../../foundations/direction";
 import type {
@@ -118,10 +119,10 @@ const STATUS_ICON: Record<NotificationStatus, IconComponent> = {
 const styles = sortCx({
   card: [
     "relative flex w-full items-start gap-3 overflow-hidden p-4 pe-11",
-    "rounded-2xl border border-line",
+    "rounded-overlay border border-line",
     "bg-surface shadow-overlay",
   ].join(" "),
-  visual: "relative flex size-10 shrink-0 items-center justify-center rounded-full",
+  visual: "relative flex size-10 shrink-0 items-center justify-center rounded-control-md",
   icon: "size-5",
   content: "flex min-w-0 flex-1 flex-col gap-1",
   header: "flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-0.5",
@@ -227,7 +228,7 @@ export function Notification({
           role={role ?? (status === "error" ? "alert" : "status")}
           initial={
             hasIntro
-              ? { opacity: 0, y: 12, scale: 0.97, filter: "blur(4px)" }
+              ? { opacity: 0, y: 8 }
               : false
           }
           animate={
@@ -235,8 +236,6 @@ export function Notification({
               ? {
                   opacity: 1,
                   y: 0,
-                  scale: 1,
-                  filter: "blur(0px)",
                   transition: {
                     duration: 0.25,
                     delay: introDelay,
@@ -247,9 +246,7 @@ export function Notification({
           }
           exit={{
             opacity: 0,
-            y: 8,
-            scale: 0.96,
-            filter: "blur(3px)",
+            y: 4,
             transition: { duration: 0.18, ease: "easeOut" },
           }}
           className={cx(styles.card, className)}

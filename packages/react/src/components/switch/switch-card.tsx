@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/switch/switch-card.tsx. See THIRD_PARTY_NOTICES.md.
+// The card structure was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import type { ComponentType, ReactNode, Ref } from "react";
 import { Switch as AriaSwitch } from "react-aria-components";

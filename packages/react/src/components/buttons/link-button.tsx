@@ -1,4 +1,5 @@
-// Adapted from BoardUI (MIT) — components/base/buttons/link-button.tsx. See THIRD_PARTY_NOTICES.md.
+// The anchor/button API was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 import type {
   AnchorHTMLAttributes,
   ButtonHTMLAttributes,
@@ -12,7 +13,8 @@ import { directionalIconClass } from "../../utils/directional-icon";
 /**
  * Link button — an inline text action styled like a link, sized on the same
  * scale as `Button` but without the container: no fill, no border, just the
- * label (plus optional icons) with an underline on hover.
+ * label (plus optional icons). On hover a pen rule draws itself under it
+ * from the start, the same rule a focused field draws.
  *
  * Variant / size matrix (mirrors Button's structure):
  *   Variant = primary (blue/600 text) | secondary (text/secondary)
@@ -64,10 +66,10 @@ const styles = sortCx({
   base: [
     "inline-flex items-center justify-center gap-1 whitespace-nowrap",
     "font-sans select-none cursor-pointer rounded-sm",
-    "underline-offset-3 hover:underline",
-    "transition-colors duration-150 ease",
+    "relative after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-current after:origin-left after:scale-x-0 after:transition-[scale] after:duration-(--ds-motion-duration-moderate) after:ease-out rtl:after:origin-right motion-reduce:after:transition-none hover:after:scale-x-100",
+    "transition-colors duration-(--ds-motion-duration-base) ease-out",
     "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
-    "disabled:cursor-not-allowed disabled:no-underline aria-disabled:cursor-not-allowed aria-disabled:no-underline",
+    "disabled:cursor-not-allowed disabled:after:hidden aria-disabled:cursor-not-allowed aria-disabled:after:hidden",
   ].join(" "),
 
   size: {
@@ -83,7 +85,7 @@ const styles = sortCx({
   },
 
   variant: {
-    // Hover keeps the resting color — the underline is the hover cue; only
+    // Hover keeps the resting color — the pen rule is the hover cue; only
     // the press darkens.
     primary: [
       "text-accent-600 active:text-accent-800",

@@ -1,24 +1,21 @@
-// Adapted from BoardUI (MIT) — components/base/avatar/avatar.tsx. See THIRD_PARTY_NOTICES.md.
+// The size scale was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 /* eslint-disable @next/next/no-img-element */
 import type { HTMLAttributes, Ref } from "react";
 import { cx, sortCx } from "../../utils/cx";
 
 /**
- * Figma source: Board UI → Avatar (styles Avatar/1…Avatar/26; used throughout
- * dashboard 1, node 3731:2932).
+ * Avatar. Initials are set as a serif monogram (the display face); photos sit
+ * in a hairline frame so light pictures keep their edge on the paper.
  *
- * Sizes used in the designs (px):
+ * Sizes (px):
  *   xs = 20   breadcrumb workspace marks     (initials 10/15 semibold)
  *   sm = 24   table rows                     (initials 12/16 semibold)
  *   md = 32   sidebar workspace / team card  (initials 16/22 semibold)
  *   lg = 36   people cards                   (initials 18/24 semibold)
  *
- * Renders a photo when `src` is given, otherwise centered initials on a
- * tinted disc. Initial tints from Figma:
- *   neutral → bg avatar/neutral/background, text text/secondary
- *   blue    → bg color/blue/300,    text color/blue/900
- *   lime    → bg color/lime/200,    text color/lime/700
- *   pink    → bg color/pink/200,    text color/pink/500
+ * Renders a photo when `src` is given, otherwise centred initials on a
+ * tinted disc (neutral, blue, lime or pink, from the avatar tokens).
  */
 
 type AvatarSize = "xs" | "sm" | "md" | "lg";
@@ -36,7 +33,7 @@ export interface AvatarProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const styles = sortCx({
-  base: "inline-flex shrink-0 select-none items-center justify-center overflow-hidden rounded-full text-center align-middle transition-[width,height,font-size] duration-200 ease",
+  base: "inline-flex shrink-0 select-none items-center justify-center overflow-hidden rounded-full text-center align-middle font-display outline-1 -outline-offset-1 outline-line",
   size: {
     xs: "size-5 text-micro-emphasis leading-3.75 font-semibold",
     sm: "size-6 text-caption-emphasis tracking-normal",

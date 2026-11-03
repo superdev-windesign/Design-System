@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/pagination/pagination.tsx. See THIRD_PARTY_NOTICES.md.
+// The page-window logic was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import { useTemplateCopy } from "../../foundations/template-copy";
 
@@ -9,13 +10,11 @@ import { Button } from "../button/button";
 import { cx } from "../../utils/cx";
 
 /**
- * Pagination — designed to match the Board UI dashboard style (no dedicated
- * Figma frame yet, so it reuses shipped tokens/components):
- *   - Previous / Next use the secondary small `Button` (same as the Recent
- *     hires card pager) with arrow icons.
- *   - Page numbers are 32×32 (radius/lg) cells. Active cell borrows the
- *     secondary-button surface (white + border/button/default + shadow/xs);
- *     inactive cells are ghost with a secondary-hover background on hover.
+ * Pagination, set like folios:
+ *   - Previous / Next are the secondary small `Button` with arrow icons.
+ *   - Page numbers are mono figures in 32×32 cells (rounded-control-sm). The
+ *     current page is a block of ink, like the chosen Segmented Control
+ *     option; the others are quiet and take the sunken fill on hover.
  *   - Overflow collapses to leading/trailing dots around a sibling window.
  *
  * Below `COMPACT_WIDTH`, a `ResizeObserver` on the nav switches to a compact
@@ -69,7 +68,7 @@ function paginationRange(
 
 // No transition on the cells: animating background/shadow/color makes the
 // previously-active number visibly fade out ("flicker") on every page change.
-const cell = "flex size-8 shrink-0 items-center justify-center rounded-lg text-body-md-strong";
+const cell = "flex size-8 shrink-0 items-center justify-center rounded-control-sm font-mono text-body-sm tabular-nums";
 
 /** Below this nav width, Previous/Next drop their labels and siblingCount
  *  clamps to 0 — the full-label, full-sibling layout starts clipping
@@ -147,7 +146,7 @@ export function Pagination({
                   cell,
                   "cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
                   item === page
-                    ? "border border-line bg-surface text-fg shadow-raised"
+                    ? "bg-fg text-canvas"
                     : "text-fg-secondary hover:bg-sunken-hover hover:text-fg",
                 )}
               >

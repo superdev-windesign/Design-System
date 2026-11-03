@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/dropdown/dropdown.tsx. See THIRD_PARTY_NOTICES.md.
+// The composable trigger/popover API was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import { createContext, useContext, useRef, useState, type ComponentProps, type ReactNode, type RefObject } from "react";
 import {
@@ -9,8 +10,9 @@ import {
   Popover as AriaPopover,
 } from "react-aria-components";
 import {
+  MENU_GROUP_LABEL,
   MENU_ITEM,
-  MENU_ITEM_ACTIVE,
+  MENU_ITEM_CHOSEN,
   MENU_ITEM_INTERACTIVE,
   MENU_POPOVER_SURFACE,
   MENU_POPOVER_WIDTH,
@@ -19,7 +21,7 @@ import { cx } from "../../utils/cx";
 import { useDismissOnOutsidePress, useTriggerToggle } from "../../utils/use-dismiss-on-outside-press";
 
 /**
- * Dropdown — the BoardUI popover-menu recipe as composable primitives, built
+ * Dropdown — the system's popover-menu recipe as composable primitives, built
  * on React Aria's DialogTrigger/Popover. Unlike Select (which picks a value
  * into a trigger), Dropdown is a free-form menu surface: grouped rows of
  * actions, headers, footers, whatever the panel needs.
@@ -27,11 +29,12 @@ import { useDismissOnOutsidePress, useTriggerToggle } from "../../utils/use-dism
  * The same recipe powers the dashboard sidebar's team/account menus and the
  * AI chat template's add/model/folder menus:
  *
- * - Panel: white, 1px border/button/default, radius 16, p 10, shadow/dropdown.
- * - Appear animation: 150ms fade + scale-95 + 2px blur in and out.
- * - Rows: rounded-2lg, background/secondary/hover on hover and on the selected
- *   row, body-medium labels, 4px apart (the panel's flex column carries a
- *   gap-1, the same rhythm as the Select listbox).
+ * - Panel and motion: the shared menu recipe (recipes/menu.ts): a lifted
+ *   surface that slides a few pixels out from the trigger as it fades in.
+ * - Rows: crisp 4px corners, the hover surface on hover; a `selected` row
+ *   carries the accent margin rule. Rows sit 4px apart (gap-1, the same
+ *   rhythm as the Select listbox).
+ * - Group headings: mono capitals, like a running head.
  *
  * Composition:
  *
@@ -175,14 +178,14 @@ export function DropdownGroup({ label, className, children }: DropdownGroupProps
     // carry it, or its first row floats 4px lower than the panel padding
     // implies (visible as extra space above the first item's hover pill).
     <div className={cx("flex w-full flex-col gap-1.5", label && "pt-1", className)}>
-      {label && <span className="ps-2 text-body-md-strong text-fg-secondary">{label}</span>}
+      {label && <span className={MENU_GROUP_LABEL}>{label}</span>}
       <div className="flex w-full flex-col gap-1">{children}</div>
     </div>
   );
 }
 
 export interface DropdownItemProps {
-  /** Highlights the row like the hover state (current selection). */
+  /** Marks the row as the current choice (the accent margin rule). */
   selected?: boolean;
   onSelect?: () => void;
   /** Row padding defaults to p-2 — override for denser rows (px-2 py-1.5). */
@@ -202,7 +205,8 @@ export function DropdownItem({ selected, onSelect, className, children }: Dropdo
       onClick={onSelect}
       className={cx(
         MENU_ITEM,
-        selected ? MENU_ITEM_ACTIVE : MENU_ITEM_INTERACTIVE,
+        MENU_ITEM_INTERACTIVE,
+        selected && MENU_ITEM_CHOSEN,
         className,
       )}
     >

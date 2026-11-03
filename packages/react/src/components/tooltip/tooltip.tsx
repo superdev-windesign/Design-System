@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/tooltip/tooltip.tsx. See THIRD_PARTY_NOTICES.md.
+// The per-side caret approach was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import type { ComponentProps, ReactNode } from "react";
 import {
@@ -12,14 +13,14 @@ import { cx, sortCx } from "../../utils/cx";
 import { useDirection } from "../../foundations/direction";
 
 /**
- * Light-surface tooltip, styled to match the card / dropdown family:
- *   surface  bg background/primary/default (white), 1px border/button/default,
- *            radius/lg (8px), shadow/dropdown, text/primary.
- *   sizes    sm → px 10 py 6, Caption 1/Medium (12px)
- *            md → px 12 py 8, Body 1/Medium   (14px)
- *   arrow    filled caret (background/primary/default); a distinct path per
- *            side (not one path rotated with CSS) faces the trigger via
- *            OverlayArrow's `placement` render prop — see `TOOLTIP_CARETS` below.
+ * Tooltip, set as an ink caption: the page's ink as the fill and its paper
+ * as the text (the body-text pairing, reversed), crisp 4px corners, no border
+ * and no shadow. It fades in and out.
+ *   sizes    sm → px 10 py 6, text-caption-strong
+ *            md → px 12 py 8, text-body-sm
+ *   arrow    a solid ink caret; a distinct path per side (not one path rotated
+ *            with CSS) faces the trigger via OverlayArrow's `placement` render
+ *            prop — see `TOOLTIP_CARETS` below.
  *
  * Behaviour comes from react-aria's TooltipTrigger / Tooltip — hover + focus
  * open, Escape closes, positioning + collision flipping, and the
@@ -41,7 +42,7 @@ export type TooltipSize = "sm" | "md";
 
 const sizes = sortCx({
   sm: "px-2.5 py-1.5 text-caption-strong",
-  md: "px-3 py-2 text-body-md-strong rounded-2lg",
+  md: "px-3 py-2 text-body-sm",
 });
 
 /**
@@ -54,19 +55,14 @@ const sizes = sortCx({
  * has `width`/`height` matching its own true rendered footprint, so the
  * layout box is always exactly right — no transform, no gap.
  *
- * Each path is left open on the edge touching the tooltip body (no "Z", so
- * only the two other edges get a stroke), and `shadow` points further along
- * the direction the tip already points — past the tip, never back toward the
- * body — matching the one spot that already looked right by default.
+ * Each caret is a filled triangle in the tooltip's ink, so it reads as part
+ * of the same shape.
  */
 export const TOOLTIP_CARETS = sortCx({
-  top: { width: 12, height: 7, path: "M0 0 L6 6 L12 0", shadow: "0 1.5px 1px" },
-  bottom: { width: 12, height: 7, path: "M0 7 L6 1 L12 7", shadow: "0 -1.5px 1px" },
-  // left/right carets stick out sideways from the body; their shadow should
-  // still fall *downward* (light-from-top, matching the body's shadow-dropdown)
-  // rather than horizontally, which read as floating.
-  left: { width: 7, height: 12, path: "M0 0 L6 6 L0 12", shadow: "0 1.5px 1px" },
-  right: { width: 7, height: 12, path: "M7 0 L1 6 L7 12", shadow: "0 1.5px 1px" },
+  top: { width: 12, height: 7, path: "M0 0 L6 6 L12 0" },
+  bottom: { width: 12, height: 7, path: "M0 7 L6 1 L12 7" },
+  left: { width: 7, height: 12, path: "M0 0 L6 6 L0 12" },
+  right: { width: 7, height: 12, path: "M7 0 L1 6 L7 12" },
 });
 
 export interface TooltipProps extends Omit<AriaTooltipProps, "children"> {
@@ -86,15 +82,13 @@ export function Tooltip({ children, className, size = "sm", showArrow = true, of
       {...props}
       className={(state) =>
         cx(
-          "pointer-events-none z-50 max-w-60 select-none rounded-lg border border-line bg-surface text-fg shadow-overlay",
+          "pointer-events-none z-50 max-w-60 select-none rounded-control-sm bg-fg text-canvas",
           sizes[size],
-          // Blur + scale in/out. react-aria stamps `data-entering` on mount then
-          // removes it (transition to base), and holds the element mounted while
-          // `data-exiting` is set so the same transition plays in reverse. The
-          // `transition` utility covers scale, filter (blur) and opacity.
-          "transition duration-200 ease-out",
-          "data-[entering]:scale-90 data-[entering]:opacity-0 data-[entering]:blur-enter-strong",
-          "data-[exiting]:scale-90 data-[exiting]:opacity-0 data-[exiting]:blur-enter-strong",
+          // A plain fade. react-aria stamps `data-entering` on mount then
+          // removes it, and holds the element mounted while `data-exiting` is
+          // set so the same transition plays in reverse.
+          "transition-opacity duration-(--ds-motion-duration-base) ease-out motion-reduce:transition-none",
+          "data-[entering]:opacity-0 data-[exiting]:opacity-0",
           typeof className === "function" ? className(state) : className,
         )
       }
@@ -110,10 +104,9 @@ export function Tooltip({ children, className, size = "sm", showArrow = true, of
                 width={caret.width}
                 height={caret.height}
                 viewBox={`0 0 ${caret.width} ${caret.height}`}
-                className="block overflow-visible fill-surface stroke-line"
-                style={{ filter: `drop-shadow(${caret.shadow} rgb(0 0 0 / 0.05))` }}
+                className="block fill-fg"
               >
-                <path d={caret.path} />
+                <path d={`${caret.path} Z`} />
               </svg>
             );
           }}

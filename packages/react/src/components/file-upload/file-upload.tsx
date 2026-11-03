@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/file-upload/file-upload.tsx. See THIRD_PARTY_NOTICES.md.
+// The upload flow and validation were first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import { useTemplateCopy } from "../../foundations/template-copy";
 
@@ -13,14 +14,16 @@ import {
 import { cx } from "../../utils/cx";
 
 /**
- * Figma sources: Board UI → "Upload file" (node 4105:25269),
- * "Upload in progress" (node 4107:27192), and the complete state
- * (node 4107:30456).
+ * Interactive drag-and-drop file upload with validation, animated content
+ * transitions, and a completion callback. The upload is simulated so the
+ * component is backend-agnostic; connect `onUploadComplete` to the
+ * application's upload/storage layer.
  *
- * Interactive drag-and-drop file upload with validation, a perimeter progress
- * indicator, animated content transitions, and a completion callback. The
- * upload is simulated so the component is backend-agnostic; connect
- * `onUploadComplete` to the application's upload/storage layer.
+ * Look: a crisp dashed drop zone on the sunken fill whose border inks in on
+ * hover and takes the focus colour while a file is dragged over it. While a
+ * file uploads the border turns solid and the system's pen rule fills along
+ * the bottom edge, with the percentage in mono figures beside the size. The
+ * icon sits in a square tile, and "select" is ink with an accent underline.
  */
 
 const DEFAULT_MAX_BYTES = 8 * 1024 * 1024;
@@ -64,7 +67,7 @@ function DefaultFileIcon({ file }: { file: File }) {
   return <Icon className="size-6 shrink-0 text-icon-secondary" aria-hidden />;
 }
 
-/** Drives the Transitions.dev text-reveal states defined in globals.css. */
+/** Drives the staggered reveal states (.t-stagger in packages/styles/src/utilities.css). */
 function useStaggerState(active: boolean): StaggerState {
   const [prevActive, setPrevActive] = useState(active);
   const [hiding, setHiding] = useState(false);
@@ -94,29 +97,6 @@ const staggerLine = (state: StaggerState) =>
     state === "hidden" && "translate-y-3 opacity-0 blur-[3px] transition-none",
   );
 
-/** Rounded-rect progress path beginning at top-center and running clockwise. */
-function ringPath(width: number, height: number, inset: number, radius: number) {
-  const x0 = inset;
-  const y0 = inset;
-  const x1 = width - inset;
-  const y1 = height - inset;
-  const arc = (endX: number, endY: number) =>
-    `A ${radius} ${radius} 0 0 1 ${endX} ${endY}`;
-
-  return [
-    `M ${width / 2} ${y0}`,
-    `H ${x1 - radius}`,
-    arc(x1, y0 + radius),
-    `V ${y1 - radius}`,
-    arc(x1 - radius, y1),
-    `H ${x0 + radius}`,
-    arc(x0, y1 - radius),
-    `V ${y0 + radius}`,
-    arc(x0 + radius, y0),
-    "Z",
-  ].join(" ");
-}
-
 export function FileUpload({
   onUploadComplete,
   allowedExtensions = DEFAULT_EXTENSIONS,
@@ -132,21 +112,7 @@ export function FileUpload({
   const [dragOver, setDragOver] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const boxRef = useRef<HTMLDivElement>(null);
-  const [box, setBox] = useState({ width: 533, height: 164 });
   const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
-
-  useEffect(() => {
-    const element = boxRef.current;
-    if (!element) return;
-    const observer = new ResizeObserver(([entry]) => {
-      if (!entry) return;
-      const { width, height } = entry.contentRect;
-      if (width > 0) setBox({ width, height });
-    });
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
 
   useEffect(() => {
     const pending = timers.current;
@@ -192,7 +158,6 @@ export function FileUpload({
   };
 
   const busy = phase !== "idle";
-  const progressPath = ringPath(box.width, box.height, 1, 15);
   const idleReveal = useStaggerState(!busy);
   const busyReveal = useStaggerState(busy);
   const uploadingLine = useStaggerState(phase === "uploading");
@@ -204,7 +169,6 @@ export function FileUpload({
 
   return localize(
     <div
-      ref={boxRef}
       role="button"
       tabIndex={busy ? -1 : 0}
       aria-label="Upload a file"
@@ -227,7 +191,7 @@ export function FileUpload({
         if (droppedFile && !busy) startUpload(droppedFile);
       }}
       className={cx(
-        "group relative h-41 w-full shrink-0 rounded-2xl outline-none",
+        "group relative h-41 w-full shrink-0 rounded-surface outline-none",
         "transition-colors duration-300 ease-out",
         busy ? "bg-surface" : "cursor-pointer bg-sunken",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
@@ -251,56 +215,29 @@ export function FileUpload({
       <div
         aria-hidden
         className={cx(
-          "pointer-events-none absolute inset-0 rounded-2xl border-2 border-dashed",
-          dragOver
-            ? "border-line-pressed"
-            : "border-line-control group-hover:border-line-pressed",
-          "transition-[opacity,border-color] duration-300 ease-out",
-          busy ? "opacity-0" : "opacity-100",
+          "pointer-events-none absolute inset-0 rounded-surface border",
+          busy
+            ? "border-solid border-line"
+            : dragOver
+              ? "border-dashed border-focus"
+              : "border-dashed border-line-control group-hover:border-fg",
+          "transition-[border-color] duration-(--ds-motion-duration-moderate) ease-out",
         )}
       />
 
-      <svg
-        aria-hidden
-        viewBox={`0 0 ${box.width} ${box.height}`}
-        preserveAspectRatio="none"
-        className={cx(
-          "pointer-events-none absolute inset-0 size-full transition-opacity duration-300 ease-out",
-          busy ? "opacity-100" : "opacity-0",
-        )}
-      >
-        <rect
-          x={1}
-          y={1}
-          width={box.width - 2}
-          height={box.height - 2}
-          rx={15}
-          fill="none"
-          stroke="var(--ds-color-border-default)"
-          strokeWidth={2}
-        />
-        <path
-          d={progressPath}
-          fill="none"
-          stroke="var(--ds-color-accent-400)"
-          strokeWidth={2}
-          strokeLinecap="round"
-          pathLength={100}
-          strokeDasharray={`${busy ? (progress >= 100 ? 102 : progress) : 0} 200`}
-          className="transition-[stroke-dasharray] duration-200 ease-linear"
-        />
-      </svg>
-
+      {/* Progress: the system's pen rule, filling along the bottom edge. */}
       <div
         aria-hidden
         className={cx(
-          "absolute -top-[9.5px] left-1/2 -translate-x-1/2 rounded-md bg-accent-400 px-1.5 py-0.5",
-          "text-caption-strong whitespace-nowrap text-on-action tabular-nums",
-          "[transition:opacity_160ms_ease-out,filter_160ms_ease-out,translate_300ms_ease-out]",
-          busy ? "translate-y-0 opacity-100 blur-0" : "-translate-y-2.5 opacity-0 blur-enter",
+          "pointer-events-none absolute inset-x-0 bottom-0 h-0.5 overflow-hidden rounded-b-surface",
+          "transition-opacity duration-(--ds-motion-duration-moderate) ease-out",
+          busy ? "opacity-100" : "opacity-0",
         )}
       >
-        {progress}%
+        <div
+          className="h-full origin-left bg-accent-600 transition-[scale] duration-200 ease-linear motion-reduce:transition-none rtl:origin-right"
+          style={{ scale: `${busy ? progress / 100 : 0} 1` }}
+        />
       </div>
 
       <div
@@ -310,7 +247,7 @@ export function FileUpload({
           busy && "pointer-events-none",
         )}
       >
-        <span className="t-stagger-line t-stagger-line--1 flex size-10 items-center justify-center rounded-full bg-file-upload-icon p-2.5">
+        <span className="t-stagger-line t-stagger-line--1 flex size-10 items-center justify-center rounded-control-md bg-file-upload-icon p-2.5">
           <RiUploadCloud2Line
             className="size-6 shrink-0 text-file-upload-icon-fg transition-colors duration-150 ease group-hover:text-file-upload-icon-fg-hover"
             aria-hidden
@@ -325,7 +262,7 @@ export function FileUpload({
           >
             {rejection ?? (
               <>
-                Drag and drop to upload or <span className="text-accent-500">select</span>
+                Drag and drop to upload or <span className="text-fg underline decoration-accent-600 underline-offset-2">select</span>
               </>
             )}
           </p>
@@ -342,7 +279,7 @@ export function FileUpload({
           !busy && "pointer-events-none",
         )}
       >
-        <span className="t-stagger-line t-stagger-line--1 flex size-10 items-center justify-center rounded-full border border-line bg-surface p-2">
+        <span className="t-stagger-line t-stagger-line--1 flex size-10 items-center justify-center rounded-control-md border border-line bg-surface p-2">
           {file && (renderFileIcon ? renderFileIcon(file) : <DefaultFileIcon file={file} />)}
         </span>
         <p className="t-stagger-line t-stagger-line--2 mt-3.5 max-w-[90%] truncate text-body-md-strong text-fg">
@@ -355,8 +292,8 @@ export function FileUpload({
               staggerLine(uploadingLine),
             )}
           >
-            Uploading {file ? formatFileSize(file.size) : ""}
-            ...
+            Uploading {file ? formatFileSize(file.size) : ""}…{" "}
+            <span className="font-mono tabular-nums text-fg">{progress}%</span>
           </p>
           <p
             className={cx(

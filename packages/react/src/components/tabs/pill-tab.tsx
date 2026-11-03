@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/tabs/pill-tab.tsx. See THIRD_PARTY_NOTICES.md.
+// The sliding-selection structure was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import { useDirection } from "../../foundations/direction";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
@@ -9,17 +10,15 @@ import { cx, sortCx } from "../../utils/cx";
 const useIsomorphicLayoutEffect = typeof window !== "undefined" ? useLayoutEffect : useEffect;
 
 /**
- * Figma source: Board UI → "ai_chat" → Changes / Browser panel switcher
- * (node 4030:5993 region) — the fully-rounded pill tab, in two styles:
+ * A compact tab for switching a local view, in two tones (the names are
+ * kept for compatibility):
  *
- *   pill      px 8, py 5, gap 4
- *   blue      fully rounded-sm (40px); selected bg uses the semantic blue pill
- *             surface, icon + label color/blue/500 (the AI chat panel switcher)
- *   gray      radius/2lg (10px); selected bg background/tertiary, label
- *             text/primary (quieter — scope/filter rows like the settings
- *             Tools page)
- *   idle      label text/secondary, icon foreground/icon/secondary,
- *             background/primary/hover on hover (both styles)
+ *   tab       px 8, py 5, gap 4, rounded-control-md (crisp, not a pill)
+ *   blue      the accent tone: selected sits on the tertiary tint with
+ *             tertiary text and icon (a contrast-checked pairing)
+ *   gray      the quiet tone: selected sits on the muted fill in fg
+ *   idle      fg-secondary label and icon-secondary glyph, surface-hover on
+ *             hover (both tones)
  *   icon      optional 20px leading glyph
  *
  * `PillTabList` owns the animated selection background so it can slide
@@ -37,23 +36,23 @@ export type PillTabVariant = "blue" | "gray";
 
 const styles = sortCx({
   radius: {
-    blue: "rounded-full",
-    gray: "rounded-2lg",
+    blue: "rounded-control-md",
+    gray: "rounded-control-md",
   },
   thumb: {
-    blue: "bg-pill-tab-selected",
+    blue: "bg-action-tertiary",
     gray: "bg-muted",
   },
   hover: {
-    blue: "bg-pill-tab-hover",
+    blue: "bg-surface-hover",
     gray: "bg-surface-hover",
   },
   selectedIcon: {
-    blue: "text-accent-500",
+    blue: "text-action-tertiary-fg",
     gray: "text-icon",
   },
   selectedLabel: {
-    blue: "text-accent-500",
+    blue: "text-action-tertiary-fg",
     gray: "text-fg",
   },
 });

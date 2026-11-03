@@ -1,4 +1,5 @@
-// Adapted from BoardUI (MIT) — components/base/date-picker/shared.tsx. See THIRD_PARTY_NOTICES.md.
+// The shared date-picker chrome was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 import { useContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
 import {
@@ -21,10 +22,12 @@ import { focusRing, focusRingInset, focusRingNative } from "../../recipes/focus-
 import { cx } from "../../utils/cx";
 
 /**
- * Shared chrome for the date-picker family. `DateRangePicker` (dual month,
- * Figma node 3871:5738) and `DatePicker` (single month, node 3879:6708) are
- * the same visual system around different React Aria roots (`RangeCalendar`
- * vs `Calendar`), so a fidelity fix only has to happen here.
+ * Shared chrome for the date-picker family. `DateRangePicker` (dual month)
+ * and `DatePicker` (single month) are the same visual system around
+ * different React Aria roots (`RangeCalendar` vs `Calendar`), so a fix only
+ * has to happen here. Set flat: hairline-bordered paper month cards on a
+ * sunken panel, triggers that ink in on hover like the secondary Button, and
+ * tabular figures in the grid.
  */
 
 export function formatTriggerDate(date: CalendarDate, locale?: string) {
@@ -104,7 +107,7 @@ export function DayCell(props: CalendarCellRenderProps & { isRange: boolean }) {
             isEdge ? "opacity-100" : "opacity-0",
           )}
         />
-        <span className={cx("relative text-body-md-strong text-fg", isDisabled && "text-fg-tertiary")}>
+        <span className={cx("relative text-body-md-strong tabular-nums text-fg", isDisabled && "text-fg-tertiary")}>
           {formattedDate}
         </span>
       </div>
@@ -146,7 +149,7 @@ export function MonthPanel({
 
   return (
     // w-81.5 = 326px card; w-74 = 296px bare grid.
-    <div className={bare ? "w-74 shrink-0" : "w-81.5 shrink-0 rounded-surface bg-surface p-3.75 shadow-raised"}>
+    <div className={bare ? "w-74 shrink-0" : "w-81.5 shrink-0 rounded-surface border border-line bg-surface p-3.75"}>
       <div className="flex flex-col gap-5">
         {!hideHeader && (
           <div className="flex items-center justify-between">
@@ -232,8 +235,8 @@ export function DateChipInput({
       }}
       aria-label={label}
       className={cx(
-        "w-26 rounded-control-md border border-line-control bg-surface p-2 text-body-md-strong text-fg shadow-raised outline-none",
-        "transition-colors duration-(--ds-motion-duration-fast) ease-out focus-visible:border-line-pressed",
+        "w-26 rounded-control-md border border-line-control bg-surface p-2 text-body-md-strong tabular-nums text-fg outline-none",
+        "transition-colors duration-(--ds-motion-duration-fast) ease-out focus-visible:border-focus",
       )}
     />
   );
@@ -252,21 +255,21 @@ export function CalendarActions({ children }: { children: ReactNode }) {
   );
 }
 
-/** Trigger chrome shared by both pickers: calendar icon + value on a raised surface. */
+/** Trigger chrome shared by both pickers: calendar icon + value on a paper outline that inks in on hover. */
 export const triggerButtonClassName = cx(
-  "inline-flex shrink-0 cursor-pointer items-center gap-0.5 rounded-control-md border border-line-control bg-surface p-2 shadow-raised",
-  "transition-[background-color,border-color,box-shadow] duration-(--ds-motion-duration-base)",
-  "hover:border-line-control-hover hover:bg-surface-hover",
+  "inline-flex shrink-0 cursor-pointer items-center gap-0.5 rounded-control-md border border-line-control bg-surface p-2",
+  "transition-[background-color,border-color] duration-(--ds-motion-duration-base)",
+  "hover:border-fg",
   focusRingNative,
-  "disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-fg-tertiary disabled:shadow-none",
+  "disabled:cursor-not-allowed disabled:bg-surface-disabled disabled:text-fg-tertiary",
 );
 
-/** Popover chrome shared by both pickers: a sunken panel holding raised month cards. */
+/** Popover chrome shared by both pickers: a sunken panel holding paper month cards; it slides out from the trigger like the menus. */
 export const popoverClassName = cx(
-  "origin-top rounded-panel bg-sunken shadow-overlay",
-  "transition duration-(--ds-motion-duration-base) ease-out",
-  "data-[entering]:scale-95 data-[entering]:opacity-0 data-[entering]:blur-enter",
-  "data-[exiting]:scale-95 data-[exiting]:opacity-0 data-[exiting]:blur-enter",
+  "rounded-panel bg-sunken shadow-overlay",
+  "transition-[opacity,translate] duration-(--ds-motion-duration-base) ease-out motion-reduce:transition-none",
+  "data-[entering]:opacity-0 data-[exiting]:opacity-0",
+  "data-[placement=bottom]:data-[entering]:-translate-y-1 data-[placement=top]:data-[entering]:translate-y-1",
 );
 
 /** The footer's slide-down entrance for the selected-date summary. */

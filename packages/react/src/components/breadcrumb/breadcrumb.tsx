@@ -1,23 +1,21 @@
-// Adapted from BoardUI (MIT) — components/base/breadcrumb/breadcrumb.tsx. See THIRD_PARTY_NOTICES.md.
+// The item API was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 import { Link } from "../../foundations/link";
 import { Children, Fragment, isValidElement } from "react";
 import type { ComponentType, ReactElement, ReactNode, Ref } from "react";
 import { Button as AriaButton } from "react-aria-components";
 import { RiMoreLine } from "@remixicon/react";
-import { ChevronRightSmall } from "../../icons/chevrons";
 import { focusRing } from "../../recipes/focus-ring";
 import { Menu, MenuItem, MenuTrigger } from "../menu/menu";
 import { cx } from "../../utils/cx";
 
 /**
- * Figma source: Board UI → dashboard 1 breadcrumb (node 3731:3011).
- *
- * Trail of ancestor pages separated by chevrons.
- *   item      Caption 1/Medium, text/tertiary, gap 6 (icon/avatar ↔ label)
- *   hover     interactive items darken to text/secondary with a soft
- *             background/primary/hover pill
- *   current   aria-current="page", neutral/700, not interactive
- *   separator ChevronRightSmall, text/tertiary, gap 10 between items
+ * Trail of ancestor pages, set like a path.
+ *   item      text-caption-strong, fg-tertiary, gap 6 (icon/avatar and label)
+ *   hover     interactive items darken to fg-secondary and a pen rule draws
+ *             under them; no background pill
+ *   current   aria-current="page", fg-secondary, not interactive
+ *   separator a mono slash in fg-tertiary, gap 10 between items
  *
  * Compose <BreadcrumbItem>s inside <Breadcrumb>; separators are inserted
  * automatically. An item becomes a link when given `href`, a button when given
@@ -49,8 +47,8 @@ function CollapsedItems({ items }: { items: ReactElement<BreadcrumbItemProps>[] 
         <AriaButton
           aria-label={`Show ${items.length} more ${items.length === 1 ? "level" : "levels"}`}
           className={cx(
-            "-mx-1 flex h-6 cursor-pointer items-center rounded-md px-1 text-fg-tertiary transition-colors duration-150",
-            "data-[hovered]:bg-surface-hover data-[hovered]:text-fg-secondary data-[pressed]:bg-surface-pressed",
+            "-mx-1 flex h-6 cursor-pointer items-center rounded-control-xs px-1 text-fg-tertiary transition-colors duration-(--ds-motion-duration-base)",
+            "data-[hovered]:text-fg-secondary data-[pressed]:bg-surface-pressed",
             focusRing,
           )}
         >
@@ -100,7 +98,7 @@ export function Breadcrumb({
         {items.map((item, index) => (
           <Fragment key={item.key ?? index}>
             {index > 0 && (
-              <ChevronRightSmall className="size-3 shrink-0 text-fg-tertiary" aria-hidden />
+              <span aria-hidden className="shrink-0 font-mono text-caption text-fg-tertiary">/</span>
             )}
             {item}
           </Fragment>
@@ -151,9 +149,9 @@ export function BreadcrumbItem({
   }
 
   const interactiveClass = cx(
-    "-mx-1 flex items-center gap-1.5 rounded-md px-1 py-0.5 text-caption-strong whitespace-nowrap text-fg-tertiary",
-    "transition-colors duration-150 ease outline-none",
-    "hover:bg-surface-hover hover:text-fg-secondary",
+    "-mx-1 flex items-center gap-1.5 rounded-control-xs px-1 py-0.5 text-caption-strong whitespace-nowrap text-fg-tertiary",
+    "transition-colors duration-(--ds-motion-duration-base) ease-out outline-none",
+    "relative after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-current after:origin-left after:scale-x-0 after:transition-[scale] after:duration-(--ds-motion-duration-moderate) after:ease-out rtl:after:origin-right motion-reduce:after:transition-none after:inset-x-1 hover:after:scale-x-100 hover:text-fg-secondary",
     "focus-visible:outline-2 focus-visible:outline-focus",
     className,
   );

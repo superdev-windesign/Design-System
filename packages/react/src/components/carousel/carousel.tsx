@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/carousel/carousel.tsx. See THIRD_PARTY_NOTICES.md.
+// The scroll-snap structure was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import {
   Children,
@@ -221,22 +222,38 @@ export function Carousel({
       </div>
 
       {showDots && count > 1 ? (
-        <div className="flex items-center justify-center gap-1.5">
-          {Array.from({ length: count }, (_, index) => (
-            <button
-              key={index}
-              type="button"
-              aria-label={`Go to slide ${index + 1}`}
-              aria-current={index === active}
-              onClick={() => scrollToIndex(index)}
-              className={cx(
-                "h-1.5 cursor-pointer rounded-full transition-all duration-200 ease-out",
-                index === active
-                  ? "w-4 bg-fg"
-                  : "w-1.5 bg-muted hover:bg-line-pressed",
-              )}
-            />
-          ))}
+        // A ruler: one short rule per slide, the current one longer and in
+        // ink, with the folio ("02 / 05") beside it. Each rule sits in a 12px
+        // tall button so it stays easy to hit.
+        <div className="flex items-center justify-center gap-3">
+          <div className="flex items-center gap-1">
+            {Array.from({ length: count }, (_, index) => (
+              <button
+                key={index}
+                type="button"
+                aria-label={`Go to slide ${index + 1}`}
+                aria-current={index === active}
+                onClick={() => scrollToIndex(index)}
+                className={cx(
+                  "group/rule flex h-3 cursor-pointer items-center rounded-control-xs",
+                  "transition-[width] duration-(--ds-motion-duration-moderate) ease-out motion-reduce:transition-none",
+                  "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
+                  index === active ? "w-8" : "w-4",
+                )}
+              >
+                <span
+                  aria-hidden
+                  className={cx(
+                    "h-0.5 w-full rounded-full transition-colors duration-(--ds-motion-duration-base)",
+                    index === active ? "bg-fg" : "bg-line-control group-hover/rule:bg-line-control-hover",
+                  )}
+                />
+              </button>
+            ))}
+          </div>
+          <span aria-hidden className="font-mono text-caption tabular-nums text-fg-secondary">
+            {String(active + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
+          </span>
         </div>
       ) : null}
     </div>

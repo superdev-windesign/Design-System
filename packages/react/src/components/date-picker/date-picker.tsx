@@ -1,4 +1,5 @@
-// Adapted from BoardUI (MIT) — components/base/date-picker/date-picker.tsx. See THIRD_PARTY_NOTICES.md.
+// The popover wiring was first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 import { useEffect, useRef, useState } from "react";
 import type { RefObject } from "react";
 import { Calendar, Dialog, Popover, useLocale } from "react-aria-components";
@@ -19,9 +20,9 @@ import {
 } from "./shared";
 
 /**
- * Visual parity with BoardUI's single-date DatePicker (Figma node 3879:6708):
- * one month with both chevrons active, and a footer with an editable
- * "DD/MM/YYYY" chip plus Cancel/Apply. Reuses the range picker's chrome.
+ * Single-date picker: one month with both chevrons active, and a footer with
+ * an editable "DD/MM/YYYY" chip plus Cancel/Apply. Reuses the range picker's
+ * chrome (./shared).
  *
  * Uses a standalone Popover anchored by `triggerRef` (not DialogTrigger), so an
  * external element can open it: pass `triggerRef` + `isOpen` + `onOpenChange`,

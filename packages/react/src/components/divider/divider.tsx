@@ -1,4 +1,5 @@
-// Adapted from BoardUI (MIT) — components/base/divider/divider.tsx. See THIRD_PARTY_NOTICES.md.
+// The three variants were first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 import type { HTMLAttributes, ReactNode, Ref } from "react";
 import { cx, sortCx } from "../../utils/cx";
 
@@ -21,7 +22,7 @@ export interface DividerProps
 const styles = sortCx({
   root: "w-full",
   line: "h-px min-w-0 flex-1 bg-separator",
-  content: "shrink-0 text-body-md-strong text-fg-secondary",
+  content: "shrink-0 font-mono text-caption text-fg-secondary",
   align: {
     start: "justify-start",
     center: "justify-center",
@@ -29,21 +30,22 @@ const styles = sortCx({
   },
   withContent: {
     single: "flex items-center gap-3",
-    double: "flex items-center border-y border-separator py-2.5",
-    fill: "flex items-center rounded-2lg bg-sunken px-4 py-2.5",
+    double: "flex items-center border-y border-separator py-2",
+    fill: "flex items-center rounded-surface bg-sunken px-4 py-2.5",
   },
   empty: {
     single: "h-px bg-separator",
-    double: "h-2 border-y border-separator",
-    fill: "h-2 rounded-full bg-sunken",
+    double: "h-1 border-y border-separator",
+    fill: "h-2 rounded-control-xs bg-sunken",
   },
 });
 
 /**
- * Horizontal content divider with three BoardUI surface treatments.
+ * Horizontal content divider, set like rules on a printed page.
  *
  * `single` places content within one continuous hairline, `double` frames it
- * with a line above and below, and `fill` uses the secondary surface color.
+ * between a close pair of rules, and `fill` uses the sunken surface. Text
+ * content is set in mono, like a running head.
  * Children stay completely composable, so labels, buttons, and small controls
  * can share the same primitive.
  */

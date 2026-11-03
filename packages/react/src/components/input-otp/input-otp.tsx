@@ -1,5 +1,6 @@
 "use client";
-// Adapted from BoardUI (MIT) — components/base/input-otp/input-otp.tsx. See THIRD_PARTY_NOTICES.md.
+// The keyboard and paste behaviour were first adapted from BoardUI (MIT); see THIRD_PARTY_NOTICES.md.
+// The look is Windesign's own.
 
 import {
   useId,
@@ -169,18 +170,18 @@ export function InputOtp({
               onPaste={(event) => onPaste(event, index)}
               onFocus={(event) => event.target.select()}
               className={cx(
-                "size-12 rounded-2lg text-center font-mono text-title-sm-strong tabular-nums",
+                // Each box is a small ledger field: a crisp outline, and on focus
+                // the focus colour with a 2px base (the pen rule a focused field
+                // draws). An <input> can't hold the ::after rule the other fields
+                // use, so the bottom border carries it here.
+                "size-12 rounded-control-md text-center font-mono text-title-sm-strong tabular-nums",
                 "bg-surface text-fg",
-                "border border-line shadow-raised",
-                "transition-[background-color,border-color,box-shadow] duration-150 ease outline-none",
-                "hover:border-line-hover",
-                "focus-visible:border-focus focus-visible:outline-2 focus-visible:outline-focus",
-                // Red edge as well as the tint. `border-error-default` was
-                // added to theme.css for this: the system had greys only.
-                isInvalid &&
-                  "border-line-danger bg-danger-subtle text-icon-danger hover:border-line-danger",
-                isDisabled &&
-                  "cursor-not-allowed bg-surface-disabled text-fg-tertiary shadow-none",
+                "border border-line-control",
+                "transition-[border-color] duration-(--ds-motion-duration-base) ease-out outline-none",
+                "hover:border-line-control-hover",
+                "focus-visible:border-focus focus-visible:border-b-2",
+                isInvalid && "border-line-danger border-b-2 text-icon-danger hover:border-line-danger",
+                isDisabled && "cursor-not-allowed bg-surface-disabled text-fg-tertiary",
               )}
             />
           </div>
