@@ -15,7 +15,7 @@ import {
   RangeCalendar,
   RangeCalendarStateContext,
 } from "react-aria-components";
-import type { RangeValue } from "react-aria-components";
+import type { RangeCalendarProps, RangeValue } from "react-aria-components";
 import { useDateFormatter } from "react-aria";
 import { RiArrowLeftSLine, RiArrowRightSLine } from "@remixicon/react";
 import { Button } from "../../components/button/button";
@@ -24,9 +24,11 @@ import { focusRing } from "../../recipes/focus-ring";
 import { cx } from "../../utils/cx";
 
 /**
- * Date and time range picker: two months side by side (one on a narrow
- * panel), a range drawn as a band between two solid days, and hour and minute
- * columns for whichever end is being set.
+ * Date and time range picker, after Moon's: two months side by side with a
+ * joined pair of hour and minute columns beside them. The range is a pale band
+ * running row by row between two solid days, and Apply sits alone under a
+ * hairline. On a narrower panel the columns drop below the months, and then
+ * the second month goes.
  *
  * Choices stay pending until Apply, so a half-picked range never reaches the
  * app. It's a panel rather than a popover, so it can sit in a page, a Popover
@@ -46,10 +48,13 @@ export interface DateTimeRangePickerProps {
   /** Called on every pending change, before Apply. */
   onChange?: (range: DateTimeRange | null) => void;
   onApply?: (range: DateTimeRange) => void;
+  /** Passing this adds a Clear button beside Apply. */
   onClear?: () => void;
   minValue?: DateValue;
   maxValue?: DateValue;
   isDateUnavailable?: (date: DateValue) => boolean;
+  /** Overrides the locale's first day of the week. */
+  firstDayOfWeek?: RangeCalendarProps<DateValue>["firstDayOfWeek"];
   /** Minutes between entries in the minute column. Default 5. */
   minuteStep?: number;
   applyLabel?: string;
@@ -60,39 +65,39 @@ const pad = (n: number) => String(n).padStart(2, "0");
 const HOURS = Array.from({ length: 24 }, (_, hour) => hour);
 
 /** One month's name, read from the calendar's state so it tracks paging. */
-function MonthName({ offset, className }: { offset: number; className?: string }) {
+function MonthName({ offset }: { offset: number }) {
   const state = useContext(RangeCalendarStateContext);
   const formatter = useDateFormatter({ month: "long", year: "numeric", timeZone: state?.timeZone });
   if (!state) return null;
   return (
-    <span aria-hidden className={cx("flex-1 text-center text-body-md-strong text-fg", className)}>
+    <span aria-hidden className="mb-4 block h-8 text-center text-title-sm-strong leading-8 font-normal text-fg">
       {formatter.format(state.visibleRange.start.add({ months: offset }).toDate(state.timeZone))}
     </span>
   );
 }
 
 const NAV_BUTTON = cx(
-  "flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-control-sm text-icon-secondary transition-colors",
-  "data-[hovered]:bg-surface-hover data-[hovered]:text-fg data-[disabled]:cursor-not-allowed data-[disabled]:text-fg-disabled",
+  "absolute top-0 flex size-8 cursor-pointer items-center justify-center rounded-full text-icon-secondary transition-colors",
+  "data-[hovered]:bg-muted data-[hovered]:text-fg data-[disabled]:cursor-not-allowed data-[disabled]:text-fg-disabled",
   focusRing,
 );
 
-function MonthGrid({ offset, className }: { offset: number; className?: string }) {
+function MonthGrid({ offset }: { offset: number }) {
   return (
-    <CalendarGrid offset={{ months: offset }} className={cx("w-full border-collapse", className)}>
+    <CalendarGrid offset={{ months: offset }} className="w-full border-collapse">
       <CalendarGridHeader>
-        {(day) => <CalendarHeaderCell className="pb-2 text-caption text-fg-tertiary">{day}</CalendarHeaderCell>}
+        {(day) => <CalendarHeaderCell className="pb-3 text-body-sm text-fg-tertiary">{day}</CalendarHeaderCell>}
       </CalendarGridHeader>
       <CalendarGridBody>
         {(date) => (
           <CalendarCell
             date={date}
-            // The band: pale between the ends, rounded where a row starts or stops.
+            // The band: each week is its own soft-cornered strip, and the ends tuck under the solid days.
             className={({ isSelected, isSelectionStart, isSelectionEnd, isOutsideMonth }) =>
               cx(
                 "relative my-0.5 flex h-9 items-center justify-center outline-none",
                 isOutsideMonth && "invisible",
-                isSelected && "bg-sunken [td:first-child>&]:rounded-s-item [td:last-child>&]:rounded-e-item",
+                isSelected && "bg-canvas [td:first-child>&]:rounded-s-control-xs [td:last-child>&]:rounded-e-control-xs",
                 isSelectionStart && "rounded-s-full",
                 isSelectionEnd && "rounded-e-full",
               )
@@ -101,9 +106,9 @@ function MonthGrid({ offset, className }: { offset: number; className?: string }
             {({ formattedDate, isSelectionStart, isSelectionEnd, isHovered, isFocusVisible, isDisabled, isUnavailable }) => (
               <span
                 className={cx(
-                  "flex size-9 cursor-pointer items-center justify-center rounded-full text-body-sm tabular-nums transition-colors",
+                  "flex size-9 cursor-pointer items-center justify-center rounded-full text-body-md-strong tabular-nums transition-colors",
                   isSelectionStart || isSelectionEnd ? "bg-fg text-canvas" : "text-fg",
-                  isHovered && !isSelectionStart && !isSelectionEnd && "bg-surface-hover",
+                  isHovered && !isSelectionStart && !isSelectionEnd && "bg-muted",
                   isFocusVisible && "outline-2 outline-offset-2 outline-focus",
                   (isDisabled || isUnavailable) && "cursor-not-allowed text-fg-disabled",
                 )}
@@ -140,20 +145,22 @@ function TimeColumn({ label, values, value, onChange }: { label: string; values:
         const next = [...keys][0];
         if (next !== undefined) onChange(Number(next));
       }}
-      className={cx("scrollbar-thin relative flex h-64 w-14 flex-col gap-0.5 overflow-y-auto rounded-surface bg-sunken p-1", focusRing)}
+      className="scrollbar-none relative flex flex-1 flex-col overflow-y-auto py-1 outline-none"
     >
       {values.map((entry) => (
-        <ListBoxItem
-          key={entry}
-          id={entry}
-          textValue={pad(entry)}
-          className={cx(
-            "flex h-8 shrink-0 cursor-pointer items-center justify-center rounded-item text-body-sm tabular-nums text-fg outline-none transition-colors",
-            "data-[hovered]:bg-surface-hover data-[selected]:bg-fg data-[selected]:text-canvas",
-            "data-[focus-visible]:outline-2 data-[focus-visible]:-outline-offset-2 data-[focus-visible]:outline-focus",
+        <ListBoxItem key={entry} id={entry} textValue={pad(entry)} className="flex h-9 shrink-0 cursor-pointer items-center justify-center outline-none">
+          {({ isSelected, isHovered, isFocusVisible }) => (
+            <span
+              className={cx(
+                "flex size-8 items-center justify-center rounded-full text-body-md-strong tabular-nums transition-colors",
+                isSelected ? "bg-fg text-canvas" : "text-fg",
+                isHovered && !isSelected && "bg-muted",
+                isFocusVisible && "outline-2 outline-offset-1 outline-focus",
+              )}
+            >
+              {pad(entry)}
+            </span>
           )}
-        >
-          {pad(entry)}
         </ListBoxItem>
       ))}
     </ListBox>
@@ -168,6 +175,7 @@ export function DateTimeRangePicker({
   minValue,
   maxValue,
   isDateUnavailable,
+  firstDayOfWeek,
   minuteStep = 5,
   applyLabel = "Apply",
   className,
@@ -196,42 +204,56 @@ export function DateTimeRangePicker({
   const stamp = (date: CalendarDate, at: Time) => `${format.format(date.toDate(getLocalTimeZone()))}, ${pad(at.hour)}:${pad(at.minute)}`;
   // An unusable range: same day, with the end at or before the start.
   const isBackwards = range !== null && range.start.compare(range.end) === 0 && range.endTime.compare(range.startTime) <= 0;
+  const endName = editing === "start" ? "Start" : "End";
 
   return (
-    <section aria-label="Date and time range" className={cx("@container/picker w-full max-w-4xl rounded-panel bg-surface shadow-raised", className)}>
-      <div className="flex flex-col gap-4 p-4 @3xl/picker:flex-row">
-        <RangeCalendar
-          aria-label="Date range"
-          value={dates}
-          onChange={(next) => {
-            const value = { start: new CalendarDate(next.start.year, next.start.month, next.start.day), end: new CalendarDate(next.end.year, next.end.month, next.end.day) };
-            setDates(value);
-            onChange?.(pending(value, times));
-          }}
-          minValue={minValue}
-          maxValue={maxValue}
-          isDateUnavailable={isDateUnavailable}
-          visibleDuration={{ months: 2 }}
-          pageBehavior="single"
-          className="min-w-0 flex-1"
-        >
-          <header className="mb-3 flex items-center gap-2">
-            <AriaButton slot="previous" className={NAV_BUTTON}>
-              <RiArrowLeftSLine aria-hidden className="size-5 rtl:-scale-x-100" />
+    <section aria-label="Date and time range" className={cx("@container/picker w-full max-w-4xl rounded-panel bg-surface", className)}>
+      <div className="flex flex-col gap-4 p-4 @2xl/picker:p-6">
+        <div className="flex flex-col gap-6 @2xl/picker:flex-row">
+          <RangeCalendar
+            aria-label="Date range"
+            value={dates}
+            onChange={(next) => {
+              const value = { start: new CalendarDate(next.start.year, next.start.month, next.start.day), end: new CalendarDate(next.end.year, next.end.month, next.end.day) };
+              setDates(value);
+              onChange?.(pending(value, times));
+            }}
+            minValue={minValue}
+            maxValue={maxValue}
+            isDateUnavailable={isDateUnavailable}
+            firstDayOfWeek={firstDayOfWeek}
+            visibleDuration={{ months: 2 }}
+            pageBehavior="single"
+            className="relative min-w-0 flex-1"
+          >
+            <AriaButton slot="previous" className={cx(NAV_BUTTON, "start-0")}>
+              <RiArrowLeftSLine aria-hidden className="size-6 rtl:-scale-x-100" />
             </AriaButton>
-            <MonthName offset={0} />
-            <MonthName offset={1} className="hidden @xl/picker:block" />
-            <AriaButton slot="next" className={NAV_BUTTON}>
-              <RiArrowRightSLine aria-hidden className="size-5 rtl:-scale-x-100" />
+            <AriaButton slot="next" className={cx(NAV_BUTTON, "end-0")}>
+              <RiArrowRightSLine aria-hidden className="size-6 rtl:-scale-x-100" />
             </AriaButton>
-          </header>
-          <div className="flex gap-6">
-            <MonthGrid offset={0} />
-            <MonthGrid offset={1} className="hidden @xl/picker:table" />
-          </div>
-        </RangeCalendar>
+            <div className="flex gap-6">
+              <div className="min-w-0 flex-1">
+                <MonthName offset={0} />
+                <MonthGrid offset={0} />
+              </div>
+              <div className="hidden min-w-0 flex-1 @xl/picker:block">
+                <MonthName offset={1} />
+                <MonthGrid offset={1} />
+              </div>
+            </div>
+          </RangeCalendar>
 
-        <div className="flex shrink-0 flex-col items-center gap-3">
+          {/* Beside the months it takes their height, so its own long lists have to sit out of the flow. */}
+          <div className="relative h-56 shrink-0 overflow-hidden rounded-surface bg-canvas @2xl/picker:h-auto @2xl/picker:w-30">
+            <div className="absolute inset-0 flex divide-x divide-line">
+              <TimeColumn label={`${endName} hour`} values={HOURS} value={time.hour} onChange={(v) => setTime("hour", v)} />
+              <TimeColumn label={`${endName} minute`} values={minuteValues} value={time.minute} onChange={(v) => setTime("minute", v)} />
+            </div>
+          </div>
+        </div>
+
+        <footer className="flex flex-wrap items-center gap-3 border-t border-line pt-4">
           <SegmentedControl
             aria-label="Set the time for"
             selectedKeys={[editing]}
@@ -243,35 +265,30 @@ export function DateTimeRangePicker({
             <SegmentedControlItem id="start">Start</SegmentedControlItem>
             <SegmentedControlItem id="end">End</SegmentedControlItem>
           </SegmentedControl>
-          <div className="flex gap-1.5">
-            <TimeColumn label={`${editing === "start" ? "Start" : "End"} hour`} values={HOURS} value={time.hour} onChange={(v) => setTime("hour", v)} />
-            <TimeColumn label={`${editing === "start" ? "Start" : "End"} minute`} values={minuteValues} value={time.minute} onChange={(v) => setTime("minute", v)} />
+          <p aria-live="polite" className="min-w-0 text-body-sm tabular-nums text-fg-secondary">
+            {range ? `${stamp(range.start, range.startTime)} – ${stamp(range.end, range.endTime)}` : "Pick a start and an end date"}
+          </p>
+          <div className="ms-auto flex gap-2">
+            {onClear && (
+              <Button
+                variant="tertiary"
+                size="sm"
+                isDisabled={!dates}
+                onPress={() => {
+                  setDates(null);
+                  onChange?.(null);
+                  onClear();
+                }}
+              >
+                Clear
+              </Button>
+            )}
+            <Button variant="ink" size="sm" isDisabled={!range || isBackwards} onPress={() => range && onApply?.(range)} className="rounded-action px-6">
+              {applyLabel}
+            </Button>
           </div>
-        </div>
+        </footer>
       </div>
-
-      <footer className="flex flex-wrap items-center justify-between gap-3 border-t border-line px-4 py-3">
-        <p aria-live="polite" className="min-w-0 text-body-sm tabular-nums text-fg-secondary">
-          {range ? `${stamp(range.start, range.startTime)} – ${stamp(range.end, range.endTime)}` : "Pick a start and an end date"}
-        </p>
-        <div className="flex gap-2">
-          <Button
-            variant="tertiary"
-            size="sm"
-            isDisabled={!dates}
-            onPress={() => {
-              setDates(null);
-              onChange?.(null);
-              onClear?.();
-            }}
-          >
-            Clear
-          </Button>
-          <Button size="sm" isDisabled={!range || isBackwards} onPress={() => range && onApply?.(range)}>
-            {applyLabel}
-          </Button>
-        </div>
-      </footer>
     </section>
   );
 }

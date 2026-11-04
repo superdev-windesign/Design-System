@@ -1,3 +1,4 @@
+import { CalendarDate, Time } from "@internationalized/date";
 import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MotionGlobalConfig } from "motion/react";
@@ -5,6 +6,7 @@ import { useState } from "react";
 import { ThemeProvider, ThemeScope, useTheme } from "../../foundations/theme";
 import { AppSidebar } from "./app-sidebar";
 import { AuthFlow } from "./auth-flow";
+import { DateTimeRangePicker } from "./date-time-range-picker";
 import { ExpandableTable } from "./expandable-table";
 import { Leaderboard } from "./leaderboard";
 import { MetricChart } from "./metric-chart";
@@ -75,6 +77,51 @@ describe("the Moon brand", () => {
   });
 });
 
+describe("DateTimeRangePicker", () => {
+  const value = { start: new CalendarDate(2026, 3, 9), end: new CalendarDate(2026, 3, 13), startTime: new Time(9), endTime: new Time(17, 30) };
+
+  it("holds choices back until Apply, and sets each end's time separately", async () => {
+    const user = userEvent.setup();
+    const onApply = vi.fn();
+    render(<DateTimeRangePicker defaultValue={value} onApply={onApply} minuteStep={15} />);
+
+    await user.click(screen.getByRole("option", { name: "10" }));
+    await user.click(screen.getByRole("radio", { name: "End" }));
+    await user.click(screen.getByRole("option", { name: "45" }));
+    expect(onApply).not.toHaveBeenCalled();
+
+    await user.click(screen.getByRole("button", { name: "Apply" }));
+    expect(onApply).toHaveBeenCalledTimes(1);
+    const range = onApply.mock.calls[0]![0];
+    expect(range.startTime.toString()).toBe("10:00:00");
+    expect(range.endTime.toString()).toBe("17:45:00");
+  });
+
+  it("won't apply a same-day range that ends before it starts", async () => {
+    const day = new CalendarDate(2026, 3, 9);
+    render(<DateTimeRangePicker defaultValue={{ start: day, end: day, startTime: new Time(12), endTime: new Time(9) }} />);
+    expect(screen.getByRole("button", { name: "Apply" })).toBeDisabled();
+  });
+
+  it("only offers Clear when asked to", async () => {
+    const user = userEvent.setup();
+    const onClear = vi.fn();
+    const { rerender } = render(<DateTimeRangePicker defaultValue={value} />);
+    expect(screen.queryByRole("button", { name: "Clear" })).not.toBeInTheDocument();
+
+    rerender(<DateTimeRangePicker defaultValue={value} onClear={onClear} />);
+    await user.click(screen.getByRole("button", { name: "Clear" }));
+    expect(onClear).toHaveBeenCalled();
+    expect(screen.getByRole("button", { name: "Apply" })).toBeDisabled();
+    expect(screen.getByText("Pick a start and an end date")).toBeInTheDocument();
+  });
+
+  it("can start the week on Monday", () => {
+    render(<DateTimeRangePicker defaultValue={value} firstDayOfWeek="mon" />);
+    expect(screen.getAllByRole("columnheader", { hidden: true })[0]).toHaveTextContent("M");
+  });
+});
+
 describe("Leaderboard", () => {
   const entries = Array.from({ length: 8 }, (_, index) => ({ id: `p${index}`, name: `Player ${index}`, score: 100 - index }));
 
@@ -83,6 +130,11 @@ describe("Leaderboard", () => {
     expect(screen.getByText("Player 7")).toBeInTheDocument();
     expect(screen.queryByText("Player 6")).not.toBeInTheDocument();
     expect(screen.getByText("You")).toBeInTheDocument();
+  });
+
+  it("numbers every rank", () => {
+    render(<Leaderboard title="Top" entries={entries} pageSize={4} />);
+    for (const rank of ["1", "2", "3", "4"]) expect(screen.getByText(rank)).toBeInTheDocument();
   });
 
   it("switches boards by period", async () => {
@@ -120,6 +172,24 @@ describe("AuthFlow", () => {
     await user.keyboard("123456");
     await waitFor(() => expect(onVerify).toHaveBeenCalledWith("123456"));
     await waitFor(() => expect(onComplete).toHaveBeenCalled());
+  });
+
+  it("reveals the password on request", async () => {
+    const user = userEvent.setup();
+    render(<AuthFlow providers={[]} />);
+    const field = screen.getByLabelText(/^password/i);
+    expect(field).toHaveAttribute("type", "password");
+    await user.click(screen.getByRole("button", { name: "Show password" }));
+    expect(field).toHaveAttribute("type", "text");
+  });
+
+  it("won't submit with fields missing, and says so", async () => {
+    const user = userEvent.setup();
+    const onSignIn = vi.fn();
+    render(<AuthFlow providers={[]} onSignIn={onSignIn} />);
+    await user.click(screen.getByRole("button", { name: "Sign in" }));
+    expect(onSignIn).not.toHaveBeenCalled();
+    expect(await screen.findByText("Check the highlighted fields.")).toBeInTheDocument();
   });
 
   it("stays put and shows the message when a handler refuses", async () => {
@@ -183,6 +253,19 @@ describe("MetricChart", () => {
     expect(options.getByRole("radio", { name: "Revenue" })).toBeChecked();
     await user.click(options.getByRole("radio", { name: "Refunds" }));
     expect(options.getByRole("radio", { name: "Refunds" })).toBeChecked();
+  });
+
+  it("turns the comparison off from the legend, and switches to bars from the corner", async () => {
+    const user = userEvent.setup();
+    render(<MetricChart title="Performance" metrics={metrics} periods={[{ id: "week", label: "Week" }]} />);
+    const legend = screen.getByRole("button", { name: "Previous period" });
+    expect(legend).toHaveAttribute("aria-pressed", "true");
+    await user.click(legend);
+    expect(legend).toHaveAttribute("aria-pressed", "false");
+
+    const bars = screen.getByRole("radio", { name: "Bar chart" });
+    await user.click(bars);
+    expect(bars).toBeChecked();
   });
 });
 
@@ -278,28 +361,33 @@ describe("TagCombobox", () => {
     );
   }
 
-  it("removes a tag without opening the panel", async () => {
+  it("clears everything from the counter, without opening the list", async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
     render(<Controlled onChange={onChange} />);
-    await user.click(screen.getByRole("button", { name: "Remove Germany" }));
+    await user.click(screen.getByRole("button", { name: "Clear 1 selected" }));
     expect(onChange).toHaveBeenCalledWith([]);
-    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: /^Clear/ })).not.toBeInTheDocument();
+    expect(screen.queryByRole("listbox")).not.toBeInTheDocument();
   });
 
-  it("searches keywords and keeps the panel open across picks", async () => {
+  it("filters as you type, on keywords too, and keeps the list open across picks", async () => {
     const user = userEvent.setup();
     const onChange = vi.fn();
     render(<Controlled onChange={onChange} />);
-    await user.click(screen.getByRole("button", { name: "Choose Markets" }));
+    await user.click(screen.getByRole("combobox", { name: "Markets" }));
     await user.click(await screen.findByRole("option", { name: "Japan" }));
     expect(onChange).toHaveBeenLastCalledWith(expect.arrayContaining(["de", "jp"]));
-    expect(screen.getByRole("dialog")).toBeInTheDocument();
+    expect(screen.getByRole("listbox")).toBeInTheDocument();
+
+    await user.type(screen.getByRole("combobox", { name: "Markets" }), "DE");
+    expect(await screen.findByRole("option", { name: "Germany" })).toBeInTheDocument();
+    expect(screen.queryByRole("option", { name: "France" })).not.toBeInTheDocument();
   });
 
-  it("folds extra tags into a count", () => {
-    render(<TagCombobox label="Markets" groups={groups} defaultSelectedKeys={["de", "fr", "jp"]} maxVisibleTags={1} />);
-    expect(screen.getByLabelText("and 2 more")).toHaveTextContent("+2");
+  it("counts what's chosen in one chip", () => {
+    render(<TagCombobox label="Markets" groups={groups} defaultSelectedKeys={["de", "fr", "jp"]} />);
+    expect(screen.getByRole("button", { name: "Clear 3 selected" })).toHaveTextContent("3");
   });
 });
 
@@ -338,14 +426,41 @@ describe("SearchBox", () => {
     expect(screen.queryByRole("option", { name: "Stale" })).not.toBeInTheDocument();
   });
 
-  it("offers recent searches when empty, and clears them", async () => {
+  it("offers suggestions and recent searches when empty", async () => {
     const user = userEvent.setup();
     const onSubmit = vi.fn();
-    const onClearRecent = vi.fn();
-    render(<SearchBox onSearch={() => []} onSubmit={onSubmit} recent={["Refunds"]} onClearRecent={onClearRecent} />);
+    render(<SearchBox onSearch={() => []} onSubmit={onSubmit} suggestions={[{ id: "start", label: "Getting started" }]} recent={["Refunds"]} />);
     await user.click(screen.getByRole("combobox", { name: "Search" }));
-    await user.click(await screen.findByRole("option", { name: "Refunds" }));
+    expect(await screen.findByRole("option", { name: "Getting started" })).toBeInTheDocument();
+    await user.click(screen.getByRole("option", { name: "Refunds" }));
     expect(onSubmit).toHaveBeenCalledWith("Refunds");
+    expect(screen.getByRole("combobox", { name: "Search" })).toHaveValue("Refunds");
+  });
+
+  it("searches for a suggestion when it's chosen", async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn();
+    render(<SearchBox onSearch={() => []} onSubmit={onSubmit} suggestions={[{ id: "start", label: "Getting started" }]} />);
+    await user.click(screen.getByRole("combobox", { name: "Search" }));
+    await user.click(await screen.findByRole("option", { name: "Getting started" }));
+    expect(onSubmit).toHaveBeenCalledWith("Getting started");
+  });
+
+  it("removes a recent search with its button, and with Delete from the keyboard", async () => {
+    const user = userEvent.setup();
+    const onRemoveRecent = vi.fn();
+    const onSubmit = vi.fn();
+    render(<SearchBox onSearch={() => []} onSubmit={onSubmit} recent={["Refunds", "Billing"]} onRemoveRecent={onRemoveRecent} />);
+    await user.click(screen.getByRole("combobox", { name: "Search" }));
+    await screen.findByRole("option", { name: "Refunds" });
+
+    const [remove] = screen.getAllByText("Remove");
+    await user.click(remove!);
+    expect(onRemoveRecent).toHaveBeenCalledWith("Refunds");
+    expect(onSubmit).not.toHaveBeenCalled();
+
+    await user.keyboard("{ArrowDown}{Delete}");
+    expect(onRemoveRecent).toHaveBeenCalledTimes(2);
   });
 
   it("submits free text on Enter", async () => {
@@ -396,6 +511,16 @@ describe("SnapSheet", () => {
 
     await user.keyboard("{Escape}");
     expect(onOpenChange).toHaveBeenCalledWith(false);
+  });
+
+  it("has no close button: the scrim, a drag or Escape close it", async () => {
+    render(
+      <SnapSheet isOpen onOpenChange={() => {}} title="Order">
+        Items
+      </SnapSheet>,
+    );
+    await screen.findByRole("dialog");
+    expect(screen.queryByRole("button", { name: "Close" })).not.toBeInTheDocument();
   });
 
   it("names the dialog after its title", async () => {

@@ -1,10 +1,9 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
-import { FieldError, Input, Label, TextField } from "react-aria-components";
+import { useState, type ReactNode } from "react";
 import { RiBankCardLine, RiCheckLine } from "@remixicon/react";
-import { focusRingInset } from "../../recipes/focus-ring";
 import { cx } from "../../utils/cx";
+import { JoinedField, JoinedFields } from "./joined-field";
 
 /**
  * Payment fields: card details as one joined group, the way a card is read.
@@ -93,72 +92,6 @@ export function isExpiryValid(expiry: string, now: Date = new Date()) {
 const expectedLength = (brand: CardBrand) => (brand === "amex" ? 15 : 16);
 const cvcLength = (brand: CardBrand) => (brand === "amex" ? 4 : 3);
 
-interface CellProps {
-  label: string;
-  value: string;
-  error: string | null;
-  className?: string;
-  onChange: (value: string) => void;
-  onBlur: () => void;
-  autoComplete: string;
-  inputMode?: "numeric" | "text";
-  placeholder?: string;
-  maxLength?: number;
-  name: string;
-  trailing?: ReactNode;
-}
-
-/** One joined cell. Its neighbours share its borders; focus and errors lift it above them. */
-function Cell({ label, value, error, className, onChange, onBlur, trailing, ...input }: CellProps) {
-  const field = useRef<HTMLInputElement>(null);
-  const digitsBeforeCaret = useRef<number | null>(null);
-
-  // Reformatting a controlled value throws the caret to the end, which would
-  // make fixing a digit mid-number maddening. Put it back after the same digit.
-  useLayoutEffect(() => {
-    const element = field.current;
-    const count = digitsBeforeCaret.current;
-    digitsBeforeCaret.current = null;
-    if (!element || count === null || document.activeElement !== element) return;
-    let position = 0;
-    for (let seen = 0; position < value.length && seen < count; position += 1) {
-      if (/\d/.test(value[position]!)) seen += 1;
-    }
-    element.setSelectionRange(position, position);
-  }, [value]);
-
-  return (
-    <TextField
-      isInvalid={error !== null}
-      value={value}
-      onChange={(next) => {
-        const element = field.current;
-        if (element && input.inputMode === "numeric") digitsBeforeCaret.current = element.value.slice(0, element.selectionStart ?? 0).replace(/\D/g, "").length;
-        onChange(next);
-      }}
-      onBlur={onBlur}
-      className={cx("relative -ms-px -mt-px flex min-w-0 flex-col", className)}
-    >
-      <Label className="pointer-events-none absolute start-3 top-2 z-20 text-caption text-fg-secondary">{label}</Label>
-      <Input
-        {...input}
-        ref={field}
-        dir="ltr"
-        className={({ isFocused, isInvalid }) =>
-          cx(
-            "h-14 w-full border border-line-control bg-surface ps-3 pe-9 pt-5 text-body-md tabular-nums text-fg transition-[border-color]",
-            "placeholder:text-fg-tertiary data-[hovered]:border-line-control-hover",
-            isInvalid && "relative z-10 border-line-danger",
-            isFocused ? cx("relative z-10", focusRingInset) : "outline-none",
-          )
-        }
-      />
-      {trailing && <span className="pointer-events-none absolute end-3 top-1/2 z-20 -translate-y-1/2 text-icon-secondary">{trailing}</span>}
-      <FieldError className="sr-only">{error}</FieldError>
-    </TextField>
-  );
-}
-
 export function PaymentFields({ defaultValue, onChange, hideName = false, now, label = "Card details", className }: PaymentFieldsProps) {
   const [name, setName] = useState(defaultValue?.name ?? "");
   const [number, setNumber] = useState((defaultValue?.number ?? "").replace(/\D/g, ""));
@@ -198,16 +131,13 @@ export function PaymentFields({ defaultValue, onChange, hideName = false, now, l
     <fieldset className={cx("flex w-full max-w-md min-w-0 flex-col gap-1.5", className)}>
       <legend className="pb-1.5 text-body-md-strong text-fg">{label}</legend>
 
-      {/* -ms-px/-mt-px on the cells collapse shared borders; the outer corners round off here. */}
-      <div className="grid grid-cols-2 ps-px pt-px [&>*:first-child_input]:rounded-t-surface [&>*:last-child_input]:rounded-ee-surface [&>*:nth-last-child(2)_input]:rounded-es-surface">
+      <JoinedFields split>
         {!hideName && (
-          <Cell
+          <JoinedField
             label="Name on card"
             name="cc-name"
             autoComplete="cc-name"
             value={name}
-            error={null}
-            className="col-span-2"
             onChange={(value) => {
               setName(value);
               emit({ name: value });
@@ -215,14 +145,13 @@ export function PaymentFields({ defaultValue, onChange, hideName = false, now, l
             onBlur={() => touch("name")}
           />
         )}
-        <Cell
+        <JoinedField
           label={`Card number${brand === "unknown" ? "" : ` · ${BRAND_LABEL[brand]}`}`}
           name="cc-number"
           autoComplete="cc-number"
           inputMode="numeric"
           value={formatCardNumber(number, brand)}
           error={numberError}
-          className="col-span-2"
           trailing={numberValid ? <RiCheckLine aria-hidden className="size-5 text-status-success-text" /> : <RiBankCardLine aria-hidden className="size-5" />}
           onChange={(value) => {
             const digits = value.replace(/\D/g, "").slice(0, expectedLength(detectCardBrand(value.replace(/\D/g, ""))));
@@ -231,7 +160,8 @@ export function PaymentFields({ defaultValue, onChange, hideName = false, now, l
           }}
           onBlur={() => touch("number")}
         />
-        <Cell
+        <JoinedField
+          half
           label="Expiry"
           name="cc-exp"
           autoComplete="cc-exp"
@@ -247,7 +177,8 @@ export function PaymentFields({ defaultValue, onChange, hideName = false, now, l
           }}
           onBlur={() => touch("expiry")}
         />
-        <Cell
+        <JoinedField
+          half
           label="Security code"
           name="cc-csc"
           autoComplete="cc-csc"
@@ -262,7 +193,7 @@ export function PaymentFields({ defaultValue, onChange, hideName = false, now, l
           }}
           onBlur={() => touch("cvc")}
         />
-      </div>
+      </JoinedFields>
 
       {errors.length > 0 && (
         <ul className="flex flex-col gap-0.5">

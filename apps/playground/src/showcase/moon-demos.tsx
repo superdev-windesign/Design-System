@@ -7,10 +7,14 @@ import {
   RiCompass3Line,
   RiCustomerService2Line,
   RiFileList3Line,
+  RiFlashlightLine,
   RiGroupLine,
   RiHome5Line,
   RiMoonClearLine,
+  RiQuestionLine,
+  RiRocketLine,
   RiSettings3Line,
+  RiStarLine,
   RiUserLine,
   RiWalletLine,
 } from "@remixicon/react";
@@ -24,6 +28,8 @@ import {
   Leaderboard,
   MetricChart,
   PaymentFields,
+  Radio,
+  RadioGroup,
   SearchBox,
   SnapSheet,
   StatusDot,
@@ -38,6 +44,7 @@ import type {
   MetricChartMetric,
   PaymentValue,
   SearchResultGroup,
+  SearchSuggestion,
   TagComboboxGroup,
 } from "@ds/react";
 import type { CatalogEntry } from "./catalog";
@@ -65,6 +72,11 @@ function ViewInMoon() {
   );
 }
 
+/** Moon's cards are white on grey with no shadow, so they need a backdrop to sit on. */
+function Stage({ children }: { children: ReactNode }) {
+  return <div className="flex justify-center rounded-surface bg-strong p-2 sm:p-4">{children}</div>;
+}
+
 function Demo({ children }: { children: ReactNode }) {
   return (
     <div className="flex w-full flex-col gap-4">
@@ -77,12 +89,13 @@ function Demo({ children }: { children: ReactNode }) {
 // ─── Date & time range ─────────────────────────────────────────────────────
 
 function DateTimeRangeDemo() {
-  const start = today(getLocalTimeZone());
+  const start = today(getLocalTimeZone()).set({ day: 1 });
   return (
     <DateTimeRangePicker
-      defaultValue={{ start, end: start.add({ days: 4 }), startTime: new Time(9, 0), endTime: new Time(17, 30) }}
+      defaultValue={{ start, end: start.add({ months: 1 }).subtract({ days: 1 }), startTime: new Time(9, 0), endTime: new Time(17, 30) }}
+      firstDayOfWeek="mon"
+      minuteStep={1}
       onApply={(range) => toast.success(`${range.start.toString()} to ${range.end.toString()}`)}
-      className="max-w-full"
     />
   );
 }
@@ -111,7 +124,6 @@ function board(seed: number): LeaderboardEntry[] {
     id: name,
     name,
     score: Math.round(98_000 / (index + 1 + (seed % 3)) + ((index * 137 + seed * 53) % 900)),
-    change: ((index * 5 + seed) % 7) - 3,
   }));
 }
 
@@ -121,7 +133,7 @@ const BOARD_PERIODS = [
   { id: "all", label: "All time", entries: board(4) },
 ];
 
-const LeaderboardDemo = () => <Leaderboard title="Top players" periods={BOARD_PERIODS} currentUserId="Ivan Petrov" scoreLabel="Points" className="w-full max-w-lg" />;
+const LeaderboardDemo = () => <Leaderboard title="Top players" periods={BOARD_PERIODS} currentUserId="Ivan Petrov" nameLabel="Username" scoreLabel="Points" formatScore={(score) => `${score.toLocaleString("en-US")} pt`} />;
 
 // ─── Metric chart ──────────────────────────────────────────────────────────
 
@@ -167,7 +179,7 @@ const CHART_PERIODS = [
   { id: "year", label: "12 months" },
 ];
 
-const MetricChartDemo = () => <MetricChart title="Performance" metrics={METRICS} periods={CHART_PERIODS} defaultPeriod="month" className="w-full" />;
+const MetricChartDemo = () => <MetricChart title="KPI overview" metrics={METRICS} periods={CHART_PERIODS} defaultPeriod="month" className="w-full" />;
 
 // ─── App sidebar ───────────────────────────────────────────────────────────
 
@@ -204,7 +216,7 @@ const SIDEBAR: AppSidebarSection[] = [
 function AppSidebarDemo() {
   const [selected, setSelected] = useState("reports-revenue");
   return (
-    <div className="flex h-160 w-full overflow-hidden rounded-surface border border-line">
+    <div className="flex h-160 w-full gap-3 rounded-surface bg-strong p-3">
       <AppSidebar
         aria-label="Workspace"
         sections={SIDEBAR}
@@ -223,7 +235,7 @@ function AppSidebarDemo() {
           </div>
         )}
       />
-      <div className="hidden min-w-0 flex-1 items-center justify-center bg-sunken p-4 text-center text-body-sm text-fg-secondary sm:flex">{selected}</div>
+      <div className="hidden min-w-0 flex-1 items-center justify-center rounded-panel bg-surface p-4 text-center text-body-sm text-fg-secondary sm:flex">{selected}</div>
     </div>
   );
 }
@@ -304,40 +316,15 @@ function ExpandableTableDemo() {
 
 // ─── Tag combobox ──────────────────────────────────────────────────────────
 
-const REGIONS: TagComboboxGroup[] = [
-  {
-    id: "europe",
-    label: "Europe",
-    options: [
-      { id: "de", label: "Germany", keywords: "DE" },
-      { id: "fr", label: "France", keywords: "FR" },
-      { id: "es", label: "Spain", keywords: "ES" },
-      { id: "se", label: "Sweden", keywords: "SE" },
-      { id: "pl", label: "Poland", keywords: "PL" },
-    ],
-  },
-  {
-    id: "asia",
-    label: "Asia",
-    options: [
-      { id: "in", label: "India", keywords: "IN" },
-      { id: "jp", label: "Japan", keywords: "JP" },
-      { id: "sg", label: "Singapore", keywords: "SG" },
-      { id: "kr", label: "South Korea", keywords: "KR" },
-    ],
-  },
-  {
-    id: "americas",
-    label: "Americas",
-    options: [
-      { id: "us", label: "United States", keywords: "US USA" },
-      { id: "ca", label: "Canada", keywords: "CA" },
-      { id: "br", label: "Brazil", keywords: "BR" },
-    ],
-  },
+const person = (name: string) => ({ id: name, label: name, leading: <Avatar initials={name.charAt(0)} size="sm" /> });
+
+const PEOPLE: TagComboboxGroup[] = [
+  { id: "design", label: "Design", options: ["Amy Doe", "John Doe", "Susanne Doe"].map(person) },
+  { id: "engineering", label: "Engineering", options: ["George Doe", "Mira Okafor", "Jonas Lind", "Priya Raman"].map(person) },
+  { id: "support", label: "Support", options: ["Tomás Vega", "Aiko Tanaka"].map(person) },
 ];
 
-const TagComboboxDemo = () => <TagCombobox label="Markets" groups={REGIONS} defaultSelectedKeys={["de", "in", "jp", "us", "br", "se"]} description="Past four, the rest fold into a count." />;
+const TagComboboxDemo = () => <TagCombobox label="Who would you like to invite?" groups={PEOPLE} defaultSelectedKeys={["Amy Doe", "Jonas Lind"]} placeholder="Search for users" />;
 
 // ─── Search box ────────────────────────────────────────────────────────────
 
@@ -358,6 +345,15 @@ const SEARCHABLE: SearchResultGroup[] = [
   },
 ];
 
+const TOPICS: SearchSuggestion[] = [
+  { id: "start", label: "Getting started", icon: RiFlashlightLine },
+  { id: "features", label: "Our features", icon: RiStarLine },
+  { id: "billing", label: "Billing", icon: RiFileList3Line },
+  { id: "payments", label: "Payments", icon: RiWalletLine },
+  { id: "basics", label: "Learn the basics", icon: RiRocketLine },
+  { id: "other", label: "Other", icon: RiQuestionLine },
+];
+
 /** Stands in for a request, so the loading state and stale answers are real. */
 function findResults(query: string) {
   const needle = query.toLowerCase();
@@ -374,19 +370,20 @@ function SearchBoxDemo() {
   return (
     <SearchBox
       aria-label="Search the workspace"
-      placeholder="Search pages and people"
+      placeholder="Type here to find your answers…"
       onSearch={findResults}
       onSelect={(result) => toast.show(`Opened ${result.title}`)}
       onSubmit={(query) => toast.show(`Searched for “${query}”`)}
+      suggestions={TOPICS}
       recent={recent}
-      onClearRecent={() => setRecent([])}
+      onRemoveRecent={(entry) => setRecent((entries) => entries.filter((item) => item !== entry))}
     />
   );
 }
 
 // ─── Snap sheet ────────────────────────────────────────────────────────────
 
-const ORDER = ["Team plan, 12 seats", "Priority support", "Extra storage, 200 GB", "Audit log", "Single sign-on", "Custom domain", "Usage alerts", "Two regions", "Data export", "Sandbox workspace", "Onboarding call"];
+const CHOICES = ["Team plan", "Business plan", "Enterprise plan", "Start with a free trial", "Talk to sales first", "Decide later"];
 
 function SnapSheetDemo() {
   const [open, setOpen] = useState(false);
@@ -398,20 +395,20 @@ function SnapSheetDemo() {
       <SnapSheet
         isOpen={open}
         onOpenChange={setOpen}
-        title="Your order"
+        title="Pick your choice!"
         footer={
           <Button className="w-full" onPress={() => setOpen(false)}>
             Continue
           </Button>
         }
       >
-        <ul className="flex flex-col divide-y divide-line">
-          {ORDER.map((line) => (
-            <li key={line} className="py-3 text-body-md text-fg">
-              {line}
-            </li>
+        <RadioGroup aria-label="Plan" defaultValue={CHOICES[1]} className="gap-0 divide-y divide-line">
+          {CHOICES.map((choice) => (
+            <Radio key={choice} value={choice} className="w-full flex-row-reverse justify-between py-3">
+              {choice}
+            </Radio>
           ))}
-        </ul>
+        </RadioGroup>
       </SnapSheet>
     </>
   );
@@ -447,7 +444,11 @@ export const MOON_ENTRIES: CatalogEntry[] = [
     summary: "Two months, presets and hour-and-minute columns for a start and an end.",
     imports: ["DateTimeRangePicker"],
     preview: () => <DateTimeRangeDemo />,
-    demo: () => <DateTimeRangeDemo />,
+    demo: () => (
+      <Stage>
+        <DateTimeRangeDemo />
+      </Stage>
+    ),
   }),
   entry({
     slug: "auth-flow",
@@ -456,25 +457,37 @@ export const MOON_ENTRIES: CatalogEntry[] = [
     imports: ["AuthFlow"],
     aliases: ["Login", "Sign in", "OTP"],
     preview: () => <AuthFlowDemo />,
-    demo: () => <AuthFlowDemo />,
+    demo: () => (
+      <Stage>
+        <AuthFlowDemo />
+      </Stage>
+    ),
   }),
   entry({
     slug: "leaderboard",
     name: "Leaderboard",
-    summary: "A podium and ranked rows, with the current player pinned when they're off the list.",
+    summary: "Ranked rows as white cards, with the current player pinned when they're off the list.",
     imports: ["Leaderboard"],
     aliases: ["Ranking"],
     preview: () => <LeaderboardDemo />,
-    demo: () => <LeaderboardDemo />,
+    demo: () => (
+      <Stage>
+        <LeaderboardDemo />
+      </Stage>
+    ),
   }),
   entry({
     slug: "metric-chart",
     name: "Metric Chart",
-    summary: "One chart with metric tabs, periods, line or bars and a comparison.",
+    summary: "A KPI card with metric tiles, a period menu, line or bars and a comparison.",
     imports: ["MetricChart"],
     aliases: ["Analytics", "KPI chart"],
     preview: () => <MetricChartDemo />,
-    demo: () => <MetricChartDemo />,
+    demo: () => (
+      <Stage>
+        <MetricChartDemo />
+      </Stage>
+    ),
   }),
   entry({
     slug: "app-sidebar",
@@ -491,25 +504,37 @@ export const MOON_ENTRIES: CatalogEntry[] = [
     summary: "Sorting, paging, row selection with bulk actions, and rows that open for detail.",
     imports: ["ExpandableTable"],
     preview: () => <ExpandableTableDemo />,
-    demo: () => <ExpandableTableDemo />,
+    demo: () => (
+      <Stage>
+        <ExpandableTableDemo />
+      </Stage>
+    ),
   }),
   entry({
     slug: "tag-combobox",
     name: "Tag Combobox",
-    summary: "Many choices from a long grouped list, kept to a line or two as tags.",
+    summary: "Pick many from a long grouped list, with a counter keeping the field to one line.",
     imports: ["TagCombobox"],
     aliases: ["Multi select"],
     preview: () => <TagComboboxDemo />,
-    demo: () => <TagComboboxDemo />,
+    demo: () => (
+      <Stage>
+        <TagComboboxDemo />
+      </Stage>
+    ),
   }),
   entry({
     slug: "search-box",
     name: "Search Box",
-    summary: "Recent searches, debounced results in groups, and the match picked out.",
+    summary: "One card with suggested topics, removable recent searches and grouped results.",
     imports: ["SearchBox"],
     aliases: ["Autocomplete", "Typeahead"],
     preview: () => <SearchBoxDemo />,
-    demo: () => <SearchBoxDemo />,
+    demo: () => (
+      <Stage>
+        <SearchBoxDemo />
+      </Stage>
+    ),
   }),
   entry({
     slug: "snap-sheet",
@@ -527,6 +552,10 @@ export const MOON_ENTRIES: CatalogEntry[] = [
     imports: ["PaymentFields"],
     aliases: ["Credit card", "Checkout"],
     preview: () => <PaymentFieldsDemo />,
-    demo: () => <PaymentFieldsDemo />,
+    demo: () => (
+      <Stage>
+        <PaymentFieldsDemo />
+      </Stage>
+    ),
   }),
 ];

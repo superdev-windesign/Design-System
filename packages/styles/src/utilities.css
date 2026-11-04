@@ -323,6 +323,11 @@
   }
 }
 
+/* No scrollbar, for short lists that scroll inside a panel and show their own edge. */
+@utility scrollbar-none {
+  scrollbar-width: none;
+}
+
 /* Thin scrollbars in the control-border colour, for ScrollArea. */
 @utility scrollbar-thin {
   scrollbar-width: thin;

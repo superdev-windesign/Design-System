@@ -25,6 +25,8 @@ import { cx } from "../../utils/cx";
  *   danger     flat red, deepening the same way
  *   secondary  a paper outline that inks in to full ink on hover
  *   tertiary   quiet: accent text, no fill until hover tints it
+ *   ink        always the text colour, in any brand or theme, for an action
+ *              that belongs with black-and-white selection rather than the accent
  *
  * No drop shadows. A trailing icon (usually an arrow) steps forward on hover.
  *
@@ -35,7 +37,7 @@ import { cx } from "../../utils/cx";
  * Aria's `onPress` / `isDisabled`.
  */
 
-export type ButtonVariant = "primary" | "secondary" | "tertiary" | "danger";
+export type ButtonVariant = "primary" | "secondary" | "tertiary" | "danger" | "ink";
 export type ButtonSize = "md" | "sm" | "xs";
 
 export type IconComponent = ComponentType<{
@@ -101,6 +103,7 @@ const styles = {
   variant: {
     primary: "bg-action-primary text-on-action data-[disabled]:text-action-primary-fg-disabled",
     danger: "bg-action-danger text-on-action data-[disabled]:text-action-danger-fg-disabled",
+    ink: "bg-fg text-canvas transition-colors data-[hovered]:bg-fg-secondary data-[pressed]:bg-fg-secondary data-[disabled]:bg-muted data-[disabled]:text-fg-disabled",
     secondary: [
       "border border-line-control bg-surface text-fg",
       "data-[hovered]:border-fg data-[pressed]:border-fg data-[pressed]:bg-surface-pressed",

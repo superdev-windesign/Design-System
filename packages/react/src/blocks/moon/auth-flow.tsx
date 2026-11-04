@@ -1,23 +1,24 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type FormEvent, type ReactNode } from "react";
+import { Button as AriaButton } from "react-aria-components";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { RiArrowLeftLine, RiCheckLine } from "@remixicon/react";
 import { Button } from "../../components/button/button";
 import { LinkButton } from "../../components/buttons/link-button";
-import { Checkbox } from "../../components/checkbox/checkbox";
 import { Divider } from "../../components/divider/divider";
-import { Input } from "../../components/input/input";
 import { InputOtp } from "../../components/input-otp/input-otp";
-import { PasswordField } from "../../components/password-field/password-field";
 import { SocialButton, type SocialBrand } from "../../components/social-button/social-button";
 import { easing } from "../../motion/tokens";
+import { focusRing } from "../../recipes/focus-ring";
 import { cx } from "../../utils/cx";
+import { JoinedField, JoinedFields } from "./joined-field";
 
 /**
- * Auth flow: a whole sign-in journey in one card. Sign in, create an account,
- * reset a password, and confirm a one-time code, moving between them without
- * leaving the card.
+ * Auth flow, after Moon's auth template: a whole sign-in journey in one card.
+ * Sign in, create an account, reset a password, and confirm a one-time code,
+ * moving between them without leaving the card. Fields sit joined in one
+ * rounded group, with sign-in providers under the form.
  *
  * Every step calls a handler you supply, and the handler decides what happens
  * next: return nothing or `true` to continue, `false` for a generic failure,
@@ -36,8 +37,6 @@ export interface AuthCredentials {
   password: string;
   /** Sign-up only. */
   name?: string;
-  /** Sign-in only. */
-  remember?: boolean;
 }
 
 /** What a handler returns: nothing or `true` to continue, `false` or a message to stop. */
@@ -45,7 +44,7 @@ export type AuthOutcome = void | boolean | string;
 
 export interface AuthFlowProps {
   defaultStep?: "signin" | "signup";
-  /** Sign-in providers, shown above the form. Pass `[]` to hide them. */
+  /** Sign-in providers, shown under the form. Pass `[]` to hide them. */
   providers?: SocialBrand[];
   onProvider?: (provider: SocialBrand) => void;
   onSignIn?: (credentials: AuthCredentials) => AuthOutcome | Promise<AuthOutcome>;
@@ -64,8 +63,8 @@ export interface AuthFlowProps {
 }
 
 const COPY: Record<AuthStep, { title: string; body?: string }> = {
-  signin: { title: "Welcome back", body: "Sign in to your account." },
-  signup: { title: "Create your account", body: "It takes less than a minute." },
+  signin: { title: "Sign in" },
+  signup: { title: "Create account" },
   forgot: { title: "Reset your password", body: "We'll email you a link to set a new one." },
   sent: { title: "Check your inbox" },
   verify: { title: "Enter your code" },
@@ -93,7 +92,7 @@ export function AuthFlow({
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [remember, setRemember] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
@@ -145,6 +144,7 @@ export function AuthFlow({
   const submit = (event: FormEvent<HTMLFormElement>, run: () => void) => {
     event.preventDefault();
     if (event.currentTarget.reportValidity()) run();
+    else setError("Check the highlighted fields.");
   };
 
   const verify = async (value: string) => {
@@ -152,72 +152,87 @@ export function AuthFlow({
     if (!ok) setCode("");
   };
 
-  const emailField = <Input label="Email" type="email" name="email" autoComplete="email" isRequired value={email} onChange={setEmail} placeholder="you@example.com" />;
+  const emailField = <JoinedField label="Email" type="email" name="email" autoComplete="email" isRequired value={email} onChange={setEmail} />;
+
+  const passwordField = (signup: boolean) => (
+    <JoinedField
+      label="Password"
+      type={showPassword ? "text" : "password"}
+      name="password"
+      autoComplete={signup ? "new-password" : "current-password"}
+      isRequired
+      minLength={signup ? 8 : undefined}
+      value={password}
+      onChange={setPassword}
+      action={
+        <AriaButton
+          aria-label={showPassword ? "Hide password" : "Show password"}
+          onPress={() => setShowPassword((value) => !value)}
+          className={cx("cursor-pointer rounded-control-xs text-body-sm-strong text-fg underline underline-offset-2", focusRing)}
+        >
+          {showPassword ? "Hide" : "Show"}
+        </AriaButton>
+      }
+    />
+  );
 
   let body: ReactNode;
   if (step === "signin" || step === "signup") {
     const signup = step === "signup";
     body = (
       <>
-        {providers.length > 0 && (
-          <>
-            <div className="flex flex-col gap-2">
-              {providers.map((provider) => (
-                <SocialButton key={provider} brand={provider} appearance="white" fullWidth onClick={() => onProvider?.(provider)} />
-              ))}
-            </div>
-            <Divider>or</Divider>
-          </>
-        )}
         <form
-          noValidate={false}
+          noValidate
           className="flex flex-col gap-3"
           onSubmit={(event) =>
             submit(event, () =>
               signup
                 ? void attempt(() => onSignUp?.({ email, password, name }), afterPassword, "We couldn't create that account.")
-                : void attempt(() => onSignIn?.({ email, password, remember }), afterPassword, "That email and password don't match."),
+                : void attempt(() => onSignIn?.({ email, password }), afterPassword, "That email and password don't match."),
             )
           }
         >
-          {signup && <Input label="Name" name="name" autoComplete="name" isRequired value={name} onChange={setName} />}
-          {emailField}
-          <PasswordField
-            label="Password"
-            name="password"
-            autoComplete={signup ? "new-password" : "current-password"}
-            isRequired
-            showStrength={signup}
-            value={password}
-            onChange={setPassword}
-          />
-          {!signup && (
-            <div className="flex items-center justify-between gap-3">
-              <Checkbox isSelected={remember} onChange={setRemember}>
-                Remember me
-              </Checkbox>
-              <LinkButton type="button" size="small" onClick={() => go("forgot")}>
+          {signup ? (
+            <>
+              <JoinedFields>
+                <JoinedField label="Name" name="name" autoComplete="name" isRequired value={name} onChange={setName} />
+                {emailField}
+              </JoinedFields>
+              <JoinedFields>{passwordField(true)}</JoinedFields>
+              <p className="text-caption text-fg-secondary">At least 8 characters.</p>
+            </>
+          ) : (
+            <>
+              <JoinedFields>
+                {emailField}
+                {passwordField(false)}
+              </JoinedFields>
+              <LinkButton type="button" size="small" onClick={() => go("forgot")} className="self-start text-fg">
                 Forgot password?
               </LinkButton>
-            </div>
+            </>
           )}
-          <Button type="submit" isPending={busy} className="mt-1 w-full">
+          <Button type="submit" isPending={busy} className="mt-1 h-14 w-full rounded-overlay">
             {signup ? "Create account" : "Sign in"}
           </Button>
         </form>
-        <p className="text-center text-body-sm text-fg-secondary">
-          {signup ? "Already have an account? " : "New here? "}
-          <LinkButton type="button" size="small" onClick={() => go(signup ? "signin" : "signup")}>
-            {signup ? "Sign in" : "Create an account"}
-          </LinkButton>
-        </p>
+        {providers.length > 0 && (
+          <>
+            <Divider>or</Divider>
+            <div className="flex flex-col gap-2">
+              {providers.map((provider) => (
+                <SocialButton key={provider} brand={provider} appearance="white" fullWidth onClick={() => onProvider?.(provider)} />
+              ))}
+            </div>
+          </>
+        )}
       </>
     );
   } else if (step === "forgot") {
     body = (
-      <form className="flex flex-col gap-3" onSubmit={(event) => submit(event, () => void attempt(() => onForgot?.(email), "sent", "We couldn't send that email."))}>
-        {emailField}
-        <Button type="submit" isPending={busy} className="mt-1 w-full">
+      <form noValidate className="flex flex-col gap-3" onSubmit={(event) => submit(event, () => void attempt(() => onForgot?.(email), "sent", "We couldn't send that email."))}>
+        <JoinedFields>{emailField}</JoinedFields>
+        <Button type="submit" isPending={busy} className="mt-1 h-14 w-full rounded-overlay">
           Send reset link
         </Button>
         <Button variant="tertiary" leadingIcon={RiArrowLeftLine} onPress={() => go("signin")} className="w-full">
@@ -285,7 +300,7 @@ export function AuthFlow({
 
   const copy = COPY[step];
   return (
-    <section aria-label="Sign in" className={cx("w-full max-w-sm overflow-hidden rounded-panel bg-surface p-6 shadow-raised", className)}>
+    <section aria-label="Sign in" className={cx("w-full max-w-sm overflow-hidden rounded-panel bg-surface p-4 sm:p-6", className)}>
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={step}
@@ -296,10 +311,18 @@ export function AuthFlow({
           className="flex flex-col gap-4"
         >
           <header className="flex flex-col gap-1">
-            <h2 ref={step === "verify" ? undefined : arrive} tabIndex={-1} className="text-title-md-strong text-fg outline-none">
+            <h2 ref={step === "verify" ? undefined : arrive} tabIndex={-1} className="text-title-lg-strong text-fg outline-none">
               {copy.title}
             </h2>
             {copy.body && <p className="text-body-md text-fg-secondary">{copy.body}</p>}
+            {(step === "signin" || step === "signup") && (
+              <p className="text-body-md text-fg">
+                {step === "signin" ? "Don't have an account? " : "Already have an account? "}
+                <LinkButton type="button" size="small" onClick={() => go(step === "signin" ? "signup" : "signin")} className="text-fg underline underline-offset-2">
+                  {step === "signin" ? "Create account" : "Log in"}
+                </LinkButton>
+              </p>
+            )}
           </header>
           {error && (
             <p role="alert" className="rounded-item bg-danger-subtle px-3 py-2 text-body-sm text-status-danger-text">

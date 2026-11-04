@@ -96,6 +96,7 @@
   --radius-surface: var(--ds-radius-surface);
   --radius-overlay: var(--ds-radius-overlay);
   --radius-panel: var(--ds-radius-panel);
+  --radius-action: var(--ds-radius-action);
 
   /* Elevation → shadow-* */
   --shadow-raised: var(--ds-elevation-raised);

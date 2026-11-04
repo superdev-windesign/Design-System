@@ -154,7 +154,7 @@
     "chart": {
       "1": {
         "$type": "color",
-        "$value": "{color.piccolo.600}"
+        "$value": "{color.moon.bulma}"
       },
       "2": {
         "$type": "color",
@@ -190,7 +190,7 @@
       },
       "1-active": {
         "$type": "color",
-        "$value": "{color.piccolo.700}"
+        "$value": "{color.moon.trunks}"
       },
       "2-active": {
         "$type": "color",

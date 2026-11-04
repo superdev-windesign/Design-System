@@ -48,6 +48,11 @@
       "$type": "dimension",
       "$value": "{radius.10}",
       "$description": "Large popovers and dialogs"
+    },
+    "action": {
+      "$type": "dimension",
+      "$value": "{radius.4}",
+      "$description": "The action that commits a panel, such as Apply"
     }
   },
   "size": {

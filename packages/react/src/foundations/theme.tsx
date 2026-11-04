@@ -157,7 +157,7 @@ export interface TransitionOrigin {
   y: number;
 }
 
-type ViewTransitionDocument = Document & { startViewTransition?: (update: () => void) => { finished: Promise<void> } };
+type ViewTransitionDocument = Document & { startViewTransition?: (update: () => void) => { ready?: Promise<void>; finished: Promise<void> } };
 
 /**
  * Runs `update` (which must change the page synchronously) inside a view
@@ -180,7 +180,11 @@ export function startThemeTransition(update: () => void, origin?: TransitionOrig
   root.style.setProperty("--ds-reveal-r", `${radius}px`);
   root.dataset.themeTransition = "";
   const transition = doc.startViewTransition(update);
-  transition.finished.finally(() => delete root.dataset.themeTransition);
+  const clear = () => delete root.dataset.themeTransition;
+  // The browser drops the animation if the tab is hidden or the window resizes
+  // part-way through. The change itself still applied, so that isn't an error.
+  transition.ready?.catch(() => {});
+  transition.finished.then(clear, clear);
 }
 
 /* -------------------------------------------------------------------------- */

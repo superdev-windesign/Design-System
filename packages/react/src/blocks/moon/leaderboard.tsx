@@ -2,7 +2,7 @@
 
 import { useMemo, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { RiArrowDownSLine, RiArrowUpSLine, RiMedalLine, RiSubtractLine } from "@remixicon/react";
+import { RiArrowDownSLine, RiArrowUpSLine, RiSubtractLine } from "@remixicon/react";
 import { Avatar } from "../../components/avatar/avatar";
 import { Button } from "../../components/button/button";
 import { SegmentedControl, SegmentedControlItem } from "../../components/segmented-control/segmented-control";
@@ -10,17 +10,18 @@ import { layoutSpring } from "../../motion/tokens";
 import { cx } from "../../utils/cx";
 
 /**
- * Leaderboard: players ranked by score. The top three wear medals, each row
- * says how far the player moved, and rows glide to their new place when the
- * period changes. Your own row stays pinned below the list while you're
- * ranked outside what's showing, so you never have to scroll to find it.
+ * Leaderboard, after Moon's: each player is a white card on the page, with the
+ * top three's ranks in solid black. Rows glide to their new place when the
+ * period changes, and can say how far a player moved. Your own row stays
+ * pinned below the list while you're ranked outside what's showing, so you
+ * never have to scroll to find it.
  */
 
 export interface LeaderboardEntry {
   id: string;
   name: string;
   score: number;
-  /** Photo for the avatar; initials are taken from the name without one. */
+  /** Photo shown beside the name. */
   avatar?: string;
   /** Places moved since the last period: positive is up. */
   change?: number;
@@ -44,15 +45,20 @@ export interface LeaderboardProps {
   pageSize?: number;
   formatScore?: (score: number) => ReactNode;
   scoreLabel?: string;
+  nameLabel?: string;
   className?: string;
 }
 
-function Rank({ rank }: { rank: number }) {
-  if (rank > 3) return <span className="w-7 shrink-0 text-center text-body-sm tabular-nums text-fg-secondary">{rank}</span>;
+/** The top three stand out in solid black; your own rank takes the accent. */
+function Rank({ rank, isYou }: { rank: number; isYou: boolean }) {
   return (
-    <span className="relative flex size-7 shrink-0 items-center justify-center rounded-full bg-fg text-canvas">
-      <RiMedalLine aria-hidden className="size-4" />
-      <span className="sr-only">{rank}</span>
+    <span
+      className={cx(
+        "flex size-8 shrink-0 items-center justify-center rounded-full text-body-sm-strong tabular-nums",
+        isYou ? "bg-accent-600 text-on-action" : rank <= 3 ? "bg-fg text-canvas" : "bg-canvas text-fg",
+      )}
+    >
+      {rank}
     </span>
   );
 }
@@ -85,17 +91,16 @@ interface RowProps {
 }
 
 function Row({ entry, rank, isYou, formatScore }: RowProps) {
-  const initials = entry.name.trim().charAt(0).toUpperCase();
   return (
-    <div className={cx("flex items-center gap-3 rounded-item px-2 py-2", isYou ? "bg-action-tertiary" : "bg-surface")}>
-      <Rank rank={rank} />
-      <Avatar size="sm" src={entry.avatar} alt="" initials={initials} />
+    <div className="flex h-14 items-center gap-3 rounded-item bg-surface px-3">
+      <Rank rank={rank} isYou={isYou} />
+      {entry.avatar && <Avatar size="sm" src={entry.avatar} alt="" />}
       <span className="min-w-0 flex-1 truncate text-body-md text-fg">
         {entry.name}
         {isYou && <span className="ms-1.5 text-caption text-fg-secondary">You</span>}
       </span>
-      <Movement change={entry.change} />
-      <span className="w-20 shrink-0 text-end text-body-md-strong tabular-nums text-fg">{formatScore(entry.score)}</span>
+      {entry.change !== undefined && <Movement change={entry.change} />}
+      <span className="shrink-0 text-end text-body-md tabular-nums text-fg">{formatScore(entry.score)}</span>
     </div>
   );
 }
@@ -110,6 +115,7 @@ export function Leaderboard({
   pageSize = 5,
   formatScore = defaultScore,
   scoreLabel = "Score",
+  nameLabel = "Player",
   className,
 }: LeaderboardProps) {
   const reduceMotion = useReducedMotion() ?? false;
@@ -124,7 +130,7 @@ export function Leaderboard({
   const youAreOffList = yourRank >= shown.length;
 
   return (
-    <section aria-label={typeof title === "string" ? title : "Leaderboard"} className={cx("flex w-full max-w-md flex-col gap-3 rounded-panel bg-surface p-4 shadow-raised", className)}>
+    <section aria-label={typeof title === "string" ? title : "Leaderboard"} className={cx("flex w-full max-w-xl flex-col gap-2", className)}>
       <header className="flex flex-wrap items-center justify-between gap-2">
         <h3 className="text-title-sm-strong text-fg">{title}</h3>
         {periods && periods.length > 1 && (
@@ -148,16 +154,16 @@ export function Leaderboard({
         )}
       </header>
 
-      <div aria-hidden className="flex items-center gap-3 px-2 text-caption text-fg-tertiary">
-        <span className="w-7 shrink-0 text-center">#</span>
-        <span className="flex-1">Player</span>
-        <span className="w-20 shrink-0 text-end">{scoreLabel}</span>
+      <div aria-hidden className="flex items-center gap-3 px-3 text-caption text-fg-secondary">
+        <span className="w-8 shrink-0 text-center">#</span>
+        <span className="flex-1">{nameLabel}</span>
+        <span className="shrink-0 text-end">{scoreLabel}</span>
       </div>
 
       {ranked.length === 0 ? (
         <p className="px-2 py-6 text-center text-body-sm text-fg-secondary">No scores yet.</p>
       ) : (
-        <ol className="flex flex-col gap-0.5">
+        <ol className="flex flex-col gap-1">
           <AnimatePresence initial={false} mode="popLayout">
             {shown.map((entry, index) => (
               <motion.li
@@ -176,7 +182,7 @@ export function Leaderboard({
       )}
 
       {youAreOffList && (
-        <div className="border-t border-line pt-2">
+        <div className="pt-2">
           <Row entry={ranked[yourRank]!} rank={yourRank + 1} isYou formatScore={formatScore} />
         </div>
       )}

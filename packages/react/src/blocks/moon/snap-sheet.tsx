@@ -3,7 +3,6 @@
 import { useEffect, useState, type KeyboardEvent, type ReactNode } from "react";
 import { Dialog, Heading, Modal, ModalOverlay } from "react-aria-components";
 import { animate, motion, useMotionValue, useReducedMotion, type PanInfo } from "motion/react";
-import { CloseButton } from "../../components/buttons/close-button";
 import { focusRingNative } from "../../recipes/focus-ring";
 import { layoutSpring } from "../../motion/tokens";
 import { cx } from "../../utils/cx";
@@ -13,9 +12,11 @@ import { cx } from "../../utils/cx";
  * and it settles at the nearest stop, taking the flick's speed into account;
  * drag it below the lowest stop and it closes.
  *
- * Dragging can't be the only way to do this, so the handle is also a slider:
- * focus it and ↑ ↓ move between stops, Home and End jump to the ends, and
- * Escape closes the sheet. With reduced motion, stops change without the
+ * As in Moon's, the top of the sheet is one large drag area, with the title
+ * centred under the handle and no close button: tapping the scrim, dragging
+ * down or pressing Escape all close it. Dragging can't be the only way to
+ * change height, so the handle is also a slider: focus it and ↑ ↓ move
+ * between stops, and Home and End jump to the ends. With reduced motion, stops change without the
  * spring. React Aria's Modal traps focus and keeps the page behind inert.
  */
 
@@ -126,28 +127,28 @@ export function SnapSheet({ isOpen, onOpenChange, title, children, snapPoints = 
         >
           <Dialog className="flex h-full min-h-0 flex-col outline-none">
             <motion.div
-              role="slider"
-              tabIndex={0}
-              aria-label="Sheet height"
-              aria-orientation="vertical"
-              aria-valuemin={percent(0)}
-              aria-valuemax={percent(heights.length - 1)}
-              aria-valuenow={percent(snap)}
-              aria-valuetext={`${percent(snap)}% of the screen`}
-              onKeyDown={onHandleKey}
               onPan={(_, info) => height.set(Math.min(tallest, Math.max(0, (heights[snap] ?? tallest) - info.offset.y)))}
               onPanEnd={onDragEnd}
-              className={cx("flex shrink-0 cursor-grab touch-none justify-center pt-2.5 pb-1.5 active:cursor-grabbing", focusRingNative)}
+              className="flex shrink-0 cursor-grab touch-none flex-col items-center border-b border-line pb-3 active:cursor-grabbing"
             >
-              <span aria-hidden className="h-1 w-10 rounded-full bg-strong" />
-            </motion.div>
-
-            <header className="flex shrink-0 items-center justify-between gap-3 px-4 pb-3">
-              <Heading slot="title" className="text-title-sm-strong text-fg">
+              <div
+                role="slider"
+                tabIndex={0}
+                aria-label="Sheet height"
+                aria-orientation="vertical"
+                aria-valuemin={percent(0)}
+                aria-valuemax={percent(heights.length - 1)}
+                aria-valuenow={percent(snap)}
+                aria-valuetext={`${percent(snap)}% of the screen`}
+                onKeyDown={onHandleKey}
+                className={cx("flex w-full justify-center pt-2.5 pb-2", focusRingNative)}
+              >
+                <span aria-hidden className="h-1 w-10 rounded-full bg-strong" />
+              </div>
+              <Heading slot="title" className="px-4 text-center text-body-md-strong text-fg">
                 {title}
               </Heading>
-              <CloseButton size="sm" aria-label="Close" onClick={close} />
-            </header>
+            </motion.div>
 
             <div className="scrollbar-thin flex min-h-0 flex-1 flex-col overflow-y-auto px-4 pb-4">{children}</div>
 

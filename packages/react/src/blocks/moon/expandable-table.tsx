@@ -50,6 +50,9 @@ export interface ExpandableTableProps<T> {
   className?: string;
 }
 
+/** Each row is its own white card, so its cells round off at the ends. */
+const CELL = "h-14 bg-surface px-3 first:rounded-s-item last:rounded-e-item group-data-[selected]:bg-action-tertiary";
+
 export function ExpandableTable<T>({
   "aria-label": ariaLabel,
   columns,
@@ -113,9 +116,9 @@ export function ExpandableTable<T>({
   const span = columns.length + (selectable ? 1 : 0) + (renderExpanded ? 1 : 0);
 
   return (
-    <div className={cx("flex w-full min-w-0 flex-col overflow-hidden rounded-panel bg-surface shadow-raised", className)}>
+    <div className={cx("flex w-full min-w-0 flex-col gap-2", className)}>
       {selectable && selected.size > 0 && (
-        <div role="status" className="flex flex-wrap items-center justify-between gap-3 bg-action-tertiary px-4 py-2">
+        <div role="status" className="flex flex-wrap items-center justify-between gap-3 rounded-item bg-action-tertiary px-3 py-2">
           <span className="text-body-sm-strong text-action-tertiary-fg tabular-nums">{selected.size} selected</span>
           <div className="flex items-center gap-2">
             {renderBulkActions?.(selectedRows, () => setSelected(new Set()))}
@@ -127,9 +130,9 @@ export function ExpandableTable<T>({
       )}
 
       <div className="scrollbar-thin w-full overflow-x-auto">
-        <table aria-label={ariaLabel} className="bui-table">
+        <table aria-label={ariaLabel} className="w-full border-separate border-spacing-y-1 text-body-md text-fg">
           <thead>
-            <tr>
+            <tr className="text-body-sm text-fg-secondary [&>th]:px-3 [&>th]:py-1 [&>th]:font-normal">
               {renderExpanded && <th scope="col" aria-label="Details" className="w-10" />}
               {selectable && (
                 <th scope="col" className="w-10">
@@ -145,11 +148,11 @@ export function ExpandableTable<T>({
                 const active = sort?.key === column.key;
                 const SortIcon = !active ? RiExpandUpDownLine : sort.direction === "ascending" ? RiArrowUpLine : RiArrowDownLine;
                 return (
-                  <th key={column.key} scope="col" aria-sort={active ? sort.direction : column.sortValue ? "none" : undefined} className={column.align === "end" ? "text-end" : undefined}>
+                  <th key={column.key} scope="col" aria-sort={active ? sort.direction : column.sortValue ? "none" : undefined} className={column.align === "end" ? "text-end" : "text-start"}>
                     {column.sortValue ? (
                       <AriaButton
                         onPress={() => toggleSort(column.key)}
-                        className={cx("inline-flex cursor-pointer items-center gap-1 rounded-control-xs uppercase transition-colors data-[hovered]:text-fg", active && "text-fg", column.align === "end" && "flex-row-reverse", focusRing)}
+                        className={cx("inline-flex cursor-pointer items-center gap-1 rounded-control-xs transition-colors data-[hovered]:text-fg", active && "text-fg", column.align === "end" && "flex-row-reverse", focusRing)}
                       >
                         {column.label}
                         <SortIcon aria-hidden className={cx("size-3.5", !active && "opacity-50")} />
@@ -165,7 +168,7 @@ export function ExpandableTable<T>({
           <tbody>
             {visible.length === 0 ? (
               <tr>
-                <td colSpan={span} className="py-10 text-center text-fg-secondary">
+                <td colSpan={span} className="rounded-item bg-surface py-10 text-center text-fg-secondary">
                   {emptyState}
                 </td>
               </tr>
@@ -177,27 +180,27 @@ export function ExpandableTable<T>({
                 const panelId = `${baseId}-${id}`;
                 return (
                   <Fragment key={id}>
-                    <tr data-selected={selected.has(id) || undefined}>
+                    <tr data-selected={selected.has(id) || undefined} className="group">
                       {renderExpanded && (
-                        <td className="w-10">
+                        <td className={cx(CELL, "w-10")}>
                           <AriaButton
                             aria-label={`Details for ${label}`}
                             aria-expanded={isOpen}
                             aria-controls={isOpen ? panelId : undefined}
                             onPress={() => setOpen((set) => toggleIn(set, id, !set.has(id)))}
-                            className={cx("flex size-7 cursor-pointer items-center justify-center rounded-control-sm text-icon-secondary transition-colors data-[hovered]:bg-surface-hover data-[hovered]:text-fg", focusRing)}
+                            className={cx("flex size-7 cursor-pointer items-center justify-center rounded-control-sm text-icon-secondary transition-colors data-[hovered]:bg-muted data-[hovered]:text-fg", focusRing)}
                           >
                             <RiArrowDownSLine aria-hidden className={cx("size-5 transition-transform duration-(--ds-motion-duration-base) motion-reduce:transition-none", isOpen && "rotate-180")} />
                           </AriaButton>
                         </td>
                       )}
                       {selectable && (
-                        <td className="w-10">
+                        <td className={cx(CELL, "w-10")}>
                           <Checkbox aria-label={`Select ${label}`} isSelected={selected.has(id)} onChange={(on) => setSelected((set) => toggleIn(set, id, on))} />
                         </td>
                       )}
                       {columns.map((column) => (
-                        <td key={column.key} className={column.align === "end" ? "text-end" : undefined}>
+                        <td key={column.key} className={cx(CELL, column.align === "end" && "text-end")}>
                           {column.render ? column.render(row) : String((row as Record<string, unknown>)[column.key] ?? "")}
                         </td>
                       ))}
@@ -206,7 +209,7 @@ export function ExpandableTable<T>({
                       <AnimatePresence initial={false}>
                         {isOpen && (
                           <motion.tr id={panelId} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : 0.16 }}>
-                            <td colSpan={span} className="bg-sunken">
+                            <td colSpan={span} className="rounded-item bg-surface p-3">
                               {renderExpanded(row)}
                             </td>
                           </motion.tr>
@@ -222,7 +225,7 @@ export function ExpandableTable<T>({
       </div>
 
       {totalPages > 1 && (
-        <div className="flex justify-center border-t border-line px-3 py-2.5">
+        <div className="flex justify-center pt-1">
           <Pagination page={currentPage} totalPages={totalPages} onChange={setPage} />
         </div>
       )}

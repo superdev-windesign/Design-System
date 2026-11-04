@@ -33,7 +33,7 @@
     },
     "surface": {
       "$type": "dimension",
-      "$value": "{radius.12}"
+      "$value": "{radius.16}"
     },
     "overlay": {
       "$type": "dimension",
@@ -41,7 +41,11 @@
     },
     "panel": {
       "$type": "dimension",
-      "$value": "{radius.16}"
+      "$value": "{radius.24}"
+    },
+    "action": {
+      "$type": "dimension",
+      "$value": "{radius.full}"
     }
   },
   "font": {

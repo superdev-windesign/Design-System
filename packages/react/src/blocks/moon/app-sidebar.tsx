@@ -60,7 +60,7 @@ export interface AppSidebarProps {
 const ROW = "flex h-10 min-w-0 cursor-pointer items-center gap-3 rounded-item px-2.5 text-body-md outline-none transition-colors";
 const rowState = (current: boolean) =>
   cx(
-    current ? "bg-action-tertiary text-action-tertiary-fg" : "text-fg-secondary data-[hovered]:bg-surface-hover data-[hovered]:text-fg",
+    current ? "bg-action-tertiary text-action-tertiary-fg" : "text-fg data-[hovered]:bg-muted",
     focusRing,
   );
 
@@ -176,7 +176,7 @@ export function AppSidebar({
     <aside
       data-collapsed={collapsed || undefined}
       className={cx(
-        "flex h-full shrink-0 flex-col gap-3 rounded-panel bg-surface p-3 shadow-raised",
+        "flex h-full shrink-0 flex-col gap-3 rounded-panel bg-surface p-3",
         "transition-[width] duration-(--ds-motion-duration-slow) ease-standard motion-reduce:transition-none",
         collapsed ? "w-16" : "w-64",
         className,
@@ -194,10 +194,10 @@ export function AppSidebar({
         </AriaButton>
       </div>
 
-      <nav aria-label={ariaLabel} className="scrollbar-thin flex min-h-0 flex-1 flex-col gap-4 overflow-x-hidden overflow-y-auto">
+      <nav aria-label={ariaLabel} className="scrollbar-thin flex min-h-0 flex-1 flex-col gap-3 divide-y divide-line overflow-x-hidden overflow-y-auto">
         {sections.map((section) => (
-          <div key={section.id} className="flex flex-col gap-0.5">
-            {section.label && !collapsed && <p className="px-2.5 pb-1 text-caption text-fg-tertiary">{section.label}</p>}
+          <div key={section.id} className="flex flex-col gap-0.5 pb-3 last:pb-0">
+            {section.label && !collapsed && <p className="px-2.5 pb-1 text-body-sm text-fg-secondary">{section.label}</p>}
             <ul className="flex flex-col gap-0.5">
               {section.items.map((item) => (
                 <li key={item.id} className="flex flex-col gap-0.5">

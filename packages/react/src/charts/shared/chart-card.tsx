@@ -156,6 +156,8 @@ export interface ChartCardProps {
   plotClassName?: string;
   /** Under the plot: stat tiles, a note, a link. */
   footer?: ReactNode;
+  /** Centres the header, with `actions` under the title. */
+  align?: "start" | "center";
 }
 
 export function ChartCard({
@@ -171,6 +173,7 @@ export function ChartCard({
   className,
   plotClassName = "h-56",
   footer,
+  align = "start",
 }: ChartCardProps) {
   const titleId = useId();
   const summaryId = useId();
@@ -181,9 +184,9 @@ export function ChartCard({
       aria-describedby={summaryId}
       className={cx("flex min-w-0 flex-col gap-5 rounded-2xl bg-sunken px-4 pt-4 pb-3", className)}
     >
-      <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3">
+      <div className={cx("flex flex-wrap items-start justify-between gap-x-4 gap-y-3", align === "center" && "flex-col items-center gap-y-1 px-16 text-center")}>
         <div className="flex min-w-0 flex-col gap-0.5">
-          <p id={titleId} className="text-body-md-strong text-fg-secondary">
+          <p id={titleId} className={align === "center" ? "text-title-sm-strong text-fg" : "text-body-md-strong text-fg-secondary"}>
             {title}
           </p>
           {value !== undefined && (

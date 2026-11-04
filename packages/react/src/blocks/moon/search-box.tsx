@@ -18,18 +18,21 @@ import type { Key } from "react-aria-components";
 import { RiCloseLine, RiHistoryLine, RiSearchLine } from "@remixicon/react";
 import type { IconComponent } from "../../components/button/button";
 import { Spinner } from "../../components/spinner/spinner";
-import { FIELD_BUTTON, FIELD_INPUT, fieldShell } from "../../recipes/field";
-import { MENU_GROUP_LABEL, MENU_ITEM, MENU_ITEM_ACTIVE, MENU_ITEMS_CONTAINER, MENU_POPOVER_SURFACE } from "../../recipes/menu";
+import { FIELD_BUTTON, FIELD_INPUT } from "../../recipes/field";
+import { focusRingInset } from "../../recipes/focus-ring";
+import { MENU_ITEM, MENU_ITEM_ACTIVE } from "../../recipes/menu";
 import { cx } from "../../utils/cx";
 
 /**
- * Search box: a field that finds as you type. Empty, it offers recent
- * searches; with text, it calls `onSearch` (debounced, and ignoring answers
+ * Search box, after Moon's focused search: one card that opens from the field.
+ * Empty, it suggests topics as chips and lists recent searches, each with its
+ * own Remove. With text, it calls `onSearch` (debounced, and ignoring answers
  * that arrive out of order) and shows the results in groups, with the matched
  * text picked out in each one.
  *
- * It's a React Aria ComboBox, so ↑ ↓ move through results, Enter opens one,
- * Escape closes the list, and screen readers announce the options. Pressing
+ * It's a React Aria ComboBox, so ↑ ↓ move through everything in the card,
+ * Enter opens the highlighted entry, Delete removes a highlighted recent
+ * search, Escape closes the card, and screen readers announce the options.
  * Enter with nothing highlighted searches for the text as typed.
  */
 
@@ -46,16 +49,27 @@ export interface SearchResultGroup {
   results: SearchResult[];
 }
 
+export interface SearchSuggestion {
+  id: string;
+  label: string;
+  icon?: IconComponent;
+}
+
 export interface SearchBoxProps {
   /** Finds results for the text. May be async. */
   onSearch: (query: string) => SearchResultGroup[] | Promise<SearchResultGroup[]>;
   /** A result was opened. */
   onSelect?: (result: SearchResult) => void;
-  /** Enter pressed on free text, with no result highlighted. */
+  /** A search was asked for: free text, a suggestion or a recent search. */
   onSubmit?: (query: string) => void;
-  /** Shown when the field is empty, newest first. */
+  /** Topics offered as chips while the field is empty. */
+  suggestions?: SearchSuggestion[];
+  suggestionsLabel?: string;
+  /** Shown while the field is empty, newest first. */
   recent?: string[];
-  onClearRecent?: () => void;
+  recentLabel?: string;
+  /** Adds a Remove to each recent search. */
+  onRemoveRecent?: (entry: string) => void;
   placeholder?: string;
   "aria-label"?: string;
   /** Milliseconds to wait after typing before searching. Default 200. */
@@ -88,6 +102,9 @@ function Highlight({ text, query }: { text: string; query: string }) {
 }
 
 const RECENT_PREFIX = "recent:";
+const SUGGESTION_PREFIX = "suggestion:";
+
+const SECTION_LABEL = "w-full pb-1 text-body-sm-strong text-fg";
 
 type ComboBoxState = NonNullable<ContextType<typeof ComboBoxStateContext>>;
 
@@ -101,8 +118,11 @@ export function SearchBox({
   onSearch,
   onSelect,
   onSubmit,
+  suggestions = [],
+  suggestionsLabel = "I'm looking for",
   recent = [],
-  onClearRecent,
+  recentLabel = "Recent searches",
+  onRemoveRecent,
   placeholder = "Search",
   "aria-label": ariaLabel = "Search",
   debounce = 200,
@@ -148,7 +168,13 @@ export function SearchBox({
 
   const results = groups.flatMap((group) => group.results);
   const hasResults = results.length > 0;
+  const showSuggestions = !searching && suggestions.length > 0;
   const showRecent = !searching && recent.length > 0;
+
+  const submit = (entry: string) => {
+    setQuery(entry);
+    onSubmit?.(entry);
+  };
 
   const choose = (key: Key | null) => {
     if (key === null) return;
@@ -156,10 +182,12 @@ export function SearchBox({
     combo.current?.close();
     const id = String(key);
     if (id.startsWith(RECENT_PREFIX)) {
-      // Choosing a recent search is the same as typing it and pressing Enter.
-      const entry = id.slice(RECENT_PREFIX.length);
-      setQuery(entry);
-      onSubmit?.(entry);
+      submit(id.slice(RECENT_PREFIX.length));
+      return;
+    }
+    if (id.startsWith(SUGGESTION_PREFIX)) {
+      const suggestion = suggestions.find((entry) => entry.id === id.slice(SUGGESTION_PREFIX.length));
+      if (suggestion) submit(suggestion.label);
       return;
     }
     const result = results.find((entry) => entry.id === id);
@@ -178,16 +206,29 @@ export function SearchBox({
       onInputChange={setQuery}
       selectedKey={null}
       onSelectionChange={choose}
-      className={cx("w-full max-w-lg", className)}
+      className={cx("group/search w-full max-w-lg", className)}
     >
       <CaptureState into={combo} />
-      <Group ref={shell} className={(state) => fieldShell(state)}>
+      <Group
+        ref={shell}
+        className={({ isFocusVisible }) =>
+          cx(
+            "relative flex h-12 w-full items-center gap-2 rounded-surface bg-surface px-3 text-icon-secondary",
+            "group-data-[open]/search:rounded-b-none",
+            isFocusVisible && cx(focusRingInset, "group-data-[open]/search:outline-0"),
+          )
+        }
+      >
         <RiSearchLine aria-hidden className="size-5 shrink-0" />
         <Input
           placeholder={placeholder}
           onKeyDown={(event) => {
             // The list handles Enter on a highlighted option; this is the free-text case.
             if (event.key === "Enter" && text && !event.currentTarget.getAttribute("aria-activedescendant")) onSubmit?.(text);
+            if (event.key === "Delete" && !text && onRemoveRecent) {
+              const focused = String(combo.current?.selectionManager.focusedKey ?? "");
+              if (focused.startsWith(RECENT_PREFIX)) onRemoveRecent(focused.slice(RECENT_PREFIX.length));
+            }
           }}
           className={FIELD_INPUT}
         />
@@ -199,40 +240,91 @@ export function SearchBox({
         )}
       </Group>
 
-      <AriaPopover triggerRef={shell} offset={4} className={cx(MENU_POPOVER_SURFACE, "flex w-(--trigger-width) flex-col gap-1 p-2")}>
-        {showRecent && onClearRecent && (
-          <div className="flex items-center justify-between">
-            <span className={MENU_GROUP_LABEL}>Recent</span>
-            <AriaButton slot={null} onPress={onClearRecent} className="cursor-pointer rounded-control-xs px-1 text-caption text-fg-secondary data-[hovered]:text-fg">
-              Clear
-            </AriaButton>
-          </div>
-        )}
+      <AriaPopover
+        triggerRef={shell}
+        offset={0}
+        shouldFlip={false}
+        // The card's lower half: joined to the field, with the hairline between them.
+        className="flex w-(--trigger-width) flex-col overflow-hidden rounded-b-surface border-t border-line bg-surface shadow-overlay outline-none"
+      >
         <ListBox
-          renderEmptyState={() =>
-            loading ? (
-              <p className="px-2 py-3 text-center text-body-sm text-fg-secondary">Searching…</p>
-            ) : searching ? (
-              <p className="px-2 py-3 text-center text-body-sm text-fg-secondary">{emptyMessage}</p>
-            ) : (
-              <p className="px-2 py-3 text-center text-body-sm text-fg-secondary">Type to search</p>
-            )
-          }
-          className={cx(MENU_ITEMS_CONTAINER, "max-h-80 overflow-auto outline-none")}
+          renderEmptyState={() => <p className="px-1 py-3 text-center text-body-sm text-fg-secondary">{loading ? "Searching…" : searching ? emptyMessage : "Type to search"}</p>}
+          className="flex max-h-96 flex-col gap-3 overflow-auto p-3 outline-none"
         >
-          {showRecent ? (
-            recent.map((entry) => (
-              <ListBoxItem key={entry} id={`${RECENT_PREFIX}${entry}`} textValue={entry} className={({ isFocused }) => cx(MENU_ITEM, "px-2 py-1.5 text-body-md", isFocused && MENU_ITEM_ACTIVE)}>
-                <RiHistoryLine aria-hidden className="size-4 shrink-0 text-icon-secondary" />
-                <span className="truncate">{entry}</span>
-              </ListBoxItem>
-            ))
-          ) : hasResults ? (
+          {showSuggestions && (
+            <ListBoxSection id="suggestions" className="flex flex-wrap gap-2">
+              <Header className={SECTION_LABEL}>{suggestionsLabel}</Header>
+              {suggestions.map((suggestion) => {
+                const Icon = suggestion.icon;
+                return (
+                  <ListBoxItem
+                    key={suggestion.id}
+                    id={`${SUGGESTION_PREFIX}${suggestion.id}`}
+                    textValue={suggestion.label}
+                    className={({ isFocused, isHovered }) =>
+                      cx(
+                        "flex h-8 cursor-pointer items-center gap-1.5 rounded-chip border border-line px-2 text-body-sm text-fg outline-none transition-colors",
+                        (isFocused || isHovered) && "bg-muted",
+                      )
+                    }
+                  >
+                    {Icon && <Icon aria-hidden className="size-4 shrink-0 text-icon-secondary" />}
+                    {suggestion.label}
+                  </ListBoxItem>
+                );
+              })}
+            </ListBoxSection>
+          )}
+
+          {showRecent && (
+            <ListBoxSection id="recent" className="flex flex-col">
+              <Header className={SECTION_LABEL}>{recentLabel}</Header>
+              {recent.map((entry) => (
+                <ListBoxItem
+                  key={entry}
+                  id={`${RECENT_PREFIX}${entry}`}
+                  textValue={entry}
+                  aria-label={entry}
+                  className={({ isFocused, isHovered }) =>
+                    cx("flex h-9 cursor-pointer items-center gap-2 rounded-item px-1 text-body-sm text-fg outline-none transition-colors", (isFocused || isHovered) && "bg-muted")
+                  }
+                >
+                  <RiHistoryLine aria-hidden className="size-4 shrink-0 text-icon-secondary" />
+                  <span className="min-w-0 flex-1 truncate">{entry}</span>
+                  {onRemoveRecent && (
+                    // A plain button on purpose: an option selects on pointer-up even when the
+                    // press began on something inside it, so these events have to stop here.
+                    // It's mouse-only and hidden from assistive tech, which can't reach inside
+                    // an option; Delete does the same job from the keyboard.
+                    <button
+                      type="button"
+                      tabIndex={-1}
+                      aria-hidden
+                      onPointerDown={(event) => {
+                        event.stopPropagation();
+                        event.preventDefault();
+                      }}
+                      onPointerUp={(event) => event.stopPropagation()}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        onRemoveRecent(entry);
+                      }}
+                      className="shrink-0 cursor-pointer rounded-control-xs px-1 text-caption text-action-tertiary-fg hover:underline"
+                    >
+                      Remove
+                    </button>
+                  )}
+                </ListBoxItem>
+              ))}
+            </ListBoxSection>
+          )}
+
+          {hasResults && (
             // `dependencies`: Collection caches rows by item, and the highlight changes with the text.
             <Collection items={groups.filter((group) => group.results.length > 0)} dependencies={[text]}>
               {(group) => (
-                <ListBoxSection id={group.id} className="flex flex-col gap-0.5 pb-1">
-                  <Header className={cx(MENU_GROUP_LABEL, "py-1")}>{group.label}</Header>
+                <ListBoxSection id={group.id} className="flex flex-col gap-0.5">
+                  <Header className={SECTION_LABEL}>{group.label}</Header>
                   <Collection items={group.results} dependencies={[text]}>
                     {(result) => {
                       const Icon = result.icon;
@@ -262,7 +354,7 @@ export function SearchBox({
                 </ListBoxSection>
               )}
             </Collection>
-          ) : null}
+          )}
         </ListBox>
       </AriaPopover>
     </ComboBox>

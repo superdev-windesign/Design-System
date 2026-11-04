@@ -1,21 +1,33 @@
 "use client";
 
 import { useState } from "react";
-import { Radio, RadioGroup } from "react-aria-components";
+import {
+  Button as AriaButton,
+  ListBox,
+  ListBoxItem,
+  Popover as AriaPopover,
+  Radio,
+  RadioGroup,
+  Select,
+  SelectValue,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "react-aria-components";
+import { RiArrowDownSLine, RiBarChartLine, RiLineChartLine } from "@remixicon/react";
 import { Bar, CartesianGrid, ComposedChart, Line, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { ChartCard, ChartToggle, ChartTooltip, chartColors, describeChange, format, quietAxis, seriesColor } from "../../charts/shared/chart-card";
-import { Switch } from "../../components/switch/switch";
+import { ChartCard, ChartTooltip, chartColors, describeChange, format, quietAxis, seriesColor } from "../../charts/shared/chart-card";
 import { focusRing } from "../../recipes/focus-ring";
+import { MENU_ITEM, MENU_ITEM_ACTIVE, MENU_ITEMS_CONTAINER, MENU_POPOVER_SURFACE } from "../../recipes/menu";
 import { cx } from "../../utils/cx";
 
 /**
- * Metric chart: one card for several metrics. Pick a metric from the tiles
- * under the plot (each shows its total and change), then choose the period,
- * line or bars, and whether to compare against the period before.
+ * Metric chart, after Moon's KPI overview: a centred title with the period
+ * under it, tiles along the top for each metric's total and change, then the
+ * plot, drawn in black against a dashed comparison. The legend under the plot
+ * turns the comparison on and off, and the corner switches to bars.
  *
- * The headline follows the pointer, so reading a point doesn't mean chasing a
- * tooltip. Totals, deltas and the screen-reader summary all recompute from the
- * data, so they can't disagree with the plot.
+ * Totals, deltas and the screen-reader summary all recompute from the data, so
+ * they can't disagree with the plot.
  */
 
 export interface MetricPoint {
@@ -52,9 +64,14 @@ export interface MetricChartProps {
 }
 
 const KINDS = [
-  { id: "line", label: "Line" },
-  { id: "bar", label: "Bars" },
+  { id: "line", label: "Line chart", icon: RiLineChartLine },
+  { id: "bar", label: "Bar chart", icon: RiBarChartLine },
 ] as const;
+
+const DELTA_TONE = { lime: "text-status-success-text", rose: "text-status-danger-text", neutral: "text-fg-secondary" } as const;
+
+/** A short sample of a line, for the legend. */
+const LegendLine = ({ dashed = false }: { dashed?: boolean }) => <span aria-hidden className={cx("w-5 border-t-2", dashed ? "border-dashed border-line-control" : "border-fg")} />;
 
 const sum = (values: number[]) => values.reduce((total, value) => total + value, 0);
 
@@ -80,7 +97,6 @@ export function MetricChart({
   const [periodId, setPeriodId] = useState(defaultPeriod ?? periods[0]?.id ?? "");
   const [kind, setKind] = useState<"line" | "bar">(defaultKind);
   const [compare, setCompare] = useState(defaultCompare);
-  const [active, setActive] = useState<number | null>(null);
 
   const metric = metrics.find((m) => m.id === metricId) ?? metrics[0];
   if (!metric) return null;
@@ -89,7 +105,6 @@ export function MetricChart({
   const formatValue = metric.formatValue ?? format.compact;
   const points = pointsFor(metric);
   const { current, previous } = totals(metric, points);
-  const hovered = active !== null ? points[active] : undefined;
   const hasPrevious = points.some((point) => point.previous !== undefined);
   // Wide enough for the longest label, allowing for the axis rounding up past the data.
   const axisWidth = Math.max(44, (formatValue(Math.max(...points.map((point) => point.value), 0)).length + 1) * 7);
@@ -98,73 +113,116 @@ export function MetricChart({
 
   return (
     <ChartCard
-      title={hovered ? hovered.label : `${title}: ${metric.label}`}
-      value={formatValue(hovered?.value ?? current)}
-      valueKey={active ?? `${metricId}-${periodId}`}
-      delta={previous !== undefined && !hovered ? describeChange(current, previous, { lowerIsBetter: metric.lowerIsBetter }) : undefined}
-      caption={hovered ? metric.label : `Over ${period}`}
+      align="center"
+      title={title}
       actions={
-        <div className="flex flex-wrap justify-end gap-2">
-          <ChartToggle label="Period" value={periodId} onChange={setPeriodId} options={periods} />
-          <ChartToggle label="Chart type" value={kind} onChange={setKind} options={KINDS} />
-        </div>
+        <Select aria-label="Period" value={periodId} onChange={(key) => setPeriodId(String(key))}>
+          <AriaButton className={cx("flex cursor-pointer items-center gap-1 rounded-control-xs text-body-sm text-fg", focusRing)}>
+            <SelectValue />
+            <RiArrowDownSLine aria-hidden className="size-4" />
+          </AriaButton>
+          <AriaPopover className={cx(MENU_POPOVER_SURFACE, "min-w-40 p-1")}>
+            <ListBox items={periods} className={cx(MENU_ITEMS_CONTAINER, "outline-none")}>
+              {(option) => (
+                <ListBoxItem id={option.id} textValue={option.label} className={({ isFocused }) => cx(MENU_ITEM, "px-2 py-1.5 text-body-md", isFocused && MENU_ITEM_ACTIVE)}>
+                  {option.label}
+                </ListBoxItem>
+              )}
+            </ListBox>
+          </AriaPopover>
+        </Select>
       }
       summary={`${metric.label} over ${period}: ${formatValue(current)}${previous !== undefined ? `, against ${formatValue(previous)} the period before` : ""}.`}
-      className={className}
+      className={cx("relative rounded-panel bg-surface", className)}
+      plotClassName="flex flex-col gap-4"
       footer={
-        <div className="flex flex-col gap-3">
-          <RadioGroup aria-label="Metric" orientation="horizontal" value={metric.id} onChange={setMetricId} className="grid grid-cols-2 gap-2 lg:grid-cols-4">
-            {metrics.map((option) => {
-              const figures = totals(option, pointsFor(option));
-              return (
-                <Radio
-                  key={option.id}
-                  value={option.id}
-                  aria-label={option.label}
-                  className={({ isSelected }) =>
-                    cx(
-                      "flex cursor-pointer flex-col gap-0.5 rounded-control-md border p-2.5 transition-colors",
-                      isSelected ? "border-accent-600 bg-surface" : "border-transparent bg-surface data-[hovered]:border-line-control-hover",
-                      focusRing,
-                    )
-                  }
-                >
-                  <span className="truncate text-caption text-fg-secondary">{option.label}</span>
-                  <span className="text-body-md-strong tabular-nums text-fg">{(option.formatValue ?? format.compact)(figures.current)}</span>
-                </Radio>
-              );
-            })}
-          </RadioGroup>
-          {hasPrevious && (
-            <Switch size="sm" isSelected={compare} onChange={setCompare}>
-              Compare to the period before
-            </Switch>
-          )}
-        </div>
+        hasPrevious ? (
+          <div className="flex flex-wrap items-center justify-center gap-4 text-caption text-fg-secondary">
+            <ToggleButton
+              isSelected={compare}
+              onChange={setCompare}
+              className={({ isSelected }) => cx("flex cursor-pointer items-center gap-1.5 rounded-control-xs data-[hovered]:text-fg", !isSelected && "opacity-60", focusRing)}
+            >
+              <LegendLine dashed />
+              Previous period
+            </ToggleButton>
+            <span className="flex items-center gap-1.5">
+              <LegendLine />
+              {metric.label}
+            </span>
+          </div>
+        ) : undefined
       }
     >
-      <ResponsiveContainer width="100%" height="100%">
-        <ComposedChart
-          data={points}
-          margin={{ top: 6, right: 6, bottom: 0, left: 0 }}
-          onMouseMove={(state) => {
-            const index = Number(state?.activeTooltipIndex);
-            setActive(state?.isTooltipActive && Number.isFinite(index) ? index : null);
-          }}
-          onMouseLeave={() => setActive(null)}
-        >
-          <CartesianGrid vertical={false} stroke={chartColors.grid} strokeDasharray="3 4" />
-          <XAxis dataKey="label" {...quietAxis} tickMargin={10} interval="preserveStartEnd" />
-          <YAxis {...quietAxis} width={axisWidth} tickCount={4} tickFormatter={(value: number) => formatValue(value)} />
-          <Tooltip cursor={{ stroke: chartColors.cursor, strokeDasharray: "4 4" }} content={(props) => <ChartTooltip {...props} formatValue={formatValue} />} />
-          {showPrevious && <Line type="monotone" dataKey="previous" name="Period before" stroke={chartColors.comparison} strokeWidth={2} strokeDasharray="5 5" dot={false} isAnimationActive={false} />}
-          {kind === "line" ? (
-            <Line type="monotone" dataKey="value" name={metric.label} stroke={seriesColor(color)} strokeWidth={2.5} dot={false} activeDot={{ r: 4 }} isAnimationActive={false} />
-          ) : (
-            <Bar dataKey="value" name={metric.label} fill={seriesColor(color)} radius={[4, 4, 0, 0]} maxBarSize={28} isAnimationActive={false} />
-          )}
-        </ComposedChart>
-      </ResponsiveContainer>
+      <ToggleButtonGroup
+        aria-label="Chart type"
+        selectionMode="single"
+        disallowEmptySelection
+        selectedKeys={[kind]}
+        onSelectionChange={(keys) => {
+          const next = [...keys][0];
+          if (next) setKind(next as "line" | "bar");
+        }}
+        className="absolute end-3 top-3 flex gap-0.5"
+      >
+        {KINDS.map(({ id, label, icon: Icon }) => (
+          <ToggleButton
+            key={id}
+            id={id}
+            aria-label={label}
+            className={cx("flex size-8 cursor-pointer items-center justify-center rounded-control-sm text-icon-tertiary transition-colors data-[hovered]:bg-muted data-[selected]:text-fg", focusRing)}
+          >
+            <Icon aria-hidden className="size-4.5" />
+          </ToggleButton>
+        ))}
+      </ToggleButtonGroup>
+
+      <RadioGroup aria-label="Metric" orientation="horizontal" value={metric.id} onChange={setMetricId} className="flex flex-wrap gap-2">
+        {metrics.map((option) => {
+          const figures = totals(option, pointsFor(option));
+          const change = figures.previous !== undefined ? describeChange(figures.current, figures.previous, { lowerIsBetter: option.lowerIsBetter }) : undefined;
+          return (
+            <Radio
+              key={option.id}
+              value={option.id}
+              aria-label={option.label}
+              className={({ isSelected }) =>
+                cx("flex min-w-36 flex-1 cursor-pointer flex-col gap-0.5 rounded-item bg-canvas p-2.5 ring-1 ring-inset transition-shadow", isSelected ? "ring-line-control" : "ring-transparent data-[hovered]:ring-line", focusRing)
+              }
+            >
+              {({ isSelected }) => (
+                <>
+                  <span className="flex min-w-0 items-center gap-1.5 text-caption text-fg-secondary">
+                    <span aria-hidden className={cx("size-1.5 shrink-0 rounded-full", isSelected ? "bg-fg" : "bg-line-control")} />
+                    <span className="truncate">{option.label}</span>
+                  </span>
+                  <span className="flex flex-wrap items-baseline gap-x-1.5">
+                    <span className="text-title-sm-strong tabular-nums text-fg">{(option.formatValue ?? format.compact)(figures.current)}</span>
+                    {change && <span className={cx("text-caption tabular-nums", DELTA_TONE[change.color])}>{change.label}</span>}
+                  </span>
+                </>
+              )}
+            </Radio>
+          );
+        })}
+      </RadioGroup>
+
+      <div className="h-56 w-full min-w-0">
+        <ResponsiveContainer width="100%" height="100%">
+          <ComposedChart data={points} margin={{ top: 6, right: 6, bottom: 0, left: 0 }}>
+            <CartesianGrid stroke={chartColors.grid} />
+            <XAxis dataKey="label" {...quietAxis} tickMargin={10} interval="preserveStartEnd" />
+            <YAxis {...quietAxis} width={axisWidth} tickCount={4} tickFormatter={(value: number) => formatValue(value)} />
+            <Tooltip cursor={{ stroke: chartColors.cursor, strokeDasharray: "4 4" }} content={(props) => <ChartTooltip {...props} formatValue={formatValue} />} />
+            {showPrevious && <Line type="monotone" dataKey="previous" name="Previous period" stroke={chartColors.comparison} strokeWidth={2} strokeDasharray="5 5" dot={false} isAnimationActive={false} />}
+            {kind === "line" ? (
+              <Line type="monotone" dataKey="value" name={metric.label} stroke={seriesColor(color)} strokeWidth={2.5} dot={false} activeDot={{ r: 4 }} isAnimationActive={false} />
+            ) : (
+              <Bar dataKey="value" name={metric.label} fill={seriesColor(color)} radius={[4, 4, 0, 0]} maxBarSize={28} isAnimationActive={false} />
+            )}
+          </ComposedChart>
+        </ResponsiveContainer>
+      </div>
     </ChartCard>
   );
 }
