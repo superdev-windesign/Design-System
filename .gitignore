@@ -4,3 +4,7 @@ coverage/
 *.log
 .vite/
 .DS_Store
+
+# Personal documents, not part of the design system
+Synopsis_BoM_SBI_Nagpur.pdf
+Synopsis_SME_Bank_Financing_Umred.pdf
