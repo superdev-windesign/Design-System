@@ -1,0 +1,265 @@
+{
+  "$description": "Moon, light: re-points the paper and accent ramps and the roles that differ. Everything else inherits through them.",
+  "color": {
+    "paper": {
+      "50": {
+        "$type": "color",
+        "$value": "{color.moon.gohan}"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "{color.moon.goku}"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "{color.moon.gray-200}"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "{color.moon.beerus}"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "{color.moon.gray-400}"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "{color.moon.zeno}"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "{color.moon.trunks}"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "{color.moon.beerus-dark}"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "{color.moon.gray-800}"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "{color.moon.gohan-dark}"
+      },
+      "925": {
+        "$type": "color",
+        "$value": "{color.moon.gray-925}"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "{color.moon.goku-dark}"
+      }
+    },
+    "accent": {
+      "50": {
+        "$type": "color",
+        "$value": "{color.piccolo.50}"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "{color.piccolo.100}"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "{color.piccolo.200}"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "{color.piccolo.300}"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "{color.piccolo.400}"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "{color.piccolo.500}"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "{color.piccolo.600}"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "{color.piccolo.700}"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "{color.piccolo.800}"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "{color.piccolo.900}"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "{color.piccolo.950}"
+      }
+    },
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.moon.bulma}"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.moon.dodoria}"
+      }
+    },
+    "icon": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.moon.bulma}"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.moon.dodoria}"
+      }
+    },
+    "border": {
+      "danger": {
+        "$type": "color",
+        "$value": "{color.moon.dodoria}"
+      },
+      "control": {
+        "$type": "color",
+        "$value": "{color.moon.gray-control}"
+      },
+      "control-hover": {
+        "$type": "color",
+        "$value": "{color.moon.zeno}"
+      }
+    },
+    "status": {
+      "success": {
+        "solid": {
+          "$type": "color",
+          "$value": "{color.moon.roshi}"
+        }
+      },
+      "danger": {
+        "solid": {
+          "$type": "color",
+          "$value": "{color.moon.dodoria}"
+        }
+      },
+      "warning": {
+        "solid": {
+          "$type": "color",
+          "$value": "{color.moon.krillin-deep}"
+        }
+      }
+    },
+    "chart": {
+      "1": {
+        "$type": "color",
+        "$value": "{color.piccolo.600}"
+      },
+      "2": {
+        "$type": "color",
+        "$value": "{color.moon.hit-deep}"
+      },
+      "3": {
+        "$type": "color",
+        "$value": "{color.moon.krillin-deep}"
+      },
+      "4": {
+        "$type": "color",
+        "$value": "{color.moon.chichi-deep}"
+      },
+      "5": {
+        "$type": "color",
+        "$value": "{color.moon.whis}"
+      },
+      "6": {
+        "$type": "color",
+        "$value": "{color.moon.roshi}"
+      },
+      "7": {
+        "$type": "color",
+        "$value": "{color.moon.raditz-deep}"
+      },
+      "8": {
+        "$type": "color",
+        "$value": "{color.moon.nappa}"
+      },
+      "9": {
+        "$type": "color",
+        "$value": "{color.moon.frieza}"
+      },
+      "1-active": {
+        "$type": "color",
+        "$value": "{color.piccolo.700}"
+      },
+      "2-active": {
+        "$type": "color",
+        "$value": "{color.moon.hit-deeper}"
+      },
+      "3-active": {
+        "$type": "color",
+        "$value": "{color.moon.krillin-deeper}"
+      },
+      "4-active": {
+        "$type": "color",
+        "$value": "{color.moon.chichi-deeper}"
+      },
+      "5-active": {
+        "$type": "color",
+        "$value": "{color.moon.whis-deep}"
+      },
+      "6-active": {
+        "$type": "color",
+        "$value": "{color.moon.roshi-deep}"
+      },
+      "7-active": {
+        "$type": "color",
+        "$value": "{color.moon.raditz-deeper}"
+      },
+      "8-active": {
+        "$type": "color",
+        "$value": "{color.moon.nappa-deep}"
+      },
+      "9-active": {
+        "$type": "color",
+        "$value": "{color.moon.frieza-deep}"
+      }
+    }
+  },
+  "gradient": {
+    "action": {
+      "primary": {
+        "default": {
+          "$type": "gradient",
+          "$value": "linear-gradient({color.piccolo.600}, {color.piccolo.600})"
+        },
+        "hover": {
+          "$type": "gradient",
+          "$value": "linear-gradient({color.piccolo.700}, {color.piccolo.700})"
+        },
+        "pressed": {
+          "$type": "gradient",
+          "$value": "linear-gradient({color.piccolo.800}, {color.piccolo.800})"
+        },
+        "disabled": {
+          "$type": "gradient",
+          "$value": "linear-gradient({color.paper.200}, {color.paper.200})"
+        }
+      }
+    }
+  },
+  "elevation": {
+    "raised": {
+      "$type": "shadow",
+      "$value": "{shadow.moon-xs}"
+    },
+    "overlay": {
+      "$type": "shadow",
+      "$value": "{shadow.moon-lg}"
+    },
+    "hairline": {
+      "$type": "shadow",
+      "$value": "{shadow.moon-hairline}"
+    }
+  }
+}

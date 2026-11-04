@@ -50,7 +50,7 @@ export function CodeBlock({ code, language, title, showLineNumbers = false, high
       <pre
         tabIndex={0}
         aria-label={typeof heading === "string" ? `${heading} code` : "Code"}
-        className={cx("scrollbar-thin overflow-auto py-3 font-mono text-body-sm text-fg", wrap ? "whitespace-pre-wrap break-words" : "whitespace-pre", focusRingNative, "focus-visible:-outline-offset-2")}
+        className={cx("scrollbar-thin overflow-auto py-3 font-code text-body-sm text-fg", wrap ? "whitespace-pre-wrap break-words" : "whitespace-pre", focusRingNative, "focus-visible:-outline-offset-2")}
       >
         {children ?? (
           <code className="block min-w-max">

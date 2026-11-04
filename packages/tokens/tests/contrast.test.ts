@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { contrastRatio, over, parseColor } from "./color";
 
-type Theme = "light" | "dark";
+type Theme = "light" | "dark" | "moon-light" | "moon-dark";
 interface Pair {
   fg: string;
   bg: string;
@@ -17,6 +17,8 @@ const { pairs } = readJson<{ pairs: Pair[] }>("../src/contrast-pairs.json");
 const themes: Record<Theme, Record<string, string>> = {
   light: readJson("../dist/json/light.json"),
   dark: readJson("../dist/json/dark.json"),
+  "moon-light": readJson("../dist/json/moon-light.json"),
+  "moon-dark": readJson("../dist/json/moon-dark.json"),
 };
 
 const cssName = (path: string) => `ds-${path.replace(/\./g, "-")}`;
@@ -35,7 +37,7 @@ function ratio(theme: Theme, pair: Pair) {
   return contrastRatio(fg, bg);
 }
 
-describe.each(["light", "dark"] as const)("contrast (%s theme)", (theme) => {
+describe.each(["light", "dark", "moon-light", "moon-dark"] as const)("contrast (%s theme)", (theme) => {
   for (const pair of pairs) {
     const known = pair.knownFailures?.includes(theme) ?? false;
     const label = `${pair.fg} on ${pair.bg} ≥ ${pair.min}:1 — ${pair.usage}`;

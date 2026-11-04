@@ -4,13 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Windesign DS · Playground</title>
-    <!-- Apply the stored theme and accent before first paint, so neither flashes.
-         Mirrors applyAccent in @ds/react (foundations/theme.tsx). -->
+    <!-- Apply the stored theme, accent and brand before first paint, so none flash.
+         Mirrors applyAccent and applyBrand in @ds/react (foundations/theme.tsx). -->
     <script>
       try {
         var root = document.documentElement;
         var t = localStorage.getItem("ds-theme");
         if (t === "light" || t === "dark") root.dataset.theme = t;
+        if (localStorage.getItem("ds-brand") === "moon") root.dataset.brand = "moon";
         var a = localStorage.getItem("ds-accent");
         var presets = { red: ["red", 0], orange: ["orange", 100], emerald: ["emerald", 100], teal: ["teal", 100], blue: ["blue", 0], purple: ["purple", 0], fuchsia: ["fuchsia", 0] };
         var mix = { 50: "white 92%", 100: "white 84%", 200: "white 68%", 300: "white 50%", 400: "white 32%", 500: "white 16%", 600: "", 700: "black 16%", 800: "black 32%", 900: "black 48%", 950: "black 62%" };

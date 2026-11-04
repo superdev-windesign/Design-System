@@ -45,6 +45,8 @@ export interface InputOtpProps {
   onComplete?: (value: string) => void;
   isDisabled?: boolean;
   isInvalid?: boolean;
+  /** Focus the first box on mount, for a step that's nothing but this field. */
+  autoFocus?: boolean;
   /** Renders a gap between groups, e.g. `3` gives 000 000. */
   groupEvery?: number;
   "aria-label"?: string;
@@ -62,6 +64,7 @@ export function InputOtp({
   onComplete,
   isDisabled = false,
   isInvalid = false,
+  autoFocus = false,
   groupEvery,
   "aria-label": ariaLabel = "One-time code",
   className,
@@ -162,6 +165,7 @@ export function InputOtp({
               // Long enough to accept a full autofilled code in one box.
               maxLength={length}
               disabled={isDisabled}
+              autoFocus={autoFocus && index === 0}
               aria-label={`Digit ${index + 1} of ${length}`}
               aria-invalid={isInvalid || undefined}
               value={filled}

@@ -90,6 +90,11 @@
         "$type": "fontFamily",
         "$value": "{font.family.jetbrains-mono}"
       },
+      "code": {
+        "$type": "fontFamily",
+        "$value": "{font.family.jetbrains-mono}",
+        "$description": "Code samples. Separate from mono so a brand can restyle mono labels and keep code monospaced."
+      },
       "display": {
         "$type": "fontFamily",
         "$value": "{font.family.fraunces}",

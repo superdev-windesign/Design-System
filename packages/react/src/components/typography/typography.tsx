@@ -78,7 +78,7 @@ export function Text({ size = "md", tone = "default", strong = false, mono = fal
 }
 
 export function Code({ className, ...props }: HTMLAttributes<HTMLElement>) {
-  return <code {...props} className={cx("rounded-xs border border-line bg-sunken px-1 py-px font-mono text-body-sm text-fg", className)} />;
+  return <code {...props} className={cx("rounded-xs border border-line bg-sunken px-1 py-px font-code text-body-sm text-fg", className)} />;
 }
 
 export interface BlockquoteProps {
@@ -121,7 +121,7 @@ export function Prose({ dropCap = false, className, ...props }: ProseProps) {
         "[&_strong]:text-body-md-strong",
         "[&_ul]:my-4 [&_ul]:list-disc [&_ul]:ps-6 [&_ol]:my-4 [&_ol]:list-decimal [&_ol]:ps-6",
         "[&_li]:my-1.5 [&_li]:ps-1 [&_li]:marker:text-fg-tertiary",
-        "[&_code]:rounded-xs [&_code]:border [&_code]:border-line [&_code]:bg-sunken [&_code]:px-1 [&_code]:font-mono [&_code]:text-body-sm",
+        "[&_code]:rounded-xs [&_code]:border [&_code]:border-line [&_code]:bg-sunken [&_code]:px-1 [&_code]:font-code [&_code]:text-body-sm",
         "[&_pre]:my-5 [&_pre]:overflow-auto [&_pre]:rounded-surface [&_pre]:border [&_pre]:border-line [&_pre]:bg-sunken [&_pre]:p-4",
         "[&_pre_code]:border-0 [&_pre_code]:bg-transparent [&_pre_code]:p-0",
         "[&_blockquote]:my-6 [&_blockquote]:border-s-2 [&_blockquote]:border-accent-600 [&_blockquote]:ps-5 [&_blockquote]:text-title-sm-emphasis [&_blockquote]:italic",

@@ -1,0 +1,286 @@
+{
+  "$description": "Primitives for the Moon brand (Moon Design System, MIT): its piccolo ramp, named colours, shadows and typeface.",
+  "color": {
+    "piccolo": {
+      "50": {
+        "$type": "color",
+        "$value": "#F1F0FA"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "#E4E3F5"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "#CCCAEC"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "#ABA7E0"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "#8580D1"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "#6861C3"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "#4E46B4"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "#423B99"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "#36307D"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "#2B2664"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "#1C1942"
+      }
+    },
+    "moon": {
+      "goku": {
+        "$type": "color",
+        "$value": "#F5F5F5"
+      },
+      "gohan": {
+        "$type": "color",
+        "$value": "#FFFFFF"
+      },
+      "beerus": {
+        "$type": "color",
+        "$value": "#E2E2E2"
+      },
+      "trunks": {
+        "$type": "color",
+        "$value": "#595D62"
+      },
+      "bulma": {
+        "$type": "color",
+        "$value": "#000000"
+      },
+      "zeno": {
+        "$type": "color",
+        "$value": "#707070"
+      },
+      "goku-dark": {
+        "$type": "color",
+        "$value": "#0B0B0B"
+      },
+      "gohan-dark": {
+        "$type": "color",
+        "$value": "#1F1F1F"
+      },
+      "beerus-dark": {
+        "$type": "color",
+        "$value": "#444444"
+      },
+      "trunks-dark": {
+        "$type": "color",
+        "$value": "#94989E"
+      },
+      "bulma-dark": {
+        "$type": "color",
+        "$value": "#FFFFFF"
+      },
+      "gray-200": {
+        "$type": "color",
+        "$value": "#EBEBEB"
+      },
+      "gray-400": {
+        "$type": "color",
+        "$value": "#B8B8B8"
+      },
+      "gray-control": {
+        "$type": "color",
+        "$value": "#8C8C8C"
+      },
+      "gray-800": {
+        "$type": "color",
+        "$value": "#2B2B2B"
+      },
+      "gray-925": {
+        "$type": "color",
+        "$value": "#141414"
+      },
+      "hit": {
+        "$type": "color",
+        "$value": "#40A69F"
+      },
+      "hit-deep": {
+        "$type": "color",
+        "$value": "#2F8580"
+      },
+      "hit-deeper": {
+        "$type": "color",
+        "$value": "#256B67"
+      },
+      "hit-light": {
+        "$type": "color",
+        "$value": "#5FC0B9"
+      },
+      "krillin": {
+        "$type": "color",
+        "$value": "#FFB319"
+      },
+      "krillin-deep": {
+        "$type": "color",
+        "$value": "#A86F00"
+      },
+      "krillin-deeper": {
+        "$type": "color",
+        "$value": "#8A5B00"
+      },
+      "krillin-light": {
+        "$type": "color",
+        "$value": "#FFC95C"
+      },
+      "chichi": {
+        "$type": "color",
+        "$value": "#FF4E64"
+      },
+      "chichi-deep": {
+        "$type": "color",
+        "$value": "#DB2C43"
+      },
+      "chichi-deeper": {
+        "$type": "color",
+        "$value": "#B82136"
+      },
+      "chichi-light": {
+        "$type": "color",
+        "$value": "#FF7D8D"
+      },
+      "roshi": {
+        "$type": "color",
+        "$value": "#2F7E31"
+      },
+      "roshi-deep": {
+        "$type": "color",
+        "$value": "#256427"
+      },
+      "roshi-light": {
+        "$type": "color",
+        "$value": "#56B55A"
+      },
+      "roshi-lighter": {
+        "$type": "color",
+        "$value": "#7FCB82"
+      },
+      "dodoria": {
+        "$type": "color",
+        "$value": "#D33030"
+      },
+      "dodoria-deep": {
+        "$type": "color",
+        "$value": "#B02626"
+      },
+      "dodoria-deeper": {
+        "$type": "color",
+        "$value": "#8F1E1E"
+      },
+      "dodoria-light": {
+        "$type": "color",
+        "$value": "#F06A6A"
+      },
+      "raditz": {
+        "$type": "color",
+        "$value": "#B3804A"
+      },
+      "raditz-deep": {
+        "$type": "color",
+        "$value": "#94693B"
+      },
+      "raditz-deeper": {
+        "$type": "color",
+        "$value": "#7A562F"
+      },
+      "raditz-light": {
+        "$type": "color",
+        "$value": "#CFA070"
+      },
+      "whis": {
+        "$type": "color",
+        "$value": "#3448F0"
+      },
+      "whis-deep": {
+        "$type": "color",
+        "$value": "#2838C4"
+      },
+      "whis-light": {
+        "$type": "color",
+        "$value": "#8593FF"
+      },
+      "whis-lighter": {
+        "$type": "color",
+        "$value": "#A9B3FF"
+      },
+      "frieza": {
+        "$type": "color",
+        "$value": "#5C33CF"
+      },
+      "frieza-deep": {
+        "$type": "color",
+        "$value": "#4A29A8"
+      },
+      "frieza-light": {
+        "$type": "color",
+        "$value": "#A98BFF"
+      },
+      "frieza-lighter": {
+        "$type": "color",
+        "$value": "#C3AEFF"
+      },
+      "nappa": {
+        "$type": "color",
+        "$value": "#725550"
+      },
+      "nappa-deep": {
+        "$type": "color",
+        "$value": "#5A4340"
+      },
+      "nappa-light": {
+        "$type": "color",
+        "$value": "#B59A96"
+      },
+      "nappa-lighter": {
+        "$type": "color",
+        "$value": "#CCB7B3"
+      }
+    }
+  },
+  "shadow": {
+    "moon-hairline": {
+      "$type": "shadow",
+      "$value": "0 0 1px rgb(0 0 0 / 0.4)",
+      "$description": "Moon's shared edge: the 1px halo in every elevation."
+    },
+    "moon-xs": {
+      "$type": "shadow",
+      "$value": "0 4px 12px -6px rgb(0 0 0 / 0.06)",
+      "$description": "Cards and controls."
+    },
+    "moon-lg": {
+      "$type": "shadow",
+      "$value": "0 8px 24px -6px rgb(0 0 0 / 0.16), 0 0 1px rgb(0 0 0 / 0.4)",
+      "$description": "Menus, popovers and dialogs."
+    }
+  },
+  "font": {
+    "family": {
+      "dm-sans": {
+        "$type": "fontFamily",
+        "$value": "\"DM Sans Variable\", \"DM Sans\", ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""
+      }
+    }
+  }
+}

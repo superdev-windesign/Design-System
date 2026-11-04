@@ -26,6 +26,8 @@ export const chartColors = {
   track: "var(--ds-color-chart-track)",
   cursor: "var(--ds-color-chart-cursor)",
   neutral: "var(--ds-color-chart-neutral)",
+  /** A line that has to stay readable beside a series: `neutral` is too quiet for one. */
+  comparison: "var(--ds-color-border-control)",
   grid: "var(--ds-color-border-default)",
   surface: "var(--ds-color-bg-sunken)",
 } as const;

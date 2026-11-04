@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Dialog, Modal, ModalOverlay } from "react-aria-components";
 import { RiCloseLine, RiComputerLine, RiMenuLine, RiMoonLine, RiSearchLine, RiSunLine } from "@remixicon/react";
-import { CommandGroup, CommandItem, CommandPalette, IconButton, Kbd, cx, focusRingNative, useTheme } from "@ds/react";
+import { BRANDS, CommandGroup, CommandItem, CommandPalette, IconButton, Kbd, cx, focusRingNative, useTheme } from "@ds/react";
 import type { IconComponent, ThemeChoice } from "@ds/react";
 import { GROUPS } from "../showcase/catalog";
 import { NAV, entriesIn } from "./routes";
@@ -40,6 +40,33 @@ function ThemeSwitch({ className }: { className?: string }) {
           )}
         >
           <Icon aria-hidden className="size-4" />
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/** Windesign or Moon: every component restyles, and the change spreads out from the click. */
+function BrandSwitch({ className }: { className?: string }) {
+  const { brand, setBrand } = useTheme();
+  return (
+    <div role="group" aria-label="Brand" className={cx("flex items-center rounded-control-md border border-line p-0.5", className)}>
+      {BRANDS.map(({ id, label }) => (
+        <button
+          key={id}
+          type="button"
+          aria-pressed={brand === id}
+          onClick={(event) => {
+            const r = event.currentTarget.getBoundingClientRect();
+            setBrand(id, event.detail ? { x: event.clientX, y: event.clientY } : { x: r.left + r.width / 2, y: r.top + r.height / 2 });
+          }}
+          className={cx(
+            "flex h-7 items-center rounded-xs px-2 text-body-sm transition-colors",
+            brand === id ? "bg-fg text-canvas" : "text-fg-secondary hover:text-fg",
+            focusRingNative,
+          )}
+        >
+          {label}
         </button>
       ))}
     </div>
@@ -103,7 +130,7 @@ export function SiteHeader({ route }: { route: Route }) {
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-5 sm:px-8">
         <Wordmark />
 
-        <nav aria-label="Sections" className="hidden flex-1 items-center gap-6 md:flex">
+        <nav aria-label="Sections" className="hidden flex-1 items-center gap-6 lg:flex">
           {NAV.map((item) => {
             const current = item.matches(route);
             return (
@@ -135,10 +162,11 @@ export function SiteHeader({ route }: { route: Route }) {
           >
             <RiSearchLine aria-hidden className="size-4" />
             <span className="hidden sm:inline">Search</span>
-            <Kbd className="hidden px-1.5 sm:inline-flex">{isApple() ? "⌘K" : "Ctrl K"}</Kbd>
+            <Kbd className="hidden px-1.5 sm:inline-flex lg:hidden xl:inline-flex">{isApple() ? "⌘K" : "Ctrl K"}</Kbd>
           </button>
+          <BrandSwitch className="hidden lg:flex" />
           <ThemeSwitch className="hidden sm:flex" />
-          <IconButton icon={RiMenuLine} size="small" aria-label="Open menu" onClick={() => setMenuOpen(true)} className="md:hidden" />
+          <IconButton icon={RiMenuLine} size="small" aria-label="Open menu" onClick={() => setMenuOpen(true)} className="lg:hidden" />
         </div>
       </div>
 
@@ -149,7 +177,7 @@ export function SiteHeader({ route }: { route: Route }) {
         isOpen={menuOpen}
         onOpenChange={setMenuOpen}
         isDismissable
-        className="fixed inset-0 z-50 bg-scrim transition-opacity data-[entering]:opacity-0 data-[exiting]:opacity-0 md:hidden"
+        className="fixed inset-0 z-50 bg-scrim transition-opacity data-[entering]:opacity-0 data-[exiting]:opacity-0 lg:hidden"
       >
         <Modal className="fixed inset-y-0 end-0 w-full max-w-sm bg-canvas transition-transform duration-(--ds-motion-duration-slow) ease-enter data-[entering]:translate-x-full data-[exiting]:translate-x-full rtl:data-[entering]:-translate-x-full rtl:data-[exiting]:-translate-x-full motion-reduce:transition-none">
           <Dialog aria-label="Menu" className="flex h-full flex-col gap-6 overflow-y-auto p-5">
@@ -169,7 +197,10 @@ export function SiteHeader({ route }: { route: Route }) {
                 ))}
               </ol>
             </nav>
-            <ThemeSwitch className="self-start" />
+            <div className="flex flex-wrap gap-2">
+              <BrandSwitch />
+              <ThemeSwitch />
+            </div>
           </Dialog>
         </Modal>
       </ModalOverlay>

@@ -36,6 +36,27 @@ describe("theme coverage", () => {
   });
 });
 
+describe("brands", () => {
+  const moonLight = flatten(readJson("../src/brands/moon/theme.light.json"));
+  const moonDark = flatten(readJson("../src/brands/moon/theme.dark.json"));
+  const moonBase = flatten(readJson("../src/brands/moon/base.json"));
+  const known = new Set(Object.keys({ ...light, ...base, ...flatten(readJson("../src/primitives/color.json")) }));
+
+  // A dark override with no light one (or the reverse) would leak the other brand's value.
+  it("moon overrides every token in both themes, bar the roles only dark needs", () => {
+    const lightOnly = Object.keys(moonLight).filter((path) => !(path in moonDark));
+    expect(lightOnly).toEqual([]);
+  });
+
+  it.each(Object.keys({ ...moonLight, ...moonDark, ...moonBase }))("%s overrides a token that exists", (path) => {
+    expect(known.has(path)).toBe(true);
+  });
+
+  it.each(Object.entries({ ...moonLight, ...moonDark, ...moonBase }))("%s references a primitive", (_, value) => {
+    expect(String(value)).toMatch(/\{[a-z0-9.-]+\}/);
+  });
+});
+
 describe("component colors", () => {
   // Component shadows may carry raw shadow geometry, but every color must come from a primitive.
   const colors = Object.entries({ ...componentLight, ...componentDark }).filter(([, v]) => !String(v).includes("px"));

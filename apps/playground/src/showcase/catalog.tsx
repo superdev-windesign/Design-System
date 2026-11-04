@@ -108,6 +108,7 @@ import { ACTION_ENTRIES, NAVIGATION_ENTRIES, OVERLAY_ENTRIES } from "./overlay-d
 import { DATE_ENTRIES, FORM_ENTRIES, SELECTION_ENTRIES } from "./form-demos";
 import { DATA_DISPLAY_ENTRIES, FEEDBACK_ENTRIES, LAYOUT_ENTRIES } from "./display-demos";
 import { MORE_ENTRIES } from "./more-demos";
+import { MOON_ENTRIES } from "./moon-demos";
 import { NINE_ENTRIES } from "./nine-demos";
 import { ALIASES, BreadcrumbDemo, PARITY_ENTRIES, SelectDemo, TableDemo } from "./parity-demos";
 import { ActivityDaysDemo, AreaDemo, ContributionsDemo, HeatmapDemo, RadialDemo } from "./chart-demos";
@@ -183,7 +184,8 @@ export type Group =
   | "Dates"
   | "Blocks"
   | "Charts"
-  | "Templates";
+  | "Templates"
+  | "Moon";
 
 export const GROUPS: { name: Group; blurb: string }[] = [
   { name: "Foundations", blurb: "The tokens everything is built on, and how theming works." },
@@ -200,6 +202,7 @@ export const GROUPS: { name: Group; blurb: string }[] = [
   { name: "Blocks", blurb: "Larger assemblies, ready to drop into a screen." },
   { name: "Charts", blurb: "Data cards built on the chart palette." },
   { name: "Templates", blurb: "Whole screens assembled from the blocks and charts." },
+  { name: "Moon", blurb: "Ten complex components from the Moon design system. Switch the brand to Moon to see the whole system restyle." },
 ];
 
 export interface CatalogEntry {
@@ -1586,6 +1589,7 @@ export const CATALOG: CatalogEntry[] = [
   ...DATE_ENTRIES,
   ...MORE_ENTRIES,
   ...NINE_ENTRIES,
+  ...MOON_ENTRIES,
   ...PARITY_ENTRIES,
 ]
   .map((entry) => ({ ...entry, aliases: entry.aliases ?? ALIASES[entry.slug] }))

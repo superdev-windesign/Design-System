@@ -1,0 +1,63 @@
+{
+  "$description": "Moon's shape and type: larger, softer radii, and DM Sans for everything but code.",
+  "radius": {
+    "hairline": {
+      "$type": "dimension",
+      "$value": "{radius.4}"
+    },
+    "control": {
+      "xs": {
+        "$type": "dimension",
+        "$value": "{radius.4}"
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": "{radius.8}"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{radius.8}"
+      }
+    },
+    "item": {
+      "$type": "dimension",
+      "$value": "{radius.8}"
+    },
+    "tile": {
+      "$type": "dimension",
+      "$value": "{radius.8}"
+    },
+    "chip": {
+      "$type": "dimension",
+      "$value": "{radius.8}"
+    },
+    "surface": {
+      "$type": "dimension",
+      "$value": "{radius.12}"
+    },
+    "overlay": {
+      "$type": "dimension",
+      "$value": "{radius.12}"
+    },
+    "panel": {
+      "$type": "dimension",
+      "$value": "{radius.16}"
+    }
+  },
+  "font": {
+    "family": {
+      "sans": {
+        "$type": "fontFamily",
+        "$value": "{font.family.dm-sans}"
+      },
+      "mono": {
+        "$type": "fontFamily",
+        "$value": "{font.family.dm-sans}"
+      },
+      "display": {
+        "$type": "fontFamily",
+        "$value": "{font.family.dm-sans}"
+      }
+    }
+  }
+}

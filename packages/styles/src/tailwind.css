@@ -30,6 +30,7 @@
 @theme inline {
   --font-sans: var(--ds-font-family-sans);
   --font-mono: var(--ds-font-family-mono);
+  --font-code: var(--ds-font-family-code);
   --font-display: var(--ds-font-family-display);
 
   /* Surfaces → bg-* */

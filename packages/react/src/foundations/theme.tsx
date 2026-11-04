@@ -23,7 +23,12 @@ import { cx } from "../utils/cx";
  * the new look spreads out from it in a circle. Without the View Transitions
  * API, or with reduced motion, they apply at once.
  *
- * `ThemeScope` pins one region to a theme (a dark hero on a light page).
+ * And it owns the brand: a whole visual language (colour, type, shape and
+ * elevation) that sits across light and dark. Windesign is the default; set
+ * "moon" with `setBrand` and every component restyles through its tokens.
+ *
+ * `ThemeScope` pins one region to a theme or a brand (a dark hero on a light
+ * page, a Moon preview on a Windesign page).
  *
  * To avoid a flash of the wrong theme or accent, apply both from storage in
  * a tiny inline script in <head>; see the playground's index.html.
@@ -31,6 +36,30 @@ import { cx } from "../utils/cx";
 
 export type ThemeChoice = "light" | "dark" | "system";
 export type ResolvedTheme = "light" | "dark";
+
+/* -------------------------------------------------------------------------- */
+/*                                   Brand                                    */
+/* -------------------------------------------------------------------------- */
+
+export type Brand = "windesign" | "moon";
+
+export const DEFAULT_BRAND: Brand = "windesign";
+
+/** The brands, with the accent each one ships with. */
+export const BRANDS: { id: Brand; label: string; accentLabel: string; accentColor: string }[] = [
+  { id: "windesign", label: "Windesign", accentLabel: "Terracotta", accentColor: "var(--ds-color-terracotta-600)" },
+  { id: "moon", label: "Moon", accentLabel: "Piccolo", accentColor: "var(--ds-color-piccolo-600)" },
+];
+
+function isBrand(value: string | null): value is Brand {
+  return BRANDS.some((brand) => brand.id === value);
+}
+
+/** Sets `data-brand` on <html>, or removes it for the default brand. */
+export function applyBrand(brand: Brand, root: HTMLElement = document.documentElement) {
+  if (brand === DEFAULT_BRAND) delete root.dataset.brand;
+  else root.dataset.brand = brand;
+}
 
 /* -------------------------------------------------------------------------- */
 /*                                   Accent                                   */
@@ -165,6 +194,9 @@ interface ThemeContextValue {
   setTheme: (theme: ThemeChoice, origin?: TransitionOrigin) => void;
   accent: AccentChoice;
   setAccent: (accent: AccentChoice, origin?: TransitionOrigin) => void;
+  brand: Brand;
+  /** Pass `origin` to spread the new brand out from that point. */
+  setBrand: (brand: Brand, origin?: TransitionOrigin) => void;
 }
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
@@ -183,6 +215,15 @@ function readStored(key: string): ThemeChoice | null {
 function readStoredAccent(key: string): AccentChoice | null {
   try {
     return localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function readStoredBrand(key: string): Brand | null {
+  try {
+    const value = localStorage.getItem(key);
+    return isBrand(value) ? value : null;
   } catch {
     return null;
   }
@@ -233,6 +274,11 @@ export interface ThemeProviderProps {
   /** localStorage key for the accent. Pass `null` to not persist. Default "ds-accent". */
   accentStorageKey?: string | null;
   onAccentChange?: (accent: AccentChoice) => void;
+  /** Used when nothing is stored. Default "windesign". */
+  defaultBrand?: Brand;
+  /** localStorage key for the brand. Pass `null` to not persist. Default "ds-brand". */
+  brandStorageKey?: string | null;
+  onBrandChange?: (brand: Brand) => void;
 }
 
 export function ThemeProvider({
@@ -244,12 +290,16 @@ export function ThemeProvider({
   defaultAccent = DEFAULT_ACCENT,
   accentStorageKey = "ds-accent",
   onAccentChange,
+  defaultBrand = DEFAULT_BRAND,
+  brandStorageKey = "ds-brand",
+  onBrandChange,
 }: ThemeProviderProps) {
   const [uncontrolled, setUncontrolled] = useState<ThemeChoice>(() => (storageKey && readStored(storageKey)) || defaultTheme);
   const theme = controlled ?? uncontrolled;
   const system = useSystemTheme();
   const resolvedTheme = theme === "system" ? system : theme;
   const [accent, setAccentState] = useState<AccentChoice>(() => (accentStorageKey && readStoredAccent(accentStorageKey)) || defaultAccent);
+  const [brand, setBrandState] = useState<Brand>(() => (brandStorageKey && readStoredBrand(brandStorageKey)) || defaultBrand);
 
   useEffect(() => {
     applyThemeAttribute(theme, resolvedTheme);
@@ -260,6 +310,11 @@ export function ThemeProvider({
     applyAccent(accent);
     store(accentStorageKey, accent === DEFAULT_ACCENT ? null : accent);
   }, [accent, accentStorageKey]);
+
+  useEffect(() => {
+    applyBrand(brand);
+    store(brandStorageKey, brand === DEFAULT_BRAND ? null : brand);
+  }, [brand, brandStorageKey]);
 
   const setTheme = useCallback(
     (next: ThemeChoice, origin?: TransitionOrigin) => {
@@ -288,11 +343,27 @@ export function ThemeProvider({
     [onAccentChange],
   );
 
-  const value = useMemo(() => ({ theme, resolvedTheme, setTheme, accent, setAccent }), [theme, resolvedTheme, setTheme, accent, setAccent]);
+  const setBrand = useCallback(
+    (next: Brand, origin?: TransitionOrigin) => {
+      const update = () => {
+        applyBrand(next);
+        flushSync(() => setBrandState(next));
+      };
+      if (origin) startThemeTransition(update, origin);
+      else update();
+      onBrandChange?.(next);
+    },
+    [onBrandChange],
+  );
+
+  const value = useMemo(
+    () => ({ theme, resolvedTheme, setTheme, accent, setAccent, brand, setBrand }),
+    [theme, resolvedTheme, setTheme, accent, setAccent, brand, setBrand],
+  );
   return <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>;
 }
 
-/** The current choice, the theme actually showing, the accent, and setters. Must be inside ThemeProvider. */
+/** The current choice, the theme actually showing, the accent, the brand, and setters. Must be inside ThemeProvider. */
 export function useTheme(): ThemeContextValue {
   const context = useContext(ThemeContext);
   if (!context) throw new Error("useTheme must be used inside a ThemeProvider");
@@ -300,10 +371,21 @@ export function useTheme(): ThemeContextValue {
 }
 
 export interface ThemeScopeProps extends HTMLAttributes<HTMLDivElement> {
-  theme: ResolvedTheme;
+  /** Pin the region to this theme. Leave it out to follow the page. */
+  theme?: ResolvedTheme;
+  /** Pin the region to this brand. Leave it out to follow the page. */
+  brand?: Brand;
 }
 
-/** Pins a region to one theme, repainting its canvas and text from that theme's tokens. */
-export function ThemeScope({ theme, className, ...props }: ThemeScopeProps) {
-  return <div {...props} data-theme={theme} style={{ colorScheme: theme, ...props.style }} className={cx("bg-canvas text-fg", className)} />;
+/** Pins a region to a theme or brand, repainting its canvas, text and type from those tokens. */
+export function ThemeScope({ theme, brand, className, ...props }: ThemeScopeProps) {
+  return (
+    <div
+      {...props}
+      data-theme={theme}
+      data-brand={brand}
+      style={{ colorScheme: theme, ...props.style }}
+      className={cx("bg-canvas font-sans text-fg", className)}
+    />
+  );
 }

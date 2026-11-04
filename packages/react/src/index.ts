@@ -214,3 +214,15 @@ export * from "./components/schedule/schedule";
 export * from "./blocks/composer/composer";
 export * from "./templates/calendar-template";
 export * from "./components/accent-picker/accent-picker";
+
+// Moon: ten complex components, built on tokens so they follow the brand switch.
+export * from "./blocks/moon/app-sidebar";
+export * from "./blocks/moon/auth-flow";
+export * from "./blocks/moon/date-time-range-picker";
+export * from "./blocks/moon/expandable-table";
+export * from "./blocks/moon/leaderboard";
+export * from "./blocks/moon/metric-chart";
+export * from "./blocks/moon/payment-fields";
+export * from "./blocks/moon/search-box";
+export * from "./blocks/moon/snap-sheet";
+export * from "./blocks/moon/tag-combobox";
