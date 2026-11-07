@@ -58,7 +58,7 @@ export function Drawer({ placement = "end", size = "md", isDismissable = true, c
     <ModalOverlay {...props} isDismissable={isDismissable} className={cx(OVERLAY_SCRIM, "flex", p.overlay)}>
       <AriaModal
         className={cx(
-          "flex w-full shadow-overlay",
+          "bui-drawer flex w-full shadow-overlay",
           placement === "bottom" ? HEIGHT[size] : WIDTH[size],
           "transition-transform duration-(--ds-motion-duration-slow) ease-enter data-[exiting]:ease-out motion-reduce:transition-none",
           p.panel,

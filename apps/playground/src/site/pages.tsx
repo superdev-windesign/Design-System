@@ -31,7 +31,7 @@ function Figure({ entry, tall = false }: { entry: CatalogEntry; tall?: boolean }
       <div
         inert
         className={cx(
-          "flex items-center justify-center overflow-hidden rounded-surface border border-line bg-surface p-5 transition-colors group-hover:border-line-control",
+          "relative flex items-center justify-center overflow-hidden rounded-surface border border-line bg-surface p-5 transition-colors group-hover:border-line-control",
           tall ? "h-80" : "h-56",
         )}
       >

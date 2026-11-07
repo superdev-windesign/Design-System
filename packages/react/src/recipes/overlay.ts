@@ -8,13 +8,13 @@ import { cx } from "../utils/cx";
 
 /** The full-screen scrim behind Modal, AlertDialog and Drawer. */
 export const OVERLAY_SCRIM = cx(
-  "fixed inset-0 z-50 bg-scrim",
+  "bui-scrim fixed inset-0 z-50 bg-scrim",
   "transition-opacity duration-(--ds-motion-duration-moderate) ease-out",
   "data-[entering]:opacity-0 data-[exiting]:opacity-0 motion-reduce:transition-none",
 );
 
-/** A floating panel: paper surface, hairline rule, overlay shadow. */
-export const FLOATING_SURFACE = "rounded-overlay border border-line bg-surface shadow-overlay";
+/** A floating panel: a pane (paper, or glass where the brand has it), a rule and the overlay shadow. */
+export const FLOATING_SURFACE = "rounded-overlay border glass-panel shadow-overlay";
 
 /** Popover motion: fade and a slight scale from the side nearest the trigger. */
 export const POPOVER_MOTION = cx(
@@ -25,4 +25,4 @@ export const POPOVER_MOTION = cx(
 );
 
 /** Overlay arrow: a surface-filled triangle with the hairline rule along its edges. */
-export const OVERLAY_ARROW_SVG = "block fill-surface stroke-line";
+export const OVERLAY_ARROW_SVG = "bui-overlay-arrow block fill-surface stroke-line";

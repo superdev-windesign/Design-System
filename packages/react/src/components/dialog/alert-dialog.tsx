@@ -54,7 +54,7 @@ export function AlertDialog({
 
   return (
     <Modal size="sm" isDismissable={false} isKeyboardDismissDisabled={pending} {...overlayProps}>
-      <AriaDialog role="alertdialog" className={cx("flex w-full flex-col overflow-hidden rounded-overlay border border-line bg-surface shadow-overlay", focusRingNative)}>
+      <AriaDialog role="alertdialog" className={cx("flex w-full flex-col overflow-hidden rounded-overlay border glass-panel shadow-overlay", focusRingNative)}>
         {({ close }) => {
           const run = async () => {
             const result = onPrimaryAction?.();

@@ -41,7 +41,7 @@ export type ResolvedTheme = "light" | "dark";
 /*                                   Brand                                    */
 /* -------------------------------------------------------------------------- */
 
-export type Brand = "windesign" | "moon";
+export type Brand = "windesign" | "moon" | "glass";
 
 export const DEFAULT_BRAND: Brand = "windesign";
 
@@ -49,6 +49,7 @@ export const DEFAULT_BRAND: Brand = "windesign";
 export const BRANDS: { id: Brand; label: string; accentLabel: string; accentColor: string }[] = [
   { id: "windesign", label: "Windesign", accentLabel: "Terracotta", accentColor: "var(--ds-color-terracotta-600)" },
   { id: "moon", label: "Moon", accentLabel: "Piccolo", accentColor: "var(--ds-color-piccolo-600)" },
+  { id: "glass", label: "Glass", accentLabel: "Blue", accentColor: "var(--ds-color-azure-600)" },
 ];
 
 function isBrand(value: string | null): value is Brand {

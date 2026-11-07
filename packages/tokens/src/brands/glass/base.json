@@ -1,0 +1,133 @@
+{
+  "$description": "Liquid Glass's shape, type and material: rounder forms that nest into each other, the platform's own type, and glass that actually blurs.",
+  "radius": {
+    "hairline": {
+      "$type": "dimension",
+      "$value": "{radius.4}"
+    },
+    "control": {
+      "xs": {
+        "$type": "dimension",
+        "$value": "{radius.12}"
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": "{radius.16}"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{radius.20}"
+      }
+    },
+    "item": {
+      "$type": "dimension",
+      "$value": "{radius.12}"
+    },
+    "tile": {
+      "$type": "dimension",
+      "$value": "{radius.16}"
+    },
+    "chip": {
+      "$type": "dimension",
+      "$value": "{radius.full}"
+    },
+    "surface": {
+      "$type": "dimension",
+      "$value": "{radius.24}"
+    },
+    "overlay": {
+      "$type": "dimension",
+      "$value": "{radius.24}"
+    },
+    "panel": {
+      "$type": "dimension",
+      "$value": "{radius.34}"
+    },
+    "action": {
+      "$type": "dimension",
+      "$value": "{radius.full}"
+    },
+    "scale": {
+      "xs": {
+        "$type": "dimension",
+        "$value": "{radius.6}"
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": "{radius.8}"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{radius.10}"
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "{radius.12}"
+      },
+      "2lg": {
+        "$type": "dimension",
+        "$value": "{radius.16}"
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": "{radius.16}"
+      },
+      "2xl": {
+        "$type": "dimension",
+        "$value": "{radius.20}"
+      },
+      "3xl": {
+        "$type": "dimension",
+        "$value": "{radius.24}"
+      }
+    }
+  },
+  "font": {
+    "family": {
+      "sans": {
+        "$type": "fontFamily",
+        "$value": "{font.family.system-glass}"
+      },
+      "mono": {
+        "$type": "fontFamily",
+        "$value": "{font.family.system-glass}"
+      },
+      "display": {
+        "$type": "fontFamily",
+        "$value": "{font.family.system-glass}"
+      }
+    }
+  },
+  "effect": {
+    "glass": {
+      "regular": {
+        "$type": "string",
+        "$value": "{backdrop.glass-regular}"
+      },
+      "clear": {
+        "$type": "string",
+        "$value": "{backdrop.glass-clear}"
+      },
+      "lens": {
+        "$type": "string",
+        "$value": "{backdrop.glass-lens}"
+      },
+      "refraction": {
+        "$type": "string",
+        "$value": "{backdrop.refraction-on}"
+      },
+      "panel": {
+        "$type": "string",
+        "$value": "{backdrop.glass-panel}"
+      }
+    }
+  },
+  "motion": {
+    "press": {
+      "scale": {
+        "$type": "number",
+        "$value": "{scale.103}"
+      }
+    }
+  }
+}

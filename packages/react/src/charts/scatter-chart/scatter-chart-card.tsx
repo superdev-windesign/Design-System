@@ -58,7 +58,7 @@ function ScatterTooltip({ active, payload, xLabel, yLabel, zLabel }: {
   const point = active ? payload?.[0]?.payload : undefined;
   if (!point) return null;
   return (
-    <div className="flex flex-col gap-1 rounded-xl border border-line bg-surface px-3 py-2 text-body-sm shadow-overlay">
+    <div className="flex flex-col gap-1 rounded-xl border glass-panel px-3 py-2 text-body-sm shadow-overlay">
       <p className="text-body-sm-strong text-fg">{point.name}</p>
       <p className="text-fg-secondary">
         {yLabel} <span className="text-fg tabular-nums">{format.money(point.y)}</span>

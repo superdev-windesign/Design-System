@@ -136,18 +136,36 @@
         "solid": {
           "$type": "color",
           "$value": "{color.moon.roshi}"
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{color.moon.tint-success}"
         }
       },
       "danger": {
         "solid": {
           "$type": "color",
           "$value": "{color.moon.dodoria}"
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{color.moon.tint-danger}"
         }
       },
       "warning": {
         "solid": {
           "$type": "color",
           "$value": "{color.moon.krillin-deep}"
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{color.moon.tint-warning}"
+        }
+      },
+      "info": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.moon.tint-info}"
         }
       }
     },
@@ -223,6 +241,16 @@
       "9-active": {
         "$type": "color",
         "$value": "{color.moon.frieza-deep}"
+      }
+    },
+    "progress": {
+      "track": {
+        "$type": "color",
+        "$value": "{color.moon.gray-200}"
+      },
+      "fill": {
+        "$type": "color",
+        "$value": "{color.accent.600}"
       }
     }
   },

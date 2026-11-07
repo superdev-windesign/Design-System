@@ -1,0 +1,313 @@
+/* The Moon brand's structural dress, read from Moon's open-source components
+   (coingaming/moon-design, MIT) and its Figma file.
+
+   Tokens alone gave Moon its colours and font and left it Windesign underneath:
+   the same ruled paper, pen strokes and ledger. These rules swap those for
+   Moon's own forms. Other brands load this and match nothing.
+
+   Moon's habits, all from its source:
+     panels     no rules: white on grey, lifted by a soft shadow
+     interaction a 12% piccolo tint on hover, and a press that shrinks to 0.9
+     fields     a 1px hairline that becomes a 2px piccolo line on focus
+     tabs       a straight 2px piccolo underline, no rule across the strip
+     switches   a thick pill with a white knob set inside it
+     lists      rows as separate cards with a small gap, on a grey well
+
+   Every value is a token or the spacing scale, and rules are unlayered, as in
+   glass.css, so they sit above the components' own utilities. */
+
+[data-brand="moon"] {
+  --moon-tint: color-mix(in srgb, var(--ds-color-accent-600) 12%, transparent);
+}
+
+/* ── Type ────────────────────────────────────────────────────────────────
+   Windesign's running heads go. Moon saves capitals for badges, below. */
+[data-brand="moon"] .uppercase {
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* ── Panels ──────────────────────────────────────────────────────────────
+   Moon doesn't rule its panels. The hairline shadow is Moon's own, and keeps a
+   white card visible on a white parent. :where() leaves it low enough for a
+   control's rule below to win. */
+[data-brand="moon"] .bg-surface:where(.border:not(.bui-control-mark)) {
+  border-color: transparent;
+  box-shadow: var(--ds-elevation-hairline), var(--ds-elevation-raised);
+}
+
+[data-brand="moon"] .bg-surface:where(.border):where(button, a, [role="button"]):is(:hover, [data-hovered]) {
+  background-color: var(--moon-tint);
+  color: var(--ds-color-accent-600);
+}
+
+[data-brand="moon"] .bui-chart-card {
+  background-color: var(--ds-color-bg-surface);
+  box-shadow: var(--ds-elevation-hairline), var(--ds-elevation-raised);
+}
+
+/* ── Buttons ─────────────────────────────────────────────────────────────
+   Hover fades in rather than wicking up from the edge. The outline is drawn
+   inside the button, and only darkens on hover. */
+[data-brand="moon"] .bui-button-md {
+  padding-inline: 1rem;
+}
+
+[data-brand="moon"] .bui-button-solid::before {
+  clip-path: none;
+  opacity: 0;
+  transition: opacity var(--ds-motion-duration-base) ease-in-out;
+}
+
+[data-brand="moon"] .bui-button-solid[data-hovered]:not([data-disabled])::before {
+  opacity: 1;
+}
+
+[data-brand="moon"] .bui-button-secondary {
+  border-color: transparent;
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1px var(--ds-color-border-control);
+}
+
+[data-brand="moon"] .bui-button-secondary:is([data-hovered], [data-pressed]) {
+  border-color: transparent;
+  background-color: transparent;
+  box-shadow: inset 0 0 0 1px var(--ds-color-text-primary);
+}
+
+[data-brand="moon"] .bui-button-secondary[data-disabled] {
+  border-color: transparent;
+  box-shadow: inset 0 0 0 1px var(--ds-color-border-default);
+}
+
+[data-brand="moon"] .bui-number-step {
+  border-radius: var(--ds-radius-item);
+}
+
+/* ── Fields ──────────────────────────────────────────────────────────────
+   A straight pen rule isn't Moon's: focus thickens the outline to 2px. */
+[data-brand="moon"] .bui-field-rule::after {
+  display: none;
+}
+
+[data-brand="moon"] .bui-field-rule.ring-focus {
+  box-shadow: inset 0 0 0 2px var(--ds-color-border-focus);
+}
+
+/* A soft ring appears round the mark on hover. */
+[data-brand="moon"] [data-hovered] .bui-control-mark {
+  box-shadow: 0 0 0 0.375rem var(--moon-tint);
+}
+
+/* ── Switch ──────────────────────────────────────────────────────────────
+   A thick pill with a white knob set 2px inside it. Travel stays the track's
+   width less its height, so the same class still carries the knob across. */
+[data-brand="moon"] .bui-switch-track {
+  border-width: 0;
+  background-color: var(--ds-color-bg-sunken);
+}
+
+[data-brand="moon"] .bui-switch-track[data-selected] {
+  background-color: var(--ds-color-accent-600);
+}
+
+[data-brand="moon"] .bui-switch-tick {
+  display: none;
+}
+
+[data-brand="moon"] .bui-switch-knob {
+  inset-block-start: 0.125rem;
+  inset-inline-start: 0.125rem;
+  width: auto;
+  height: calc(100% - 0.25rem);
+  aspect-ratio: 1;
+  background-color: var(--ds-color-moon-gohan);
+  box-shadow: var(--ds-elevation-hairline), var(--ds-elevation-raised);
+}
+
+/* ── Slider ──────────────────────────────────────────────────────────────
+   A plain 6px track and a white thumb: the ruler's ticks and leader go. */
+[data-brand="moon"] :is(.bui-slider-tick, .bui-slider-dot, .bui-slider-leader) {
+  display: none;
+}
+
+[data-brand="moon"] .bui-slider-rail {
+  height: 0.375rem;
+  background-color: var(--ds-color-bg-sunken);
+}
+
+[data-brand="moon"] .bui-slider-fill {
+  height: 0.375rem;
+  clip-path: none;
+  border-radius: var(--ds-radius-action);
+}
+
+[data-brand="moon"] .bui-slider-thumb {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-width: 0;
+  background-color: var(--ds-color-moon-gohan);
+  box-shadow: var(--ds-elevation-overlay);
+}
+
+/* ── Tabs ────────────────────────────────────────────────────────────────
+   No rule across the strip, a straight underline, and a tint under the pointer. */
+[data-brand="moon"] .bui-tabs-list {
+  border-bottom-width: 0;
+}
+
+[data-brand="moon"] .bui-tabs-indicator {
+  bottom: 0;
+  height: 0.125rem;
+  clip-path: none;
+}
+
+[data-brand="moon"] .bui-tab {
+  border-radius: var(--ds-radius-item);
+  padding-inline: 0.75rem;
+}
+
+[data-brand="moon"] .bui-tab[data-hovered]:not([data-selected]) {
+  background-color: var(--moon-tint);
+}
+
+/* ── Segmented control ───────────────────────────────────────────────────
+   A grey track with the choice on a white block, in the text colour. */
+[data-brand="moon"] .bui-segmented:where(.border) {
+  border-width: 0;
+  background-color: var(--ds-color-bg-sunken);
+  padding: 0.25rem;
+}
+
+[data-brand="moon"] .bui-segmented-thumb {
+  background-color: var(--ds-color-bg-surface);
+  box-shadow: var(--ds-elevation-hairline);
+}
+
+[data-brand="moon"] .bui-segmented-item[data-selected] {
+  color: var(--ds-color-text-primary);
+}
+
+/* ── Overlays ────────────────────────────────────────────────────────────
+   A Moon tooltip is a small white card, not reversed ink. */
+[data-brand="moon"] .bui-tooltip {
+  background-color: var(--ds-color-bg-surface);
+  color: var(--ds-color-text-primary);
+  border-radius: var(--ds-radius-hairline);
+  box-shadow: var(--ds-elevation-overlay);
+}
+
+[data-brand="moon"] .bui-tooltip-caret {
+  fill: var(--ds-color-bg-surface);
+}
+
+[data-brand="moon"] .bui-dialog[data-frame="modal"] {
+  border-width: 0;
+}
+
+[data-brand="moon"] .bui-dialog > header {
+  border-bottom-width: 0;
+}
+
+[data-brand="moon"] .bui-dialog > footer {
+  border-top-width: 0;
+  background-color: transparent;
+}
+
+[data-brand="moon"] .bui-menu-chosen {
+  background-color: var(--moon-tint);
+  color: var(--ds-color-accent-600);
+}
+
+[data-brand="moon"] .bui-menu-chosen::before {
+  display: none;
+}
+
+/* ── Table and accordion ─────────────────────────────────────────────────
+   Rows are separate white cards on a grey well. */
+[data-brand="moon"] :is(.bui-table-frame, .bui-accordion) {
+  border-radius: var(--ds-radius-overlay);
+  background-color: var(--ds-color-bg-canvas);
+  padding: 0.25rem;
+}
+
+[data-brand="moon"] .bui-table {
+  border-collapse: separate;
+  border-spacing: 0 0.25rem;
+}
+
+[data-brand="moon"] .bui-table th {
+  font-family: var(--ds-font-family-sans);
+  text-transform: none;
+  border-bottom-width: 0;
+}
+
+[data-brand="moon"] .bui-table-sticky th {
+  background-color: var(--ds-color-bg-canvas);
+  box-shadow: none;
+}
+
+[data-brand="moon"] .bui-table tbody tr:not(:last-child) {
+  border-bottom-width: 0;
+}
+
+[data-brand="moon"] .bui-table tbody td {
+  background-color: var(--ds-color-bg-surface);
+}
+
+[data-brand="moon"] .bui-table tbody td:first-child {
+  border-start-start-radius: var(--ds-radius-item);
+  border-end-start-radius: var(--ds-radius-item);
+}
+
+[data-brand="moon"] .bui-table tbody td:last-child {
+  border-start-end-radius: var(--ds-radius-item);
+  border-end-end-radius: var(--ds-radius-item);
+}
+
+[data-brand="moon"] .bui-table tbody tr[data-hovered] td {
+  background-color: var(--moon-tint);
+}
+
+[data-brand="moon"] .bui-table tbody tr[data-selected] td {
+  background-color: var(--moon-tint);
+}
+
+[data-brand="moon"] .bui-table tbody tr[data-selected] td:first-child,
+[data-brand="moon"] .bui-table tbody tr[data-selected] td:first-child:dir(rtl) {
+  box-shadow: none;
+}
+
+[data-brand="moon"] .bui-accordion {
+  gap: 0.25rem;
+  border-top-width: 0;
+}
+
+[data-brand="moon"] .bui-accordion > * {
+  border-bottom-width: 0;
+  border-radius: var(--ds-radius-item);
+  background-color: var(--ds-color-bg-surface);
+  padding-inline: 1rem;
+}
+
+[data-brand="moon"] .bui-accordion button[data-hovered] {
+  text-decoration: none;
+}
+
+/* ── Small marks ─────────────────────────────────────────────────────────
+   Alerts lose their rule; their tint comes from Moon's status tokens. A badge
+   is Moon's one use of capitals: a small tracked pill. */
+[data-brand="moon"] .bui-alert {
+  border-color: transparent;
+}
+
+[data-brand="moon"] .bui-badge {
+  border-radius: var(--ds-radius-action);
+  padding-inline: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.0625rem;
+}
+
+[data-brand="moon"] .bg-progress-fill {
+  border-radius: var(--ds-radius-action);
+}

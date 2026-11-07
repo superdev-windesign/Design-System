@@ -96,7 +96,7 @@ function SliderBase<T extends SliderValue>({
                   <span
                     aria-hidden
                     className={cx(
-                      "absolute top-1/2 end-0 start-0 h-0.5 -translate-y-1/2 rounded-full",
+                      "bui-slider-rail absolute top-1/2 end-0 start-0 h-0.5 -translate-y-1/2 rounded-full",
                       "transition-colors duration-(--ds-motion-duration-base) ease-standard",
                       isHovered ? "bg-line-control-hover" : "bg-line-control",
                     )}
@@ -105,7 +105,7 @@ function SliderBase<T extends SliderValue>({
                     <span
                       key={edge}
                       aria-hidden
-                      className={cx("absolute top-1/2 h-2 w-px -translate-y-1/2", edge, isHovered ? "bg-line-control-hover" : "bg-line-control")}
+                      className={cx("bui-slider-tick absolute top-1/2 h-2 w-px -translate-y-1/2", edge, isHovered ? "bg-line-control-hover" : "bg-line-control")}
                     />
                   ))}
                   {/* The ink: one value swells from a hairline to full width
@@ -114,7 +114,7 @@ function SliderBase<T extends SliderValue>({
                   <span
                     aria-hidden
                     className={cx(
-                      "absolute top-1/2 -translate-y-1/2 bg-accent-600",
+                      "bui-slider-fill absolute top-1/2 -translate-y-1/2 bg-accent-600",
                       isRange ? "h-1 rounded-full" : "h-1.5 ink-swell",
                     )}
                     style={{
@@ -138,7 +138,7 @@ function SliderBase<T extends SliderValue>({
                         }
                         className={({ isDragging, isFocusVisible, isDisabled }) =>
                           cx(
-                            "top-1/2 flex size-4.5 items-center justify-center rounded-full border-2 border-accent-600 bg-surface outline-none",
+                            "bui-slider-thumb top-1/2 flex size-4.5 items-center justify-center rounded-full border-2 border-accent-600 bg-surface outline-none",
                             "transition-[scale] duration-(--ds-motion-duration-base) ease-standard motion-reduce:transition-none",
                             isDragging && "z-20 scale-110",
                             isFocusVisible && "outline-2 outline-focus outline-offset-2",
@@ -161,14 +161,14 @@ function SliderBase<T extends SliderValue>({
                                 >
                                   {valueLabel}
                                 </span>
-                                <span className="h-1.5 w-px bg-line-control" />
+                                <span className="bui-slider-leader h-1.5 w-px bg-line-control" />
                               </span>
                             )}
                             {/* The radio's ink drop: shows on hover, fills while held. */}
                             <span
                               aria-hidden
                               className={cx(
-                                "size-2 rounded-full bg-accent-600 transition-[scale] duration-(--ds-motion-duration-base) ease-overshoot motion-reduce:transition-none",
+                                "bui-slider-dot size-2 rounded-full bg-accent-600 transition-[scale] duration-(--ds-motion-duration-base) ease-overshoot motion-reduce:transition-none",
                                 isDragging ? "scale-150" : isThumbHovered || isFocused ? "scale-100" : "scale-0",
                               )}
                             />

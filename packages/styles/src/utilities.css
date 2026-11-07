@@ -323,6 +323,275 @@
   }
 }
 
+/* The glass material. Every brand has these tokens, and only a brand with real
+   glass makes them translucent, so components stay brand-agnostic: elsewhere
+   this is simply a solid raised surface. The same goes for anyone who has asked
+   their system for less transparency. Put it on the element that moves or clips:
+   an ancestor with opacity, a filter, a mask or a clip-path hides the page from
+   backdrop-filter, so the blur would see nothing. */
+@utility glass {
+  background-color: var(--ds-color-glass-regular);
+  -webkit-backdrop-filter: var(--ds-effect-glass-regular);
+  backdrop-filter: var(--ds-effect-glass-regular);
+  box-shadow: var(--ds-elevation-glass);
+
+  @media (prefers-reduced-transparency: reduce) {
+    background-color: var(--ds-color-bg-surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* Glass you can feel the thickness of: the same material, with a lit top edge
+   and shade pooling low inside it. This is what makes a pane read as an object. */
+@utility glass-thick {
+  background-color: var(--ds-color-glass-regular);
+  -webkit-backdrop-filter: var(--ds-effect-glass-regular);
+  backdrop-filter: var(--ds-effect-glass-regular);
+  box-shadow: var(--ds-elevation-glass-bevel), var(--ds-elevation-glass);
+
+  @media (prefers-reduced-transparency: reduce) {
+    background-color: var(--ds-color-bg-surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* A soft lozenge lifted off the page, with a double rim. Reads best on plain
+   light surfaces, where clear glass would have nothing to show. */
+@utility glass-frost {
+  background-color: var(--ds-color-glass-frost);
+  -webkit-backdrop-filter: var(--ds-effect-glass-panel);
+  backdrop-filter: var(--ds-effect-glass-panel);
+  box-shadow: var(--ds-elevation-glass-frost);
+
+  @media (prefers-reduced-transparency: reduce) {
+    background-color: var(--ds-color-bg-surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* A pane that carries text: menus, popovers, dialogs, toasts. It's denser than
+   regular glass so text holds up over anything, which the contrast tests check
+   against pure black and white backdrops. Paper inside it turns to translucent
+   fills, so a footer strip or a nested field doesn't punch a solid hole in the
+   glass. Keep `border` and `shadow-overlay` on the element: they stay as they
+   are in every brand, and only the colours here change. */
+@utility glass-panel {
+  background-color: var(--ds-color-glass-panel);
+  border-color: var(--ds-color-glass-edge);
+  -webkit-backdrop-filter: var(--ds-effect-glass-panel);
+  backdrop-filter: var(--ds-effect-glass-panel);
+  --ds-color-bg-surface: var(--ds-color-glass-well);
+  --ds-color-glass-surface: var(--ds-color-glass-well);
+  --ds-color-bg-sunken: var(--ds-color-glass-inset);
+  --ds-color-bg-surface-hover: var(--ds-color-glass-hover);
+  --ds-color-border-default: var(--ds-color-glass-line);
+  --ds-color-text-secondary: var(--ds-color-glass-on-panel-secondary);
+  --ds-color-icon-secondary: var(--ds-color-glass-on-panel-secondary);
+
+  @media (prefers-reduced-transparency: reduce) {
+    background-color: var(--ds-color-glass-solid);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    --ds-color-bg-surface: var(--ds-color-glass-solid);
+  }
+}
+
+/* The thick edge and the lift, for a pane that stands on its own as an object:
+   a widget or a card. Pair it with glass-panel and `border`. */
+@utility glass-slab {
+  box-shadow: var(--ds-elevation-glass-bevel), var(--ds-elevation-glass);
+}
+
+/* Light held inside the glass: a pool at the bottom edge and a wash through the
+   middle. Set --glow to a glow colour; the material stays on the same element. */
+@utility glass-glow {
+  background-image:
+    radial-gradient(70% 80% at 50% 115%, var(--glow, var(--ds-color-glass-glow-sky)) 0%, transparent 72%),
+    radial-gradient(95% 95% at 50% 45%, color-mix(in srgb, var(--glow, var(--ds-color-glass-glow-sky)) 42%, transparent) 0%, transparent 72%);
+}
+
+/* An iridescent ring around a round control. Needs a positioned host. */
+@utility glass-iris {
+  &::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    pointer-events: none;
+    background: conic-gradient(
+      from var(--iris-angle, 210deg),
+      var(--ds-color-glass-glow-sky),
+      var(--ds-color-glass-glow-iris),
+      var(--ds-color-glass-glow-ember),
+      var(--ds-color-glass-glow-sun),
+      var(--ds-color-glass-glow-mint),
+      var(--ds-color-glass-glow-sky)
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+  }
+}
+
+/* The highlight that follows the pointer (sheenHandlers sets --sheen-x and --sheen-y).
+   It needs a positioned host that clips, and sits under the host's content. */
+@utility glass-sheen {
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: var(--sheen-on, 0);
+    background: radial-gradient(
+      circle 90px at var(--sheen-x, 50%) var(--sheen-y, 0%),
+      var(--ds-color-glass-rim),
+      transparent 70%
+    );
+    transition: opacity var(--ds-motion-duration-moderate) ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::before {
+      display: none;
+    }
+  }
+}
+
+/* A dial's or wheel's ring of light turning slowly while it's listening. */
+@keyframes ds-iris-turn {
+  to {
+    --iris-angle: 570deg;
+  }
+}
+
+@property --iris-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 210deg;
+}
+
+@utility animate-iris {
+  animation: ds-iris-turn calc(var(--ds-motion-duration-shimmer) * 1.5) linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Live level bars while a voice control listens. Each bar sets its own delay. */
+@keyframes ds-level {
+  0%,
+  100% {
+    scale: 1 0.35;
+  }
+  50% {
+    scale: 1 1;
+  }
+}
+
+@utility animate-level {
+  animation: ds-level calc(var(--ds-motion-duration-shimmer) * 0.4) var(--ds-motion-easing-standard) infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Nearly bare glass, for controls over photos and video. Sit it on bg-glass-dim. */
+@utility glass-clear {
+  background-color: var(--ds-color-glass-clear);
+  -webkit-backdrop-filter: var(--ds-effect-glass-clear);
+  backdrop-filter: var(--ds-effect-glass-clear);
+
+  @media (prefers-reduced-transparency: reduce) {
+    background-color: var(--ds-color-bg-surface);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}
+
+/* The lit edge: bright where the light lands, fading away along the sides. */
+@utility glass-rim {
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    background: linear-gradient(
+      135deg,
+      var(--ds-color-glass-rim),
+      var(--ds-color-glass-rim-soft) 30%,
+      var(--ds-color-glass-rim-soft) 70%,
+      var(--ds-color-glass-rim)
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+  }
+}
+
+@utility rounded-inherit {
+  border-radius: inherit;
+}
+
+/* Softens content scrolling under a bar so the bar stays readable. */
+@utility glass-scroll-edge {
+  background-color: color-mix(in srgb, var(--ds-color-bg-canvas) 55%, transparent);
+  -webkit-backdrop-filter: var(--ds-effect-glass-clear);
+  backdrop-filter: var(--ds-effect-glass-clear);
+  -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent);
+  mask-image: linear-gradient(to bottom, #000 35%, transparent);
+}
+
+/* A wheel fading out at its top and bottom. */
+@utility wheel-fade {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 30%, #000 70%, transparent);
+}
+
+/* A menu growing out of its button: the panel starts clipped to the button's
+   shape and opens to its full size. The clip is on the panel itself, which
+   keeps the glass able to see the page. */
+@utility morph-menu {
+  clip-path: inset(0 0 0 0 round var(--ds-radius-overlay));
+  transition: clip-path var(--ds-motion-duration-slow) var(--ds-motion-easing-enter);
+
+  &[data-entering],
+  &[data-exiting] {
+    clip-path: inset(0 calc(100% - var(--trigger-width)) calc(100% - var(--morph-height)) 0 round var(--morph-radius));
+  }
+
+  &[data-align="end"][data-entering],
+  &[data-align="end"][data-exiting] {
+    clip-path: inset(0 0 calc(100% - var(--morph-height)) calc(100% - var(--trigger-width)) round var(--morph-radius));
+  }
+
+  &[data-placement="top"][data-entering],
+  &[data-placement="top"][data-exiting] {
+    clip-path: inset(calc(100% - var(--morph-height)) calc(100% - var(--trigger-width)) 0 0 round var(--morph-radius));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
 /* No scrollbar, for short lists that scroll inside a panel and show their own edge. */
 @utility scrollbar-none {
   scrollbar-width: none;

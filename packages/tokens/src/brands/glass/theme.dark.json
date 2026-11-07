@@ -1,0 +1,477 @@
+{
+  "$description": "Liquid Glass, dark: re-points the paper and accent ramps and the roles that differ, then gives the glass material real translucency.",
+  "color": {
+    "paper": {
+      "50": {
+        "$type": "color",
+        "$value": "{color.ios.white}"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "{color.ios.gray6}"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "{color.ios.gray5}"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "{color.ios.gray4}"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "{color.ios.gray3}"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "{color.ios.gray}"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "{color.ios.gray-accessible}"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "{color.ios.gray3-dark}"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "{color.ios.gray4-dark}"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "{color.ios.gray6-dark}"
+      },
+      "925": {
+        "$type": "color",
+        "$value": "{color.ios.gray5-dark}"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "{color.ios.black}"
+      }
+    },
+    "accent": {
+      "50": {
+        "$type": "color",
+        "$value": "{color.azure.50}"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "{color.azure.100}"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "{color.azure.200}"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "{color.azure.300}"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "{color.azure.400}"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "{color.azure.500}"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "{color.azure.600}"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "{color.azure.700}"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "{color.azure.800}"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "{color.azure.900}"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "{color.azure.950}"
+      }
+    },
+    "text": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.ios.white}"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.ios.gray2}"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.ios.red-light}"
+      }
+    },
+    "icon": {
+      "primary": {
+        "$type": "color",
+        "$value": "{color.ios.white}"
+      },
+      "secondary": {
+        "$type": "color",
+        "$value": "{color.ios.gray2}"
+      },
+      "danger": {
+        "$type": "color",
+        "$value": "{color.ios.red-light}"
+      }
+    },
+    "border": {
+      "danger": {
+        "$type": "color",
+        "$value": "{color.ios.red-light}"
+      },
+      "control": {
+        "$type": "color",
+        "$value": "{color.ios.gray}"
+      },
+      "control-hover": {
+        "$type": "color",
+        "$value": "{color.ios.gray2}"
+      },
+      "focus": {
+        "$type": "color",
+        "$value": "{color.azure.400}"
+      },
+      "default": {
+        "$type": "color",
+        "$value": "{color.ios.glass-line-dark}"
+      },
+      "separator": {
+        "$type": "color",
+        "$value": "{color.ios.glass-line-dark}"
+      },
+      "group": {
+        "$type": "color",
+        "$value": "{color.ios.glass-line-dark}"
+      }
+    },
+    "status": {
+      "success": {
+        "solid": {
+          "$type": "color",
+          "$value": "{color.ios.green-dark}"
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{color.ios.tint-success-dark}"
+        }
+      },
+      "danger": {
+        "solid": {
+          "$type": "color",
+          "$value": "{color.ios.red-light}"
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{color.ios.tint-danger-dark}"
+        }
+      },
+      "warning": {
+        "solid": {
+          "$type": "color",
+          "$value": "{color.ios.yellow-dark}"
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{color.ios.tint-warning-dark}"
+        }
+      },
+      "info": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.ios.tint-info-dark}"
+        }
+      }
+    },
+    "chart": {
+      "1": {
+        "$type": "color",
+        "$value": "{color.ios.blue-dark}"
+      },
+      "2": {
+        "$type": "color",
+        "$value": "{color.ios.teal-dark}"
+      },
+      "3": {
+        "$type": "color",
+        "$value": "{color.ios.orange-dark}"
+      },
+      "4": {
+        "$type": "color",
+        "$value": "{color.ios.pink-dark}"
+      },
+      "5": {
+        "$type": "color",
+        "$value": "{color.ios.indigo-dark}"
+      },
+      "6": {
+        "$type": "color",
+        "$value": "{color.ios.green-dark}"
+      },
+      "7": {
+        "$type": "color",
+        "$value": "{color.ios.brown-dark}"
+      },
+      "8": {
+        "$type": "color",
+        "$value": "{color.ios.purple-dark}"
+      },
+      "9": {
+        "$type": "color",
+        "$value": "{color.ios.yellow-dark}"
+      },
+      "1-active": {
+        "$type": "color",
+        "$value": "{color.ios.blue-dark-active}"
+      },
+      "2-active": {
+        "$type": "color",
+        "$value": "{color.ios.teal-light}"
+      },
+      "3-active": {
+        "$type": "color",
+        "$value": "{color.ios.orange-light}"
+      },
+      "4-active": {
+        "$type": "color",
+        "$value": "{color.ios.pink-light}"
+      },
+      "5-active": {
+        "$type": "color",
+        "$value": "{color.ios.indigo-light}"
+      },
+      "6-active": {
+        "$type": "color",
+        "$value": "{color.ios.green-light}"
+      },
+      "7-active": {
+        "$type": "color",
+        "$value": "{color.ios.brown-light}"
+      },
+      "8-active": {
+        "$type": "color",
+        "$value": "{color.ios.purple-light}"
+      },
+      "9-active": {
+        "$type": "color",
+        "$value": "{color.ios.yellow-light}"
+      }
+    },
+    "glass": {
+      "regular": {
+        "$type": "color",
+        "$value": "{color.ios.glass-regular-dark}"
+      },
+      "clear": {
+        "$type": "color",
+        "$value": "{color.ios.glass-clear}"
+      },
+      "rim": {
+        "$type": "color",
+        "$value": "{color.ios.glass-rim-dark}"
+      },
+      "rim-soft": {
+        "$type": "color",
+        "$value": "{color.ios.glass-rim-soft-dark}"
+      },
+      "lens": {
+        "$type": "color",
+        "$value": "{color.ios.glass-lens-dark}"
+      },
+      "dim": {
+        "$type": "color",
+        "$value": "{color.ios.glass-dim}"
+      },
+      "on-clear": {
+        "$type": "color",
+        "$value": "{color.ios.white}"
+      },
+      "on-clear-secondary": {
+        "$type": "color",
+        "$value": "{color.ios.on-clear-secondary}"
+      },
+      "panel": {
+        "$type": "color",
+        "$value": "{color.ios.glass-panel-dark}"
+      },
+      "edge": {
+        "$type": "color",
+        "$value": "{color.ios.glass-edge-dark}"
+      },
+      "well": {
+        "$type": "color",
+        "$value": "{color.ios.glass-well-dark}"
+      },
+      "inset": {
+        "$type": "color",
+        "$value": "{color.ios.glass-inset-dark}"
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{color.ios.glass-fill-dark}"
+      },
+      "line": {
+        "$type": "color",
+        "$value": "{color.ios.glass-line-dark}"
+      },
+      "on-panel-secondary": {
+        "$type": "color",
+        "$value": "{color.ios.gray3}"
+      },
+      "frost": {
+        "$type": "color",
+        "$value": "{color.ios.glass-frost-dark}"
+      },
+      "glow-sky": {
+        "$type": "color",
+        "$value": "{color.ios.glow-sky}"
+      },
+      "glow-sun": {
+        "$type": "color",
+        "$value": "{color.ios.glow-sun}"
+      },
+      "glow-ember": {
+        "$type": "color",
+        "$value": "{color.ios.glow-ember}"
+      },
+      "glow-mint": {
+        "$type": "color",
+        "$value": "{color.ios.glow-mint}"
+      },
+      "glow-iris": {
+        "$type": "color",
+        "$value": "{color.ios.glow-iris}"
+      },
+      "surface": {
+        "$type": "color",
+        "$value": "{color.ios.glass-surface-dark}"
+      },
+      "wash-sky": {
+        "$type": "color",
+        "$value": "{color.ios.wash-sky-dark}"
+      },
+      "wash-lilac": {
+        "$type": "color",
+        "$value": "{color.ios.wash-lilac-dark}"
+      },
+      "wash-peach": {
+        "$type": "color",
+        "$value": "{color.ios.wash-peach-dark}"
+      },
+      "wash-mint": {
+        "$type": "color",
+        "$value": "{color.ios.wash-mint-dark}"
+      }
+    },
+    "bg": {
+      "sunken": {
+        "$type": "color",
+        "$value": "{color.ios.glass-inset-dark}"
+      },
+      "sunken-hover": {
+        "$type": "color",
+        "$value": "{color.ios.glass-fill-dark}"
+      },
+      "muted": {
+        "$type": "color",
+        "$value": "{color.ios.glass-fill-dark}"
+      },
+      "muted-hover": {
+        "$type": "color",
+        "$value": "{color.ios.glass-fill-strong-dark}"
+      },
+      "strong": {
+        "$type": "color",
+        "$value": "{color.ios.glass-fill-strong-dark}"
+      },
+      "strong-hover": {
+        "$type": "color",
+        "$value": "{color.ios.glass-fill-heavy-dark}"
+      },
+      "surface-hover": {
+        "$type": "color",
+        "$value": "{color.ios.glass-fill-dark}"
+      },
+      "surface-pressed": {
+        "$type": "color",
+        "$value": "{color.ios.glass-fill-strong-dark}"
+      },
+      "surface-disabled": {
+        "$type": "color",
+        "$value": "{color.ios.glass-inset-dark}"
+      }
+    },
+    "progress": {
+      "track": {
+        "$type": "color",
+        "$value": "{color.ios.glass-fill-strong-dark}"
+      },
+      "fill": {
+        "$type": "color",
+        "$value": "{color.accent.600}"
+      }
+    }
+  },
+  "gradient": {
+    "action": {
+      "primary": {
+        "default": {
+          "$type": "gradient",
+          "$value": "linear-gradient({color.azure.600}, {color.azure.600})"
+        },
+        "hover": {
+          "$type": "gradient",
+          "$value": "linear-gradient({color.azure.500}, {color.azure.500})"
+        },
+        "pressed": {
+          "$type": "gradient",
+          "$value": "linear-gradient({color.azure.700}, {color.azure.700})"
+        },
+        "disabled": {
+          "$type": "gradient",
+          "$value": "linear-gradient({color.paper.800}, {color.paper.800})"
+        }
+      }
+    }
+  },
+  "elevation": {
+    "raised": {
+      "$type": "shadow",
+      "$value": "{shadow.glass-raised}"
+    },
+    "overlay": {
+      "$type": "shadow",
+      "$value": "{shadow.glass-dark}"
+    },
+    "hairline": {
+      "$type": "shadow",
+      "$value": "{shadow.glass-hairline}"
+    },
+    "glass": {
+      "$type": "shadow",
+      "$value": "{shadow.glass-dark}"
+    },
+    "glass-bevel": {
+      "$type": "shadow",
+      "$value": "{shadow.glass-bevel-dark}"
+    },
+    "glass-frost": {
+      "$type": "shadow",
+      "$value": "{shadow.glass-frost-dark}"
+    },
+    "glass-lens": {
+      "$type": "shadow",
+      "$value": "{shadow.glass-lens-dark}"
+    }
+  }
+}

@@ -108,6 +108,8 @@ import { ACTION_ENTRIES, NAVIGATION_ENTRIES, OVERLAY_ENTRIES } from "./overlay-d
 import { DATE_ENTRIES, FORM_ENTRIES, SELECTION_ENTRIES } from "./form-demos";
 import { DATA_DISPLAY_ENTRIES, FEEDBACK_ENTRIES, LAYOUT_ENTRIES } from "./display-demos";
 import { MORE_ENTRIES } from "./more-demos";
+import { GLASS_ENTRIES } from "./glass-demos";
+import { LIQUID_ENTRIES } from "./liquid-demos";
 import { MOON_ENTRIES } from "./moon-demos";
 import { NINE_ENTRIES } from "./nine-demos";
 import { ALIASES, BreadcrumbDemo, PARITY_ENTRIES, SelectDemo, TableDemo } from "./parity-demos";
@@ -185,7 +187,8 @@ export type Group =
   | "Blocks"
   | "Charts"
   | "Templates"
-  | "Moon";
+  | "Moon"
+  | "Glass";
 
 export const GROUPS: { name: Group; blurb: string }[] = [
   { name: "Foundations", blurb: "The tokens everything is built on, and how theming works." },
@@ -203,6 +206,7 @@ export const GROUPS: { name: Group; blurb: string }[] = [
   { name: "Charts", blurb: "Data cards built on the chart palette." },
   { name: "Templates", blurb: "Whole screens assembled from the blocks and charts." },
   { name: "Moon", blurb: "Ten complex components from the Moon design system. Switch the brand to Moon to see the whole system restyle." },
+  { name: "Glass", blurb: "Complex components on a thick Liquid Glass material, for the layer floating over content. Switch the brand to Glass to see the whole system restyle." },
 ];
 
 export interface CatalogEntry {
@@ -1590,6 +1594,8 @@ export const CATALOG: CatalogEntry[] = [
   ...MORE_ENTRIES,
   ...NINE_ENTRIES,
   ...MOON_ENTRIES,
+  ...GLASS_ENTRIES,
+  ...LIQUID_ENTRIES,
   ...PARITY_ENTRIES,
 ]
   .map((entry) => ({ ...entry, aliases: entry.aliases ?? ALIASES[entry.slug] }))

@@ -41,7 +41,7 @@ export function BottomNavigation({ "aria-label": ariaLabel, items, currentId, on
   return (
     <nav
       aria-label={ariaLabel}
-      className={cx("border-t border-line bg-surface", fixed && "fixed inset-x-0 bottom-0 z-40", className)}
+      className={cx("bui-bottom-nav border-t border-line bg-surface", fixed && "fixed inset-x-0 bottom-0 z-40", className)}
       style={fixed ? { paddingBottom: "env(safe-area-inset-bottom)" } : undefined}
     >
       <ul className="grid" style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}>
@@ -50,7 +50,7 @@ export function BottomNavigation({ "aria-label": ariaLabel, items, currentId, on
           const Glyph = current && item.activeIcon ? item.activeIcon : item.icon;
           const content = (
             <>
-              <span aria-hidden className={cx("absolute inset-x-1/4 top-0 h-0.5 rounded-full bg-accent-600 transition-opacity duration-(--ds-motion-duration-base)", current ? "opacity-100" : "opacity-0")} />
+              <span aria-hidden className={cx("bui-bottom-nav-mark absolute inset-x-1/4 top-0 h-0.5 rounded-full bg-accent-600 transition-opacity duration-(--ds-motion-duration-base)", current ? "opacity-100" : "opacity-0")} />
               <span className="relative">
                 <Glyph aria-hidden className="size-5.5" />
                 {item.badge ? (
@@ -66,7 +66,7 @@ export function BottomNavigation({ "aria-label": ariaLabel, items, currentId, on
             </>
           );
           const classes = cx(
-            "relative flex h-16 w-full cursor-pointer flex-col items-center justify-center gap-1 rounded-xs transition-colors duration-(--ds-motion-duration-fast)",
+            "bui-bottom-nav-item relative flex h-16 w-full cursor-pointer flex-col items-center justify-center gap-1 rounded-xs transition-colors duration-(--ds-motion-duration-fast)",
             current ? "text-fg" : "text-fg-secondary hover:text-fg",
             focusRingNative,
             "focus-visible:-outline-offset-2",

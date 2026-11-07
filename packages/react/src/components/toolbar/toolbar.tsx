@@ -22,7 +22,7 @@ export function Toolbar({ className, ...props }: ToolbarProps) {
     <AriaToolbar
       {...props}
       className={cx(
-        "flex flex-wrap items-center gap-1 rounded-surface border border-line bg-surface p-1 shadow-raised",
+        "bui-toolbar flex flex-wrap items-center gap-1 rounded-surface border border-line bg-surface p-1 shadow-raised",
         "data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-stretch",
         className,
       )}

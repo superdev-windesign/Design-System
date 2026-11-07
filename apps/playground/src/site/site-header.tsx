@@ -46,7 +46,7 @@ function ThemeSwitch({ className }: { className?: string }) {
   );
 }
 
-/** Windesign or Moon: every component restyles, and the change spreads out from the click. */
+/** Windesign, Moon or Glass: every component restyles, and the change spreads out from the click. */
 function BrandSwitch({ className }: { className?: string }) {
   const { brand, setBrand } = useTheme();
   return (
@@ -126,7 +126,7 @@ export function SiteHeader({ route }: { route: Route }) {
   useEffect(() => setMenuOpen(false), [route]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-canvas/92 backdrop-blur-sm">
+    <header className="sticky top-0 z-40 border-b border-line bg-canvas/92 [backdrop-filter:var(--ds-effect-glass-panel)]">
       <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-5 sm:px-8">
         <Wordmark />
 
@@ -164,9 +164,9 @@ export function SiteHeader({ route }: { route: Route }) {
             <span className="hidden sm:inline">Search</span>
             <Kbd className="hidden px-1.5 sm:inline-flex lg:hidden xl:inline-flex">{isApple() ? "⌘K" : "Ctrl K"}</Kbd>
           </button>
-          <BrandSwitch className="hidden lg:flex" />
+          <BrandSwitch className="hidden xl:flex" />
           <ThemeSwitch className="hidden sm:flex" />
-          <IconButton icon={RiMenuLine} size="small" aria-label="Open menu" onClick={() => setMenuOpen(true)} className="lg:hidden" />
+          <IconButton icon={RiMenuLine} size="small" aria-label="Open menu" onClick={() => setMenuOpen(true)} className="xl:hidden" />
         </div>
       </div>
 
@@ -177,7 +177,7 @@ export function SiteHeader({ route }: { route: Route }) {
         isOpen={menuOpen}
         onOpenChange={setMenuOpen}
         isDismissable
-        className="fixed inset-0 z-50 bg-scrim transition-opacity data-[entering]:opacity-0 data-[exiting]:opacity-0 lg:hidden"
+        className="fixed inset-0 z-50 bg-scrim transition-opacity data-[entering]:opacity-0 data-[exiting]:opacity-0 xl:hidden"
       >
         <Modal className="fixed inset-y-0 end-0 w-full max-w-sm bg-canvas transition-transform duration-(--ds-motion-duration-slow) ease-enter data-[entering]:translate-x-full data-[exiting]:translate-x-full rtl:data-[entering]:-translate-x-full rtl:data-[exiting]:-translate-x-full motion-reduce:transition-none">
           <Dialog aria-label="Menu" className="flex h-full flex-col gap-6 overflow-y-auto p-5">

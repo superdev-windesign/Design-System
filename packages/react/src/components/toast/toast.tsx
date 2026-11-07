@@ -359,7 +359,7 @@ function ToastItem({
     >
       {/* Resting behind the front toast, a toast takes the front one's height so the stack stays tidy. */}
       <motion.div
-        className="overflow-hidden rounded-surface border border-line bg-surface shadow-overlay"
+        className="overflow-hidden rounded-surface border glass-panel shadow-overlay"
         initial={false}
         animate={{ height: isStacked && frontHeight ? frontHeight : height ?? "auto" }}
         transition={spring}

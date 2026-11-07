@@ -182,7 +182,7 @@ export function ChartCard({
       role="figure"
       aria-labelledby={titleId}
       aria-describedby={summaryId}
-      className={cx("flex min-w-0 flex-col gap-5 rounded-2xl bg-sunken px-4 pt-4 pb-3", className)}
+      className={cx("bui-chart-card flex min-w-0 flex-col gap-5 rounded-2xl bg-sunken px-4 pt-4 pb-3", className)}
     >
       <div className={cx("flex flex-wrap items-start justify-between gap-x-4 gap-y-3", align === "center" && "flex-col items-center gap-y-1 px-16 text-center")}>
         <div className="flex min-w-0 flex-col gap-0.5">
@@ -245,7 +245,7 @@ export function ChartTooltip({
 }: ChartTooltipProps) {
   if (!active || !payload?.length) return null;
   return (
-    <div className="flex min-w-36 flex-col gap-1.5 rounded-xl border border-line bg-surface px-3 py-2 shadow-overlay">
+    <div className="flex min-w-36 flex-col gap-1.5 rounded-xl border glass-panel px-3 py-2 shadow-overlay">
       {(typeof label === "string" || typeof label === "number") && (
         <p className="text-body-sm-strong text-fg">{formatLabel ? formatLabel(label) : label}</p>
       )}

@@ -42,7 +42,7 @@ export function FloatingActionButton({ icon: Icon, label, extended = false, posi
       aria-label={extended ? undefined : label}
       className={composeRenderProps(className, (className) =>
         cx(
-          "z-30 inline-flex h-14 min-w-14 cursor-pointer items-center justify-center gap-2 rounded-full bg-action-primary text-body-md-strong text-on-action shadow-overlay press-motion",
+          "bui-button-solid z-30 inline-flex h-14 min-w-14 cursor-pointer items-center justify-center gap-2 rounded-full bg-action-primary text-body-md-strong text-on-action shadow-overlay press-motion",
           extended ? "ps-4 pe-5" : "px-0",
           placement !== "static" && placement,
           placement !== "static" && POSITION[position],
@@ -100,7 +100,7 @@ export function BackToTop({ threshold = 480, scrollRef, focusTargetId = "main", 
       onPress={goTop}
       className={cx(
         placement,
-        "end-6 bottom-6 z-30 flex size-11 cursor-pointer items-center justify-center rounded-full border border-line-control bg-surface text-fg shadow-overlay",
+        "bui-back-to-top end-6 bottom-6 z-30 flex size-11 cursor-pointer items-center justify-center rounded-full border border-line-control bg-surface text-fg shadow-overlay",
         "animate-row-slide-in transition-colors duration-(--ds-motion-duration-base) data-[hovered]:bg-surface-hover",
         focusRing,
         className,

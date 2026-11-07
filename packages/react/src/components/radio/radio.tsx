@@ -58,7 +58,7 @@ export function RadioDot({ selected = false, size = "sm", focusVisible = false, 
       aria-hidden
       data-selected={selected || undefined}
       className={cx(
-        "relative flex shrink-0 items-center justify-center rounded-full border bg-surface",
+        "bui-control-mark relative flex shrink-0 items-center justify-center rounded-full border bg-surface",
         "transition-[border-color] duration-(--ds-motion-duration-base) ease-standard motion-reduce:transition-none",
         s.dot,
         selected ? "border-accent-600" : hovered ? "border-line-control-hover" : "border-line-control",

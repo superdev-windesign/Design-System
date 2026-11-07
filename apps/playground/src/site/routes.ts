@@ -20,7 +20,7 @@ export const groupSlug = (group: Group) => group.toLowerCase().replace(/\s+/g, "
 export const groupBySlug = (slug: string) => GROUPS.find((g) => groupSlug(g.name) === slug)?.name;
 
 /** Groups that aren't foundations, blocks, charts or templates. */
-export const COMPONENT_GROUPS: Group[] = GROUPS.map((g) => g.name).filter((g) => !["Foundations", "Blocks", "Charts", "Templates", "Moon"].includes(g));
+export const COMPONENT_GROUPS: Group[] = GROUPS.map((g) => g.name).filter((g) => !["Foundations", "Blocks", "Charts", "Templates", "Moon", "Glass"].includes(g));
 
 /** "03" for the third group: the chapter number used across the site. */
 export const groupNumber = (group: Group) => String(GROUPS.findIndex((g) => g.name === group) + 1).padStart(2, "0");
@@ -76,7 +76,7 @@ export const NAV: { label: string; href: string; matches: (route: Route) => bool
     matches: (r) =>
       r.kind === "index" || (r.kind === "section" && COMPONENT_GROUPS.includes(r.group)) || (r.kind === "detail" && COMPONENT_GROUPS.includes(r.entry.group)),
   },
-  ...(["Blocks", "Charts", "Templates", "Moon"] as const).map((group) => ({
+  ...(["Blocks", "Charts", "Templates", "Moon", "Glass"] as const).map((group) => ({
     label: group,
     href: `#/section/${groupSlug(group)}`,
     matches: (r: Route) => (r.kind === "section" && r.group === group) || (r.kind === "detail" && r.entry.group === group),

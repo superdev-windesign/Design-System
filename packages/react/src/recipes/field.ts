@@ -28,7 +28,7 @@ export type FieldSize = "md" | "sm";
  * `after:scale-x-100` to show it; `after:bg-line-danger` recolours it.
  */
 export const FIELD_RULE = cx(
-  "after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:rounded-b-control-md after:bg-focus",
+  "bui-field-rule after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:rounded-b-control-md after:bg-focus",
   "after:origin-left after:scale-x-0 after:transition-[scale] after:duration-(--ds-motion-duration-moderate) after:ease-out",
   "rtl:after:origin-right motion-reduce:after:transition-none",
 );

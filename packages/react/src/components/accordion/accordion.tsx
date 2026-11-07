@@ -29,7 +29,7 @@ export function Accordion({ numbered = false, className, children, ...props }: A
   const items = Children.toArray(children);
   return (
     <NumberedContext.Provider value={numbered}>
-      <DisclosureGroup {...props} className={cx("flex flex-col border-t border-line", className)}>
+      <DisclosureGroup {...props} className={cx("bui-accordion flex flex-col border-t border-line", className)}>
         {items.map((child, i) => (
           <IndexContext.Provider key={i} value={i}>
             {child}

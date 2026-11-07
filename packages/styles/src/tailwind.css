@@ -13,6 +13,8 @@
 @import "@ds/tokens/css";
 @import "./base.css";
 @import "./utilities.css";
+@import "./brands/glass.css";
+@import "./brands/moon.css";
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 @custom-variant rtl (&:dir(rtl));
@@ -97,6 +99,27 @@
   --radius-overlay: var(--ds-radius-overlay);
   --radius-panel: var(--ds-radius-panel);
   --radius-action: var(--ds-radius-action);
+  --color-glass-regular: var(--ds-color-glass-regular);
+  --color-glass-clear: var(--ds-color-glass-clear);
+  --color-glass-lens: var(--ds-color-glass-lens);
+  --color-glass-dim: var(--ds-color-glass-dim);
+  --color-glass-rim: var(--ds-color-glass-rim);
+  --color-on-glass: var(--ds-color-glass-on-clear);
+  --color-on-glass-secondary: var(--ds-color-glass-on-clear-secondary);
+  --shadow-glass: var(--ds-elevation-glass);
+  --shadow-glass-bevel: var(--ds-elevation-glass-bevel);
+  --shadow-glass-frost: var(--ds-elevation-glass-frost);
+  --shadow-glass-lens: var(--ds-elevation-glass-lens);
+  --color-glass-panel: var(--ds-color-glass-panel);
+  --color-glass-frost: var(--ds-color-glass-frost);
+  --color-glass-well: var(--ds-color-glass-well);
+  --color-glass-hover: var(--ds-color-glass-hover);
+  --color-glass-line: var(--ds-color-glass-line);
+  --color-glow-sky: var(--ds-color-glass-glow-sky);
+  --color-glow-sun: var(--ds-color-glass-glow-sun);
+  --color-glow-ember: var(--ds-color-glass-glow-ember);
+  --color-glow-mint: var(--ds-color-glass-glow-mint);
+  --color-glow-iris: var(--ds-color-glass-glow-iris);
 
   /* Elevation → shadow-* */
   --shadow-raised: var(--ds-elevation-raised);
@@ -272,15 +295,15 @@
   --color-social-dark-pressed: var(--ds-component-social-dark-bg-pressed);
 
   /* Radius scale for component internals (prefer the role names above when one fits) */
-  /* Editorial corners: the size names step up gently and top out at 10px. */
-  --radius-xs: var(--ds-radius-2);
-  --radius-sm: var(--ds-radius-4);
-  --radius-md: var(--ds-radius-4);
-  --radius-lg: var(--ds-radius-4);
-  --radius-2lg: var(--ds-radius-6);
-  --radius-xl: var(--ds-radius-6);
-  --radius-2xl: var(--ds-radius-8);
-  --radius-3xl: var(--ds-radius-10);
+  /* The size names step up with the brand: gently in Windesign, topping out at 10px. */
+  --radius-xs: var(--ds-radius-scale-xs);
+  --radius-sm: var(--ds-radius-scale-sm);
+  --radius-md: var(--ds-radius-scale-md);
+  --radius-lg: var(--ds-radius-scale-lg);
+  --radius-2lg: var(--ds-radius-scale-2lg);
+  --radius-xl: var(--ds-radius-scale-xl);
+  --radius-2xl: var(--ds-radius-scale-2xl);
+  --radius-3xl: var(--ds-radius-scale-3xl);
 
   /* Elevation and component effects */
   --shadow-hairline: var(--ds-elevation-hairline);

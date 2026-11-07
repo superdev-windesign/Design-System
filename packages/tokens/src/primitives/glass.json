@@ -1,0 +1,587 @@
+{
+  "$description": "Liquid Glass primitives. The hues are Apple's published iOS system colours and grays; the -deep steps are their increased-contrast values, for text and marks on light surfaces. SF is named but not bundled: it only appears on Apple devices, which ship it.",
+  "color": {
+    "azure": {
+      "50": {
+        "$type": "color",
+        "$value": "#EBF5FF"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "#D6EAFF"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "#ADD5FF"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "#7ABDFF"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "#47A3FF"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "#0088FF",
+        "$description": "System blue, light."
+      },
+      "600": {
+        "$type": "color",
+        "$value": "#0071E3",
+        "$description": "A step deeper, so white text clears 4.5:1 on it."
+      },
+      "700": {
+        "$type": "color",
+        "$value": "#005BBF"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "#00479A"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "#003470"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "#00214A"
+      }
+    },
+    "ios": {
+      "none": {
+        "$type": "color",
+        "$value": "#00000000"
+      },
+      "white": {
+        "$type": "color",
+        "$value": "#FFFFFF"
+      },
+      "black": {
+        "$type": "color",
+        "$value": "#000000"
+      },
+      "gray": {
+        "$type": "color",
+        "$value": "#8E8E93"
+      },
+      "gray-accessible": {
+        "$type": "color",
+        "$value": "#6C6C70"
+      },
+      "gray-control": {
+        "$type": "color",
+        "$value": "#86868B",
+        "$description": "Control outlines: 3:1 on the grouped background."
+      },
+      "gray2": {
+        "$type": "color",
+        "$value": "#AEAEB2"
+      },
+      "gray3": {
+        "$type": "color",
+        "$value": "#C7C7CC"
+      },
+      "gray4": {
+        "$type": "color",
+        "$value": "#D1D1D6"
+      },
+      "gray5": {
+        "$type": "color",
+        "$value": "#E5E5EA"
+      },
+      "gray6": {
+        "$type": "color",
+        "$value": "#F2F2F7"
+      },
+      "gray2-dark": {
+        "$type": "color",
+        "$value": "#636366"
+      },
+      "gray3-dark": {
+        "$type": "color",
+        "$value": "#48484A"
+      },
+      "gray4-dark": {
+        "$type": "color",
+        "$value": "#3A3A3C"
+      },
+      "gray5-dark": {
+        "$type": "color",
+        "$value": "#2C2C2E"
+      },
+      "gray6-dark": {
+        "$type": "color",
+        "$value": "#1C1C1E"
+      },
+      "blue-dark": {
+        "$type": "color",
+        "$value": "#0091FF"
+      },
+      "blue-dark-active": {
+        "$type": "color",
+        "$value": "#47A3FF"
+      },
+      "red": {
+        "$type": "color",
+        "$value": "#FF383C"
+      },
+      "red-dark": {
+        "$type": "color",
+        "$value": "#FF4245"
+      },
+      "red-deep": {
+        "$type": "color",
+        "$value": "#D70015"
+      },
+      "red-light": {
+        "$type": "color",
+        "$value": "#FF6961"
+      },
+      "orange-deep": {
+        "$type": "color",
+        "$value": "#C93400"
+      },
+      "orange-deeper": {
+        "$type": "color",
+        "$value": "#A62B00"
+      },
+      "orange-dark": {
+        "$type": "color",
+        "$value": "#FF9230"
+      },
+      "orange-light": {
+        "$type": "color",
+        "$value": "#FFB273"
+      },
+      "yellow-deep": {
+        "$type": "color",
+        "$value": "#B25000"
+      },
+      "yellow-deeper": {
+        "$type": "color",
+        "$value": "#8F4000"
+      },
+      "yellow-dark": {
+        "$type": "color",
+        "$value": "#FFD600"
+      },
+      "yellow-light": {
+        "$type": "color",
+        "$value": "#FFE566"
+      },
+      "green": {
+        "$type": "color",
+        "$value": "#34C759"
+      },
+      "green-deep": {
+        "$type": "color",
+        "$value": "#248A3D"
+      },
+      "green-deeper": {
+        "$type": "color",
+        "$value": "#1C6E30"
+      },
+      "green-dark": {
+        "$type": "color",
+        "$value": "#30D158"
+      },
+      "green-light": {
+        "$type": "color",
+        "$value": "#66E08A"
+      },
+      "teal-deep": {
+        "$type": "color",
+        "$value": "#008299"
+      },
+      "teal-deeper": {
+        "$type": "color",
+        "$value": "#00697B"
+      },
+      "teal-dark": {
+        "$type": "color",
+        "$value": "#00D2E0"
+      },
+      "teal-light": {
+        "$type": "color",
+        "$value": "#5CE6F0"
+      },
+      "indigo": {
+        "$type": "color",
+        "$value": "#6155F5"
+      },
+      "indigo-deep": {
+        "$type": "color",
+        "$value": "#4A3FD6"
+      },
+      "indigo-dark": {
+        "$type": "color",
+        "$value": "#6D7CFF"
+      },
+      "indigo-light": {
+        "$type": "color",
+        "$value": "#97A3FF"
+      },
+      "purple-deep": {
+        "$type": "color",
+        "$value": "#8944AB"
+      },
+      "purple-deeper": {
+        "$type": "color",
+        "$value": "#70378C"
+      },
+      "purple-dark": {
+        "$type": "color",
+        "$value": "#DB34F2"
+      },
+      "purple-light": {
+        "$type": "color",
+        "$value": "#E680F7"
+      },
+      "pink-deep": {
+        "$type": "color",
+        "$value": "#D30F45"
+      },
+      "pink-deeper": {
+        "$type": "color",
+        "$value": "#AD0C39"
+      },
+      "pink-dark": {
+        "$type": "color",
+        "$value": "#FF375F"
+      },
+      "pink-light": {
+        "$type": "color",
+        "$value": "#FF6482"
+      },
+      "brown-deep": {
+        "$type": "color",
+        "$value": "#7F6545"
+      },
+      "brown-deeper": {
+        "$type": "color",
+        "$value": "#66513A"
+      },
+      "brown-dark": {
+        "$type": "color",
+        "$value": "#B78A66"
+      },
+      "brown-light": {
+        "$type": "color",
+        "$value": "#C8AD7F"
+      },
+      "glass-regular": {
+        "$type": "color",
+        "$value": "#FFFFFF9E",
+        "$description": "Most glass: bars, popovers and menus. It has to stay readable over anything."
+      },
+      "glass-regular-dark": {
+        "$type": "color",
+        "$value": "#22222499"
+      },
+      "glass-clear": {
+        "$type": "color",
+        "$value": "#FFFFFF1F",
+        "$description": "Nearly bare glass, for controls over photos and video. Needs the dimming layer."
+      },
+      "glass-rim": {
+        "$type": "color",
+        "$value": "#FFFFFFD9",
+        "$description": "The lit edge of the material."
+      },
+      "glass-rim-soft": {
+        "$type": "color",
+        "$value": "#FFFFFF59"
+      },
+      "glass-rim-dark": {
+        "$type": "color",
+        "$value": "#FFFFFF52"
+      },
+      "glass-rim-soft-dark": {
+        "$type": "color",
+        "$value": "#FFFFFF1A"
+      },
+      "glass-lens": {
+        "$type": "color",
+        "$value": "#FFFFFFB8",
+        "$description": "A selected item's lens, sitting inside the glass."
+      },
+      "glass-lens-dark": {
+        "$type": "color",
+        "$value": "#FFFFFF29"
+      },
+      "glass-dim": {
+        "$type": "color",
+        "$value": "#000000A8",
+        "$description": "Dims a bright backdrop under clear glass. Apple suggests 35%; white text needs this much to reach 4.5:1 over a bright image."
+      },
+      "on-clear-secondary": {
+        "$type": "color",
+        "$value": "#FFFFFFEB"
+      },
+      "glass-panel": {
+        "$type": "color",
+        "$value": "#FFFFFFCC"
+      },
+      "glass-panel-dark": {
+        "$type": "color",
+        "$value": "#1C1C1EC7"
+      },
+      "glass-edge": {
+        "$type": "color",
+        "$value": "#FFFFFF8C"
+      },
+      "glass-edge-dark": {
+        "$type": "color",
+        "$value": "#FFFFFF24"
+      },
+      "glass-well": {
+        "$type": "color",
+        "$value": "#FFFFFF73"
+      },
+      "glass-well-dark": {
+        "$type": "color",
+        "$value": "#FFFFFF14"
+      },
+      "glass-fill": {
+        "$type": "color",
+        "$value": "#78788024"
+      },
+      "glass-fill-dark": {
+        "$type": "color",
+        "$value": "#7878803D"
+      },
+      "glass-inset": {
+        "$type": "color",
+        "$value": "#78788014"
+      },
+      "glass-inset-dark": {
+        "$type": "color",
+        "$value": "#7878802E"
+      },
+      "glass-line": {
+        "$type": "color",
+        "$value": "#0000001A"
+      },
+      "glass-line-dark": {
+        "$type": "color",
+        "$value": "#FFFFFF1F"
+      },
+      "glass-frost": {
+        "$type": "color",
+        "$value": "#FFFFFFD1"
+      },
+      "glass-frost-dark": {
+        "$type": "color",
+        "$value": "#2C2C2EC2"
+      },
+      "glow-sky": {
+        "$type": "color",
+        "$value": "#4FC3FF"
+      },
+      "glow-sun": {
+        "$type": "color",
+        "$value": "#FFB340"
+      },
+      "glow-ember": {
+        "$type": "color",
+        "$value": "#FF6A2B"
+      },
+      "glow-mint": {
+        "$type": "color",
+        "$value": "#30D6A0"
+      },
+      "glow-iris": {
+        "$type": "color",
+        "$value": "#A78BFA"
+      },
+      "glass-surface": {
+        "$type": "color",
+        "$value": "#FFFFFFA6"
+      },
+      "glass-surface-dark": {
+        "$type": "color",
+        "$value": "#2C2C2E99"
+      },
+      "glass-fill-strong": {
+        "$type": "color",
+        "$value": "#78788033"
+      },
+      "glass-fill-strong-dark": {
+        "$type": "color",
+        "$value": "#78788052"
+      },
+      "glass-fill-heavy": {
+        "$type": "color",
+        "$value": "#7878804D"
+      },
+      "glass-fill-heavy-dark": {
+        "$type": "color",
+        "$value": "#78788066"
+      },
+      "wash-sky": {
+        "$type": "color",
+        "$value": "#CFE6FF"
+      },
+      "wash-lilac": {
+        "$type": "color",
+        "$value": "#E4DCFF"
+      },
+      "wash-peach": {
+        "$type": "color",
+        "$value": "#FFE3D1"
+      },
+      "wash-mint": {
+        "$type": "color",
+        "$value": "#CFF3E6"
+      },
+      "wash-sky-dark": {
+        "$type": "color",
+        "$value": "#0B2240"
+      },
+      "wash-lilac-dark": {
+        "$type": "color",
+        "$value": "#1E1440"
+      },
+      "wash-peach-dark": {
+        "$type": "color",
+        "$value": "#33190D"
+      },
+      "wash-mint-dark": {
+        "$type": "color",
+        "$value": "#0A2A22"
+      },
+      "tint-info": {
+        "$type": "color",
+        "$value": "#0088FF24"
+      },
+      "tint-success": {
+        "$type": "color",
+        "$value": "#34C75929"
+      },
+      "tint-warning": {
+        "$type": "color",
+        "$value": "#FF9F0A2E"
+      },
+      "tint-danger": {
+        "$type": "color",
+        "$value": "#FF383C24"
+      },
+      "tint-info-dark": {
+        "$type": "color",
+        "$value": "#0091FF33"
+      },
+      "tint-success-dark": {
+        "$type": "color",
+        "$value": "#30D15833"
+      },
+      "tint-warning-dark": {
+        "$type": "color",
+        "$value": "#FF9F0A33"
+      },
+      "tint-danger-dark": {
+        "$type": "color",
+        "$value": "#FF424533"
+      }
+    }
+  },
+  "radius": {
+    "34": {
+      "$type": "dimension",
+      "$value": "34px",
+      "$description": "A sheet's corners, close to a phone's."
+    }
+  },
+  "shadow": {
+    "glass": {
+      "$type": "shadow",
+      "$value": "0 12px 36px -8px rgb(0 0 0 / 0.16), 0 2px 6px rgb(0 0 0 / 0.06)",
+      "$description": "Glass floating over content."
+    },
+    "glass-dark": {
+      "$type": "shadow",
+      "$value": "0 12px 36px -8px rgb(0 0 0 / 0.55), 0 2px 6px rgb(0 0 0 / 0.3)"
+    },
+    "glass-raised": {
+      "$type": "shadow",
+      "$value": "0 1px 3px rgb(0 0 0 / 0.08), 0 0 0 0.5px rgb(0 0 0 / 0.04)"
+    },
+    "glass-hairline": {
+      "$type": "shadow",
+      "$value": "0 0 0 0.5px rgb(0 0 0 / 0.08)"
+    },
+    "glass-bevel": {
+      "$type": "shadow",
+      "$value": "inset 0 1px 0 rgb(255 255 255 / 0.85), inset 0 -1px 1px rgb(255 255 255 / 0.4), inset 0 0 0 1px rgb(255 255 255 / 0.28), inset 0 10px 14px -10px rgb(255 255 255 / 0.75), inset 0 -10px 14px -12px rgb(0 0 0 / 0.14)",
+      "$description": "The thickness of a pane: a lit top edge, a fainter bottom one, and shade pooling low inside."
+    },
+    "glass-bevel-dark": {
+      "$type": "shadow",
+      "$value": "inset 0 1px 0 rgb(255 255 255 / 0.32), inset 0 -1px 1px rgb(255 255 255 / 0.1), inset 0 0 0 1px rgb(255 255 255 / 0.1), inset 0 10px 14px -10px rgb(255 255 255 / 0.18), inset 0 -10px 14px -12px rgb(0 0 0 / 0.5)"
+    },
+    "glass-frost": {
+      "$type": "shadow",
+      "$value": "0 14px 34px -12px rgb(0 0 0 / 0.16), 0 3px 8px -2px rgb(0 0 0 / 0.06), inset 0 0 0 2px rgb(255 255 255 / 0.9), inset 0 0 8px 2px rgb(0 0 0 / 0.05)",
+      "$description": "A soft lozenge lifted off the page, with a double rim."
+    },
+    "glass-frost-dark": {
+      "$type": "shadow",
+      "$value": "0 14px 34px -12px rgb(0 0 0 / 0.6), 0 3px 8px -2px rgb(0 0 0 / 0.35), inset 0 0 0 2px rgb(255 255 255 / 0.1), inset 0 0 8px 2px rgb(0 0 0 / 0.3)"
+    },
+    "glass-lens": {
+      "$type": "shadow",
+      "$value": "0 6px 16px -4px rgb(0 0 0 / 0.28), 0 0 0 1px rgb(255 255 255 / 0.2), inset 0 1px 1px rgb(255 255 255 / 0.75), inset 0 -2px 6px rgb(255 255 255 / 0.18)",
+      "$description": "A drop of glass standing proud of its track."
+    },
+    "glass-lens-dark": {
+      "$type": "shadow",
+      "$value": "0 6px 16px -4px rgb(0 0 0 / 0.6), 0 0 0 1px rgb(255 255 255 / 0.16), inset 0 1px 1px rgb(255 255 255 / 0.4), inset 0 -2px 6px rgb(255 255 255 / 0.08)"
+    }
+  },
+  "backdrop": {
+    "glass-regular": {
+      "$type": "string",
+      "$value": "blur(22px) saturate(180%)"
+    },
+    "glass-clear": {
+      "$type": "string",
+      "$value": "blur(8px) saturate(150%)"
+    },
+    "glass-lens": {
+      "$type": "string",
+      "$value": "blur(7px) saturate(180%)",
+      "$description": "Under a refracting edge: light enough that the bending shows."
+    },
+    "none": {
+      "$type": "string",
+      "$value": "none"
+    },
+    "refraction-on": {
+      "$type": "string",
+      "$value": "1"
+    },
+    "refraction-off": {
+      "$type": "string",
+      "$value": "0"
+    },
+    "glass-panel": {
+      "$type": "string",
+      "$value": "blur(30px) saturate(190%)"
+    }
+  },
+  "font": {
+    "family": {
+      "system-glass": {
+        "$type": "fontFamily",
+        "$value": "-apple-system, BlinkMacSystemFont, \"SF Pro Text\", \"Inter Variable\", \"Inter\", \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Noto Color Emoji\""
+      }
+    }
+  },
+  "scale": {
+    "103": {
+      "$type": "number",
+      "$value": "1.03"
+    }
+  }
+}

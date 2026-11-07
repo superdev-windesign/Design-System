@@ -18,7 +18,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const styles = sortCx({
-  base: "inline-flex items-center justify-center rounded-control-xs px-1 py-px font-mono text-caption tabular-nums whitespace-nowrap",
+  base: "bui-badge inline-flex items-center justify-center rounded-control-xs px-1 py-px font-mono text-caption tabular-nums whitespace-nowrap",
   color: {
     primary: "bg-accent-600 text-on-action",
     neutral: "bg-badge-neutral text-fg-secondary",

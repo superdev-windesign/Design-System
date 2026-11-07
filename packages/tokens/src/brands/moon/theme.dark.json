@@ -144,18 +144,36 @@
         "solid": {
           "$type": "color",
           "$value": "{color.moon.roshi-light}"
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{color.moon.tint-success-dark}"
         }
       },
       "danger": {
         "solid": {
           "$type": "color",
           "$value": "{color.moon.dodoria-light}"
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{color.moon.tint-danger-dark}"
         }
       },
       "warning": {
         "solid": {
           "$type": "color",
           "$value": "{color.moon.krillin}"
+        },
+        "bg": {
+          "$type": "color",
+          "$value": "{color.moon.tint-warning-dark}"
+        }
+      },
+      "info": {
+        "bg": {
+          "$type": "color",
+          "$value": "{color.moon.tint-info-dark}"
         }
       }
     },
@@ -232,6 +250,16 @@
         "$type": "color",
         "$value": "{color.moon.frieza-lighter}"
       }
+    },
+    "progress": {
+      "track": {
+        "$type": "color",
+        "$value": "{color.moon.beerus-dark}"
+      },
+      "fill": {
+        "$type": "color",
+        "$value": "{color.accent.600}"
+      }
     }
   },
   "gradient": {
@@ -267,7 +295,7 @@
     },
     "hairline": {
       "$type": "shadow",
-      "$value": "{shadow.moon-hairline}"
+      "$value": "{shadow.moon-hairline-dark}"
     }
   }
 }

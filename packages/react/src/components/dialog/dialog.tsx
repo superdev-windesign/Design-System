@@ -76,7 +76,7 @@ export function Modal({ size = "md", className, isDismissable = true, children, 
     >
       <AriaModal
         className={cx(
-          "flex max-h-[calc(100dvh-24px)] w-full",
+          "bui-modal flex max-h-[calc(100dvh-24px)] w-full",
           MODAL_WIDTH[size],
           "transition duration-(--ds-motion-duration-moderate) ease-enter motion-reduce:transition-none",
           "data-[entering]:translate-y-4 data-[entering]:opacity-0 sm:data-[entering]:translate-y-2",
@@ -129,7 +129,8 @@ export function Dialog({
     <AriaDialog
       aria-describedby={description ? descriptionId : undefined}
       {...props}
-      className={cx("relative flex w-full flex-col overflow-hidden border-line bg-surface", FRAME[frame], focusRingNative, className)}
+      data-frame={frame}
+      className={cx("bui-dialog relative flex w-full flex-col overflow-hidden glass-panel", FRAME[frame], focusRingNative, className)}
     >
       {({ close }) => (
         <>

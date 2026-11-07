@@ -70,7 +70,7 @@ export function CheckboxGlyph({
       aria-hidden
       data-marked={isMarked || undefined}
       className={cx(
-        "relative flex shrink-0 items-center justify-center overflow-hidden rounded-control-xs border bg-surface",
+        "bui-control-mark relative flex shrink-0 items-center justify-center overflow-hidden rounded-control-xs border bg-surface",
         "transition-[border-color,scale] duration-(--ds-motion-duration-base) ease-standard motion-reduce:transition-none",
         s.box,
         isMarked

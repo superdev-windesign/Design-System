@@ -91,7 +91,7 @@ export function CommandMenu({
   };
 
   return (
-    <div className={cx("flex min-h-0 flex-col overflow-hidden rounded-overlay border border-line bg-surface", className)}>
+    <div className={cx("flex min-h-0 flex-col overflow-hidden rounded-overlay border glass-panel", className)}>
       <PaletteContext.Provider value={{ highlightId, reduceMotion }}>
         <Autocomplete filter={filter} inputValue={query} onInputChange={setQuery}>
           <SearchField aria-label="Search commands" autoFocus={autoFocus} className="flex shrink-0 items-center gap-2.5 border-b border-line px-4">

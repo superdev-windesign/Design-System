@@ -266,7 +266,7 @@ export const triggerButtonClassName = cx(
 
 /** Popover chrome shared by both pickers: a sunken panel holding paper month cards; it slides out from the trigger like the menus. */
 export const popoverClassName = cx(
-  "rounded-panel bg-sunken shadow-overlay",
+  "bui-date-popover overflow-y-auto rounded-panel bg-sunken shadow-overlay",
   "transition-[opacity,translate] duration-(--ds-motion-duration-base) ease-out motion-reduce:transition-none",
   "data-[entering]:opacity-0 data-[exiting]:opacity-0",
   "data-[placement=bottom]:data-[entering]:-translate-y-1 data-[placement=top]:data-[entering]:translate-y-1",

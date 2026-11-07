@@ -1,0 +1,434 @@
+/* The Glass brand's structural dress.
+
+   Tokens re-paint a component; they can't move its parts. A slider's thumb
+   standing proud of its rail, or tabs on a capsule, are changes of shape, and
+   components never branch on brand. So each part carries a `bui-*` hook and the
+   shape lives here, as Table's does in utilities.css. Other brands load these
+   rules and match nothing.
+
+   Every value is a token or the spacing scale. These rules are unlayered on
+   purpose: they sit above the components' own utilities without a specificity
+   race. Backdrop filters go on the element that moves, as in utilities.css. */
+
+/* ── Type ─────────────────────────────────────────────────────────────────
+   Mono capitals are Windesign's running heads. Here a label is just a label. */
+[data-brand="glass"] .uppercase {
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+/* ── Every component ──────────────────────────────────────────────────────
+   Switching to Glass has to turn the whole system to glass, not only the
+   floating pieces, so this works at the base rather than component by
+   component. The paper fills (sunken, muted, hover) are translucent tokens, the
+   page carries a wash of colour for them to pick up, and these rules do the rest.
+
+   The `bg-surface` class changes rather than its token, because the token is
+   also a mask: the ring around a timeline dot, the gap in a donut, a scroller's
+   fade. Those need something solid to hide what's under them. Blur is left off
+   here on purpose: nothing but the soft wash sits behind these panels, so it
+   would look the same and cost a backdrop filter on every panel on the page. */
+html[data-brand="glass"],
+[data-brand="glass"] .bg-canvas {
+  background-image:
+    radial-gradient(60vmax 50vmax at 10% 6%, var(--ds-color-glass-wash-sky), transparent 70%),
+    radial-gradient(56vmax 48vmax at 92% 12%, var(--ds-color-glass-wash-lilac), transparent 70%),
+    radial-gradient(60vmax 52vmax at 82% 94%, var(--ds-color-glass-wash-peach), transparent 70%),
+    radial-gradient(54vmax 46vmax at 12% 90%, var(--ds-color-glass-wash-mint), transparent 70%);
+  background-attachment: fixed;
+}
+
+[data-brand="glass"] .bg-surface {
+  background-color: var(--ds-color-glass-surface);
+}
+
+/* Anything scrolling beneath a sticky bar would show through glass, so it stays solid. */
+[data-brand="glass"] .bg-surface.sticky {
+  background-color: var(--ds-color-bg-surface);
+}
+
+/* A panel with a rule round it is a slab of glass: a lit edge, and thickness.
+   :where() keeps this low enough for a control's own rule below to win. */
+[data-brand="glass"] .bg-surface:where(.border:not(.bui-control-mark)),
+[data-brand="glass"] :is(.bui-chart-card, .bui-accordion, .bui-table-frame, .bui-alert) {
+  border-color: var(--ds-color-glass-edge);
+  box-shadow: var(--ds-elevation-glass-bevel), var(--ds-elevation-raised);
+}
+
+/* These three are bare in Windesign, ruled straight onto the page, so here they
+   gain the panel itself. An alert keeps its tint, which is translucent already. */
+[data-brand="glass"] :is(.bui-chart-card, .bui-accordion, .bui-table-frame) {
+  border-width: 1px;
+  background-color: var(--ds-color-glass-surface);
+}
+
+[data-brand="glass"] :is(.bui-accordion, .bui-table-frame) {
+  border-radius: var(--ds-radius-surface);
+}
+
+[data-brand="glass"] .bui-accordion {
+  padding-inline: 1rem;
+}
+
+[data-brand="glass"] .bui-accordion > :last-child {
+  border-bottom-width: 0;
+}
+
+[data-brand="glass"] .bg-badge-neutral {
+  background-color: var(--ds-color-bg-muted);
+}
+
+[data-brand="glass"] .bg-surface:where(.border):where(button, a, [role="button"]):is(:hover, [data-hovered]) {
+  background-color: var(--ds-color-glass-lens);
+}
+
+/* Checkboxes and radios keep their outline: it's what shows they're controls.
+   A checkbox stays square-ish: the brand's control radius would make it a
+   circle at this size, and then it would read as a radio. */
+[data-brand="glass"] .bui-control-mark {
+  box-shadow: var(--ds-elevation-glass-bevel);
+}
+
+[data-brand="glass"] .bui-control-mark:not(.rounded-full) {
+  border-radius: var(--ds-radius-scale-xs);
+}
+
+[data-brand="glass"] .bg-progress-fill {
+  box-shadow: 0 0 0.75rem -0.125rem var(--ds-color-accent-500);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  html[data-brand="glass"],
+  [data-brand="glass"] .bg-canvas {
+    background-image: none;
+  }
+
+  [data-brand="glass"] :is(.bg-surface, .bui-chart-card, .bui-accordion, .bui-table-frame) {
+    background-color: var(--ds-color-glass-solid);
+  }
+}
+
+/* ── Glass parts ──────────────────────────────────────────────────────────
+   One list, so the reduced-transparency fallback below can't miss one. */
+[data-brand="glass"] :is(.bui-toolbar, .bui-bottom-nav, .bui-back-to-top, .bui-button-secondary) {
+  border-color: transparent;
+  background-color: var(--ds-color-glass-regular);
+  -webkit-backdrop-filter: var(--ds-effect-glass-regular);
+  backdrop-filter: var(--ds-effect-glass-regular);
+  box-shadow: var(--ds-elevation-glass-bevel), var(--ds-elevation-raised);
+}
+
+[data-brand="glass"] :is(.bui-toolbar, .bui-bottom-nav, .bui-back-to-top) {
+  box-shadow: var(--ds-elevation-glass-bevel), var(--ds-elevation-glass);
+}
+
+/* The sunken date panel and the tooltip are the two panes that aren't paper in
+   Windesign, so glass-panel can't stand in for their classes there. */
+[data-brand="glass"] :is(.bui-date-popover, .bui-tooltip) {
+  background-color: var(--ds-color-glass-panel);
+  -webkit-backdrop-filter: var(--ds-effect-glass-panel);
+  backdrop-filter: var(--ds-effect-glass-panel);
+  --ds-color-bg-surface: var(--ds-color-glass-well);
+  --ds-color-glass-surface: var(--ds-color-glass-well);
+  --ds-color-bg-sunken: var(--ds-color-glass-inset);
+  --ds-color-bg-surface-hover: var(--ds-color-glass-hover);
+  --ds-color-border-default: var(--ds-color-glass-line);
+  --ds-color-text-secondary: var(--ds-color-glass-on-panel-secondary);
+  --ds-color-icon-secondary: var(--ds-color-glass-on-panel-secondary);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  [data-brand="glass"] :is(.bui-toolbar, .bui-bottom-nav, .bui-back-to-top, .bui-button-secondary, .bui-date-popover, .bui-tooltip) {
+    background-color: var(--ds-color-glass-solid);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    --ds-color-bg-surface: var(--ds-color-glass-solid);
+  }
+}
+
+/* ── Overlays ─────────────────────────────────────────────────────────── */
+[data-brand="glass"] .bui-overlay-arrow,
+[data-brand="glass"] .bui-tooltip-caret {
+  display: none;
+}
+
+[data-brand="glass"] .bui-tooltip {
+  border-radius: var(--ds-radius-chip);
+  color: var(--ds-color-text-primary);
+  box-shadow: var(--ds-elevation-overlay);
+}
+
+/* While an ancestor's opacity is below 1 it cuts glass off from the page, so a
+   panel would fade in over sharp content and its blur would snap on at the end.
+   Here the scrim fades its colour and the panel fades itself, which leaves the
+   blur live from the first frame. Moving the fade doesn't change how it looks. */
+[data-brand="glass"] .bui-scrim {
+  transition: background-color var(--ds-motion-duration-moderate) ease-out;
+}
+
+[data-brand="glass"] .bui-scrim:is([data-entering], [data-exiting]) {
+  opacity: 1;
+  background-color: transparent;
+}
+
+[data-brand="glass"] .bui-modal:is([data-entering], [data-exiting]) {
+  opacity: 1;
+}
+
+[data-brand="glass"] .bui-dialog {
+  transition: opacity var(--ds-motion-duration-moderate) ease-out;
+}
+
+[data-brand="glass"] .bui-modal:is([data-entering], [data-exiting]) .bui-dialog {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-brand="glass"] :is(.bui-scrim, .bui-dialog) {
+    transition: none;
+  }
+}
+
+/* A drawer floats clear of the screen's edges, as a half sheet does. */
+[data-brand="glass"] .bui-drawer {
+  padding: 0.5rem;
+  box-shadow: none;
+}
+
+[data-brand="glass"] .bui-dialog[data-frame^="drawer"] {
+  border-width: 1px;
+  border-radius: var(--ds-radius-overlay);
+  box-shadow: var(--ds-elevation-overlay);
+}
+
+/* A chosen row is lit, not ruled. */
+[data-brand="glass"] .bui-menu-chosen {
+  background-color: var(--ds-color-bg-surface-hover);
+}
+
+[data-brand="glass"] .bui-menu-chosen::before {
+  display: none;
+}
+
+/* ── Fields ───────────────────────────────────────────────────────────────
+   A straight pen rule can't follow a capsule, so focus is a soft ring instead. */
+[data-brand="glass"] .bui-field-rule::after {
+  display: none;
+}
+
+[data-brand="glass"] .bui-field-rule:focus-within {
+  outline: 0.1875rem solid color-mix(in srgb, var(--ds-color-border-focus) 28%, transparent);
+}
+
+/* ── Buttons ──────────────────────────────────────────────────────────────
+   A filled button is tinted glass: the same lit edge over its colour. */
+[data-brand="glass"] .bui-button-solid {
+  box-shadow: var(--ds-elevation-glass-bevel), var(--ds-elevation-raised);
+}
+
+[data-brand="glass"] .bui-button-secondary[data-hovered],
+[data-brand="glass"] .bui-button-secondary[data-pressed] {
+  border-color: transparent;
+  background-color: var(--ds-color-glass-lens);
+}
+
+[data-brand="glass"] .bui-button-secondary[data-disabled] {
+  border-color: transparent;
+  background-color: var(--ds-color-glass-inset);
+  box-shadow: none;
+}
+
+[data-brand="glass"] .bui-number-step {
+  border-radius: var(--ds-radius-item);
+  background-color: var(--ds-color-glass-frost);
+  box-shadow: var(--ds-elevation-glass-bevel), var(--ds-elevation-raised);
+}
+
+/* ── Switch ───────────────────────────────────────────────────────────────
+   The knob is a drop of glass wider than its track. Travel is unchanged, since
+   it's the track's width less its height whatever the knob's size. */
+[data-brand="glass"] .bui-switch-track {
+  overflow: visible;
+  border-width: 0;
+  background-color: var(--ds-color-bg-strong);
+  box-shadow: var(--ds-elevation-glass-bevel);
+}
+
+[data-brand="glass"] .bui-switch-track[data-selected] {
+  background-color: var(--ds-color-accent-600);
+}
+
+[data-brand="glass"] .bui-switch-ink {
+  border-radius: inherit;
+}
+
+[data-brand="glass"] .bui-switch-tick {
+  display: none;
+}
+
+[data-brand="glass"] .bui-switch-knob {
+  inset-block-start: -0.1875rem;
+  inset-inline-start: -0.1875rem;
+  width: auto;
+  height: calc(100% + 0.375rem);
+  aspect-ratio: 1;
+  background-color: var(--ds-color-ios-white);
+  box-shadow: var(--ds-elevation-glass-lens);
+  transition:
+    translate var(--ds-motion-duration-moderate) var(--ds-motion-easing-overshoot),
+    scale var(--ds-motion-duration-base) var(--ds-motion-easing-standard),
+    background-color var(--ds-motion-duration-base) ease;
+}
+
+/* Held, it turns to clear glass so the track shows through. */
+[data-brand="glass"] [data-pressed] > .bui-switch-track .bui-switch-knob {
+  scale: 1.15;
+  background-color: var(--ds-color-glass-lens);
+  -webkit-backdrop-filter: var(--ds-effect-glass-lens);
+  backdrop-filter: var(--ds-effect-glass-lens);
+}
+
+/* ── Slider ───────────────────────────────────────────────────────────────
+   A channel with light running in it, and a capsule thumb wider than the rail.
+   The ruler's ticks and leader belong to Windesign. */
+[data-brand="glass"] :is(.bui-slider-tick, .bui-slider-dot, .bui-slider-leader) {
+  display: none;
+}
+
+[data-brand="glass"] .bui-slider-rail {
+  height: 0.5rem;
+  background-color: var(--ds-color-bg-strong);
+  box-shadow: var(--ds-elevation-glass-bevel);
+}
+
+[data-brand="glass"] .bui-slider-fill {
+  height: 0.5rem;
+  clip-path: none;
+  border-radius: var(--ds-radius-action);
+  box-shadow: 0 0 0.875rem -0.125rem var(--ds-color-accent-500);
+}
+
+[data-brand="glass"] .bui-slider-thumb {
+  width: 2.25rem;
+  height: 1.5rem;
+  border-width: 0;
+  background-color: var(--ds-color-ios-white);
+  box-shadow: var(--ds-elevation-glass-lens);
+  transition:
+    scale var(--ds-motion-duration-base) var(--ds-motion-easing-overshoot),
+    background-color var(--ds-motion-duration-base) ease;
+}
+
+[data-brand="glass"] .bui-slider-thumb[data-dragging] {
+  scale: 1.3;
+  background-color: var(--ds-color-glass-lens);
+  -webkit-backdrop-filter: var(--ds-effect-glass-lens);
+  backdrop-filter: var(--ds-effect-glass-lens);
+}
+
+/* ── Segmented control ────────────────────────────────────────────────────
+   A frosted lozenge; the choice sits under a raised lens that bulges past it. */
+[data-brand="glass"] .bui-segmented {
+  border-width: 0;
+  border-radius: var(--ds-radius-action);
+  background-color: var(--ds-color-glass-frost);
+  box-shadow: var(--ds-elevation-glass-frost);
+  padding: 0.25rem;
+}
+
+[data-brand="glass"] .bui-segmented-thumb {
+  scale: 1.04 1.14;
+  border-radius: var(--ds-radius-action);
+  background-color: var(--ds-color-glass-lens);
+  box-shadow: var(--ds-elevation-glass-lens);
+  transition-timing-function: var(--ds-motion-easing-overshoot);
+}
+
+[data-brand="glass"] .bui-segmented-item {
+  border-radius: var(--ds-radius-action);
+  padding-inline: 0.875rem;
+}
+
+[data-brand="glass"] .bui-segmented-item[data-selected] {
+  color: var(--ds-color-text-primary);
+}
+
+/* ── Tabs ─────────────────────────────────────────────────────────────────
+   The rule and pen stroke give way to a capsule and a lens. The strip stays the
+   tabs' offset parent, so the indicator's measured position is still right. */
+[data-brand="glass"] .bui-tabs-strip {
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.25rem;
+  border-radius: var(--ds-radius-action);
+  background-color: var(--ds-color-bg-sunken);
+}
+
+[data-brand="glass"] .bui-tabs-list {
+  width: auto;
+  gap: 0;
+  border-bottom-width: 0;
+}
+
+[data-brand="glass"] .bui-tab {
+  z-index: 1;
+  border-radius: var(--ds-radius-action);
+  padding-inline: 0.875rem;
+}
+
+[data-brand="glass"] .bui-tabs-indicator {
+  inset-block: 0.25rem;
+  height: auto;
+  clip-path: none;
+  border-radius: var(--ds-radius-action);
+  background-color: var(--ds-color-bg-surface);
+  box-shadow: var(--ds-elevation-glass-lens);
+  transition-timing-function: var(--ds-motion-easing-overshoot);
+}
+
+/* ── Bars ─────────────────────────────────────────────────────────────── */
+[data-brand="glass"] .bui-toolbar {
+  border-radius: var(--ds-radius-panel);
+}
+
+[data-brand="glass"] .bui-bottom-nav {
+  margin: 0.5rem;
+  padding: 0.25rem;
+  border-radius: var(--ds-radius-panel);
+}
+
+[data-brand="glass"] .bui-bottom-nav-mark {
+  display: none;
+}
+
+[data-brand="glass"] .bui-bottom-nav-item {
+  height: 3.5rem;
+  border-radius: var(--ds-radius-overlay);
+}
+
+[data-brand="glass"] .bui-bottom-nav-item[aria-current="page"] {
+  background-color: var(--ds-color-glass-lens);
+  color: var(--ds-color-action-tertiary-fg);
+}
+
+/* ── Table ────────────────────────────────────────────────────────────────
+   Tables are content, so they stay solid. They only lose the ledger's ink. */
+[data-brand="glass"] .bui-table th {
+  font-family: var(--ds-font-family-sans);
+  text-transform: none;
+  border-bottom-color: var(--ds-color-border-separator);
+}
+
+[data-brand="glass"] .bui-table-sticky th {
+  border-bottom-color: transparent;
+  box-shadow: inset 0 -1px 0 var(--ds-color-border-separator);
+}
+
+[data-brand="glass"] .bui-table tbody tr[data-selected] td {
+  background-color: var(--ds-color-selection-range);
+}
+
+[data-brand="glass"] .bui-table tbody tr[data-selected] td:first-child,
+[data-brand="glass"] .bui-table tbody tr[data-selected] td:first-child:dir(rtl) {
+  box-shadow: none;
+}

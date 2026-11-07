@@ -42,3 +42,9 @@ consumes them.
    `npm test -w @ds/tokens`.
 8. **Register new text, radius, shadow or size names in
    `packages/react/src/utils/cx.ts`** so tailwind-merge doesn't drop them.
+9. **A brand restyles through tokens first.** When a brand needs a part to change
+   shape, which tokens can't do, give the part a `bui-*` class and put the rule
+   in `packages/styles/src/brands/<brand>.css`, scoped to
+   `[data-brand="<brand>"]`. Components never branch on brand. Translucent
+   surfaces use the `glass*` utilities: their tokens resolve to solid values in
+   brands without glass, so those brands render exactly as they did.

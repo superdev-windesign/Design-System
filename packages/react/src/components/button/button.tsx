@@ -73,7 +73,7 @@ const styles = {
   ].join(" "),
 
   size: {
-    md: "h-control-md gap-1.5 rounded-control-md px-3 text-body-md-strong",
+    md: "bui-button-md h-control-md gap-1.5 rounded-control-md px-3 text-body-md-strong",
     sm: "h-control-sm gap-1.5 rounded-control-sm px-2.5 text-body-md-strong",
     xs: "h-control-xs gap-1 rounded-control-xs px-2 text-caption-emphasis",
   },
@@ -101,11 +101,11 @@ const styles = {
     "transition-[translate] duration-(--ds-motion-duration-base) ease-out motion-reduce:transition-none group-data-[hovered]/button:translate-x-0.5 rtl:group-data-[hovered]/button:-translate-x-0.5",
 
   variant: {
-    primary: "bg-action-primary text-on-action data-[disabled]:text-action-primary-fg-disabled",
-    danger: "bg-action-danger text-on-action data-[disabled]:text-action-danger-fg-disabled",
+    primary: "bui-button-solid bg-action-primary text-on-action data-[disabled]:text-action-primary-fg-disabled",
+    danger: "bui-button-solid bg-action-danger text-on-action data-[disabled]:text-action-danger-fg-disabled",
     ink: "bg-fg text-canvas transition-colors data-[hovered]:bg-fg-secondary data-[pressed]:bg-fg-secondary data-[disabled]:bg-muted data-[disabled]:text-fg-disabled",
     secondary: [
-      "border border-line-control bg-surface text-fg",
+      "bui-button-secondary border border-line-control bg-surface text-fg",
       "data-[hovered]:border-fg data-[pressed]:border-fg data-[pressed]:bg-surface-pressed",
       "data-[disabled]:border-line data-[disabled]:bg-surface-disabled data-[disabled]:text-fg-tertiary",
     ].join(" "),

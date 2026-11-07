@@ -95,7 +95,7 @@ export function SegmentedControl({ className, children, variant = "solid", ref, 
       {...props}
       className={(state) =>
         cx(
-          "relative inline-flex items-start gap-0.5 rounded-control-md",
+          "bui-segmented relative inline-flex items-start gap-0.5 rounded-control-md",
           variant === "solid" && "border border-line bg-surface p-0.5",
           typeof className === "function" ? className(state) : className,
         )
@@ -104,7 +104,7 @@ export function SegmentedControl({ className, children, variant = "solid", ref, 
       {variant === "solid" && thumb && (
         <span
           aria-hidden
-          className="pointer-events-none absolute left-0 top-0 rounded-control-sm bg-fg transition-[transform,width,height] duration-(--ds-motion-duration-moderate) ease-standard motion-reduce:transition-none"
+          className="bui-segmented-thumb pointer-events-none absolute left-0 top-0 rounded-control-sm bg-fg transition-[transform,width,height] duration-(--ds-motion-duration-moderate) ease-standard motion-reduce:transition-none"
           style={{
             transform: `translate(${thumb.left}px, ${thumb.top}px)`,
             width: thumb.width,
@@ -135,7 +135,7 @@ export function SegmentedControlItem({
       {...props}
       className={(state) =>
         cx(
-          "relative z-10 inline-flex cursor-pointer items-center justify-center rounded-control-sm px-2.5 py-1 text-center whitespace-nowrap",
+          "bui-segmented-item relative z-10 inline-flex cursor-pointer items-center justify-center rounded-control-sm px-2.5 py-1 text-center whitespace-nowrap",
           "transition-colors duration-(--ds-motion-duration-moderate) ease-standard motion-reduce:transition-none",
           "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus",
           state.isSelected

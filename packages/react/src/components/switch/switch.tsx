@@ -93,7 +93,7 @@ export function SwitchTrack({
       aria-hidden
       data-selected={on || undefined}
       className={cx(
-        "relative shrink-0 overflow-hidden border bg-surface transition-[border-color]",
+        "bui-switch-track relative shrink-0 overflow-hidden border bg-surface transition-[border-color]",
         motion,
         s.track,
         r.track,
@@ -105,7 +105,7 @@ export function SwitchTrack({
       {/* The ink: floods from the start edge as the knob moves across. */}
       <span
         className={cx(
-          "absolute inset-0 origin-left transition-[scale,background-color] rtl:origin-right",
+          "bui-switch-ink absolute inset-0 origin-left transition-[scale,background-color] rtl:origin-right",
           motion,
           hover ? "bg-accent-700" : "bg-accent-600",
           on ? "scale-x-100" : "scale-x-0",
@@ -114,7 +114,7 @@ export function SwitchTrack({
       {/* Knob */}
       <span
         className={cx(
-          "absolute flex items-center justify-center transition-[translate,background-color]",
+          "bui-switch-knob absolute flex items-center justify-center transition-[translate,background-color]",
           motion,
           s.thumb,
           s.offset,
@@ -123,7 +123,7 @@ export function SwitchTrack({
         )}
       >
         {on && (
-          <svg viewBox="0 0 16 16" className={s.tick}>
+          <svg viewBox="0 0 16 16" className={cx("bui-switch-tick", s.tick)}>
             <path d={CHECK_TICK_PATH} fill="currentColor" className={cx(inkIn && "animate-check-ink")} />
           </svg>
         )}

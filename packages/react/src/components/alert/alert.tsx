@@ -47,7 +47,7 @@ export function Alert({ tone = "neutral", title, children, icon, actions, onDism
   return (
     <div
       role={announce === "assertive" ? "alert" : announce === "polite" ? "status" : undefined}
-      className={cx("relative flex gap-3 rounded-surface border p-4", t.box, className)}
+      className={cx("bui-alert relative flex gap-3 rounded-surface border p-4", t.box, className)}
     >
       {Icon && <Icon aria-hidden className={cx("mt-px size-5 shrink-0", t.accent)} />}
       <div className={cx("flex min-w-0 flex-1 flex-col gap-1", onDismiss && "pe-6")}>

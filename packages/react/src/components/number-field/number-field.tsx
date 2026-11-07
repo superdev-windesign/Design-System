@@ -34,11 +34,11 @@ export function NumberField({ label, description, errorMessage, placeholder, siz
     <AriaNumberField {...props} className={cx("group flex w-full flex-col gap-1", className)}>
       {label && <FieldLabel isRequired={props.isRequired}>{label}</FieldLabel>}
       <Group className={(state) => fieldShell(state, size)}>
-        <AriaButton slot="decrement" className={cx(FIELD_BUTTON, "-ms-1")}>
+        <AriaButton slot="decrement" className={cx("bui-number-step", FIELD_BUTTON, "-ms-1")}>
           <RiSubtractLine aria-hidden className="size-4" />
         </AriaButton>
         <Input placeholder={placeholder} className={cx(FIELD_INPUT, "text-center tabular-nums")} />
-        <AriaButton slot="increment" className={cx(FIELD_BUTTON, "-me-1")}>
+        <AriaButton slot="increment" className={cx("bui-number-step", FIELD_BUTTON, "-me-1")}>
           <RiAddLine aria-hidden className="size-4" />
         </AriaButton>
       </Group>

@@ -22,7 +22,7 @@ export const cx = extendTailwindMerge({
         "xs", "sm", "md", "lg", "2lg", "xl", "2xl", "3xl",
       ],
       shadow: [
-        "raised", "overlay", "hairline", "control-checked",
+        "raised", "overlay", "hairline", "control-checked", "glass", "glass-bevel", "glass-frost", "glass-lens",
         "radio-checked-sm", "radio-checked-md",
         "slider-track", "slider-fill", "slider-thumb", "slider-thumb-active", "slider-highlight",
         "switch-on-sm", "switch-on-md", "switch-chip-sm", "switch-chip-md", "switch-chip-lg", "switch-thumb",

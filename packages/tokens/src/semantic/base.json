@@ -53,6 +53,40 @@
       "$type": "dimension",
       "$value": "{radius.4}",
       "$description": "The action that commits a panel, such as Apply"
+    },
+    "scale": {
+      "xs": {
+        "$type": "dimension",
+        "$value": "{radius.2}"
+      },
+      "sm": {
+        "$type": "dimension",
+        "$value": "{radius.4}"
+      },
+      "md": {
+        "$type": "dimension",
+        "$value": "{radius.4}"
+      },
+      "lg": {
+        "$type": "dimension",
+        "$value": "{radius.4}"
+      },
+      "2lg": {
+        "$type": "dimension",
+        "$value": "{radius.6}"
+      },
+      "xl": {
+        "$type": "dimension",
+        "$value": "{radius.6}"
+      },
+      "2xl": {
+        "$type": "dimension",
+        "$value": "{radius.8}"
+      },
+      "3xl": {
+        "$type": "dimension",
+        "$value": "{radius.10}"
+      }
     }
   },
   "size": {
@@ -487,6 +521,34 @@
       "scale": {
         "$type": "number",
         "$value": "{scale.98}"
+      }
+    }
+  },
+  "effect": {
+    "glass": {
+      "regular": {
+        "$type": "string",
+        "$value": "{backdrop.none}",
+        "$description": "The backdrop filter behind regular glass. None here: the material is solid."
+      },
+      "clear": {
+        "$type": "string",
+        "$value": "{backdrop.none}"
+      },
+      "lens": {
+        "$type": "string",
+        "$value": "{backdrop.none}",
+        "$description": "The blur under a refracting edge."
+      },
+      "refraction": {
+        "$type": "string",
+        "$value": "{backdrop.refraction-off}",
+        "$description": "1 where glass may bend what's behind it."
+      },
+      "panel": {
+        "$type": "string",
+        "$value": "{backdrop.none}",
+        "$description": "The backdrop filter behind a pane. None here: the material is solid."
       }
     }
   }

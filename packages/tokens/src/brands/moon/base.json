@@ -63,5 +63,21 @@
         "$value": "{font.family.dm-sans}"
       }
     }
+  },
+  "size": {
+    "control": {
+      "md": {
+        "$type": "dimension",
+        "$value": "{size.40}"
+      }
+    }
+  },
+  "motion": {
+    "press": {
+      "scale": {
+        "$type": "number",
+        "$value": "{scale.90}"
+      }
+    }
   }
 }

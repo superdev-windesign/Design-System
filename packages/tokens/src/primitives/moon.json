@@ -255,6 +255,38 @@
       "nappa-lighter": {
         "$type": "color",
         "$value": "#CCB7B3"
+      },
+      "tint-info": {
+        "$type": "color",
+        "$value": "#3448F01F"
+      },
+      "tint-success": {
+        "$type": "color",
+        "$value": "#2F7E311F"
+      },
+      "tint-warning": {
+        "$type": "color",
+        "$value": "#FFB31933"
+      },
+      "tint-danger": {
+        "$type": "color",
+        "$value": "#D330301F"
+      },
+      "tint-info-dark": {
+        "$type": "color",
+        "$value": "#8593FF29"
+      },
+      "tint-success-dark": {
+        "$type": "color",
+        "$value": "#56B55A29"
+      },
+      "tint-warning-dark": {
+        "$type": "color",
+        "$value": "#FFB31929"
+      },
+      "tint-danger-dark": {
+        "$type": "color",
+        "$value": "#F06A6A29"
       }
     }
   },
@@ -273,6 +305,11 @@
       "$type": "shadow",
       "$value": "0 8px 24px -6px rgb(0 0 0 / 0.16), 0 0 1px rgb(0 0 0 / 0.4)",
       "$description": "Menus, popovers and dialogs."
+    },
+    "moon-hairline-dark": {
+      "$type": "shadow",
+      "$value": "0 0 0 1px rgb(255 255 255 / 0.1)",
+      "$description": "A black hairline disappears on a dark surface, so dark panels are edged in light."
     }
   },
   "font": {
@@ -281,6 +318,12 @@
         "$type": "fontFamily",
         "$value": "\"DM Sans Variable\", \"DM Sans\", ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\""
       }
+    }
+  },
+  "scale": {
+    "90": {
+      "$type": "number",
+      "$value": "0.9"
     }
   }
 }

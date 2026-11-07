@@ -13,7 +13,7 @@
  */
 export const MENU_POPOVER_SURFACE = [
   "max-w-[calc(100vw-32px)] overflow-y-auto",
-  "rounded-overlay border border-line bg-surface p-2.5 shadow-overlay",
+  "rounded-overlay border glass-panel p-2.5 shadow-overlay",
   "transition-[opacity,translate] duration-(--ds-motion-duration-base) ease-out motion-reduce:transition-none",
   "data-[entering]:opacity-0 data-[exiting]:opacity-0",
   "data-[placement=bottom]:data-[entering]:-translate-y-1 data-[placement=top]:data-[entering]:translate-y-1",
@@ -37,7 +37,7 @@ export const MENU_ITEM_ACTIVE = "bg-surface-hover";
 
 /** The chosen row: a short accent rule in its margin (as on the sidebar's current page). */
 export const MENU_ITEM_CHOSEN =
-  "before:absolute before:inset-y-2 before:start-0.5 before:w-0.5 before:rounded-full before:bg-accent-600";
+  "bui-menu-chosen before:absolute before:inset-y-2 before:start-0.5 before:w-0.5 before:rounded-full before:bg-accent-600";
 
 /** A group heading inside a menu panel, set like a running head. */
 export const MENU_GROUP_LABEL = "ps-2 font-mono text-caption uppercase text-fg-secondary";

@@ -82,7 +82,7 @@ export function Tooltip({ children, className, size = "sm", showArrow = true, of
       {...props}
       className={(state) =>
         cx(
-          "pointer-events-none z-50 max-w-60 select-none rounded-control-sm bg-fg text-canvas",
+          "bui-tooltip pointer-events-none z-50 max-w-60 select-none rounded-control-sm bg-fg text-canvas",
           sizes[size],
           // A plain fade. react-aria stamps `data-entering` on mount then
           // removes it, and holds the element mounted while `data-exiting` is
@@ -104,7 +104,7 @@ export function Tooltip({ children, className, size = "sm", showArrow = true, of
                 width={caret.width}
                 height={caret.height}
                 viewBox={`0 0 ${caret.width} ${caret.height}`}
-                className="block fill-fg"
+                className="bui-tooltip-caret block fill-fg"
               >
                 <path d={`${caret.path} Z`} />
               </svg>

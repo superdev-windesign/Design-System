@@ -514,6 +514,132 @@
         "$value": "{color.indigo.300}",
         "$description": "Hover emphasis for series 9"
       }
+    },
+    "glass": {
+      "regular": {
+        "$type": "color",
+        "$value": "{color.bg.surface}",
+        "$description": "The glass material. Solid here; a brand with real glass makes it translucent."
+      },
+      "clear": {
+        "$type": "color",
+        "$value": "{color.bg.surface}"
+      },
+      "rim": {
+        "$type": "color",
+        "$value": "{color.border.default}",
+        "$description": "The material's lit edge."
+      },
+      "rim-soft": {
+        "$type": "color",
+        "$value": "{color.border.default}"
+      },
+      "lens": {
+        "$type": "color",
+        "$value": "{color.bg.muted}",
+        "$description": "A selected item inside the glass."
+      },
+      "dim": {
+        "$type": "color",
+        "$value": "{color.ios.none}",
+        "$description": "Dims a bright backdrop under clear glass."
+      },
+      "on-clear": {
+        "$type": "color",
+        "$value": "{color.text.primary}"
+      },
+      "on-clear-secondary": {
+        "$type": "color",
+        "$value": "{color.text.secondary}"
+      },
+      "panel": {
+        "$type": "color",
+        "$value": "{color.bg.surface}",
+        "$description": "A pane that carries text. Solid here; a brand with real glass makes it translucent."
+      },
+      "solid": {
+        "$type": "color",
+        "$value": "{color.bg.surface}",
+        "$description": "What a pane falls back to when someone asks for less transparency."
+      },
+      "edge": {
+        "$type": "color",
+        "$value": "{color.border.default}",
+        "$description": "The rule around a pane."
+      },
+      "well": {
+        "$type": "color",
+        "$value": "{color.bg.surface}",
+        "$description": "A surface inside a pane."
+      },
+      "inset": {
+        "$type": "color",
+        "$value": "{color.bg.sunken}",
+        "$description": "A sunken strip inside a pane."
+      },
+      "hover": {
+        "$type": "color",
+        "$value": "{color.bg.surface-hover}",
+        "$description": "A hovered row inside a pane."
+      },
+      "line": {
+        "$type": "color",
+        "$value": "{color.border.default}",
+        "$description": "A rule inside a pane."
+      },
+      "on-panel-secondary": {
+        "$type": "color",
+        "$value": "{color.text.secondary}",
+        "$description": "Secondary text inside a pane."
+      },
+      "frost": {
+        "$type": "color",
+        "$value": "{color.bg.surface}",
+        "$description": "A soft lifted lozenge."
+      },
+      "glow-sky": {
+        "$type": "color",
+        "$value": "{color.accent.300}",
+        "$description": "Light held inside the glass."
+      },
+      "glow-sun": {
+        "$type": "color",
+        "$value": "{color.accent.300}"
+      },
+      "glow-ember": {
+        "$type": "color",
+        "$value": "{color.accent.300}"
+      },
+      "glow-mint": {
+        "$type": "color",
+        "$value": "{color.accent.300}"
+      },
+      "glow-iris": {
+        "$type": "color",
+        "$value": "{color.accent.300}"
+      },
+      "surface": {
+        "$type": "color",
+        "$value": "{color.bg.surface}",
+        "$description": "A panel made of glass. Solid here; a brand with real glass makes it translucent."
+      },
+      "wash-sky": {
+        "$type": "color",
+        "$value": "{color.bg.canvas}",
+        "$description": "Colour washed across the page, for glass to pick up."
+      },
+      "wash-lilac": {
+        "$type": "color",
+        "$value": "{color.bg.canvas}"
+      },
+      "wash-peach": {
+        "$type": "color",
+        "$value": "{color.bg.canvas}"
+      },
+      "wash-mint": {
+        "$type": "color",
+        "$value": "{color.bg.canvas}"
+      }
     }
   },
   "gradient": {
@@ -574,6 +700,26 @@
     "control-checked": {
       "$type": "shadow",
       "$value": "inset 0 2px 0 0 rgb(255 255 255 / 0.25), inset 0 0 0 1px {color.accent.500}"
+    },
+    "glass": {
+      "$type": "shadow",
+      "$value": "{elevation.overlay}",
+      "$description": "Glass floating over content."
+    },
+    "glass-bevel": {
+      "$type": "shadow",
+      "$value": "{elevation.hairline}",
+      "$description": "The thickness of a pane."
+    },
+    "glass-frost": {
+      "$type": "shadow",
+      "$value": "{elevation.raised}",
+      "$description": "A soft lifted lozenge."
+    },
+    "glass-lens": {
+      "$type": "shadow",
+      "$value": "{elevation.raised}",
+      "$description": "A drop of glass standing proud of its track."
     }
   }
 }

@@ -36,24 +36,24 @@ describe("theme coverage", () => {
   });
 });
 
-describe("brands", () => {
-  const moonLight = flatten(readJson("../src/brands/moon/theme.light.json"));
-  const moonDark = flatten(readJson("../src/brands/moon/theme.dark.json"));
-  const moonBase = flatten(readJson("../src/brands/moon/base.json"));
+describe.each(["moon", "glass"])("the %s brand", (brand) => {
+  const brandLight = flatten(readJson(`../src/brands/${brand}/theme.light.json`));
+  const brandDark = flatten(readJson(`../src/brands/${brand}/theme.dark.json`));
+  const brandBase = flatten(readJson(`../src/brands/${brand}/base.json`));
   const known = new Set(Object.keys({ ...light, ...base, ...flatten(readJson("../src/primitives/color.json")) }));
 
   // A dark override with no light one (or the reverse) would leak the other brand's value.
-  it("moon overrides every token in both themes, bar the roles only dark needs", () => {
-    const lightOnly = Object.keys(moonLight).filter((path) => !(path in moonDark));
+  it("overrides every token in both themes, bar the roles only dark needs", () => {
+    const lightOnly = Object.keys(brandLight).filter((path) => !(path in brandDark));
     expect(lightOnly).toEqual([]);
   });
 
-  it.each(Object.keys({ ...moonLight, ...moonDark, ...moonBase }))("%s overrides a token that exists", (path) => {
+  it.each(Object.keys({ ...brandLight, ...brandDark, ...brandBase }))("%s overrides a token that exists", (path) => {
     expect(known.has(path)).toBe(true);
   });
 
-  it.each(Object.entries({ ...moonLight, ...moonDark, ...moonBase }))("%s references a primitive", (_, value) => {
-    expect(String(value)).toMatch(/\{[a-z0-9.-]+\}/);
+  it.each(Object.entries({ ...brandLight, ...brandDark, ...brandBase }))("%s references a primitive", (_, value) => {
+    expect(String(value)).toMatch(/{[a-z0-9.-]+}/);
   });
 });
 

@@ -95,13 +95,13 @@ export function TabList<T extends object>({ className, ref, ...props }: TabListP
   }, [direction]);
 
   return (
-    <div ref={wrapperRef} className="relative w-full">
+    <div ref={wrapperRef} className="bui-tabs-strip relative w-full">
       <AriaTabList
         ref={ref}
         {...props}
         className={(state) =>
           cx(
-            "flex w-full items-center gap-1 border-b border-separator",
+            "bui-tabs-list flex w-full items-center gap-1 border-b border-separator",
             typeof className === "function" ? className(state) : className,
           )
         }
@@ -109,7 +109,7 @@ export function TabList<T extends object>({ className, ref, ...props }: TabListP
       {underline && (
         <span
           aria-hidden
-          className="pointer-events-none absolute -bottom-px left-0 h-1 bg-accent-600 ink-lens transition-[transform,width] duration-(--ds-motion-duration-moderate) ease-standard motion-reduce:transition-none"
+          className="bui-tabs-indicator pointer-events-none absolute -bottom-px left-0 h-1 bg-accent-600 ink-lens transition-[transform,width] duration-(--ds-motion-duration-moderate) ease-standard motion-reduce:transition-none"
           style={{
             transform: `translateX(${underline.left}px)`,
             width: underline.width,
@@ -136,7 +136,7 @@ export function Tab({ className, children, icon: Icon, count, ref, ...props }: T
       {...props}
       className={(state) =>
         cx(
-          "group/tab relative inline-flex cursor-pointer items-center gap-2 px-2.5 py-2 whitespace-nowrap",
+          "bui-tab group/tab relative inline-flex cursor-pointer items-center gap-2 px-2.5 py-2 whitespace-nowrap",
           "outline-none transition-colors duration-(--ds-motion-duration-base) ease-standard",
           "focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-focus",
           state.isDisabled && "cursor-not-allowed opacity-50",
