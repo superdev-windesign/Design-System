@@ -793,7 +793,7 @@ export const MORE_ENTRIES: CatalogEntry[] = [
     summary: "A short guided walk: each step outlines an element and explains it.",
     imports: ["Tour"],
     preview: () => (
-      <div className="flex w-64 flex-col overflow-hidden rounded-overlay border border-line bg-surface p-3 shadow-overlay">
+      <div className="flex w-64 flex-col overflow-hidden rounded-overlay border glass-panel p-3 shadow-overlay">
         <span className="font-mono text-caption tracking-wide text-accent-600 uppercase">Step 01 / 03</span>
         <span className="mt-1 text-body-md-strong text-fg">Find anything</span>
         <span className="text-body-sm text-fg-secondary">Search boards, cards and people from here.</span>

@@ -483,6 +483,16 @@
       "tint-danger-dark": {
         "$type": "color",
         "$value": "#FF424533"
+      },
+      "gray2-dark-legible": {
+        "$type": "color",
+        "$value": "#545458",
+        "$description": "Secondary text that holds 4.5:1 on fills stacked over glass."
+      },
+      "gray-legible-dark": {
+        "$type": "color",
+        "$value": "#A1A1A6",
+        "$description": "Tertiary text that holds 4.5:1 on dark glass fills."
       }
     }
   },

@@ -104,11 +104,15 @@
       },
       "secondary": {
         "$type": "color",
-        "$value": "{color.ios.gray2-dark}"
+        "$value": "{color.ios.gray2-dark-legible}"
       },
       "danger": {
         "$type": "color",
         "$value": "{color.ios.red-deep}"
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.ios.gray-accessible}"
       }
     },
     "icon": {

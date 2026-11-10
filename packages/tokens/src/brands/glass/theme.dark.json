@@ -109,6 +109,10 @@
       "danger": {
         "$type": "color",
         "$value": "{color.ios.red-light}"
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.ios.gray-legible-dark}"
       }
     },
     "icon": {
@@ -174,6 +178,10 @@
         "bg": {
           "$type": "color",
           "$value": "{color.ios.tint-danger-dark}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.ios.red-light}"
         }
       },
       "warning": {
@@ -419,6 +427,14 @@
       "fill": {
         "$type": "color",
         "$value": "{color.accent.600}"
+      }
+    },
+    "tag": {
+      "rose": {
+        "fg": {
+          "$type": "color",
+          "$value": "{color.ios.pink-light}"
+        }
       }
     }
   },

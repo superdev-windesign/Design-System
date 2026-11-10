@@ -105,6 +105,10 @@
       "danger": {
         "$type": "color",
         "$value": "{color.moon.dodoria}"
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.moon.zeno-legible}"
       }
     },
     "icon": {

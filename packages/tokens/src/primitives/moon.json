@@ -287,6 +287,16 @@
       "tint-danger-dark": {
         "$type": "color",
         "$value": "#F06A6A29"
+      },
+      "trunks-dark-legible": {
+        "$type": "color",
+        "$value": "#A1A5AB",
+        "$description": "Moon's dark trunks, lifted to hold 4.5:1 on a highlighted row."
+      },
+      "zeno-legible": {
+        "$type": "color",
+        "$value": "#686868",
+        "$description": "Moon's zeno, darkened to hold 4.5:1 on a grey well."
       }
     }
   },

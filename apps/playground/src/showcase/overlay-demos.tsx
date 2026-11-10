@@ -85,7 +85,7 @@ function MockPage({ children, align = "center" }: { children: ReactNode; align?:
 
 function MockMenu({ rows, className }: { rows: { label: string; shortcut?: string; danger?: boolean; checked?: boolean }[]; className?: string }) {
   return (
-    <div className={`flex w-48 flex-col gap-0.5 rounded-overlay border border-line bg-surface p-1.5 shadow-overlay ${className ?? ""}`}>
+    <div className={`flex w-48 flex-col gap-0.5 rounded-overlay border glass-panel p-1.5 shadow-overlay ${className ?? ""}`}>
       {rows.map((row, i) =>
         row.label === "—" ? (
           <span key={i} className="mx-1 my-1 h-px bg-line" />
@@ -548,7 +548,7 @@ export const OVERLAY_ENTRIES: CatalogEntry[] = [
     imports: ["DialogTrigger", "Modal", "Dialog"],
     preview: () => (
       <MockPage>
-        <div className="flex w-56 flex-col overflow-hidden rounded-overlay border border-line bg-surface shadow-overlay">
+        <div className="flex w-56 flex-col overflow-hidden rounded-overlay border glass-panel shadow-overlay">
           <span className="border-b border-line px-3 py-2 font-display text-body-md-strong text-fg">Edit profile</span>
           <span className="flex flex-col gap-1.5 px-3 py-3">
             <span className="h-6 rounded-control-sm ring-1 ring-line-control ring-inset" />
@@ -572,7 +572,7 @@ export const OVERLAY_ENTRIES: CatalogEntry[] = [
     imports: ["DialogTrigger", "AlertDialog"],
     preview: () => (
       <MockPage>
-        <div className="flex w-56 flex-col overflow-hidden rounded-overlay border border-line bg-surface shadow-overlay">
+        <div className="flex w-56 flex-col overflow-hidden rounded-overlay border glass-panel shadow-overlay">
           <span className="flex gap-2.5 px-3 pt-3 pb-2.5">
             <span className="flex size-7 shrink-0 items-center justify-center rounded-full bg-status-danger text-status-danger-text">!</span>
             <span className="flex flex-col gap-0.5">
@@ -598,7 +598,7 @@ export const OVERLAY_ENTRIES: CatalogEntry[] = [
     imports: ["DialogTrigger", "Drawer", "Dialog"],
     preview: () => (
       <MockPage align="end">
-        <div className="flex h-full w-36 flex-col border-s border-line bg-surface shadow-overlay">
+        <div className="flex h-full w-36 flex-col border-s glass-panel shadow-overlay">
           <span className="border-b border-line px-3 py-2 font-display text-body-sm-strong text-fg">Filters</span>
           <span className="flex flex-col gap-2 p-3">
             {["To do", "In progress", "Done"].map((s, i) => (
@@ -622,7 +622,7 @@ export const OVERLAY_ENTRIES: CatalogEntry[] = [
     imports: ["PopoverTrigger", "Popover"],
     preview: () => (
       <div className="flex flex-col items-center">
-        <div className="flex w-52 flex-col gap-2 rounded-overlay border border-line bg-surface p-3 shadow-overlay">
+        <div className="flex w-52 flex-col gap-2 rounded-overlay border glass-panel p-3 shadow-overlay">
           <span className="text-body-sm-strong text-fg">Share “Q3 plan”</span>
           <span className="h-6 rounded-control-sm ring-1 ring-line-control ring-inset" />
           <span className="h-6 w-24 rounded-control-sm border border-line-control" />
@@ -649,7 +649,7 @@ export const OVERLAY_ENTRIES: CatalogEntry[] = [
         <span className="text-body-sm text-fg">
           Proposed by <span className="text-accent-600 underline underline-offset-4">@riley</span>
         </span>
-        <div className="w-60 rounded-overlay border border-line bg-surface p-3 shadow-overlay">
+        <div className="w-60 rounded-overlay border glass-panel p-3 shadow-overlay">
           <ProfileCard />
         </div>
       </div>
@@ -735,7 +735,7 @@ export const NAVIGATION_ENTRIES: CatalogEntry[] = [
           <span className="rounded-control-sm bg-surface-hover px-2.5 py-1 text-fg">Products ▾</span>
           <span className="px-2.5 py-1">Pricing</span>
         </div>
-        <div className="grid grid-cols-2 gap-1 rounded-overlay border border-line bg-surface p-2 shadow-overlay">
+        <div className="grid grid-cols-2 gap-1 rounded-overlay border glass-panel p-2 shadow-overlay">
           {["Analytics", "Billing", "Teams", "Docs"].map((t) => (
             <span key={t} className="flex flex-col gap-0.5 rounded-control-md p-2">
               <span className="text-caption-strong text-fg">{t}</span>

@@ -104,11 +104,15 @@
       },
       "secondary": {
         "$type": "color",
-        "$value": "{color.moon.trunks-dark}"
+        "$value": "{color.moon.trunks-dark-legible}"
       },
       "danger": {
         "$type": "color",
         "$value": "{color.moon.dodoria-light}"
+      },
+      "tertiary": {
+        "$type": "color",
+        "$value": "{color.moon.gray-control}"
       }
     },
     "icon": {
@@ -158,6 +162,10 @@
         "bg": {
           "$type": "color",
           "$value": "{color.moon.tint-danger-dark}"
+        },
+        "text": {
+          "$type": "color",
+          "$value": "{color.moon.chichi-light}"
         }
       },
       "warning": {
@@ -259,6 +267,14 @@
       "fill": {
         "$type": "color",
         "$value": "{color.accent.600}"
+      }
+    },
+    "tag": {
+      "rose": {
+        "fg": {
+          "$type": "color",
+          "$value": "{color.moon.chichi-light}"
+        }
       }
     }
   },

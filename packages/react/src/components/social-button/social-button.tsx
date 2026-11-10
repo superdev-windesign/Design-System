@@ -193,7 +193,7 @@ export function SocialButton({ href, ...props }: SocialButtonProps | SocialButto
   );
 
   // A brand whose colour is a system token (Google) hands the fill straight
-  // to `bg-button-primary`, so it is the primary button, gradient, hover and
+  // to `bg-action-primary`, so it is the primary button, gradient, hover and
   // active included, rather than an approximation of it. Every other brand
   // gets that gradient's shape derived from its own colour: down in
   // lightness and up slightly in chroma, which is what blue-500 → blue-600
@@ -204,10 +204,10 @@ export function SocialButton({ href, ...props }: SocialButtonProps | SocialButto
     styles.base,
     iconOnly ? styles.iconOnlySize[size] : styles.size[size],
     styles.appearance[appearance],
-    // `bg-button-primary` carries its own hover and active gradients; the
+    // `bg-action-primary` carries its own hover and active gradients; the
     // derived brands need the brightness shift instead.
     systemFill
-      ? "bg-button-primary"
+      ? "bg-action-primary"
       : appearance === "colorful" && "hover:brightness-[1.06] active:brightness-95",
     fullWidth && !iconOnly && "w-full",
     className,
