@@ -55,15 +55,23 @@ function Figure({ entry, tall = false }: { entry: CatalogEntry; tall?: boolean }
   );
 }
 
-/** A chapter: number, title, blurb, then its figures. */
-function Chapter({ group }: { group: Group }) {
+/** A chapter: number, title, blurb, then its figures. `bare` drops the heading when the page already gives it. */
+function Chapter({ group, bare = false }: { group: Group; bare?: boolean }) {
   const meta = GROUPS.find((g) => g.name === group)!;
   const entries = entriesIn(group);
   const wide = group === "Templates" || group === "Blocks" || group === "Charts";
+  if (bare)
+    return (
+      <section aria-label={group} className={cx("grid grid-cols-1 gap-x-8 gap-y-12 border-t border-line pt-8", wide ? "xl:grid-cols-2" : "sm:grid-cols-2 xl:grid-cols-3")}>
+        {entries.map((entry) => (
+          <Figure key={entry.slug} entry={entry} tall={group === "Templates"} />
+        ))}
+      </section>
+    );
   return (
     // grid-cols-1 is minmax(0, 1fr): a wide preview is clipped by its figure instead of widening the page on phones.
-    <section aria-labelledby={`ch-${groupSlug(group)}`} className="grid grid-cols-1 gap-8 border-t border-line pt-8 lg:grid-cols-12">
-      <header className="flex flex-col gap-2 lg:col-span-3">
+    <section aria-labelledby={`ch-${groupSlug(group)}`} className="grid grid-cols-1 gap-8 border-t border-line pt-8 xl:grid-cols-12">
+      <header className="flex flex-col gap-2 xl:col-span-3">
         <span className="font-mono text-caption text-accent-600">{groupNumber(group)}</span>
         <h2 id={`ch-${groupSlug(group)}`} className="font-display text-title-lg-strong text-fg">
           <a href={`#/section/${groupSlug(group)}`} className={cx("rounded-xs hover:underline hover:decoration-1 hover:underline-offset-4", focusRingNative)}>
@@ -75,7 +83,7 @@ function Chapter({ group }: { group: Group }) {
           {entries.length} {entries.length === 1 ? "entry" : "entries"}
         </p>
       </header>
-      <div className={cx("grid grid-cols-1 gap-x-8 gap-y-12 lg:col-span-9", wide ? "sm:grid-cols-1 xl:grid-cols-2" : "sm:grid-cols-2")}>
+      <div className={cx("grid grid-cols-1 gap-x-8 gap-y-12 xl:col-span-9", wide ? "sm:grid-cols-1 xl:grid-cols-2" : "sm:grid-cols-2")}>
         {entries.map((entry) => (
           <Figure key={entry.slug} entry={entry} tall={group === "Templates"} />
         ))}
@@ -192,10 +200,15 @@ export function ContentsPage({ groups, title, lead, kicker }: { groups: Group[];
         <Kicker>{kicker}</Kicker>
         <h1 className="font-display text-display-md text-fg">{title}</h1>
         <p className="text-body-md text-fg-secondary">{lead}</p>
+        {groups.length === 1 && (
+          <p className="font-mono text-caption text-fg-secondary">
+            {entriesIn(groups[0]!).length} {entriesIn(groups[0]!).length === 1 ? "entry" : "entries"}
+          </p>
+        )}
       </header>
       <div className="flex flex-col gap-16">
         {groups.map((group) => (
-          <Chapter key={group} group={group} />
+          <Chapter key={group} group={group} bare={groups.length === 1} />
         ))}
       </div>
     </Page>
@@ -233,7 +246,6 @@ export function DetailPage({ entry }: { entry: CatalogEntry }) {
   const index = CATALOG.indexOf(entry);
   const previous = CATALOG[index - 1];
   const next = CATALOG[index + 1];
-  const siblings = entriesIn(entry.group);
   const Demo = entry.demo ?? entry.preview;
   const isFoundation = entry.group === "Foundations";
   const isTemplate = entry.group === "Templates";
@@ -241,8 +253,9 @@ export function DetailPage({ entry }: { entry: CatalogEntry }) {
 
   return (
     <Page className="gap-12 py-10 sm:py-14">
-      <div className="grid grid-cols-1 gap-10 lg:grid-cols-12">
-        <article className="flex min-w-0 flex-col gap-8 lg:col-span-9">
+      {/* The chapter's other pages are in the sidebar, so the article takes the full width. */}
+      <div className="flex flex-col">
+        <article className="flex min-w-0 flex-col gap-8">
           <header className="flex flex-col gap-3 border-b border-line pb-8">
             <Kicker>
               <a href={`#/section/${groupSlug(entry.group)}`} className={cx("rounded-xs hover:text-fg", focusRingNative)}>
@@ -285,30 +298,6 @@ export function DetailPage({ entry }: { entry: CatalogEntry }) {
             </Tabs>
           )}
         </article>
-
-        <aside aria-label={`In ${entry.group}`} className="hidden lg:col-span-3 lg:block">
-          <div className="sticky top-24 flex flex-col gap-3">
-            <Kicker>In this chapter</Kicker>
-            <ol className="flex flex-col border-s border-line">
-              {siblings.map((s) => (
-                <li key={s.slug}>
-                  <a
-                    href={`#/components/${s.slug}`}
-                    aria-current={s.slug === entry.slug ? "page" : undefined}
-                    className={cx(
-                      "-ms-px flex items-baseline gap-2 border-s-2 py-1.5 ps-3 text-body-sm transition-colors",
-                      s.slug === entry.slug ? "border-accent-500 text-fg" : "border-transparent text-fg-secondary hover:text-fg",
-                      focusRingNative,
-                    )}
-                  >
-                    <span className="font-mono text-caption">{entryNumber(s).split(".")[1]}</span>
-                    {s.name}
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </div>
-        </aside>
       </div>
 
       <nav aria-label="More" className="grid gap-px overflow-hidden rounded-surface border border-line bg-line sm:grid-cols-2">

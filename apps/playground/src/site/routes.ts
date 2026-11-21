@@ -19,8 +19,21 @@ export type Route =
 export const groupSlug = (group: Group) => group.toLowerCase().replace(/\s+/g, "-");
 export const groupBySlug = (slug: string) => GROUPS.find((g) => groupSlug(g.name) === slug)?.name;
 
-/** Groups that aren't foundations, blocks, charts or templates. */
-export const COMPONENT_GROUPS: Group[] = GROUPS.map((g) => g.name).filter((g) => !["Foundations", "Blocks", "Charts", "Templates", "Moon", "Glass"].includes(g));
+/** Larger pieces built from the components. */
+export const PATTERN_GROUPS: Group[] = ["Blocks", "Charts", "Templates"];
+
+/** Components made for one brand's look. */
+export const BRAND_GROUPS: Group[] = ["Moon", "Glass"];
+
+/** The component chapters: everything that isn't a foundation, a pattern or a brand. */
+export const COMPONENT_GROUPS: Group[] = GROUPS.map((g) => g.name).filter((g) => g !== "Foundations" && !PATTERN_GROUPS.includes(g) && !BRAND_GROUPS.includes(g));
+
+/** The group a page belongs to, or "index" for the component contents. */
+export const routeGroup = (route: Route): Group | "index" | null =>
+  route.kind === "section" ? route.group : route.kind === "detail" ? route.entry.group : route.kind === "index" ? "index" : null;
+
+/** Pages that sit in the docs shell, with the sidebar beside them. */
+export const isDocsRoute = (route: Route) => routeGroup(route) !== null;
 
 /** "03" for the third group: the chapter number used across the site. */
 export const groupNumber = (group: Group) => String(GROUPS.findIndex((g) => g.name === group) + 1).padStart(2, "0");
@@ -63,22 +76,19 @@ export function useRoute() {
   return parseRoute(hash);
 }
 
-/** Top navigation: four chapters of the book, plus the component index. */
+/**
+ * Top navigation: only the three top-level parts. Everything inside them,
+ * from Actions to Blocks, Charts and the brand sets, is in the sidebar.
+ */
 export const NAV: { label: string; href: string; matches: (route: Route) => boolean }[] = [
-  {
-    label: "Foundations",
-    href: "#/section/foundations",
-    matches: (r) => (r.kind === "section" && r.group === "Foundations") || (r.kind === "detail" && r.entry.group === "Foundations"),
-  },
+  { label: "Foundations", href: "#/section/foundations", matches: (r) => routeGroup(r) === "Foundations" },
   {
     label: "Components",
     href: "#/components",
-    matches: (r) =>
-      r.kind === "index" || (r.kind === "section" && COMPONENT_GROUPS.includes(r.group)) || (r.kind === "detail" && COMPONENT_GROUPS.includes(r.entry.group)),
+    matches: (r) => {
+      const group = routeGroup(r);
+      return group !== null && group !== "Foundations" && group !== "Templates";
+    },
   },
-  ...(["Blocks", "Charts", "Templates", "Moon", "Glass"] as const).map((group) => ({
-    label: group,
-    href: `#/section/${groupSlug(group)}`,
-    matches: (r: Route) => (r.kind === "section" && r.group === group) || (r.kind === "detail" && r.entry.group === group),
-  })),
+  { label: "Templates", href: "#/section/templates", matches: (r) => routeGroup(r) === "Templates" },
 ];

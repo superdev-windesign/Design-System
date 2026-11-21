@@ -4,6 +4,7 @@ import { RiCloseLine, RiComputerLine, RiMenuLine, RiMoonLine, RiSearchLine, RiSu
 import { BRANDS, CommandGroup, CommandItem, CommandPalette, IconButton, Kbd, cx, focusRingNative, useTheme } from "@ds/react";
 import type { IconComponent, ThemeChoice } from "@ds/react";
 import { GROUPS } from "../showcase/catalog";
+import { DocsNav } from "./docs-nav";
 import { NAV, entriesIn } from "./routes";
 import type { Route } from "./routes";
 
@@ -127,7 +128,7 @@ export function SiteHeader({ route }: { route: Route }) {
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-canvas/92 [backdrop-filter:var(--ds-effect-glass-panel)]">
-      <div className="mx-auto flex h-16 max-w-6xl items-center gap-6 px-5 sm:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center gap-6 px-5 sm:px-8">
         <Wordmark />
 
         <nav aria-label="Sections" className="hidden flex-1 items-center gap-6 lg:flex">
@@ -164,43 +165,45 @@ export function SiteHeader({ route }: { route: Route }) {
             <span className="hidden sm:inline">Search</span>
             <Kbd className="hidden px-1.5 sm:inline-flex lg:hidden xl:inline-flex">{isApple() ? "⌘K" : "Ctrl K"}</Kbd>
           </button>
-          <BrandSwitch className="hidden xl:flex" />
+          <BrandSwitch className="hidden lg:flex" />
           <ThemeSwitch className="hidden sm:flex" />
-          <IconButton icon={RiMenuLine} size="small" aria-label="Open menu" onClick={() => setMenuOpen(true)} className="xl:hidden" />
+          <IconButton icon={RiMenuLine} size="small" aria-label="Open menu" onClick={() => setMenuOpen(true)} className="lg:hidden" />
         </div>
       </div>
 
       <SiteSearch isOpen={searchOpen} onOpenChange={setSearchOpen} />
 
-      {/* Small screens: the contents as a full-height sheet. */}
+      {/* Small screens: the top links, then the same contents tree as the sidebar, in a full-height sheet. */}
       <ModalOverlay
         isOpen={menuOpen}
         onOpenChange={setMenuOpen}
         isDismissable
-        className="fixed inset-0 z-50 bg-scrim transition-opacity data-[entering]:opacity-0 data-[exiting]:opacity-0 xl:hidden"
+        className="fixed inset-0 z-50 bg-scrim transition-opacity data-[entering]:opacity-0 data-[exiting]:opacity-0 lg:hidden"
       >
         <Modal className="fixed inset-y-0 end-0 w-full max-w-sm bg-canvas transition-transform duration-(--ds-motion-duration-slow) ease-enter data-[entering]:translate-x-full data-[exiting]:translate-x-full rtl:data-[entering]:-translate-x-full rtl:data-[exiting]:-translate-x-full motion-reduce:transition-none">
-          <Dialog aria-label="Menu" className="flex h-full flex-col gap-6 overflow-y-auto p-5">
-            <div className="flex items-center justify-between">
+          <Dialog aria-label="Menu" data-docs-scroll className="flex h-full flex-col gap-6 overflow-y-auto p-5">
+            {/* Pinned: the sheet scrolls to the current page, and on a phone it fills the screen, so this is the only way out. */}
+            <div className="sticky -top-5 z-10 -mx-5 -mt-5 flex items-center justify-between border-b border-line bg-canvas px-5 py-3">
               <Wordmark />
               <IconButton icon={RiCloseLine} size="small" aria-label="Close menu" onClick={() => setMenuOpen(false)} />
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <BrandSwitch />
+              <ThemeSwitch />
             </div>
             <nav aria-label="Sections">
               <ol className="flex flex-col">
                 {NAV.map((item, i) => (
                   <li key={item.label} className="border-b border-line">
-                    <a href={item.href} className={cx("flex items-baseline gap-4 py-4", focusRingNative)}>
+                    <a href={item.href} aria-current={item.matches(route) ? "page" : undefined} className={cx("flex items-baseline gap-4 py-3", focusRingNative)}>
                       <span className="font-mono text-caption text-fg-secondary">{String(i + 1).padStart(2, "0")}</span>
-                      <span className="font-display text-title-md-strong text-fg">{item.label}</span>
+                      <span className="font-display text-title-sm-emphasis text-fg">{item.label}</span>
                     </a>
                   </li>
                 ))}
               </ol>
             </nav>
-            <div className="flex flex-wrap gap-2">
-              <BrandSwitch />
-              <ThemeSwitch />
-            </div>
+            <DocsNav route={route} />
           </Dialog>
         </Modal>
       </ModalOverlay>

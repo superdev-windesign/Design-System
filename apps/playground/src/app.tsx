@@ -1,7 +1,8 @@
 import { SkipLink, Toaster } from "@ds/react";
 import { GROUPS } from "./showcase/catalog";
+import { DocsSidebar } from "./site/docs-nav";
 import { ContentsPage, DetailPage, HomePage, MissingPage } from "./site/pages";
-import { COMPONENT_GROUPS, useRoute } from "./site/routes";
+import { COMPONENT_GROUPS, isDocsRoute, useRoute } from "./site/routes";
 import { SiteHeader, Wordmark } from "./site/site-header";
 
 /** Lead paragraphs for the four non-component chapters. */
@@ -39,11 +40,21 @@ export function App() {
       <SiteHeader route={route} />
       {/* One app-wide toast region; anything can call toast.success(…). */}
       <Toaster />
-      <main id="main" tabIndex={-1} className="flex-1">
-        {page}
-      </main>
+      {isDocsRoute(route) ? (
+        // The docs shell: the contents tree on the left, the page beside it.
+        <div className="mx-auto flex w-full max-w-7xl flex-1 items-start">
+          <DocsSidebar route={route} />
+          <main id="main" tabIndex={-1} className="min-w-0 flex-1">
+            {page}
+          </main>
+        </div>
+      ) : (
+        <main id="main" tabIndex={-1} className="flex-1">
+          {page}
+        </main>
+      )}
       <footer className="border-t border-line">
-        <div className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-8">
           <Wordmark />
           <p className="font-mono text-caption text-fg-secondary">Set in Fraunces, Instrument Sans and JetBrains Mono · React Aria · Tokens</p>
         </div>
