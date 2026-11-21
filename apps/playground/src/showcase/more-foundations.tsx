@@ -505,7 +505,7 @@ export function BreakpointsPreview() {
 
 const THEME_USAGE = `import { AccentPicker, ThemeProvider, ThemeScope, useTheme } from "@ds/react";
 
-<ThemeProvider defaultTheme="system">
+<ThemeProvider defaultTheme="light">
   <App />
 </ThemeProvider>
 
@@ -537,7 +537,7 @@ export function ThemingFoundation() {
     <div className="flex w-full max-w-3xl flex-col gap-8">
       <Section title="This page" blurb="The site runs inside ThemeProvider. Switching here is the same as the switch in the header.">
         <Stack direction="row" gap={2} wrap>
-          {(["light", "dark", "system"] as ThemeChoice[]).map((choice) => (
+          {(["light", "dark"] as ThemeChoice[]).map((choice) => (
             <Button key={choice} size="sm" variant={theme === choice ? "primary" : "secondary"} onPress={(e) => setTheme(choice, centreOf(e.target))} aria-pressed={theme === choice}>
               {choice[0]!.toUpperCase() + choice.slice(1)}
             </Button>

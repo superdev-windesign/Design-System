@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Dialog, Modal, ModalOverlay } from "react-aria-components";
-import { RiCloseLine, RiComputerLine, RiMenuLine, RiMoonLine, RiSearchLine, RiSunLine } from "@remixicon/react";
+import { RiCloseLine, RiMenuLine, RiMoonLine, RiSearchLine, RiSunLine } from "@remixicon/react";
 import { BRANDS, CommandGroup, CommandItem, CommandPalette, IconButton, Kbd, cx, focusRingNative, useTheme } from "@ds/react";
 import type { IconComponent, ThemeChoice } from "@ds/react";
 import { GROUPS } from "../showcase/catalog";
@@ -12,10 +12,10 @@ import type { Route } from "./routes";
 /*                                    Theme                                   */
 /* -------------------------------------------------------------------------- */
 
+/** Light or dark, chosen outright: the site doesn't follow the OS. */
 const THEMES: { id: ThemeChoice; label: string; icon: IconComponent }[] = [
   { id: "light", label: "Light", icon: RiSunLine },
   { id: "dark", label: "Dark", icon: RiMoonLine },
-  { id: "system", label: "System", icon: RiComputerLine },
 ];
 
 function ThemeSwitch({ className }: { className?: string }) {

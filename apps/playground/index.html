@@ -9,8 +9,8 @@
     <script>
       try {
         var root = document.documentElement;
-        var t = localStorage.getItem("ds-theme");
-        if (t === "light" || t === "dark") root.dataset.theme = t;
+        // Light unless dark was chosen: the site has no "follow the OS" option.
+        root.dataset.theme = localStorage.getItem("ds-theme") === "dark" ? "dark" : "light";
         var brand = localStorage.getItem("ds-brand");
         if (brand === "moon" || brand === "glass") root.dataset.brand = brand;
         var a = localStorage.getItem("ds-accent");

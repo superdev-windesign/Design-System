@@ -11,8 +11,8 @@ import { App } from "./app";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {/* One theme choice for the whole site; index.html applies it before first paint. */}
-    <ThemeProvider>
+    {/* One theme choice for the whole site, light until someone picks dark; index.html applies it before first paint. */}
+    <ThemeProvider defaultTheme="light">
       <App />
     </ThemeProvider>
   </StrictMode>,
