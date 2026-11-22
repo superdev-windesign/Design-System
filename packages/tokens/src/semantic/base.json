@@ -142,6 +142,25 @@
     }
   },
   "text": {
+    "body-lg": {
+      "size": {
+        "$type": "dimension",
+        "$value": "{font.size.16}"
+      },
+      "line-height": {
+        "$type": "dimension",
+        "$value": "{font.line-height.24}"
+      },
+      "weight": {
+        "$type": "fontWeight",
+        "$value": "{font.weight.regular}"
+      },
+      "tracking": {
+        "$type": "dimension",
+        "$value": "{font.tracking.0}"
+      },
+      "$description": "Lead paragraphs under page titles"
+    },
     "body-md": {
       "size": {
         "$type": "dimension",

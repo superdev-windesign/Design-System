@@ -134,6 +134,10 @@
   --spacing-icon-md: var(--ds-size-icon-md);
 
   /* Composite text styles → text-body-md sets size, line height, weight and tracking */
+  --text-body-lg: var(--ds-text-body-lg-size);
+  --text-body-lg--line-height: var(--ds-text-body-lg-line-height);
+  --text-body-lg--font-weight: var(--ds-text-body-lg-weight);
+  --text-body-lg--letter-spacing: var(--ds-text-body-lg-tracking);
   --text-body-md: var(--ds-text-body-md-size);
   --text-body-md--line-height: var(--ds-text-body-md-line-height);
   --text-body-md--font-weight: var(--ds-text-body-md-weight);

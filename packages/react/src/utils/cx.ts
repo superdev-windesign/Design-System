@@ -13,7 +13,7 @@ export const cx = extendTailwindMerge({
   extend: {
     theme: {
       text: [
-        "body-md", "body-md-strong", "body-sm", "body-sm-strong",
+        "body-lg", "body-md", "body-md-strong", "body-sm", "body-sm-strong",
         "caption", "caption-strong", "caption-emphasis",
         "headline-emphasis", "title-sm-strong", "title-sm-emphasis", "micro-emphasis", "display-sm", "display-md", "display-lg", "title-md-strong", "title-lg-strong",
       ],

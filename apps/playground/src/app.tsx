@@ -1,16 +1,18 @@
 import { SkipLink, Toaster } from "@ds/react";
 import { GROUPS } from "./showcase/catalog";
+import type { Group } from "./showcase/catalog";
 import { DocsSidebar } from "./site/docs-nav";
-import { ContentsPage, DetailPage, HomePage, MissingPage } from "./site/pages";
+import { ContentsPage, DetailPage, HomePage, MissingPage, sectionCrumbs } from "./site/pages";
 import { COMPONENT_GROUPS, isDocsRoute, useRoute } from "./site/routes";
-import { SiteHeader, Wordmark } from "./site/site-header";
+import { SiteFooter } from "./site/site-footer";
+import { SiteHeader } from "./site/site-header";
 
-/** Lead paragraphs for the four non-component chapters. */
-const SECTION_COPY: Partial<Record<(typeof GROUPS)[number]["name"], { kicker: string; lead: string }>> = {
-  Foundations: { kicker: "Chapter 01", lead: "The tokens every component is built from (colour, type, space, corners, depth, motion) and how theming works, read live from the token bridge." },
-  Blocks: { kicker: "Assemblies", lead: "Larger pieces made from the components: agent tools, data views, settings and navigation." },
-  Charts: { kicker: "Data", lead: "Chart cards on one shell and one palette, each with a written description of its data." },
-  Templates: { kicker: "Screens", lead: "Whole screens assembled from blocks and charts. They fit whatever space they're given." },
+/** Lead paragraphs for the group overview pages that say more than the group's blurb. */
+const SECTION_LEAD: Partial<Record<Group, string>> = {
+  Foundations: "The tokens every component is built from (colour, type, space, corners, depth and motion) and how theming works, read live from the token bridge.",
+  Blocks: "Larger pieces made from the components: agent tools, data views, settings and navigation, ready to drop into a screen.",
+  Charts: "Chart cards on one shell and one palette, each with a written description of its data.",
+  Templates: "Whole screens assembled from blocks and charts. They fit whatever space they're given.",
 };
 
 export function App() {
@@ -22,15 +24,14 @@ export function App() {
     page = (
       <ContentsPage
         groups={COMPONENT_GROUPS}
-        kicker="Contents"
+        crumbs={[{ label: "Components" }]}
         title="Components"
-        lead="The controls and patterns everything else is made from, in chapters. Each figure is the live component; open one for its page."
+        lead="The controls and patterns everything else is made from, grouped by what they do. Every card is the live component; open one for its page."
       />
     );
   else if (route.kind === "section") {
-    const copy = SECTION_COPY[route.group];
-    const blurb = GROUPS.find((g) => g.name === route.group)?.blurb ?? "";
-    page = <ContentsPage groups={[route.group]} kicker={copy?.kicker ?? "Chapter"} title={route.group} lead={copy?.lead ?? blurb} />;
+    const lead = SECTION_LEAD[route.group] ?? GROUPS.find((g) => g.name === route.group)?.blurb ?? "";
+    page = <ContentsPage key={route.group} groups={[route.group]} crumbs={sectionCrumbs(route.group)} title={route.group} lead={lead} />;
   } else if (route.kind === "detail") page = <DetailPage key={route.entry.slug} entry={route.entry} />;
   else page = <MissingPage path={route.path} />;
 
@@ -41,24 +42,24 @@ export function App() {
       {/* One app-wide toast region; anything can call toast.success(…). */}
       <Toaster />
       {isDocsRoute(route) ? (
-        // The docs shell: the contents tree on the left, the page beside it.
-        <div className="mx-auto flex w-full max-w-7xl flex-1 items-start">
+        // The docs shell: the contents tree pinned on the left, the page beside it.
+        <div className="flex w-full flex-1 items-start">
           <DocsSidebar route={route} />
-          <main id="main" tabIndex={-1} className="min-w-0 flex-1">
-            {page}
-          </main>
+          <div className="flex min-w-0 flex-1 flex-col self-stretch">
+            <main id="main" tabIndex={-1} className="flex-1">
+              {page}
+            </main>
+            <SiteFooter compact />
+          </div>
         </div>
       ) : (
-        <main id="main" tabIndex={-1} className="flex-1">
-          {page}
-        </main>
+        <>
+          <main id="main" tabIndex={-1} className="flex-1">
+            {page}
+          </main>
+          <SiteFooter />
+        </>
       )}
-      <footer className="border-t border-line">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-10 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-          <Wordmark />
-          <p className="font-mono text-caption text-fg-secondary">Set in Fraunces, Instrument Sans and JetBrains Mono · React Aria · Tokens</p>
-        </div>
-      </footer>
     </div>
   );
 }

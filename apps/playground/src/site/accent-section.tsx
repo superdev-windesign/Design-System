@@ -33,11 +33,10 @@ export function AccentSpecimen() {
 /** Home page section: one accent, every control. */
 export function AccentSection() {
   return (
-    <section aria-labelledby="accent" className="grid grid-cols-1 gap-8 border-t border-line pt-8 lg:grid-cols-12">
+    <section aria-labelledby="accent" className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:items-start">
       <header className="flex flex-col gap-3 lg:col-span-5">
-        <span className="font-mono text-caption text-accent-600">Accent</span>
-        <h2 id="accent" className="font-display text-display-sm text-fg">
-          One colour for everything you can press
+        <h2 id="accent" className="text-display-sm tracking-tight text-fg">
+          One accent for everything you can press
         </h2>
         <p className="text-body-md text-pretty text-fg-secondary">
           Checked boxes, switches, sliders, selections, focus rings and the dark theme's primary button all read one{" "}

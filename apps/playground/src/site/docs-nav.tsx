@@ -74,8 +74,8 @@ export function DocsSidebar({ route }: { route: Route }) {
     <div
       data-docs-scroll
       className={cx(
-        // ps-5.5 plus each row's own 10px lines the labels up with the wordmark above.
-        "scrollbar-thin sticky top-16 hidden h-[calc(100dvh-4rem)] w-64 shrink-0 overflow-y-auto border-e border-line py-6 ps-5.5 pe-3 lg:block",
+        // ps-3.5 plus each row's own 10px lines the labels up with the logo mark above.
+        "scrollbar-thin sticky top-14 hidden h-[calc(100dvh-3.5rem)] w-64 shrink-0 overflow-y-auto border-e border-line py-6 ps-3.5 pe-3 lg:block",
       )}
     >
       <DocsNav route={route} />
