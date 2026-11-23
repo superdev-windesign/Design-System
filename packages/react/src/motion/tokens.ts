@@ -17,3 +17,16 @@ export const easing = {
  * between positions. Springs have no CSS equivalent, so this lives only here.
  */
 export const layoutSpring = { type: "spring", stiffness: 260, damping: 30, mass: 0.8 } as const;
+
+/**
+ * Effect timings in seconds, for the canvas and `motion` driven effects
+ * (motion.duration.* in @ds/tokens). `tokens.test.ts` checks them too.
+ */
+export const effectDuration = {
+  reveal: 0.6,
+  hold: 1.2,
+  sweep: 2.4,
+  loop: 6,
+  ambient: 12,
+  marquee: 40,
+} as const;

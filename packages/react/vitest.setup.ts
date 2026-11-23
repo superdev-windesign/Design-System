@@ -34,3 +34,8 @@ if (hasWindow) {
   // jsdom defines scrollTo but only to log "Not implemented".
   window.scrollTo = () => {};
 }
+
+if (hasWindow) {
+  // jsdom has no 2D canvas; the effects skip drawing when getContext returns null.
+  HTMLCanvasElement.prototype.getContext = (() => null) as typeof HTMLCanvasElement.prototype.getContext;
+}

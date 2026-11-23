@@ -120,6 +120,11 @@
   --color-glow-ember: var(--ds-color-glass-glow-ember);
   --color-glow-mint: var(--ds-color-glass-glow-mint);
   --color-glow-iris: var(--ds-color-glass-glow-iris);
+  --color-effect-1: var(--ds-color-effect-1);
+  --color-effect-2: var(--ds-color-effect-2);
+  --color-effect-3: var(--ds-color-effect-3);
+  --color-effect-4: var(--ds-color-effect-4);
+  --color-effect-5: var(--ds-color-effect-5);
 
   /* Elevation → shadow-* */
   --shadow-raised: var(--ds-elevation-raised);
@@ -383,4 +388,7 @@
   --ease-default: var(--ds-motion-easing-ease);
   --ease-overshoot: var(--ds-motion-easing-overshoot);
   --blur-enter: var(--ds-motion-blur-enter);
+  --blur-soft: var(--ds-motion-blur-soft);
+  --blur-glow: var(--ds-motion-blur-glow);
+  --blur-haze: var(--ds-motion-blur-haze);
 }

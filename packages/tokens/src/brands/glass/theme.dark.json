@@ -436,6 +436,28 @@
           "$value": "{color.ios.pink-light}"
         }
       }
+    },
+    "effect": {
+      "1": {
+        "$type": "color",
+        "$value": "{color.ios.glow-sky}"
+      },
+      "2": {
+        "$type": "color",
+        "$value": "{color.ios.glow-iris}"
+      },
+      "3": {
+        "$type": "color",
+        "$value": "{color.ios.glow-ember}"
+      },
+      "4": {
+        "$type": "color",
+        "$value": "{color.ios.glow-sun}"
+      },
+      "5": {
+        "$type": "color",
+        "$value": "{color.ios.glow-mint}"
+      }
     }
   },
   "gradient": {

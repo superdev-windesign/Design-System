@@ -112,6 +112,9 @@ import { GLASS_ENTRIES } from "./glass-demos";
 import { LIQUID_ENTRIES } from "./liquid-demos";
 import { MOON_ENTRIES } from "./moon-demos";
 import { NINE_ENTRIES } from "./nine-demos";
+import { EFFECT_UI_ENTRIES } from "./effects-ui-demos";
+import { EFFECT_MEDIA_ENTRIES } from "./effects-media-demos";
+import { EFFECT_SCENE_ENTRIES } from "./effects-scene-demos";
 import { ALIASES, BreadcrumbDemo, PARITY_ENTRIES, SelectDemo, TableDemo } from "./parity-demos";
 import { ActivityDaysDemo, AreaDemo, ContributionsDemo, HeatmapDemo, RadialDemo } from "./chart-demos";
 import {
@@ -1597,6 +1600,9 @@ export const CATALOG: CatalogEntry[] = [
   ...GLASS_ENTRIES,
   ...LIQUID_ENTRIES,
   ...PARITY_ENTRIES,
+  ...EFFECT_UI_ENTRIES,
+  ...EFFECT_MEDIA_ENTRIES,
+  ...EFFECT_SCENE_ENTRIES,
 ]
   .map((entry) => ({ ...entry, aliases: entry.aliases ?? ALIASES[entry.slug] }))
   .sort((x, y) => groupIndex(x) - groupIndex(y));

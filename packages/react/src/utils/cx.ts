@@ -28,7 +28,7 @@ export const cx = extendTailwindMerge({
         "switch-on-sm", "switch-on-md", "switch-chip-sm", "switch-chip-md", "switch-chip-lg", "switch-thumb",
         "sidebar", "nav-selected",
       ],
-      blur: ["enter", "enter-strong"],
+      blur: ["enter", "enter-strong", "soft", "glow", "haze"],
       ease: ["standard", "enter", "out", "default", "overshoot"],
       spacing: ["control-xs", "control-sm", "control-md", "icon-xs", "icon-sm", "icon-md"],
     },

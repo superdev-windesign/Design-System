@@ -499,6 +499,36 @@
         "$type": "duration",
         "$value": "{duration.225}",
         "$description": "A list row collapsing away"
+      },
+      "reveal": {
+        "$type": "duration",
+        "$value": "{duration.600}",
+        "$description": "Text and content fading up out of a blur, word by word"
+      },
+      "hold": {
+        "$type": "duration",
+        "$value": "{duration.1200}",
+        "$description": "How long a hold-to-confirm control must be held"
+      },
+      "sweep": {
+        "$type": "duration",
+        "$value": "{duration.2400}",
+        "$description": "One pass of a scan line, a meteor or a travelling sheen"
+      },
+      "loop": {
+        "$type": "duration",
+        "$value": "{duration.6000}",
+        "$description": "One lap of a beam around a border, or a slow pulse"
+      },
+      "ambient": {
+        "$type": "duration",
+        "$value": "{duration.12000}",
+        "$description": "Slow background drift: auroras, orbits, retro grids"
+      },
+      "marquee": {
+        "$type": "duration",
+        "$value": "{duration.40000}",
+        "$description": "One full pass of a marquee row"
       }
     },
     "easing": {
@@ -534,6 +564,21 @@
         "$type": "dimension",
         "$value": "{blur.4}",
         "$description": "Stronger blur for tooltip-sized overlays"
+      },
+      "soft": {
+        "$type": "dimension",
+        "$value": "{blur.8}",
+        "$description": "Words and blocks fading in out of focus"
+      },
+      "glow": {
+        "$type": "dimension",
+        "$value": "{blur.16}",
+        "$description": "Halos and glows behind beams, spotlights and lights"
+      },
+      "haze": {
+        "$type": "dimension",
+        "$value": "{blur.64}",
+        "$description": "Aurora and light pools that should have no edges"
       }
     },
     "press": {

@@ -87,6 +87,30 @@
     "3400": {
       "$type": "duration",
       "$value": "3400ms"
+    },
+    "600": {
+      "$type": "duration",
+      "$value": "600ms"
+    },
+    "1200": {
+      "$type": "duration",
+      "$value": "1200ms"
+    },
+    "2400": {
+      "$type": "duration",
+      "$value": "2400ms"
+    },
+    "6000": {
+      "$type": "duration",
+      "$value": "6000ms"
+    },
+    "12000": {
+      "$type": "duration",
+      "$value": "12000ms"
+    },
+    "40000": {
+      "$type": "duration",
+      "$value": "40000ms"
     }
   },
   "easing": {
@@ -119,6 +143,18 @@
     "4": {
       "$type": "dimension",
       "$value": "4px"
+    },
+    "8": {
+      "$type": "dimension",
+      "$value": "8px"
+    },
+    "16": {
+      "$type": "dimension",
+      "$value": "16px"
+    },
+    "64": {
+      "$type": "dimension",
+      "$value": "64px"
     }
   },
   "scale": {

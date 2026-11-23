@@ -941,3 +941,444 @@
   background-image: repeating-conic-gradient(var(--ds-color-bg-muted) 0 25%, var(--ds-color-bg-surface) 0 50%);
   background-size: 8px 8px;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Effects (packages/react/src/effects). Every one of these stops, or shows its
+   end state, under reduced motion. Masks are alpha, so their black is not a
+   design colour. Colours come from the effect palette (color.effect.1–5) and
+   the accent ramp, which every brand and theme defines.
+   ───────────────────────────────────────────────────────────────────────────── */
+
+/* Words arriving one by one out of a blur: TextGenerate. */
+@keyframes ds-word-in {
+  from {
+    opacity: 0;
+    filter: blur(var(--ds-motion-blur-soft));
+    transform: translateY(0.25em);
+  }
+}
+
+@utility animate-word-in {
+  animation: ds-word-in var(--ds-motion-duration-reveal) var(--ds-motion-easing-enter) both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* A marker stroke drawn behind text, across line breaks: TextHighlighter. */
+@utility highlight-sweep {
+  background-image: linear-gradient(var(--ds-color-selection-range), var(--ds-color-selection-range));
+  background-repeat: no-repeat;
+  background-position: 0 88%;
+  background-size: 0% 40%;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  transition: background-size var(--ds-motion-duration-reveal) var(--ds-motion-easing-enter);
+
+  &[data-shape="underline"] {
+    background-position: 0 100%;
+    background-size: 0% 12%;
+  }
+  &[data-shape="box"] {
+    background-position: 0 50%;
+    background-size: 0% 100%;
+  }
+  &[data-on] {
+    background-size: 100% 40%;
+  }
+  &[data-on][data-shape="underline"] {
+    background-size: 100% 12%;
+  }
+  &[data-on][data-shape="box"] {
+    background-size: 100% 100%;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+}
+
+/* A split-flap cell folding down onto its next character. */
+@keyframes ds-flap {
+  from {
+    transform: rotateX(-90deg);
+  }
+}
+
+@utility animate-flap {
+  transform-origin: 50% 0;
+  animation: ds-flap var(--ds-motion-duration-fast) var(--ds-motion-easing-out) both;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* A blinking text caret. */
+@keyframes ds-caret {
+  50% {
+    opacity: 0;
+  }
+}
+
+@utility animate-caret {
+  animation: ds-caret var(--ds-motion-duration-hold) steps(1) infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* A slow full turn: circular text, rotating halos. */
+@keyframes ds-turn {
+  to {
+    rotate: 1turn;
+  }
+}
+
+@utility animate-turn {
+  animation: ds-turn var(--ds-motion-duration-ambient) linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* A beam of light lapping a border: BorderBeam, and the halo behind HaloInput. */
+@property --ds-beam-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes ds-beam-turn {
+  to {
+    --ds-beam-angle: 360deg;
+  }
+}
+
+@utility border-beam {
+  position: relative;
+  isolation: isolate;
+
+  &::after,
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: conic-gradient(
+      from var(--ds-beam-angle),
+      transparent 0 68%,
+      var(--ds-color-effect-2) 80%,
+      var(--ds-color-accent-500) 92%,
+      transparent 100%
+    );
+    animation: ds-beam-turn var(--ds-motion-duration-loop) linear infinite;
+  }
+
+  /* The beam itself: only the border ring shows. */
+  &::after {
+    padding: var(--beam-width, 1.5px);
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+  }
+
+  /* Its glow, spilling past the edge. */
+  &::before {
+    z-index: -1;
+    filter: blur(var(--ds-motion-blur-glow));
+    opacity: 0.55;
+  }
+
+  &[data-paused]::after,
+  &[data-paused]::before {
+    opacity: 0;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::after,
+    &::before {
+      animation: none;
+    }
+  }
+}
+
+/* A rotating colour halo that wakes when the field inside it has focus. */
+@utility halo {
+  position: relative;
+  isolation: isolate;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: calc(var(--spacing) * -0.5);
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: conic-gradient(
+      from var(--ds-beam-angle),
+      var(--ds-color-effect-1),
+      var(--ds-color-effect-2),
+      var(--ds-color-effect-3),
+      var(--ds-color-effect-4),
+      var(--ds-color-effect-1)
+    );
+    filter: blur(var(--ds-motion-blur-glow));
+    opacity: 0;
+    transition: opacity var(--ds-motion-duration-moderate) var(--ds-motion-easing-out);
+    animation: ds-beam-turn var(--ds-motion-duration-loop) linear infinite;
+  }
+
+  &:focus-within::before,
+  &[data-active]::before {
+    opacity: 0.75;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &::before {
+      animation: none;
+    }
+  }
+}
+
+/* An endless row (or column) of content: Marquee. Set --marquee-gap to the gap. */
+@keyframes ds-marquee-x {
+  to {
+    transform: translate3d(calc(-100% - var(--marquee-gap, 0px)), 0, 0);
+  }
+}
+
+@keyframes ds-marquee-y {
+  to {
+    transform: translate3d(0, calc(-100% - var(--marquee-gap, 0px)), 0);
+  }
+}
+
+@utility animate-marquee {
+  animation: ds-marquee-x calc(var(--ds-motion-duration-marquee) * var(--marquee-speed, 1)) linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+@utility animate-marquee-y {
+  animation: ds-marquee-y calc(var(--ds-motion-duration-marquee) * var(--marquee-speed, 1)) linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Diagonal streaks falling across a panel: Meteors. */
+@keyframes ds-meteor {
+  0% {
+    transform: rotate(215deg) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(215deg) translateX(-60vmax);
+    opacity: 0;
+  }
+}
+
+@utility animate-meteor {
+  animation: ds-meteor var(--ds-motion-duration-sweep) linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* A slow wander for light pools: AuroraBackground. */
+@keyframes ds-drift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  33% {
+    transform: translate3d(8%, -6%, 0) scale(1.1);
+  }
+  66% {
+    transform: translate3d(-6%, 8%, 0) scale(0.95);
+  }
+}
+
+@utility animate-drift {
+  animation: ds-drift var(--ds-motion-duration-ambient) var(--ds-motion-easing-standard) infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* A rocking beam of light: LightRays. */
+@keyframes ds-sway {
+  0%,
+  100% {
+    rotate: -6deg;
+    opacity: 0.6;
+  }
+  50% {
+    rotate: 6deg;
+    opacity: 1;
+  }
+}
+
+@utility animate-sway {
+  animation: ds-sway var(--ds-motion-duration-loop) var(--ds-motion-easing-standard) infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* A perspective floor of grid lines rolling toward the viewer: RetroGrid. */
+@keyframes ds-grid-roll {
+  to {
+    background-position: 0 var(--grid-cell);
+  }
+}
+
+@utility retro-grid {
+  --grid-cell: calc(var(--spacing) * 15);
+  background-image:
+    linear-gradient(to right, var(--grid-line, var(--ds-color-border-default)) 1px, transparent 0),
+    linear-gradient(to bottom, var(--grid-line, var(--ds-color-border-default)) 1px, transparent 0);
+  background-size: var(--grid-cell) var(--grid-cell);
+  animation: ds-grid-roll calc(var(--ds-motion-duration-ambient) / 6) linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* A dash of light travelling along an SVG path drawn with pathLength="1". */
+@keyframes ds-path-travel {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: -0.2;
+  }
+}
+
+@utility animate-path-travel {
+  stroke-dasharray: 0.2 1;
+  animation: ds-path-travel var(--ds-motion-duration-sweep) var(--ds-motion-easing-standard) infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    stroke-dasharray: none;
+    opacity: 0.4;
+  }
+}
+
+/* Children circling a centre: OrbitingCircles. Set --orbit-radius and --orbit-start. */
+@keyframes ds-orbit {
+  from {
+    transform: rotate(var(--orbit-start, 0deg)) translateY(calc(var(--orbit-radius) * -1)) rotate(calc(var(--orbit-start, 0deg) * -1));
+  }
+  to {
+    transform: rotate(calc(var(--orbit-start, 0deg) + 360deg)) translateY(calc(var(--orbit-radius) * -1))
+      rotate(calc((var(--orbit-start, 0deg) + 360deg) * -1));
+  }
+}
+
+@utility animate-orbit {
+  transform: rotate(var(--orbit-start, 0deg)) translateY(calc(var(--orbit-radius) * -1)) rotate(calc(var(--orbit-start, 0deg) * -1));
+  animation: ds-orbit calc(var(--ds-motion-duration-ambient) * var(--orbit-speed, 1)) linear infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* A scan line sweeping down a panel: ScanLoader. */
+@keyframes ds-scan {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}
+
+@utility animate-scan {
+  animation: ds-scan var(--ds-motion-duration-sweep) var(--ds-motion-easing-standard) infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    opacity: 0;
+  }
+}
+
+/* One spark flying out from a click: ClickSpark. Set --spark-angle. */
+@keyframes ds-spark {
+  from {
+    transform: rotate(var(--spark-angle)) translateY(0) scaleY(1);
+    opacity: 1;
+  }
+  to {
+    transform: rotate(var(--spark-angle)) translateY(calc(var(--spacing) * -7)) scaleY(0.2);
+    opacity: 0;
+  }
+}
+
+@utility animate-spark {
+  animation: ds-spark var(--ds-motion-duration-reveal) var(--ds-motion-easing-out) forwards;
+}
+
+/* A gentle twinkle for star fields drawn in CSS. */
+@keyframes ds-twinkle {
+  50% {
+    opacity: 0.25;
+  }
+}
+
+@utility animate-twinkle {
+  animation: ds-twinkle var(--ds-motion-duration-sweep) var(--ds-motion-easing-standard) infinite;
+
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
+}
+
+/* Blur that deepens toward an edge, in four masked layers: ProgressiveBlur.
+   --pb-dir is the direction the blur grows in. */
+@utility progressive-blur {
+  pointer-events: none;
+
+  & > * {
+    position: absolute;
+    inset: 0;
+  }
+  & > :nth-child(1) {
+    backdrop-filter: blur(var(--ds-motion-blur-enter));
+    mask-image: linear-gradient(var(--pb-dir, to bottom), transparent 0%, #000 12.5%, #000 37.5%, transparent 50%);
+  }
+  & > :nth-child(2) {
+    backdrop-filter: blur(var(--ds-motion-blur-enter-strong));
+    mask-image: linear-gradient(var(--pb-dir, to bottom), transparent 12.5%, #000 37.5%, #000 62.5%, transparent 75%);
+  }
+  & > :nth-child(3) {
+    backdrop-filter: blur(var(--ds-motion-blur-soft));
+    mask-image: linear-gradient(var(--pb-dir, to bottom), transparent 37.5%, #000 62.5%, #000 87.5%, transparent 100%);
+  }
+  & > :nth-child(4) {
+    backdrop-filter: blur(var(--ds-motion-blur-glow));
+    mask-image: linear-gradient(var(--pb-dir, to bottom), transparent 62.5%, #000 87.5%);
+  }
+}

@@ -256,6 +256,28 @@
         "$type": "color",
         "$value": "{color.accent.600}"
       }
+    },
+    "effect": {
+      "1": {
+        "$type": "color",
+        "$value": "{color.moon.whis}"
+      },
+      "2": {
+        "$type": "color",
+        "$value": "{color.piccolo.400}"
+      },
+      "3": {
+        "$type": "color",
+        "$value": "{color.moon.chichi}"
+      },
+      "4": {
+        "$type": "color",
+        "$value": "{color.moon.krillin}"
+      },
+      "5": {
+        "$type": "color",
+        "$value": "{color.moon.hit}"
+      }
     }
   },
   "gradient": {

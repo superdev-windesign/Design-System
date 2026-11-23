@@ -677,6 +677,33 @@
         "$type": "color",
         "$value": "{color.bg.canvas}"
       }
+    },
+    "effect": {
+      "1": {
+        "$type": "color",
+        "$value": "{color.sky.300}",
+        "$description": "Decorative palette for effects (auroras, beams, confetti): a cool blue."
+      },
+      "2": {
+        "$type": "color",
+        "$value": "{color.purple.300}",
+        "$description": "A violet."
+      },
+      "3": {
+        "$type": "color",
+        "$value": "{color.terracotta.400}",
+        "$description": "A warm red."
+      },
+      "4": {
+        "$type": "color",
+        "$value": "{color.yellow.300}",
+        "$description": "A yellow."
+      },
+      "5": {
+        "$type": "color",
+        "$value": "{color.teal.300}",
+        "$description": "A green."
+      }
     }
   },
   "gradient": {
