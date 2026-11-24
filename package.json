@@ -2,19 +2,24 @@
   "name": "windesign-design-system",
   "private": true,
   "type": "module",
+  "bin": {
+    "windesign-mcp": "./dist/index.js"
+  },
   "workspaces": [
     "packages/tokens",
     "packages/styles",
     "packages/react",
     "packages/cli",
-    "apps/playground"
+    "apps/playground",
+    "packages/mcp"
   ],
   "scripts": {
     "build:tokens": "npm run build -w @windesign-ds/tokens",
     "dev": "npm run dev -w @windesign-ds/playground",
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "build": "npm run build -w @windesign-ds/playground"
+    "build": "npm run build -w @windesign-ds/playground",
+    "inspect": "npx @modelcontextprotocol/inspector node dist/index.js"
   },
   "engines": {
     "node": ">=20.19"

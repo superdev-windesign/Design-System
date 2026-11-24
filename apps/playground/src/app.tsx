@@ -2,6 +2,7 @@ import { SkipLink, Toaster } from "@windesign-ds/react";
 import { GROUPS } from "./showcase/catalog";
 import type { Group } from "./showcase/catalog";
 import { DocsSidebar } from "./site/docs-nav";
+import { AiPage } from "./site/ai-page";
 import { ContentsPage, DetailPage, HomePage, MissingPage, sectionCrumbs } from "./site/pages";
 import { COMPONENT_GROUPS, isDocsRoute, useRoute } from "./site/routes";
 import { SiteFooter } from "./site/site-footer";
@@ -33,6 +34,7 @@ export function App() {
     const lead = SECTION_LEAD[route.group] ?? GROUPS.find((g) => g.name === route.group)?.blurb ?? "";
     page = <ContentsPage key={route.group} groups={[route.group]} crumbs={sectionCrumbs(route.group)} title={route.group} lead={lead} />;
   } else if (route.kind === "detail") page = <DetailPage key={route.entry.slug} entry={route.entry} />;
+  else if (route.kind === "ai") page = <AiPage />;
   else page = <MissingPage path={route.path} />;
 
   return (

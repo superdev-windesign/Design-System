@@ -184,6 +184,7 @@ export function SiteHeader({ route }: { route: Route }) {
                 className={cx(
                   "rounded-control-sm px-3 py-1.5 text-body-md whitespace-nowrap transition-colors",
                   current ? "bg-muted text-body-md-strong text-fg" : "text-fg-secondary hover:bg-surface-hover hover:text-fg",
+                  item.wide && "hidden xl:block",
                   focusRingNative,
                 )}
               >

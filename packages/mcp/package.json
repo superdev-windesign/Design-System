@@ -1,0 +1,56 @@
+{
+    "name": "@windesign-ds/mcp",
+    "version": "0.1.0",
+    "description": "MCP server for the Windesign design system: lets AI coding tools find components, read their props and examples, and follow the design rules.",
+    "keywords": [
+        "mcp",
+        "model-context-protocol",
+        "design-system",
+        "react",
+        "components",
+        "ai"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/superdev-windesign/Design-System.git",
+        "directory": "packages/mcp"
+    },
+    "homepage": "https://galactic-deepskyblue-toad-85.hostingersite.com",
+    "bugs": {
+        "url": "https://github.com/superdev-windesign/Design-System/issues"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "type": "module",
+    "bin": {
+        "windesign-mcp": "./dist/index.js"
+    },
+    "files": [
+        "dist",
+        "data",
+        "content",
+        "README.md",
+        "LICENSE",
+        "THIRD_PARTY_NOTICES.md"
+    ],
+    "engines": {
+        "node": ">=20"
+    },
+    "scripts": {
+        "data": "node scripts/build-data.mjs",
+        "build": "node scripts/build-data.mjs && tsc",
+        "test": "npm run build && node --test test/server.test.mjs",
+        "inspect": "npx @modelcontextprotocol/inspector node dist/index.js",
+        "prepack": "node ../../tools/release/copy-legal.mjs && npm run build"
+    },
+    "dependencies": {
+        "@modelcontextprotocol/sdk": "^1.32.2",
+        "zod": "^4.6.7"
+    },
+    "devDependencies": {
+        "@types/node": "^22.20.5",
+        "typescript": "^5.9.3"
+    }
+}

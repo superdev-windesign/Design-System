@@ -6,6 +6,7 @@ import { Wordmark } from "./site-header";
 type FooterLink = { label: string; href: string; external?: boolean };
 
 const RESOURCES: FooterLink[] = [
+  { label: "Use with AI", href: "#/ai" },
   { label: "Source on GitHub", href: REPO_URL, external: true },
   { label: "Rules for AI agents", href: `${REPO_URL}/blob/main/AGENTS.md`, external: true },
 ];

@@ -49,7 +49,7 @@ import { BRAND_GROUPS, COMPONENT_GROUPS, PATTERN_GROUPS, entriesIn, groupSlug } 
 /* -------------------------------------------------------------------------- */
 
 /** Page container with the site's margins. */
-function Page({ children, className }: { children: ReactNode; className?: string }) {
+export function Page({ children, className }: { children: ReactNode; className?: string }) {
   return <div className={cx("mx-auto flex w-full max-w-6xl flex-col px-5 sm:px-8", className)}>{children}</div>;
 }
 
@@ -89,7 +89,7 @@ function groupTrail(group: Group): Crumb[] {
   ];
 }
 
-function PageHeader({ crumbs, title, lead, children }: { crumbs?: Crumb[]; title: ReactNode; lead?: ReactNode; children?: ReactNode }) {
+export function PageHeader({ crumbs, title, lead, children }: { crumbs?: Crumb[]; title: ReactNode; lead?: ReactNode; children?: ReactNode }) {
   return (
     <header className="flex flex-col gap-4">
       {crumbs && <Crumbs items={crumbs} />}
@@ -101,7 +101,7 @@ function PageHeader({ crumbs, title, lead, children }: { crumbs?: Crumb[]; title
 }
 
 /** A section title on the long pages, with an optional action on the right. */
-function SectionHeading({ id, title, description, action }: { id: string; title: string; description?: ReactNode; action?: ReactNode }) {
+export function SectionHeading({ id, title, description, action }: { id: string; title: string; description?: ReactNode; action?: ReactNode }) {
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
       <div className="flex max-w-2xl flex-col gap-2">
@@ -396,6 +396,25 @@ const PRINCIPLES: { icon: IconComponent; title: string; text: string }[] = [
   },
 ];
 
+/** Home: a pointer to #/ai, with the one line most people need. */
+function UseWithAi() {
+  return (
+    <section aria-labelledby="use-with-ai" className="flex flex-col gap-8">
+      <SectionHeading
+        id="use-with-ai"
+        title="Build with your AI tools"
+        description="Windesign's MCP server gives Claude Code, Cursor and VS Code the real components, their props and the system's tokens, so generated code stays on the system."
+        action={
+          <Button variant="secondary" trailingIcon={RiArrowRightLine} onPress={go("#/ai")}>
+            Set it up
+          </Button>
+        }
+      />
+      <CodeBlock code="claude mcp add windesign -- npx -y @windesign-ds/mcp" language="bash" />
+    </section>
+  );
+}
+
 function Principles() {
   return (
     <section aria-labelledby="principles" className="flex flex-col gap-8">
@@ -463,6 +482,7 @@ export function HomePage() {
         <Stats />
         <Explore />
         <QuickStart />
+        <UseWithAi />
         <Principles />
         <AccentSection />
         <section aria-labelledby="featured" className="flex flex-col gap-8">

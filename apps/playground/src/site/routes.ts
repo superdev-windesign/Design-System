@@ -8,12 +8,14 @@ import type { CatalogEntry, Group } from "../showcase/catalog";
  *   #/components           contents of every component group
  *   #/section/<group>      one group (foundations, blocks, charts, templates, …)
  *   #/components/<slug>    one entry
+ *   #/ai                   using the system from AI coding tools
  */
 export type Route =
   | { kind: "home" }
   | { kind: "index" }
   | { kind: "section"; group: Group }
   | { kind: "detail"; entry: CatalogEntry }
+  | { kind: "ai" }
   | { kind: "missing"; path: string };
 
 export const groupSlug = (group: Group) => group.toLowerCase().replace(/\s+/g, "-");
@@ -50,6 +52,7 @@ export function parseRoute(hash: string): Route {
   const path = hash.replace(/^#/, "") || "/";
   if (path === "/") return { kind: "home" };
   if (path === "/components") return { kind: "index" };
+  if (path === "/ai") return { kind: "ai" };
   const section = /^\/section\/([a-z0-9-]+)$/.exec(path);
   if (section) {
     const group = groupBySlug(section[1]!);
@@ -80,7 +83,7 @@ export function useRoute() {
  * Top navigation: only the three top-level parts. Everything inside them,
  * from Actions to Blocks, Charts and the brand sets, is in the sidebar.
  */
-export const NAV: { label: string; href: string; matches: (route: Route) => boolean }[] = [
+export const NAV: { label: string; href: string; matches: (route: Route) => boolean; /** Shown in the top bar only from xl, where there is room. */ wide?: boolean }[] = [
   { label: "Foundations", href: "#/section/foundations", matches: (r) => routeGroup(r) === "Foundations" },
   {
     label: "Components",
@@ -91,4 +94,5 @@ export const NAV: { label: string; href: string; matches: (route: Route) => bool
     },
   },
   { label: "Templates", href: "#/section/templates", matches: (r) => routeGroup(r) === "Templates" },
+  { label: "Use with AI", href: "#/ai", matches: (r) => r.kind === "ai", wide: true },
 ];
