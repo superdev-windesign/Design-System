@@ -1,19 +1,44 @@
 {
-  "name": "@ds/tokens",
-  "version": "0.0.1",
-  "private": true,
-  "type": "module",
+  "name": "@windesign/tokens",
+  "version": "0.1.0",
   "description": "Design tokens (DTCG JSON) built to CSS custom properties and flat JSON.",
+  "keywords": [
+    "design-tokens",
+    "dtcg",
+    "css-variables",
+    "design-system"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/superdev-windesign/Design-System.git",
+    "directory": "packages/tokens"
+  },
+  "homepage": "https://galactic-deepskyblue-toad-85.hostingersite.com",
+  "bugs": {
+    "url": "https://github.com/superdev-windesign/Design-System/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
   "exports": {
     "./css": "./dist/css/tokens.css",
     "./css/*": "./dist/css/*",
     "./json/*": "./dist/json/*"
   },
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src",
+    "LICENSE",
+    "README.md",
+    "THIRD_PARTY_NOTICES.md"
+  ],
   "scripts": {
     "build": "node build.mjs",
     "sync:palette": "node scripts/sync-tailwind-palette.mjs",
-    "test": "node build.mjs && vitest run"
+    "test": "node build.mjs && vitest run",
+    "prepack": "node ../../tools/release/copy-legal.mjs && node build.mjs"
   },
   "devDependencies": {
     "style-dictionary": "^5.0.0",

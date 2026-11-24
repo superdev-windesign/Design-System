@@ -1,4 +1,4 @@
-/* Base document styles. Framework-agnostic: needs only @ds/tokens/css. */
+/* Base document styles. Framework-agnostic: needs only @windesign/tokens/css. */
 @layer base {
   html,
   body {

@@ -1,6 +1,6 @@
 // Regenerates src/primitives/color.json from Tailwind v4's default OKLCH palette,
 // then applies the handful of BoardUI/Figma-tuned overrides. Run after upgrading
-// tailwindcss: `npm run sync:palette -w @ds/tokens`.
+// tailwindcss: `npm run sync:palette -w @windesign/tokens`.
 import { readFile, writeFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 

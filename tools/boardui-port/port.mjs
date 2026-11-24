@@ -1,9 +1,9 @@
-// Ports BoardUI's MIT-licensed free components onto the @ds token system.
+// Ports BoardUI's MIT-licensed free components onto the Windesign token system.
 //
 //   node tools/boardui-port/port.mjs <path to a BoardUI checkout>
 //
 // For each file in mapping.FILES it rewrites imports to this repo's layout,
-// renames token utilities and CSS variables to @ds names, converts pixel
+// renames token utilities and CSS variables to Windesign names, converts pixel
 // values on the spacing scale (w-[118px] → w-29.5), adds an attribution
 // header, and writes the result under packages/react/src. Anything it can't
 // map is listed in tools/boardui-port/report.txt for a manual pass.

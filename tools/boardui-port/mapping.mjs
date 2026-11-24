@@ -1,8 +1,8 @@
-// BoardUI → @ds vocabulary. Used by port.mjs to convert BoardUI's MIT-licensed
+// BoardUI → Windesign vocabulary. Used by port.mjs to convert BoardUI's MIT-licensed
 // free components onto this system's tokens. Values were matched by their
 // light and dark resolution, names were chosen by meaning (see README.md).
 
-/** BoardUI semantic color name → [@ds utility color name, @ds CSS variable]. */
+/** BoardUI semantic color name → [Windesign utility color name, Windesign CSS variable]. */
 export const COLORS = {
   // Blocks (application components)
   "background-inner-default": ["surface", "--ds-color-bg-surface"],
@@ -208,7 +208,7 @@ export const CLASSES = {
   "shadow-[0_3px_3px_0_rgb(0_0_0/0.03),0_0.75px_0_0_rgb(0_0_0/0.05)]": "shadow-switch-thumb",
 };
 
-/** BoardUI composite text styles → @ds composite text styles. */
+/** BoardUI composite text styles → Windesign composite text styles. */
 export const TEXT = {
   "title-1-medium": "title-lg-strong",
   "title-2-medium": "title-md-strong",

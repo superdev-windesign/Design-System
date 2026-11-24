@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
-import tailwindBridge from "@ds/styles/tailwind.css?raw";
-import lightTokens from "@ds/tokens/json/light.json";
+import tailwindBridge from "@windesign/styles/tailwind.css?raw";
+import lightTokens from "@windesign/tokens/json/light.json";
 import {
   RiAddLine,
   RiArrowRightLine,
@@ -33,14 +33,14 @@ import {
   RiUploadLine,
   RiUserLine,
 } from "@remixicon/react";
-import { AccentPicker, Button, CodeBlock, Grid, Stack, Text, ThemeScope, cx, useTheme } from "@ds/react";
+import { AccentPicker, Button, CodeBlock, Grid, Stack, Text, ThemeScope, cx, useTheme } from "@windesign/react";
 import { AccentSpecimen } from "../site/accent-section";
 
 const centreOf = (el: Element) => {
   const r = el.getBoundingClientRect();
   return { x: r.left + r.width / 2, y: r.top + r.height / 2 };
 };
-import type { IconComponent, ThemeChoice } from "@ds/react";
+import type { IconComponent, ThemeChoice } from "@windesign/react";
 
 /**
  * More foundation pages: spacing, radius, elevation, motion, icons,
@@ -383,7 +383,7 @@ const ICONS: [string, IconComponent][] = [
 ];
 
 const ICON_USAGE = `import { RiDownloadLine } from "@remixicon/react";
-import { Button } from "@ds/react";
+import { Button } from "@windesign/react";
 
 // Pass the component, not an element: the button sizes it.
 <Button leadingIcon={RiDownloadLine}>Export</Button>
@@ -503,7 +503,7 @@ export function BreakpointsPreview() {
 /*                                   Theming                                  */
 /* -------------------------------------------------------------------------- */
 
-const THEME_USAGE = `import { AccentPicker, ThemeProvider, ThemeScope, useTheme } from "@ds/react";
+const THEME_USAGE = `import { AccentPicker, ThemeProvider, ThemeScope, useTheme } from "@windesign/react";
 
 <ThemeProvider defaultTheme="light">
   <App />

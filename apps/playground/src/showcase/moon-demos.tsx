@@ -36,7 +36,7 @@ import {
   TagCombobox,
   toast,
   useTheme,
-} from "@ds/react";
+} from "@windesign/react";
 import type {
   AppSidebarSection,
   ExpandableTableColumn,
@@ -46,8 +46,9 @@ import type {
   SearchResultGroup,
   SearchSuggestion,
   TagComboboxGroup,
-} from "@ds/react";
+} from "@windesign/react";
 import type { CatalogEntry } from "./catalog";
+import { GoogleSession, useProviderHandler } from "../site/google-auth";
 
 // ─── The brand hint ────────────────────────────────────────────────────────
 
@@ -103,14 +104,16 @@ function DateTimeRangeDemo() {
 // ─── Auth flow ─────────────────────────────────────────────────────────────
 
 function AuthFlowDemo() {
+  const onProvider = useProviderHandler();
   return (
-    <div className="w-full max-w-sm">
+    <div className="flex w-full max-w-sm flex-col gap-4">
       <AuthFlow
-        onProvider={(provider) => toast.show(`Continue with ${provider}`)}
+        onProvider={onProvider}
         onComplete={() => toast.success("Signed in")}
         // Any code but all zeros goes through, so both paths can be tried here.
         onVerify={(code) => (code === "000000" ? "That code didn't match. Try another." : true)}
       />
+      <GoogleSession />
     </div>
   );
 }

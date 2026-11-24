@@ -1,16 +1,49 @@
 {
-  "name": "@ds/react",
-  "version": "0.0.1",
-  "private": true,
-  "type": "module",
-  "description": "React components built on React Aria, styled only through @ds tokens.",
-  "exports": {
-    ".": "./src/index.ts"
+  "name": "@windesign/react",
+  "version": "0.1.0",
+  "description": "Accessible React components on React Aria, styled through Windesign design tokens and Tailwind CSS v4.",
+  "keywords": [
+    "react",
+    "design-system",
+    "components",
+    "react-aria",
+    "tailwindcss",
+    "accessibility"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/superdev-windesign/Design-System.git",
+    "directory": "packages/react"
   },
+  "homepage": "https://galactic-deepskyblue-toad-85.hostingersite.com",
+  "bugs": {
+    "url": "https://github.com/superdev-windesign/Design-System/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "windesign-source": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
-    "src"
+    "dist",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "README.md"
   ],
   "scripts": {
+    "build": "vite build -c build.config.ts && tsc -p tsconfig.build.json",
+    "prepack": "node ../../tools/release/copy-legal.mjs && npm run build",
     "test": "vitest run",
     "typecheck": "tsc -p tsconfig.json"
   },
@@ -40,6 +73,7 @@
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "typescript": "^5.9.0",
-    "vitest": "^3.2.0"
+    "vitest": "^3.2.0",
+    "vite": "^7.3.0"
   }
 }

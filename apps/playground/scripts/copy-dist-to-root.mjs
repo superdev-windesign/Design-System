@@ -12,4 +12,4 @@ const to = fileURLToPath(new URL("../../../dist", import.meta.url));
 
 rmSync(to, { recursive: true, force: true });
 cpSync(from, to, { recursive: true });
-console.log(`@ds/playground: copied build output to ${to}`);
+console.log(`@windesign/playground: copied build output to ${to}`);

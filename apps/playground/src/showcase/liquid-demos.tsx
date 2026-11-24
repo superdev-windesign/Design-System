@@ -38,10 +38,11 @@ import {
   promptArt,
   toast,
   useTheme,
-} from "@ds/react";
-import type { DeckProfile, GlassScene, LensBarItem } from "@ds/react";
+} from "@windesign/react";
+import type { DeckProfile, GlassScene, LensBarItem } from "@windesign/react";
 import type { CatalogEntry } from "./catalog";
 import { FitPreview } from "./fit-preview";
+import { GoogleSession, useProviderHandler } from "../site/google-auth";
 
 // ─── Shared stage ──────────────────────────────────────────────────────────
 
@@ -179,7 +180,15 @@ const Camera = () => (
     onCapture={() => toast.show("Captured")}
   />
 );
-const SignIn = () => <GlassSignIn title="Welcome back" providers={["google", "github"]} onSubmit={() => toast.show("Submitted")} />;
+function SignIn() {
+  const onProvider = useProviderHandler();
+  return (
+    <div className="flex flex-col items-center gap-4">
+      <GlassSignIn title="Welcome back" providers={["google", "github"]} onSubmit={() => toast.show("Submitted")} onProvider={onProvider} />
+      <GoogleSession />
+    </div>
+  );
+}
 
 // ─── Catalogue entries ─────────────────────────────────────────────────────
 

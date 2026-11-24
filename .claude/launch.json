@@ -4,7 +4,7 @@
     {
       "name": "playground",
       "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev", "-w", "@ds/playground"],
+      "runtimeArgs": ["run", "dev", "-w", "@windesign/playground"],
       "port": 5180
     }
   ]

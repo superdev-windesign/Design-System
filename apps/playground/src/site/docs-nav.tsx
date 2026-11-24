@@ -1,6 +1,6 @@
 import { useLayoutEffect, useRef } from "react";
-import { SideNavigation, cx } from "@ds/react";
-import type { SideNavItem, SideNavSection } from "@ds/react";
+import { SideNavigation, cx } from "@windesign/react";
+import type { SideNavItem, SideNavSection } from "@windesign/react";
 import type { Group } from "../showcase/catalog";
 import { BRAND_GROUPS, COMPONENT_GROUPS, PATTERN_GROUPS, entriesIn, groupSlug, routeGroup } from "./routes";
 import type { Route } from "./routes";

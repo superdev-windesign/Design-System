@@ -28,8 +28,8 @@ import {
   SegmentedControlItem,
   StickyScrollReveal,
   TracingBeam,
-} from "@ds/react";
-import type { IconComponent, PageTransitionVariant } from "@ds/react";
+} from "@windesign/react";
+import type { IconComponent, PageTransitionVariant } from "@windesign/react";
 import type { CatalogEntry } from "./catalog";
 import { Art, Filler, ScrollBox, effect } from "./effects-kit";
 

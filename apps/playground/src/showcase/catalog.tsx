@@ -71,7 +71,7 @@ import {
   TooltipTrigger,
   TreeView,
   TreeViewItem,
-} from "@ds/react";
+} from "@windesign/react";
 import {
   CommandPaletteDemo,
   CommandPalettePreview,
@@ -112,6 +112,7 @@ import { GLASS_ENTRIES } from "./glass-demos";
 import { LIQUID_ENTRIES } from "./liquid-demos";
 import { MOON_ENTRIES } from "./moon-demos";
 import { NINE_ENTRIES } from "./nine-demos";
+import { GoogleSignInDemo } from "../site/google-auth";
 import { EFFECT_UI_ENTRIES } from "./effects-ui-demos";
 import { EFFECT_MEDIA_ENTRIES } from "./effects-media-demos";
 import { EFFECT_SCENE_ENTRIES } from "./effects-scene-demos";
@@ -173,7 +174,7 @@ import {
   SleepScoreCard,
   StageBarsCard,
   StepsChartCard,
-} from "@ds/react";
+} from "@windesign/react";
 
 export type Group =
   | "Foundations"
@@ -598,6 +599,7 @@ const BASE_CATALOG: CatalogEntry[] = [
         </SocialButton>
       </div>
     ),
+    demo: () => <GoogleSignInDemo />,
   },
 
   // Forms

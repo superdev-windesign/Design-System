@@ -41,8 +41,8 @@ import {
   TargetCursor,
   TiltedMarquee,
   WorldMap,
-} from "@ds/react";
-import type { IconComponent } from "@ds/react";
+} from "@windesign/react";
+import type { IconComponent } from "@windesign/react";
 import type { CatalogEntry } from "./catalog";
 import { Art, Stage, StageTitle, effect } from "./effects-kit";
 

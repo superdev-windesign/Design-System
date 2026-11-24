@@ -1,5 +1,5 @@
 {
-  "name": "@ds/playground",
+  "name": "@windesign/playground",
   "version": "0.0.1",
   "private": true,
   "type": "module",
@@ -14,9 +14,9 @@
     "typecheck": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@ds/react": "0.0.1",
-    "@ds/styles": "0.0.1",
-    "@ds/tokens": "0.0.1",
+    "@windesign/react": "0.1.0",
+    "@windesign/styles": "0.1.0",
+    "@windesign/tokens": "0.1.0",
     "@fontsource-variable/dm-sans": "^5.3.0",
     "@fontsource-variable/fraunces": "^5.3.0",
     "@fontsource-variable/instrument-sans": "^5.3.0",

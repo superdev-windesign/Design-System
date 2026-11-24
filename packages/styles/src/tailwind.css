@@ -1,16 +1,17 @@
-/* Tailwind v4 bridge for @ds tokens.
+/* Tailwind v4 bridge for Windesign tokens.
  *
  * Use from an app stylesheet:
  *   @import "tailwindcss";
- *   @import "@ds/styles/tailwind.css";
- *   @source "<path to>/@ds/react/src";
+ *   @import "@windesign/styles/fonts.css";   (optional: the brands' typefaces)
+ *   @import "@windesign/styles/tailwind.css";
+ *   @source "<path to>/node_modules/@windesign/react/dist";
  *
  * Tailwind's default palette, radii, shadows, type sizes, easings and blurs are
  * removed so only system values exist as utilities. `@theme inline` points each
  * utility straight at its --ds-* variable, so themes also work on a subtree
  * (<aside data-theme="dark">), not just on <html>.
  */
-@import "@ds/tokens/css";
+@import "@windesign/tokens/css";
 @import "./base.css";
 @import "./utilities.css";
 @import "./brands/glass.css";

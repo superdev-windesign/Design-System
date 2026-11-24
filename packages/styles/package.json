@@ -1,19 +1,51 @@
 {
-  "name": "@ds/styles",
-  "version": "0.0.1",
-  "private": true,
-  "type": "module",
+  "name": "@windesign/styles",
+  "version": "0.1.0",
   "description": "Base CSS, the Tailwind v4 bridge (@theme inline) and shared CSS utilities.",
+  "keywords": [
+    "tailwindcss",
+    "design-system",
+    "css",
+    "theme"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/superdev-windesign/Design-System.git",
+    "directory": "packages/styles"
+  },
+  "homepage": "https://galactic-deepskyblue-toad-85.hostingersite.com",
+  "bugs": {
+    "url": "https://github.com/superdev-windesign/Design-System/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
   "exports": {
     "./base.css": "./src/base.css",
     "./tailwind.css": "./src/tailwind.css",
-    "./utilities.css": "./src/utilities.css"
+    "./utilities.css": "./src/utilities.css",
+    "./fonts.css": "./src/fonts.css"
   },
-  "files": ["src"],
+  "files": [
+    "src",
+    "LICENSE",
+    "README.md",
+    "THIRD_PARTY_NOTICES.md"
+  ],
   "dependencies": {
-    "@ds/tokens": "0.0.1"
+    "@windesign/tokens": "0.1.0",
+    "@fontsource-variable/dm-sans": "^5.3.0",
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/instrument-sans": "^5.3.0",
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fontsource-variable/jetbrains-mono": "^5.3.0"
   },
   "peerDependencies": {
     "tailwindcss": "^4.1.0"
+  },
+  "scripts": {
+    "prepack": "node ../../tools/release/copy-legal.mjs"
   }
 }

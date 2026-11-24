@@ -8,7 +8,7 @@ export const REPO_URL = "https://github.com/superdev-windesign/Design-System";
 export const VERSION = pkg.version;
 
 /**
- * Every source file in @ds/react, by path. The modules are already in the
+ * Every source file in @windesign/react, by path. The modules are already in the
  * bundle through the package's index, so the lazy imports add no chunks; only
  * the paths are used, to link each page to its source.
  */

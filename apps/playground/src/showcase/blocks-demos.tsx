@@ -18,9 +18,10 @@ import {
   StatCards,
   Switch,
   DASHBOARD_NAV,
-} from "@ds/react";
-import type { AuthMode } from "@ds/react";
+} from "@windesign/react";
+import type { AuthMode } from "@windesign/react";
 import { RiArrowUpLine, RiAttachment2, RiSettings3Line } from "@remixicon/react";
+import { GoogleSession, useProviderHandler } from "../site/google-auth";
 
 /**
  * Paints a block at its real width, then scales it down to the card. Blocks
@@ -113,6 +114,7 @@ export function ComposerLoaderDemo() {
 
 export function AuthCardDemo() {
   const [mode, setMode] = useState<AuthMode>("signin");
+  const onProvider = useProviderHandler();
   return (
     <div className="flex w-full flex-col items-center gap-5">
       <SegmentedControl
@@ -132,7 +134,9 @@ export function AuthCardDemo() {
         layout="inline"
         providers={["google", "apple", "github"]}
         headingLevel={3}
+        onProvider={onProvider}
       />
+      <GoogleSession />
     </div>
   );
 }

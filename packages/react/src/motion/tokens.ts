@@ -1,7 +1,7 @@
 /**
  * JS mirror of the motion tokens for the `motion` library, which takes numbers
  * (bezier arrays, seconds) rather than CSS strings. `tokens.test.ts` fails if
- * these drift from @ds/tokens, so change values in packages/tokens first.
+ * these drift from @windesign/tokens, so change values in packages/tokens first.
  */
 export const easing = {
   /** motion.easing.enter — decelerating entrances and state changes */
@@ -20,7 +20,7 @@ export const layoutSpring = { type: "spring", stiffness: 260, damping: 30, mass:
 
 /**
  * Effect timings in seconds, for the canvas and `motion` driven effects
- * (motion.duration.* in @ds/tokens). `tokens.test.ts` checks them too.
+ * (motion.duration.* in @windesign/tokens). `tokens.test.ts` checks them too.
  */
 export const effectDuration = {
   reveal: 0.6,

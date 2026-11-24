@@ -15,8 +15,8 @@ import {
   cx,
   focusRingNative,
   useTheme,
-} from "@ds/react";
-import type { Brand } from "@ds/react";
+} from "@windesign/react";
+import type { Brand } from "@windesign/react";
 import { GROUPS } from "../showcase/catalog";
 import { DocsNav } from "./docs-nav";
 import { REPO_URL, VERSION } from "./meta";

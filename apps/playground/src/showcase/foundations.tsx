@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import tailwindBridge from "@ds/styles/tailwind.css?raw";
-import lightTokens from "@ds/tokens/json/light.json";
-import { cx, focusRingNative } from "@ds/react";
+import tailwindBridge from "@windesign/styles/tailwind.css?raw";
+import lightTokens from "@windesign/tokens/json/light.json";
+import { cx, focusRingNative } from "@windesign/react";
 
 /**
  * Foundation pages: the colour and type tokens, read straight from the
@@ -17,7 +17,7 @@ import { cx, focusRingNative } from "@ds/react";
 interface ColorToken {
   /** Utility name, e.g. "surface" → bg-surface / text-surface / border-surface. */
   name: string;
-  /** The underlying @ds variable. */
+  /** The underlying Windesign variable. */
   variable: string;
 }
 

@@ -14,9 +14,9 @@ import {
   WebSearch,
   attachmentKind,
   toast,
-} from "@ds/react";
+} from "@windesign/react";
 import { PICTURE } from "./display-demos";
-import type { AgentConfig, ComposerAttachment, Question, ResearchStep, TaskItem } from "@ds/react";
+import type { AgentConfig, ComposerAttachment, Question, ResearchStep, TaskItem } from "@windesign/react";
 import { Fit } from "./blocks-demos";
 
 /** Runs `steps` one after another with `delay` ms between them; restarts when `run` changes. */

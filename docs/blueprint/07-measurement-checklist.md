@@ -12,7 +12,7 @@
 |---|---|---|---|
 | Unique color values in product CSS | CSS analyzer (e.g. Project Wallace) on built CSS, run monthly | Trends down toward the token count; new raw colors only appear with a tracked exception | E → A |
 | Unique font-size / line-height / weight combinations | Same analyzer | ≤ the number of type tokens actually used (aim for the composite set only) | E → A |
-| Off-scale spacing values | Analyzer + lint report of arbitrary values | Down from baseline each release; zero inside `@ds/react` | E |
+| Off-scale spacing values | Analyzer + lint report of arbitrary values | Down from baseline each release; zero inside `@windesign/react` | E |
 | Control height alignment | Visual test: Button, TextField, Select and SegmentedControl in one row at each size | Identical heights (BoardUI fails this: 38 vs 36) | E |
 | Single focus style | Story that tabs through every component; screenshot diff | One ring style (plus the documented inset variant for cells) | E |
 | Visual regression stability | Snapshot suite per variant × state × theme | Every diff is intentional and reviewed; no unexplained diffs merged | E |
@@ -21,7 +21,7 @@
 
 | Criterion | How to measure | Good result | Stage |
 |---|---|---|---|
-| Raw values in components | ESLint / Stylelint rules (`no-raw-color`, `no-arbitrary-value`) | Zero in `@ds/react`; exceptions documented in code | E |
+| Raw values in components | ESLint / Stylelint rules (`no-raw-color`, `no-arbitrary-value`) | Zero in `@windesign/react`; exceptions documented in code | E |
 | Primitive tokens used directly in components | Lint rule or grep for `--ds-color-{hue}-` in component code | Zero | E |
 | Semantic token utilization | Script: for each semantic token, count references across components and products | Every semantic token is used by ≥2 components or patterns; unused tokens get deprecated | E → A |
 | Component-scoped token ratio | Count component tokens vs semantic tokens | Component tokens stay scoped in component files; the global semantic list grows slowly (BoardUI: ~55% component-specific) | E |

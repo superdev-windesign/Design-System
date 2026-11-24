@@ -227,7 +227,7 @@ Each table answers: **Define** · **Measure** · **Choose** · **Deliverables** 
 | Define | One icon set (or a custom one with a grid), stroke vs fill, sizes, optical alignment with text, RTL mirroring rules, illustration style and when it's allowed |
 | Measure | How many icons the validation screens need; icon-text alignment at each control size |
 | Choose | One library with consistent stroke width (BoardUI uses Remix Icon). Sizes tied to control sizes (14 / 16 / 20 / 24). Mirror only **directional** icons in RTL (arrows, chevrons), never logos or checkmarks. |
-| Deliverables | `@ds/icons` (optimized SVG to React), icon size tokens, guidelines (decorative = `aria-hidden`; meaningful = labeled), an illustration brief |
+| Deliverables | `@windesign/icons` (optimized SVG to React), icon size tokens, guidelines (decorative = `aria-hidden`; meaningful = labeled), an illustration brief |
 | Validate | Icons inherit `currentColor` and pass the same contrast as their text role; every icon-only control has an accessible name (lint or test) |
 
 ### B10. Motion principles and animation tokens

@@ -17,8 +17,8 @@ import {
   TableRow,
   Text,
   toast,
-} from "@ds/react";
-import type { ComposerMessage } from "@ds/react";
+} from "@windesign/react";
+import type { ComposerMessage } from "@windesign/react";
 import type { CatalogEntry } from "./catalog";
 import { TemplateFrame, TemplatePreview } from "./templates-demos";
 

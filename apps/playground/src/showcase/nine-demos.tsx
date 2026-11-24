@@ -31,8 +31,8 @@ import {
   Text,
   TreeSelect,
   toast,
-} from "@ds/react";
-import type { MentionOption, ScheduleEvent, SideNavSection, TreeNode } from "@ds/react";
+} from "@windesign/react";
+import type { MentionOption, ScheduleEvent, SideNavSection, TreeNode } from "@windesign/react";
 import type { CatalogEntry } from "./catalog";
 
 // ─── Data ──────────────────────────────────────────────────────────────────

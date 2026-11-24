@@ -29,7 +29,7 @@ import {
   TagGroup,
   TimeField,
   toast,
-} from "@ds/react";
+} from "@windesign/react";
 import type { Key } from "react-aria-components";
 import type { CatalogEntry } from "./catalog";
 

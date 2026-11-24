@@ -32,7 +32,7 @@ import {
   WizardStep,
   createToastQueue,
   toast,
-} from "@ds/react";
+} from "@windesign/react";
 
 const wait = (ms: number) => new Promise<void>((resolve) => setTimeout(resolve, ms));
 const isApplePlatform = () => typeof navigator !== "undefined" && /Mac|iPhone|iPad/.test(navigator.userAgent);

@@ -8,3 +8,10 @@ coverage/
 # Personal documents, not part of the design system
 Synopsis_BoM_SBI_Nagpur.pdf
 Synopsis_SME_Bank_Financing_Umred.pdf
+
+# Local environment (e.g. apps/playground/.env.local with VITE_GOOGLE_CLIENT_ID)
+*.local
+
+# Copied from the repository root when a package is packed (tools/release/copy-legal.mjs).
+packages/*/LICENSE
+packages/*/THIRD_PARTY_NOTICES.md

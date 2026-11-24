@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import type { ReactNode, RefObject } from "react";
-import { cx, promptArt } from "@ds/react";
+import { cx, promptArt } from "@windesign/react";
 import type { CatalogEntry } from "./catalog";
 
 /**

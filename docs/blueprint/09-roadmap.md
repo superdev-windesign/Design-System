@@ -47,7 +47,7 @@ Release/adopt/maint.               ▲v0.1    ▲v0.2   ▲v0.3 ... ▲v1.0 ─�
 |---|---|
 | **Objectives** | Encode the foundations as a single, tested source of truth for both design and code |
 | **Tasks** | Set up `packages/tokens` (DTCG JSON + Style Dictionary); primitives, then semantic tokens (light + dark); contrast-pair matrix and test; theme-coverage and naming tests; Tailwind bridge and base CSS (focus, reduced motion, forced colors); Figma variables (Primitives hidden, Semantic with Light/Dark modes, code syntax set); token docs page generated from JSON |
-| **Deliverables** | `@ds/tokens` v0.0.x building `tokens.css`, `tokens.ts` and the Figma JSON; passing contrast and coverage tests; Figma variable collections; token reference page |
+| **Deliverables** | `@windesign/tokens` v0.0.x building `tokens.css`, `tokens.ts` and the Figma JSON; passing contrast and coverage tests; Figma variable collections; token reference page |
 | **Dependencies** | Phase 2 scales and decisions |
 | **Completion criteria** | **Theme-swap test passes:** change the accent and flip to dark mode with zero component changes, and the contrast suite stays green. Figma and code token names match 1:1. |
 | **Common mistakes** | Component-specific tokens in the global semantic layer (BoardUI); raw hex in semantic tokens; no contrast test; naming by appearance (`gray-text`); letting Figma and code drift because nobody owns the sync |
@@ -57,7 +57,7 @@ Release/adopt/maint.               ▲v0.1    ▲v0.2   ▲v0.3 ... ▲v1.0 ─�
 | | |
 |---|---|
 | **Objectives** | Ship the components that nearly every screen needs, at production quality |
-| **Tasks** | Monorepo, `@ds/react` build, Storybook. **Tracer bullet:** Button end to end (Figma ↔ code ↔ stories ↔ docs ↔ tests ↔ release). Then TextField (with the Field wrapper), Checkbox, Switch, Select, Dialog, Tooltip and Badge, plus utilities (Icon, VisuallyHidden, Stack, Spinner). Shared recipes (focus, field, menu, overlay). |
+| **Tasks** | Monorepo, `@windesign/react` build, Storybook. **Tracer bullet:** Button end to end (Figma ↔ code ↔ stories ↔ docs ↔ tests ↔ release). Then TextField (with the Field wrapper), Checkbox, Switch, Select, Dialog, Tooltip and Badge, plus utilities (Icon, VisuallyHidden, Stack, Spinner). Shared recipes (focus, field, menu, overlay). |
 | **Deliverables** | 8 components + utilities meeting the definition of done ([file 6 §6.4](06-component-inventory.md#64-universal-acceptance-criteria-definition-of-done-for-every-component)); matching Figma components; Storybook with full state matrices |
 | **Dependencies** | Tokens (Phase 3); React Aria; icon set |
 | **Completion criteria** | Each component passes lint (no raw values), axe, keyboard tests, visual snapshots in light, dark and RTL, and the contrast matrix. Button, TextField and Select align in height at every size. |
@@ -91,7 +91,7 @@ Release/adopt/maint.               ▲v0.1    ▲v0.2   ▲v0.3 ... ▲v1.0 ─�
 |---|---|
 | **Objectives** | Make the packages production-grade and easy to adopt in real apps |
 | **Tasks** | Package builds (ESM, types, tree-shaking, `sideEffects` for CSS); SSR/RSC compatibility (`"use client"` boundaries); theme provider and no-flash script; Tailwind preset/bridge plus a compiled-CSS option for non-Tailwind consumers; ESLint plugin (no raw colors or arbitrary values, no primitives); bundle-size tracking; integration into one product branch; codemod scaffolding for future majors |
-| **Deliverables** | Installable `@ds/tokens`, `@ds/styles`, `@ds/icons`, `@ds/react`; integration guide; example app (`apps/playground`) |
+| **Deliverables** | Installable `@windesign/tokens`, `@windesign/styles`, `@windesign/icons`, `@windesign/react`; integration guide; example app (`apps/playground`) |
 | **Dependencies** | Core components; target product's tech stack |
 | **Completion criteria** | One product renders the validation screens from the published packages, in both themes, with SSR; lint rules active in that product |
 | **Common mistakes** | Publishing without a theme or no-flash solution (white flash in dark mode); forcing Tailwind on consumers without a fallback; big-bang migration of a whole product |

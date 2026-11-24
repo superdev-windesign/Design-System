@@ -79,3 +79,43 @@ SOFTWARE.
 `packages/tokens/src/primitives/color.json` is generated from Tailwind CSS's
 default palette (MIT License, © Tailwind Labs, Inc.) by
 `packages/tokens/scripts/sync-tailwind-palette.mjs`.
+
+## Moon Design System
+
+The Moon brand takes its colour values, shadows, typeface choice and component
+measurements from Moon Design System (https://github.com/coingaming/moon-design,
+MIT License): `packages/tokens/src/primitives/moon.json`,
+`packages/tokens/src/brands/moon/*.json` and `packages/styles/src/brands/moon.css`.
+No Moon component code is included; the components are this repository's own,
+restyled through those tokens. "Moon" names the design language it follows and
+doesn't imply endorsement by its authors.
+
+```
+MIT License
+
+Copyright (c) 2024 Yolo Group
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+## Fonts
+
+`@windesign/styles/fonts.css` loads Fraunces, Instrument Sans, DM Sans, Inter and
+JetBrains Mono through Fontsource. All are under the SIL Open Font License 1.1,
+shipped with each `@fontsource-variable/*` package.
