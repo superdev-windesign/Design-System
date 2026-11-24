@@ -6,6 +6,7 @@
     "packages/tokens",
     "packages/styles",
     "packages/react",
+    "packages/cli",
     "apps/playground"
   ],
   "scripts": {

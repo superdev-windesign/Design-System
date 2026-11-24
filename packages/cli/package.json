@@ -1,0 +1,48 @@
+{
+  "name": "windesign-ds",
+  "version": "0.1.0",
+  "description": "Add Windesign design-system components to your project as source: npx windesign-ds@latest add <component>.",
+  "keywords": [
+    "cli",
+    "react",
+    "components",
+    "design-system",
+    "tailwindcss",
+    "react-aria"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/superdev-windesign/Design-System.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://galactic-deepskyblue-toad-85.hostingersite.com",
+  "bugs": {
+    "url": "https://github.com/superdev-windesign/Design-System/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "type": "module",
+  "bin": {
+    "windesign-ds": "./bin/windesign-ds.mjs"
+  },
+  "files": [
+    "bin",
+    "registry",
+    "LICENSE",
+    "THIRD_PARTY_NOTICES.md",
+    "README.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "registry": "node scripts/build-registry.mjs",
+    "prepack": "node ../../tools/release/copy-legal.mjs && node scripts/build-registry.mjs",
+    "test": "node scripts/build-registry.mjs && node --test test/cli.test.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0"
+  }
+}

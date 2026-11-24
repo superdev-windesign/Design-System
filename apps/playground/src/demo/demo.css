@@ -1,0 +1,9 @@
+/* The /demo page's stylesheet: exactly what an app using the packages writes.
+ * (In an app installed from npm, @source points at
+ *  "../node_modules/@windesign-ds/react/dist" instead.) */
+@import "tailwindcss";
+@import "@windesign-ds/styles/fonts.css";
+@import "@windesign-ds/styles/tailwind.css";
+
+@source "../../../../packages/react/src";
+@source "./";

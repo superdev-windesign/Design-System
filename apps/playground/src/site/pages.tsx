@@ -40,6 +40,7 @@ import type { IconComponent } from "@windesign-ds/react";
 import { CATALOG, GROUPS, findEntry } from "../showcase/catalog";
 import type { CatalogEntry, Group } from "../showcase/catalog";
 import { AccentSection } from "./accent-section";
+import { InstallCommand, cliCommand, installCommand } from "./install-command";
 import { sourceUrl } from "./meta";
 import { BRAND_GROUPS, COMPONENT_GROUPS, PATTERN_GROUPS, entriesIn, groupSlug } from "./routes";
 
@@ -308,10 +309,11 @@ const STEPS: { title: string; text: string; file: string; language: string; code
     file: "src/styles.css",
     language: "css",
     code: `@import "tailwindcss";
+@import "@windesign-ds/styles/fonts.css";
 @import "@windesign-ds/styles/tailwind.css";
 
-/* Tailwind skips workspace packages: point it at the components. */
-@source "../../../packages/react/src";`,
+/* Let Tailwind see the classes the components use. */
+@source "../node_modules/@windesign-ds/react/dist";`,
   },
   {
     title: "Wrap the app",
@@ -346,7 +348,7 @@ function QuickStart() {
       <SectionHeading
         id="quick-start"
         title="Quick start"
-        description="The packages live in this repository as npm workspaces: @windesign-ds/tokens, @windesign-ds/styles and @windesign-ds/react. Three steps put them in an app."
+        description="Install @windesign-ds/react and @windesign-ds/styles from npm (Tailwind CSS v4 and React 19), then three steps put them in an app. Or copy single components in as source with npx windesign-ds@latest add <name>."
       />
       <ol className="flex flex-col">
         {STEPS.map((step, i) => (
@@ -696,11 +698,23 @@ export function DetailPage({ entry }: { entry: CatalogEntry }) {
         )}
 
         {snippet && (
-          <section aria-labelledby="import" className="flex flex-col gap-4">
-            <h2 id="import" className="scroll-mt-20 text-title-md-strong text-fg">
-              Import
+          <section aria-labelledby="installation" className="flex flex-col gap-6">
+            <h2 id="installation" className="scroll-mt-20 text-title-md-strong text-fg">
+              Installation
             </h2>
-            <CodeBlock code={snippet} language="tsx" />
+            <div className="flex flex-col gap-3">
+              <h3 className="text-body-md-strong text-fg">Copy the source into your project</h3>
+              <p className="text-body-md text-fg-secondary">
+                The CLI copies the component and the files it uses into your project, and installs the npm packages it needs. The code is then yours to change.
+              </p>
+              <InstallCommand label="Add with the CLI" command={(m) => cliCommand(m, `add ${entry.slug}`)} />
+            </div>
+            <div className="flex flex-col gap-3">
+              <h3 className="text-body-md-strong text-fg">Or install the package</h3>
+              <p className="text-body-md text-fg-secondary">Keep the components in node_modules and update them with the package.</p>
+              <InstallCommand label="Install the package" command={(m) => installCommand(m, "@windesign-ds/react @windesign-ds/styles")} />
+              <CodeBlock code={snippet} language="tsx" />
+            </div>
           </section>
         )}
 
