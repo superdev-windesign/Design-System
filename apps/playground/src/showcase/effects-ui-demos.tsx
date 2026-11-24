@@ -57,7 +57,7 @@ import {
   TiltCard,
   VanishInput,
   VariableFontHover,
-} from "@windesign/react";
+} from "@windesign-ds/react";
 import type { CatalogEntry } from "./catalog";
 import { Art, Filler, ScrollBox, effect } from "./effects-kit";
 
@@ -967,7 +967,7 @@ const INPUT_ENTRIES: CatalogEntry[] = [
         lines={[
           { kind: "command", text: "npm install" },
           { kind: "output", text: "added 345 packages in 26s" },
-          { kind: "command", text: "npm test -w @windesign/tokens" },
+          { kind: "command", text: "npm test -w @windesign-ds/tokens" },
           { kind: "output", text: "✓ 1,644 tests passed" },
           { kind: "command", text: "npm run build" },
           { kind: "output", text: "✓ built in 13.7s" },

@@ -60,7 +60,7 @@ Three steps, in order. Each one produces something concrete, and each unblocks t
 2. Build **Button**: variants primary / secondary / tertiary / danger; sizes sm / md / lg; icon-only (type-enforced `aria-label`); pending state.
 3. Build the matching **Figma component** with identical prop names, auto layout bound to variables, and the state variants.
 4. Write the **stories** (variant × size × state × light/dark/RTL), **tests** (role-based queries, keyboard, axe) and the **docs page** using the template in [file 8 §8.8](08-implementation-strategy.md#88-documentation-and-interactive-examples).
-5. Release `@windesign/react@0.0.1` with Changesets, and use the Button in one of your validation screens.
+5. Release `@windesign-ds/react@0.0.1` with Changesets, and use the Button in one of your validation screens.
 
 **Done when:**
 

@@ -36,5 +36,5 @@ color at runtime, and the tooltip computes its caret shadow inline.
   single), `status-dot`, `dropdown/menu-styles`: hand-built earlier and kept.
 - `components/foundations/brand/logo.tsx`: BoardUI's own brand.
 - The Chat Starter template: it's built on Next.js routing, a server route and the
-  Vercel AI SDK. `@windesign/react` has its own `ChatStarter` on `useChatSession` instead.
+  Vercel AI SDK. `@windesign-ds/react` has its own `ChatStarter` on `useChatSession` instead.
 - Everything in BoardUI Pro.

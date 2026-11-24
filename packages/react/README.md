@@ -1,4 +1,4 @@
-# @windesign/react
+# @windesign-ds/react
 
 Accessible React components for the Windesign design system: form controls,
 overlays, navigation, data display, charts, blocks, full-screen templates and
@@ -12,7 +12,7 @@ Browse every component live: https://galactic-deepskyblue-toad-85.hostingersite.
 ## Install
 
 ```sh
-npm install @windesign/react @windesign/styles
+npm install @windesign-ds/react @windesign-ds/styles
 ```
 
 Needs React 19 and Tailwind CSS v4.
@@ -22,16 +22,16 @@ Needs React 19 and Tailwind CSS v4.
 ```css
 /* src/styles.css */
 @import "tailwindcss";
-@import "@windesign/styles/fonts.css"; /* optional: the brands' typefaces */
-@import "@windesign/styles/tailwind.css";
+@import "@windesign-ds/styles/fonts.css"; /* optional: the brands' typefaces */
+@import "@windesign-ds/styles/tailwind.css";
 
 /* Let Tailwind see the classes the components use. */
-@source "../node_modules/@windesign/react/dist";
+@source "../node_modules/@windesign-ds/react/dist";
 ```
 
 ```tsx
 // src/main.tsx
-import { ThemeProvider } from "@windesign/react";
+import { ThemeProvider } from "@windesign-ds/react";
 import "./styles.css";
 
 createRoot(document.getElementById("root")!).render(
@@ -42,7 +42,7 @@ createRoot(document.getElementById("root")!).render(
 ```
 
 ```tsx
-import { Button } from "@windesign/react";
+import { Button } from "@windesign-ds/react";
 
 export function SaveBar({ onSave }: { onSave: () => void }) {
   return <Button onPress={onSave}>Save changes</Button>;

@@ -36,7 +36,7 @@ import {
   TagCombobox,
   toast,
   useTheme,
-} from "@windesign/react";
+} from "@windesign-ds/react";
 import type {
   AppSidebarSection,
   ExpandableTableColumn,
@@ -46,7 +46,7 @@ import type {
   SearchResultGroup,
   SearchSuggestion,
   TagComboboxGroup,
-} from "@windesign/react";
+} from "@windesign-ds/react";
 import type { CatalogEntry } from "./catalog";
 import { GoogleSession, useProviderHandler } from "../site/google-auth";
 

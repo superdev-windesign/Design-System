@@ -1,4 +1,4 @@
-import { AccentPicker, Checkbox, Link, ProgressCircle, Radio, RadioGroup, Rating, Slider, Switch, Tag, TagGroup, Text } from "@windesign/react";
+import { AccentPicker, Checkbox, Link, ProgressCircle, Radio, RadioGroup, Rating, Slider, Switch, Tag, TagGroup, Text } from "@windesign-ds/react";
 
 /** A few controls that read the accent, to watch them re-tint. */
 export function AccentSpecimen() {

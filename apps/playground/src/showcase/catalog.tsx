@@ -71,7 +71,7 @@ import {
   TooltipTrigger,
   TreeView,
   TreeViewItem,
-} from "@windesign/react";
+} from "@windesign-ds/react";
 import {
   CommandPaletteDemo,
   CommandPalettePreview,
@@ -174,7 +174,7 @@ import {
   SleepScoreCard,
   StageBarsCard,
   StepsChartCard,
-} from "@windesign/react";
+} from "@windesign-ds/react";
 
 export type Group =
   | "Foundations"

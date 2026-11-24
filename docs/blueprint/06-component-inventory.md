@@ -4,7 +4,7 @@
 
 | Concept | Definition | Test | BoardUI example | Where it lives |
 |---|---|---|---|---|
-| **Component** | A reusable unit with its own anatomy, behavior and accessibility contract | Does it have a distinct ARIA role or keyboard model, or a distinct anatomy? | Button, Select, Dialog | `@windesign/react` |
+| **Component** | A reusable unit with its own anatomy, behavior and accessibility contract | Does it have a distinct ARIA role or keyboard model, or a distinct anatomy? | Button, Select, Dialog | `@windesign-ds/react` |
 | **Variant** | The same component, anatomy and behavior with a different visual treatment or size | Could it be one prop value without new structure or behavior? | Button `variant="danger"`, `size="sm"` | A prop on the component |
 | **Composition** | Existing components assembled for a recurring need, with little or no new behavior | Is it mostly existing parts plus layout, configured for one purpose? | Social Button (Button + provider logo), Close Button (IconButton + "×" + label) | A small component or a documented recipe |
 | **Pattern / block** | A documented solution to a UX problem: several components plus layout, content and rules | Does it solve a *task* (sign-in, filtering, settings) rather than provide a *control*? | Auth Card, Settings Modal, Data Table with filters | Docs (with copyable code), or a separate `blocks` package |

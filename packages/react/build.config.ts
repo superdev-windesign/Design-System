@@ -4,7 +4,7 @@ import { defineConfig } from "vite";
 import type { Plugin } from "vite";
 
 /**
- * The published build of @windesign/react: ES modules, one file per source
+ * The published build of @windesign-ds/react: ES modules, one file per source
  * module, so apps only bundle the components they import. Dependencies stay
  * external. Types come from `tsc -p tsconfig.build.json` alongside.
  */

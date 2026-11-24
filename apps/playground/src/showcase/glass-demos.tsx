@@ -58,8 +58,8 @@ import {
   toast,
   useMinimizeOnScroll,
   useTheme,
-} from "@windesign/react";
-import type { DockItem, GlassTab, GlassToolbarGroup, MorphMenuSection, NowPlayingTrack, SpotlightGroup, StackNotification, WheelColumn } from "@windesign/react";
+} from "@windesign-ds/react";
+import type { DockItem, GlassTab, GlassToolbarGroup, MorphMenuSection, NowPlayingTrack, SpotlightGroup, StackNotification, WheelColumn } from "@windesign-ds/react";
 import type { CatalogEntry } from "./catalog";
 import { FitPreview, InPreview } from "./fit-preview";
 

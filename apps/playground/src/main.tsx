@@ -5,7 +5,7 @@ import "@fontsource-variable/instrument-sans";
 import "@fontsource-variable/jetbrains-mono";
 import "./styles.css";
 import { StrictMode } from "react";
-import { ThemeProvider } from "@windesign/react";
+import { ThemeProvider } from "@windesign-ds/react";
 import { createRoot } from "react-dom/client";
 import { App } from "./app";
 import { GoogleAuthProvider } from "./site/google-auth";

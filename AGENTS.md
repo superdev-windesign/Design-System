@@ -4,11 +4,11 @@ These rules keep generated code on the design system instead of producing
 look-alikes. They apply to `packages/react`, `packages/styles` and any app that
 consumes them.
 
-1. **Use the components.** Import from `@windesign/react`; the full list is in
+1. **Use the components.** Import from `@windesign-ds/react`; the full list is in
    `packages/react/src/index.ts` and the showcase at `#/components` in the
    playground. Don't rebuild a control with raw elements and classes.
    Motion values for the `motion` library come from `easing` and
-   `layoutSpring` in `@windesign/react`, never inline bezier arrays.
+   `layoutSpring` in `@windesign-ds/react`, never inline bezier arrays.
 2. **Colors only from semantic utilities:** `bg-canvas`, `bg-surface`,
    `bg-sunken`, `bg-muted`, `text-fg`, `text-fg-secondary`, `border-line`,
    `outline-focus` and the rest listed in `packages/styles/src/tailwind.css`.
@@ -17,7 +17,7 @@ consumes them.
    `accent-50…950`, for interactive emphasis (checked controls, slider fill,
    selection); it follows the brand when the accent is re-pointed.
    Charts take series colours from `seriesColor(n)` / `SERIES_SWATCH` (the
-   `color.chart.*` tokens) in `@windesign/react`, and build cards on `ChartCard`.
+   `color.chart.*` tokens) in `@windesign-ds/react`, and build cards on `ChartCard`.
 3. **No arbitrary design values.** No `p-[13px]`, `rounded-[7px]`,
    `shadow-[...]`, `text-[15px]`. Use the spacing scale (`p-2`, `gap-1.5`),
    radius roles (`rounded-control-md`), elevation (`shadow-raised`,
@@ -31,7 +31,7 @@ consumes them.
 4. **No `dark:` in components.** Themes remap tokens (`data-theme="dark"`);
    components never branch on theme.
 5. **One focus style.** Use `focusRing` / `focusRingNative` /
-   `focusRingInset` from `@windesign/react` (recipes). Never `outline-none` without
+   `focusRingInset` from `@windesign-ds/react` (recipes). Never `outline-none` without
    a replacement.
 6. **React Aria for behavior.** Interactive pieces wrap
    `react-aria-components`; style states with its data attributes
@@ -39,7 +39,7 @@ consumes them.
    `data-[focus-visible]`).
 7. **New tokens go through `packages/tokens/src`**, never straight into CSS.
    Add any new contrast pairing to `src/contrast-pairs.json` and run
-   `npm test -w @windesign/tokens`.
+   `npm test -w @windesign-ds/tokens`.
 8. **Register new text, radius, shadow or size names in
    `packages/react/src/utils/cx.ts`** so tailwind-merge doesn't drop them.
 9. **A brand restyles through tokens first.** When a brand needs a part to change

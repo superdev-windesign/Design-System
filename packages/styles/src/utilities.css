@@ -736,7 +736,7 @@
   }
 }
 
-/* Theme and accent changes (startThemeTransition in @windesign/react): the new look
+/* Theme and accent changes (startThemeTransition in @windesign-ds/react): the new look
    spreads out from the point that changed it, as a circle over the old one.
    Only while that transition runs, so other view transitions keep the default. */
 @keyframes ds-theme-reveal {

@@ -1,4 +1,4 @@
-import { SkipLink, Toaster } from "@windesign/react";
+import { SkipLink, Toaster } from "@windesign-ds/react";
 import { GROUPS } from "./showcase/catalog";
 import type { Group } from "./showcase/catalog";
 import { DocsSidebar } from "./site/docs-nav";

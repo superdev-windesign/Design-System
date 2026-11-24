@@ -116,6 +116,6 @@ SOFTWARE.
 
 ## Fonts
 
-`@windesign/styles/fonts.css` loads Fraunces, Instrument Sans, DM Sans, Inter and
+`@windesign-ds/styles/fonts.css` loads Fraunces, Instrument Sans, DM Sans, Inter and
 JetBrains Mono through Fontsource. All are under the SIL Open Font License 1.1,
 shipped with each `@fontsource-variable/*` package.

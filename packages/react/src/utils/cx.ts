@@ -2,7 +2,7 @@ import { extendTailwindMerge } from "tailwind-merge";
 
 /**
  * tailwind-merge can't see our Tailwind theme, so the custom scale names from
- * @windesign/styles must be registered here. Without this, `text-body-md` looks like a
+ * @windesign-ds/styles must be registered here. Without this, `text-body-md` looks like a
  * text *color* and is silently dropped next to `text-fg`, and `shadow-raised`
  * looks like a shadow color, so `shadow-none` can't override it.
  *

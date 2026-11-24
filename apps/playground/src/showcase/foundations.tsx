@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-import tailwindBridge from "@windesign/styles/tailwind.css?raw";
-import lightTokens from "@windesign/tokens/json/light.json";
-import { cx, focusRingNative } from "@windesign/react";
+import tailwindBridge from "@windesign-ds/styles/tailwind.css?raw";
+import lightTokens from "@windesign-ds/tokens/json/light.json";
+import { cx, focusRingNative } from "@windesign-ds/react";
 
 /**
  * Foundation pages: the colour and type tokens, read straight from the

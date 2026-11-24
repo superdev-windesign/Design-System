@@ -38,7 +38,7 @@ const DEMO_ANSWERS: { match: RegExp; reply: string }[] = [
   {
     match: /code|component|react|button|function/i,
     reply:
-      "Here's a small component that uses the system's Button and reads its label from props:\n\n```tsx\nimport { Button } from \"@windesign/react\";\n\nexport function SaveBar({ onSave }: { onSave: () => void }) {\n  return (\n    <div className=\"flex justify-end gap-2\">\n      <Button variant=\"secondary\">Cancel</Button>\n      <Button onPress={onSave}>Save changes</Button>\n    </div>\n  );\n}\n```\n\nThe secondary button comes first so the primary action sits at the end of the row.",
+      "Here's a small component that uses the system's Button and reads its label from props:\n\n```tsx\nimport { Button } from \"@windesign-ds/react\";\n\nexport function SaveBar({ onSave }: { onSave: () => void }) {\n  return (\n    <div className=\"flex justify-end gap-2\">\n      <Button variant=\"secondary\">Cancel</Button>\n      <Button onPress={onSave}>Save changes</Button>\n    </div>\n  );\n}\n```\n\nThe secondary button comes first so the primary action sits at the end of the row.",
   },
   {
     match: /plan|steps|launch|roadmap/i,

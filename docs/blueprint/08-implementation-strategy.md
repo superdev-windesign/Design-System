@@ -18,7 +18,7 @@
 | Versioning | **Changesets** | semantic-release | Release intent is written per PR; works well for monorepos with several packages |
 | Icons | SVG source → **SVGR** → React components; start from one open set (Remix, Lucide or similar) | Icon fonts (avoid) | Tree-shakable, `currentColor`, no FOIT, accessible |
 
-**Keeping the foundation framework-agnostic:** `@windesign/tokens` (JSON → CSS/JS) and `@windesign/styles` (plain CSS) contain no React. A future Vue app, a Web Components layer, email templates or a native app can consume the same tokens. Only `@windesign/react` is React-specific.
+**Keeping the foundation framework-agnostic:** `@windesign-ds/tokens` (JSON → CSS/JS) and `@windesign-ds/styles` (plain CSS) contain no React. A future Vue app, a Web Components layer, email templates or a native app can consume the same tokens. Only `@windesign-ds/react` is React-specific.
 
 ## 8.2 Distribution model: package vs copy-in registry
 
@@ -98,7 +98,7 @@ packages/tokens/src/*.json  (DTCG)          ← designers sync via Tokens Studio
   </script>
   ```
 
-- **Base CSS in `@windesign/styles`:**
+- **Base CSS in `@windesign-ds/styles`:**
   - The focus-ring utility.
   - `@media (prefers-reduced-motion: reduce)` defaults.
   - `@media (forced-colors: active)` fixes: restore borders on filled controls, use `outline` for focus, use `Highlight` / `CanvasText` system colors for selected states.
@@ -121,7 +121,7 @@ packages/tokens/src/*.json  (DTCG)          ← designers sync via Tokens Studio
 ```css
 /* packages/styles/src/tailwind.css */
 @import "tailwindcss";
-@import "@windesign/tokens/css/tokens.css";
+@import "@windesign-ds/tokens/css/tokens.css";
 
 @theme inline {
   /* Remove Tailwind's default palette so only DS colors exist as utilities */

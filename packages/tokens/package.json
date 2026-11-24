@@ -1,5 +1,5 @@
 {
-  "name": "@windesign/tokens",
+  "name": "@windesign-ds/tokens",
   "version": "0.1.0",
   "description": "Design tokens (DTCG JSON) built to CSS custom properties and flat JSON.",
   "keywords": [

@@ -46,7 +46,7 @@ docs/
   blueprint/   the design-system blueprint and the original BoardUI audit
 ```
 
-The packages are internal workspace packages: `@windesign/react` exports its
+The packages are internal workspace packages: `@windesign-ds/react` exports its
 TypeScript source, so there is no build step yet. Add one (tsup or tsdown)
 before publishing to a registry.
 
@@ -60,9 +60,9 @@ Run from the repository root (npm workspaces):
 | `npm run dev` | Builds tokens, then starts the playground at http://localhost:5180 |
 | `npm run build` | Builds tokens, then the playground into `apps/playground/dist`, mirrored to `./dist` so hosts find it whether their root is the repo or `apps/playground` |
 | `npm test` | Token tests (contrast matrix, theme coverage, naming) + component tests |
-| `npm run typecheck` | TypeScript for `@windesign/react` and the playground |
+| `npm run typecheck` | TypeScript for `@windesign-ds/react` and the playground |
 | `npm run build:tokens` | Rebuilds `packages/tokens/dist` |
-| `npm run sync:palette -w @windesign/tokens` | Regenerates color primitives from the installed Tailwind palette |
+| `npm run sync:palette -w @windesign-ds/tokens` | Regenerates color primitives from the installed Tailwind palette |
 
 ## How a value reaches a component
 
@@ -87,12 +87,12 @@ no theme is set). Components contain no `dark:` classes.
 ```css
 /* app.css */
 @import "tailwindcss";
-@import "@windesign/styles/tailwind.css";
-@source "../node_modules/@windesign/react/src";
+@import "@windesign-ds/styles/tailwind.css";
+@source "../node_modules/@windesign-ds/react/src";
 ```
 
 ```tsx
-import { DateRangePicker, Select, SelectItem } from "@windesign/react";
+import { DateRangePicker, Select, SelectItem } from "@windesign-ds/react";
 
 <Select aria-label="Filter by price" defaultSelectedKey="all">
   <SelectItem id="all" textValue="All prices">All prices</SelectItem>

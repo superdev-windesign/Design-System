@@ -13,8 +13,8 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   cx,
-} from "@windesign/react";
-import type { ActiveDay, RingGoal } from "@windesign/react";
+} from "@windesign-ds/react";
+import type { ActiveDay, RingGoal } from "@windesign-ds/react";
 
 /** Fuller demos for chart pages: the options each chart takes beyond its defaults. */
 

@@ -44,8 +44,8 @@ import {
   VirtualList,
   VisuallyHidden,
   toast,
-} from "@windesign/react";
-import type { PhoneValue } from "@windesign/react";
+} from "@windesign-ds/react";
+import type { PhoneValue } from "@windesign-ds/react";
 import { useLocale } from "react-aria-components";
 import type { CatalogEntry } from "./catalog";
 
@@ -175,7 +175,7 @@ function ProgressCircleDemo() {
   );
 }
 
-const SNIPPET = `import { Button } from "@windesign/react";
+const SNIPPET = `import { Button } from "@windesign-ds/react";
 import { RiDownloadLine } from "@remixicon/react";
 
 export function ExportButton() {
@@ -186,7 +186,7 @@ function CodeBlockDemo() {
   return (
     <div className="flex w-full max-w-xl flex-col gap-4">
       <CodeBlock code={SNIPPET} title="export-button.tsx" language="tsx" showLineNumbers highlightLines={[5]} />
-      <CodeBlock code="npm install @windesign/react @windesign/styles" language="bash" />
+      <CodeBlock code="npm install @windesign-ds/react @windesign-ds/styles" language="bash" />
     </div>
   );
 }
@@ -215,7 +215,7 @@ function TypographyDemo() {
         </Heading>
       </Stack>
       <Stack gap={2}>
-        <Text>Body copy in Instrument Sans. Install it with <Code>npm i @windesign/react</Code>, then import what you need.</Text>
+        <Text>Body copy in Instrument Sans. Install it with <Code>npm i @windesign-ds/react</Code>, then import what you need.</Text>
         <Text size="sm" tone="secondary">
           Secondary, smaller text for supporting detail.
         </Text>

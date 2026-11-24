@@ -10,7 +10,7 @@ import {
   MedicalProfile,
   MultiAgentChat,
   ProjectBoard,
-} from "@windesign/react";
+} from "@windesign-ds/react";
 import { Fit } from "./blocks-demos";
 
 /** A template in a fixed-height frame: templates fill their container and lay out to its width. */

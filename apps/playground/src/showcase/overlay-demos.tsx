@@ -62,7 +62,7 @@ import {
   ToolbarSeparator,
   focusRingNative,
   toast,
-} from "@windesign/react";
+} from "@windesign-ds/react";
 import type { Selection } from "react-aria-components";
 import type { CatalogEntry } from "./catalog";
 

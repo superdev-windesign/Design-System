@@ -1,4 +1,4 @@
-import { Link } from "@windesign/react";
+import { Link } from "@windesign-ds/react";
 import { REPO_URL, VERSION } from "./meta";
 import { BRAND_GROUPS, PATTERN_GROUPS, groupSlug } from "./routes";
 import { Wordmark } from "./site-header";

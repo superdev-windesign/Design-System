@@ -2,7 +2,7 @@
  * (all SIL Open Font License). Optional: without it each brand falls back to
  * system fonts. Import once, before the theme:
  *
- *   @import "@windesign/styles/fonts.css";
+ *   @import "@windesign-ds/styles/fonts.css";
  *
  * Windesign: Fraunces (display) and Instrument Sans (interface).
  * Moon: DM Sans. Glass: the system font, then Inter.

@@ -18,8 +18,8 @@ import {
   StatCards,
   Switch,
   DASHBOARD_NAV,
-} from "@windesign/react";
-import type { AuthMode } from "@windesign/react";
+} from "@windesign-ds/react";
+import type { AuthMode } from "@windesign-ds/react";
 import { RiArrowUpLine, RiAttachment2, RiSettings3Line } from "@remixicon/react";
 import { GoogleSession, useProviderHandler } from "../site/google-auth";
 

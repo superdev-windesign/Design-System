@@ -44,15 +44,15 @@ Keep the foundation framework-agnostic and the components framework-specific.
 
 | Package | Contents | Framework-agnostic? |
 |---|---|---|
-| `@windesign/tokens` | DTCG JSON source. Build outputs: CSS custom properties (per theme), JS/TS constants, JSON for Figma sync | Yes |
-| `@windesign/styles` | Base CSS (reset, `color-scheme`, focus ring, reduced-motion and forced-colors helpers), theme files, an optional Tailwind v4 bridge (`@theme inline`) | Yes (Tailwind optional) |
-| `@windesign/icons` | SVG source, optimized, plus generated React components | SVG yes; React wrapper no |
-| `@windesign/react` | Components, recipes, hooks | React |
-| `@windesign/eslint-plugin` (later) | `no-raw-color`, `no-arbitrary-value`, `no-primitive-token-in-component` | — |
+| `@windesign-ds/tokens` | DTCG JSON source. Build outputs: CSS custom properties (per theme), JS/TS constants, JSON for Figma sync | Yes |
+| `@windesign-ds/styles` | Base CSS (reset, `color-scheme`, focus ring, reduced-motion and forced-colors helpers), theme files, an optional Tailwind v4 bridge (`@theme inline`) | Yes (Tailwind optional) |
+| `@windesign-ds/icons` | SVG source, optimized, plus generated React components | SVG yes; React wrapper no |
+| `@windesign-ds/react` | Components, recipes, hooks | React |
+| `@windesign-ds/eslint-plugin` (later) | `no-raw-color`, `no-arbitrary-value`, `no-primitive-token-in-component` | — |
 | `apps/docs` | Storybook and/or a docs site | — |
 | `apps/playground` | The real "validation screens" you rebuild with the system | — |
 
-**Why split tokens from components:** Figma, native apps, emails or a second framework can consume `@windesign/tokens` without React, and the token build becomes the single source of truth.
+**Why split tokens from components:** Figma, native apps, emails or a second framework can consume `@windesign-ds/tokens` without React, and the token build becomes the single source of truth.
 
 ## 3.3 Theming model
 

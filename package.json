@@ -9,11 +9,11 @@
     "apps/playground"
   ],
   "scripts": {
-    "build:tokens": "npm run build -w @windesign/tokens",
-    "dev": "npm run dev -w @windesign/playground",
+    "build:tokens": "npm run build -w @windesign-ds/tokens",
+    "dev": "npm run dev -w @windesign-ds/playground",
     "test": "npm run test --workspaces --if-present",
     "typecheck": "npm run typecheck --workspaces --if-present",
-    "build": "npm run build -w @windesign/playground"
+    "build": "npm run build -w @windesign-ds/playground"
   },
   "engines": {
     "node": ">=20.19"

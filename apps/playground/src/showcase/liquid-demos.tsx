@@ -38,8 +38,8 @@ import {
   promptArt,
   toast,
   useTheme,
-} from "@windesign/react";
-import type { DeckProfile, GlassScene, LensBarItem } from "@windesign/react";
+} from "@windesign-ds/react";
+import type { DeckProfile, GlassScene, LensBarItem } from "@windesign-ds/react";
 import type { CatalogEntry } from "./catalog";
 import { FitPreview } from "./fit-preview";
 import { GoogleSession, useProviderHandler } from "../site/google-auth";

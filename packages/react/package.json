@@ -1,5 +1,5 @@
 {
-  "name": "@windesign/react",
+  "name": "@windesign-ds/react",
   "version": "0.1.0",
   "description": "Accessible React components on React Aria, styled through Windesign design tokens and Tailwind CSS v4.",
   "keywords": [

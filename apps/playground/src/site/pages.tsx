@@ -35,8 +35,8 @@ import {
   TableOfContents,
   cx,
   focusRingNative,
-} from "@windesign/react";
-import type { IconComponent } from "@windesign/react";
+} from "@windesign-ds/react";
+import type { IconComponent } from "@windesign-ds/react";
 import { CATALOG, GROUPS, findEntry } from "../showcase/catalog";
 import type { CatalogEntry, Group } from "../showcase/catalog";
 import { AccentSection } from "./accent-section";
@@ -308,7 +308,7 @@ const STEPS: { title: string; text: string; file: string; language: string; code
     file: "src/styles.css",
     language: "css",
     code: `@import "tailwindcss";
-@import "@windesign/styles/tailwind.css";
+@import "@windesign-ds/styles/tailwind.css";
 
 /* Tailwind skips workspace packages: point it at the components. */
 @source "../../../packages/react/src";`,
@@ -318,7 +318,7 @@ const STEPS: { title: string; text: string; file: string; language: string; code
     text: "ThemeProvider applies the theme, brand and accent, and remembers each choice between visits.",
     file: "src/main.tsx",
     language: "tsx",
-    code: `import { ThemeProvider } from "@windesign/react";
+    code: `import { ThemeProvider } from "@windesign-ds/react";
 import "./styles.css";
 
 createRoot(root).render(
@@ -329,10 +329,10 @@ createRoot(root).render(
   },
   {
     title: "Use the components",
-    text: "Import from @windesign/react. Behaviour comes from React Aria, so keyboard and screen reader support come with it.",
+    text: "Import from @windesign-ds/react. Behaviour comes from React Aria, so keyboard and screen reader support come with it.",
     file: "src/save-bar.tsx",
     language: "tsx",
-    code: `import { Button } from "@windesign/react";
+    code: `import { Button } from "@windesign-ds/react";
 
 export function SaveBar({ onSave }: { onSave: () => void }) {
   return <Button onPress={onSave}>Save changes</Button>;
@@ -346,7 +346,7 @@ function QuickStart() {
       <SectionHeading
         id="quick-start"
         title="Quick start"
-        description="The packages live in this repository as npm workspaces: @windesign/tokens, @windesign/styles and @windesign/react. Three steps put them in an app."
+        description="The packages live in this repository as npm workspaces: @windesign-ds/tokens, @windesign-ds/styles and @windesign-ds/react. Three steps put them in an app."
       />
       <ol className="flex flex-col">
         {STEPS.map((step, i) => (
@@ -593,7 +593,7 @@ function Details({ entry, source }: { entry: CatalogEntry; source?: string }) {
         )}
         <div className="flex flex-col gap-0.5">
           <dt className="text-fg-secondary">Package</dt>
-          <dd className="font-code text-caption text-fg">@windesign/react</dd>
+          <dd className="font-code text-caption text-fg">@windesign-ds/react</dd>
         </div>
         {source && (
           <div className="flex flex-col gap-0.5">
@@ -644,7 +644,7 @@ export function DetailPage({ entry }: { entry: CatalogEntry }) {
   const Demo = entry.demo ?? entry.preview;
   const isFoundation = entry.group === "Foundations";
   const isTemplate = entry.group === "Templates";
-  const snippet = entry.imports.length ? `import { ${entry.imports.join(", ")} } from "@windesign/react";` : "";
+  const snippet = entry.imports.length ? `import { ${entry.imports.join(", ")} } from "@windesign-ds/react";` : "";
   const source = sourceUrl(entry);
   const siblings = entriesIn(entry.group);
   const at = siblings.indexOf(entry);

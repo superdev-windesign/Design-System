@@ -1,8 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { RiLogoutBoxRLine, RiShieldUserLine } from "@remixicon/react";
-import { Avatar, Button, SocialButton, Text, cx, toast } from "@windesign/react";
-import type { SocialBrand } from "@windesign/react";
+import { Avatar, Button, SocialButton, Text, cx, toast } from "@windesign-ds/react";
+import type { SocialBrand } from "@windesign-ds/react";
 
 /**
  * Google sign-in for the playground, on Google Identity Services.

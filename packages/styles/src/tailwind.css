@@ -2,16 +2,16 @@
  *
  * Use from an app stylesheet:
  *   @import "tailwindcss";
- *   @import "@windesign/styles/fonts.css";   (optional: the brands' typefaces)
- *   @import "@windesign/styles/tailwind.css";
- *   @source "<path to>/node_modules/@windesign/react/dist";
+ *   @import "@windesign-ds/styles/fonts.css";   (optional: the brands' typefaces)
+ *   @import "@windesign-ds/styles/tailwind.css";
+ *   @source "<path to>/node_modules/@windesign-ds/react/dist";
  *
  * Tailwind's default palette, radii, shadows, type sizes, easings and blurs are
  * removed so only system values exist as utilities. `@theme inline` points each
  * utility straight at its --ds-* variable, so themes also work on a subtree
  * (<aside data-theme="dark">), not just on <html>.
  */
-@import "@windesign/tokens/css";
+@import "@windesign-ds/tokens/css";
 @import "./base.css";
 @import "./utilities.css";
 @import "./brands/glass.css";
