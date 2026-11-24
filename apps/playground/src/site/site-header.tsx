@@ -19,6 +19,7 @@ import {
 import type { Brand } from "@windesign-ds/react";
 import { GROUPS } from "../showcase/catalog";
 import { DocsNav } from "./docs-nav";
+import { HeaderAccount } from "./google-auth";
 import { REPO_URL, VERSION } from "./meta";
 import { NAV, entriesIn } from "./routes";
 import type { Route } from "./routes";
@@ -119,6 +120,7 @@ function SearchButton({ onPress }: { onPress: () => void }) {
     <button
       type="button"
       onClick={onPress}
+      aria-label="Search docs"
       aria-keyshortcuts="Meta+K Control+K"
       className={cx(
         "flex h-8 items-center gap-2 rounded-control-md border border-line-control bg-surface ps-2.5 pe-1.5 text-body-sm text-fg-secondary transition-colors hover:border-line-control-hover hover:text-fg xl:w-64",
@@ -126,7 +128,8 @@ function SearchButton({ onPress }: { onPress: () => void }) {
       )}
     >
       <RiSearchLine aria-hidden className="size-4 shrink-0" />
-      <span className="hidden whitespace-nowrap sm:inline">Search docs…</span>
+      {/* From lg the header also holds the nav and brand switch: the words return at xl, where there's room. */}
+      <span className="hidden whitespace-nowrap sm:inline lg:hidden xl:inline">Search docs…</span>
       <Kbd className="ms-auto hidden px-1.5 sm:inline-flex">{isApple() ? "⌘K" : "Ctrl K"}</Kbd>
     </button>
   );
@@ -195,6 +198,7 @@ export function SiteHeader({ route }: { route: Route }) {
           <BrandSwitch className="hidden lg:block" />
           <ThemeToggle className="hidden sm:inline-flex" />
           <GitHubLink className="hidden sm:inline-flex" />
+          <HeaderAccount />
           <IconButton icon={RiMenuLine} size="small" aria-label="Open menu" onClick={() => setMenuOpen(true)} className="lg:hidden" />
         </div>
       </div>

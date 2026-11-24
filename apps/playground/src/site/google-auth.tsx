@@ -1,7 +1,8 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
 import { RiLogoutBoxRLine, RiShieldUserLine } from "@remixicon/react";
-import { Avatar, Button, SocialButton, Text, cx, toast } from "@windesign-ds/react";
+import { Button as AriaButton } from "react-aria-components";
+import { Avatar, Button, Menu, MenuItem, MenuSection, MenuSeparator, MenuTrigger, SocialButton, Text, cx, focusRingNative, toast } from "@windesign-ds/react";
 import type { SocialBrand } from "@windesign-ds/react";
 
 /**
@@ -239,6 +240,55 @@ export function GoogleSession({ className }: { className?: string }) {
               : "The Google button signs you in for real. Nothing is sent anywhere but Google."}
       </Text>
     </div>
+  );
+}
+
+/**
+ * The site header's account control. Signed out, a small Google button; signed
+ * in, your avatar, opening a menu with who you are and Sign out. Without a
+ * client ID it renders nothing, so a fork without one shows no dead button.
+ */
+export function HeaderAccount({ className }: { className?: string }) {
+  const { configured, status, user, signIn, signOut } = useGoogleAuth();
+  if (!configured) return null;
+  if (!user) {
+    const busy = status === "signing-in" || status === "loading";
+    return (
+      <span className={cx("flex", className)}>
+        {/* The header is full on most screens: the Google mark alone, with the words from 2xl. */}
+        <SocialButton brand="google" size="small" appearance="white" iconOnly aria-label="Sign in with Google" onClick={signIn} disabled={busy} className="2xl:hidden" />
+        <SocialButton
+          brand="google"
+          size="small"
+          appearance="white"
+          onClick={signIn}
+          disabled={busy}
+          // Sign-in forms give it a fixed width; in the header it fits its label.
+          className="hidden w-auto 2xl:inline-flex"
+        >
+          Sign in
+        </SocialButton>
+      </span>
+    );
+  }
+  return (
+    <MenuTrigger>
+      <AriaButton aria-label={`Account: ${user.name}`} className={cx("flex cursor-pointer rounded-full", focusRingNative, className)}>
+        <Avatar src={user.picture} alt="" initials={user.name.slice(0, 1).toUpperCase()} size="sm" />
+      </AriaButton>
+      <Menu aria-label="Account" placement="bottom end" onAction={(key) => key === "sign-out" && signOut()}>
+        {/* Not disabled: a disabled item is drawn faint, and who you are should read clearly. */}
+        <MenuSection title="Signed in as">
+          <MenuItem id="profile" textValue={user.name} description={user.email}>
+            {user.name}
+          </MenuItem>
+        </MenuSection>
+        <MenuSeparator />
+        <MenuItem id="sign-out" icon={RiLogoutBoxRLine}>
+          Sign out
+        </MenuItem>
+      </Menu>
+    </MenuTrigger>
   );
 }
 
