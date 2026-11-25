@@ -50,7 +50,10 @@ export function Marquee({ children, vertical = false, reverse = false, speed = 1
       {Array.from({ length: repeat }, (_, i) => (
         <div
           key={i}
+          // The copies only fill the loop: inert keeps their links and controls out of
+          // the tab order and the accessibility tree, so each item is reached once.
           aria-hidden={i > 0 || undefined}
+          inert={i > 0 || undefined}
           style={{ gap: "var(--marquee-gap)", animationDirection: reverse ? "reverse" : undefined, animationPlayState: paused ? "paused" : undefined }}
           className={cx("flex shrink-0 justify-around", vertical ? "animate-marquee-y flex-col" : "animate-marquee flex-row")}
         >

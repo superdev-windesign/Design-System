@@ -81,13 +81,26 @@ function Reveal({ children, className, delay = 0 }: { children: ReactNode; class
 }
 
 /** A live catalogue demo in a tile, with its name linking to its page. */
-function Tile({ slug, className, beam = false, demo = false }: { slug: string; className?: string; beam?: boolean; demo?: boolean }) {
+function Tile({
+  slug,
+  className,
+  beam = false,
+  demo = false,
+  fixed = false,
+}: {
+  slug: string;
+  className?: string;
+  beam?: boolean;
+  demo?: boolean;
+  /** In a fixed-height card: the demo fits the space above the name bar and clips, never pushing it out. */
+  fixed?: boolean;
+}) {
   const entry = findEntry(slug);
   if (!entry) return null;
   const Render = demo ? (entry.demo ?? entry.preview) : entry.preview;
   const body = (
     <div className="flex h-full flex-col overflow-hidden rounded-surface border border-line bg-surface">
-      <div className="flex min-h-56 flex-1 items-center justify-center p-5 sm:p-6">
+      <div className={cx("flex flex-1 items-center justify-center p-5 sm:p-6", fixed ? "min-h-0 overflow-hidden" : "min-h-56")}>
         <Render />
       </div>
       <a
@@ -166,6 +179,39 @@ function Hero() {
           ))}
         </ul>
       </Page>
+    </section>
+  );
+}
+
+/* ── 1b. Ticker of big live components ───────────────────────────────────── */
+
+// Different from the bento's, so the page shows more of the system.
+const TICKER = [
+  "orders-chart",
+  "calendar",
+  "composer",
+  "notification-center",
+  "activity-rings",
+  "agent-thinking",
+  "task-list",
+  "contributions",
+  "line-chart",
+  "date-range-picker",
+];
+
+/**
+ * Under the hero: large cards, each a working component, drifting past. It
+ * pauses while hovered or focused, so anything in it can be used, and holds
+ * still (scrollable by hand) for reduced motion.
+ */
+function ComponentTicker() {
+  return (
+    <section aria-label="Live components" className="border-b border-line bg-sunken py-8 sm:py-10">
+      <Marquee pauseOnHover fade gap={5} speed={4}>
+        {TICKER.map((slug) => (
+          <Tile key={slug} slug={slug} fixed className="h-80 w-80 shrink-0 sm:w-96" />
+        ))}
+      </Marquee>
     </section>
   );
 }
@@ -422,6 +468,7 @@ export function HomePage() {
   return (
     <div className="flex flex-col">
       <Hero />
+      <ComponentTicker />
       <Page className="gap-24 py-20 sm:gap-32 sm:py-24">
         <Bento />
         <ComponentMarquee />
