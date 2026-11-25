@@ -10,8 +10,8 @@ import {
   IconButton,
   IconLinkButton,
   Kbd,
-  SegmentedControl,
-  SegmentedControlItem,
+  Select,
+  SelectItem,
   cx,
   focusRingNative,
   useTheme,
@@ -50,36 +50,39 @@ function ThemeToggle({ className }: { className?: string }) {
   );
 }
 
-/** Windesign, Moon or Glass: every component restyles, and the change spreads out from the click. */
+/**
+ * Windesign, Moon or Glass, as a dropdown: every component restyles, and the
+ * change spreads out from the control. Each option shows the brand's accent.
+ */
 function BrandSwitch({ className }: { className?: string }) {
   const { brand, setBrand } = useTheme();
-  const origin = useRef<Origin | undefined>(undefined);
+  const control = useRef<HTMLDivElement>(null);
   return (
-    <div
-      className={className}
-      // The control reports only the new key, so remember where the pointer went down.
-      onPointerDownCapture={(event) => {
-        origin.current = { x: event.clientX, y: event.clientY };
+    <Select
+      ref={control}
+      aria-label="Brand"
+      size="sm"
+      selectedKey={brand}
+      onSelectionChange={(key) => {
+        const next = key as Brand | null;
+        if (!next || next === brand) return;
+        // The list closes as it changes, so the ripple starts from the control itself.
+        setBrand(next, control.current ? centreOf(control.current) : undefined);
       }}
+      // Sized to its label, and as tall as the header's other controls.
+      className={cx("w-auto", className)}
+      triggerClassName="h-8"
     >
-      <SegmentedControl
-        aria-label="Brand"
-        selectedKeys={[brand]}
-        onSelectionChange={(keys) => {
-          const next = [...keys][0] as Brand | undefined;
-          if (!next || next === brand) return;
-          const active = document.activeElement;
-          setBrand(next, origin.current ?? (active ? centreOf(active) : undefined));
-          origin.current = undefined;
-        }}
-      >
-        {BRANDS.map(({ id, label }) => (
-          <SegmentedControlItem key={id} id={id}>
+      {BRANDS.map(({ id, label, accentColor }) => (
+        <SelectItem key={id} id={id} textValue={label}>
+          <span className="flex items-center gap-2">
+            {/* The brand's own accent, from its token, not the current theme's. */}
+            <span aria-hidden className="size-2.5 shrink-0 rounded-full" style={{ backgroundColor: accentColor }} />
             {label}
-          </SegmentedControlItem>
-        ))}
-      </SegmentedControl>
-    </div>
+          </span>
+        </SelectItem>
+      ))}
+    </Select>
   );
 }
 

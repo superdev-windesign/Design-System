@@ -705,7 +705,8 @@ export function DetailPage({ entry }: { entry: CatalogEntry }) {
             <h2 id="preview" className="scroll-mt-20 text-title-md-strong text-fg">
               Preview
             </h2>
-            <div className="overflow-hidden rounded-surface border border-line">
+            {/* site-preview: frosted in the Glass brand (styles.css); exactly as before in the others. */}
+            <div className="site-preview overflow-hidden rounded-surface border border-line">
               <div className="flex items-center gap-2 border-b border-line bg-sunken px-4 py-2.5 text-body-sm text-fg-secondary">
                 <RiPaletteLine aria-hidden className="size-4 shrink-0" />
                 Live and interactive. It follows the brand and theme set in the header.

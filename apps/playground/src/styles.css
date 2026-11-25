@@ -3,3 +3,20 @@
 
 /* Tailwind doesn't scan workspace packages under node_modules; point it at the component source. */
 @source "../../../packages/react/src";
+
+/* The docs' live preview frame, as a slab of glass in the Glass brand: frosted,
+   with the brand's lit edge, like the cards (brands/glass.css). Its body's
+   bg-surface is already translucent there. Other brands don't match. */
+[data-brand="glass"] .site-preview {
+  border-color: var(--ds-color-glass-edge);
+  box-shadow: var(--ds-elevation-glass-bevel), var(--ds-elevation-raised);
+  -webkit-backdrop-filter: var(--ds-effect-glass-panel);
+  backdrop-filter: var(--ds-effect-glass-panel);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  [data-brand="glass"] .site-preview {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}

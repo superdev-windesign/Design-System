@@ -55,6 +55,15 @@ html[data-brand="glass"],
   box-shadow: var(--ds-elevation-glass-bevel), var(--ds-elevation-raised);
 }
 
+/* And it's frosted: what's behind the slab blurs through its translucent fill,
+   so a card reads as glass rather than a flat grey sheet. Checkbox marks and
+   text fields are left out: they're too small, or too busy, to need it. */
+[data-brand="glass"] .bg-surface:where(.border):not(:where(.bui-control-mark, input, textarea, select)),
+[data-brand="glass"] :is(.bui-chart-card, .bui-accordion, .bui-table-frame) {
+  -webkit-backdrop-filter: var(--ds-effect-glass-panel);
+  backdrop-filter: var(--ds-effect-glass-panel);
+}
+
 /* These three are bare in Windesign, ruled straight onto the page, so here they
    gain the panel itself. An alert keeps its tint, which is translucent already. */
 [data-brand="glass"] :is(.bui-chart-card, .bui-accordion, .bui-table-frame) {
@@ -105,6 +114,8 @@ html[data-brand="glass"],
 
   [data-brand="glass"] :is(.bg-surface, .bui-chart-card, .bui-accordion, .bui-table-frame) {
     background-color: var(--ds-color-glass-solid);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 }
 
