@@ -3,12 +3,17 @@ import type { ReactNode } from "react";
 import {
   RiArrowRightLine,
   RiArrowRightUpLine,
+  RiCodeSSlashLine,
+  RiReactjsLine,
+  RiShieldCheckLine,
+  RiTailwindCssFill,
   RiBox3Line,
   RiRobot2Line,
   RiSparkling2Line,
   RiTerminalBoxLine,
 } from "@remixicon/react";
 import {
+  AnimatedNumber,
   BRANDS,
   BorderBeam,
   Button,
@@ -120,14 +125,43 @@ function Tile({
 
 /* ── 1. Hero ─────────────────────────────────────────────────────────────── */
 
-const TECH = ["React 19", "Tailwind CSS v4", "React Aria", "TypeScript", "MIT licence"];
+const TECH: { label: string; icon: IconComponent }[] = [
+  { label: "React 19", icon: RiReactjsLine },
+  { label: "Tailwind CSS v4", icon: RiTailwindCssFill },
+  { label: "React Aria", icon: RiShieldCheckLine },
+  { label: "TypeScript", icon: RiCodeSSlashLine },
+];
 const INSTALL = "npx windesign-ds@latest add dynamic-island";
+
+const HERO_STATS: { value: number; label: string }[] = [
+  { value: CATALOG.length, label: "components" },
+  { value: effectCount, label: "effects" },
+  { value: BRANDS.length, label: "brands" },
+  { value: BRANDS.length * 2, label: "themes" },
+];
+
+/** The hero's numbers. AnimatedNumber counts each up from zero on first render. */
+function HeroStats() {
+  return (
+    <dl className="grid w-full max-w-2xl grid-cols-2 gap-px overflow-hidden rounded-surface border border-line bg-line sm:grid-cols-4">
+      {HERO_STATS.map(({ value, label }) => (
+        <div key={label} className="flex flex-col items-center gap-0.5 bg-surface px-4 py-3">
+          <dt className="order-2 text-body-sm text-fg-secondary">{label}</dt>
+          <dd className="order-1 text-title-lg-strong text-fg">
+            <AnimatedNumber value={value} />
+          </dd>
+        </div>
+      ))}
+    </dl>
+  );
+}
 
 function Hero() {
   return (
     <section aria-labelledby="hero" className="relative isolate overflow-hidden border-b border-line">
       <LightRays className="-z-10 opacity-70" />
-      {/* The rays fade out into the page. */}
+      {/* A pool of the brand's accent behind the headline, then the rays fade out into the page. */}
+      <div aria-hidden className="absolute inset-x-0 top-1/4 -z-10 mx-auto h-96 max-w-4xl bg-radial from-accent-500/15 to-transparent to-70% blur-glow" />
       <div aria-hidden className="absolute inset-x-0 bottom-0 -z-10 h-2/5 bg-linear-to-b from-transparent to-canvas" />
 
       <Page className="items-center gap-8 py-20 text-center sm:py-28 lg:py-32">
@@ -170,11 +204,14 @@ function Hero() {
           <CopyButton value={INSTALL} iconOnly label="Copy the command" size="sm" variant="tertiary" />
         </div>
 
-        <ul aria-label="Built with" className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-body-sm text-fg-secondary">
-          {TECH.map((t, i) => (
-            <li key={t} className="flex items-center gap-5">
-              {i > 0 && <span aria-hidden className="size-1 rounded-full bg-fg-tertiary" />}
-              {t}
+        <HeroStats />
+
+        <ul aria-label="Built with" className="flex flex-wrap items-center justify-center gap-2">
+          <li className="text-body-sm text-fg-tertiary">Built with</li>
+          {TECH.map(({ label, icon: Icon }) => (
+            <li key={label} className="flex items-center gap-1.5 rounded-full border border-line bg-surface py-1 ps-2 pe-3 text-body-sm text-fg-secondary">
+              <Icon aria-hidden className="size-4 text-icon-secondary" />
+              {label}
             </li>
           ))}
         </ul>
