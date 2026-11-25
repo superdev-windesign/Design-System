@@ -4,19 +4,14 @@ import {
   RiAccessibilityLine,
   RiArrowLeftLine,
   RiArrowRightLine,
-  RiArrowRightSLine,
-  RiBrushLine,
   RiContrast2Line,
   RiDropLine,
   RiExternalLinkLine,
-  RiLayoutMasonryLine,
   RiPaletteLine,
   RiSearchLine,
-  RiShapesLine,
   RiStackLine,
 } from "@remixicon/react";
 import {
-  BRANDS,
   Badge,
   Breadcrumb,
   BreadcrumbItem,
@@ -37,12 +32,11 @@ import {
   focusRingNative,
 } from "@windesign-ds/react";
 import type { IconComponent } from "@windesign-ds/react";
-import { CATALOG, GROUPS, findEntry } from "../showcase/catalog";
+import { CATALOG, GROUPS } from "../showcase/catalog";
 import type { CatalogEntry, Group } from "../showcase/catalog";
-import { AccentSection } from "./accent-section";
 import { InstallCommand, cliCommand, installCommand } from "./install-command";
 import { sourceUrl } from "./meta";
-import { BRAND_GROUPS, COMPONENT_GROUPS, PATTERN_GROUPS, entriesIn, groupSlug } from "./routes";
+import { BRAND_GROUPS, PATTERN_GROUPS, entriesIn, groupSlug } from "./routes";
 
 /* -------------------------------------------------------------------------- */
 /*                                    Parts                                   */
@@ -115,7 +109,7 @@ export function SectionHeading({ id, title, description, action }: { id: string;
   );
 }
 
-const NewChip = () => (
+export const NewChip = () => (
   <Chip variant="caption" color="blue">
     New
   </Chip>
@@ -168,7 +162,7 @@ function CardGrid({ group, entries }: { group: Group; entries: CatalogEntry[] })
 /* -------------------------------------------------------------------------- */
 
 /** A small form made of live components, so the first screen shows the system working. */
-function HeroSpecimen() {
+export function HeroSpecimen() {
   return (
     <div className="flex flex-col overflow-hidden rounded-surface border border-line bg-surface shadow-raised">
       <div className="flex flex-col gap-0.5 border-b border-line px-5 py-4">
@@ -197,108 +191,6 @@ function HeroSpecimen() {
         <Button size="sm">Create project</Button>
       </div>
     </div>
-  );
-}
-
-const componentCount = CATALOG.filter((e) => COMPONENT_GROUPS.includes(e.group)).length;
-const patternCount = PATTERN_GROUPS.reduce((n, g) => n + entriesIn(g).length, 0);
-
-function Stats() {
-  const stats: [string, number, string][] = [
-    ["Components", componentCount, `in ${COMPONENT_GROUPS.length} categories`],
-    ["Patterns", patternCount, "blocks, charts and templates"],
-    ["Foundations", entriesIn("Foundations").length, "guides to the tokens"],
-    ["Brands", BRANDS.length, "each in light and dark"],
-  ];
-  return (
-    <dl className="grid grid-cols-2 gap-px overflow-hidden rounded-surface border border-line bg-line lg:grid-cols-4">
-      {stats.map(([label, value, note]) => (
-        <div key={label} className="flex flex-col gap-1 bg-surface p-5 sm:p-6">
-          <dt className="text-body-sm-strong text-fg-secondary">{label}</dt>
-          <dd className="text-display-sm text-fg tabular-nums">{value}</dd>
-          <dd className="text-body-sm text-fg-secondary">{note}</dd>
-        </div>
-      ))}
-    </dl>
-  );
-}
-
-type Area = { title: string; href: string; icon: IconComponent; text: string; links: Crumb[] };
-
-const AREAS: Area[] = [
-  {
-    title: "Foundations",
-    href: "#/section/foundations",
-    icon: RiPaletteLine,
-    text: "Colour, type, space, corners, depth and motion: the tokens every component is built from.",
-    links: [
-      { label: "Color", href: "#/components/color" },
-      { label: "Typography", href: "#/components/typography" },
-      { label: "Theming", href: "#/components/theming" },
-    ],
-  },
-  {
-    title: "Components",
-    href: "#/components",
-    icon: RiShapesLine,
-    text: `${componentCount} controls and patterns for forms, navigation, feedback, overlays and data.`,
-    links: [
-      { label: "Button", href: "#/components/button" },
-      { label: "Select", href: "#/components/select" },
-      { label: "Command Palette", href: "#/components/command-palette" },
-    ],
-  },
-  {
-    title: "Patterns",
-    href: "#/section/blocks",
-    icon: RiLayoutMasonryLine,
-    text: "Blocks, charts and whole-screen templates assembled from the components.",
-    links: PATTERN_GROUPS.map((g) => ({ label: g, href: `#/section/${groupSlug(g)}` })),
-  },
-  {
-    title: "Brands",
-    href: "#/section/glass",
-    icon: RiBrushLine,
-    text: "Moon and Glass restyle every component through tokens. Try them with the switch in the header.",
-    links: BRAND_GROUPS.map((g) => ({ label: g, href: `#/section/${groupSlug(g)}` })),
-  },
-];
-
-function Explore() {
-  return (
-    <section aria-labelledby="explore" className="flex flex-col gap-8">
-      <SectionHeading id="explore" title="Explore the system" description="Four parts, from the tokens up to whole screens." />
-      <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {AREAS.map(({ title, href, icon: AreaIcon, text, links }) => (
-          <div key={title} className="flex flex-col gap-5 rounded-surface border border-line bg-surface p-6 transition-[border-color,box-shadow] hover:border-line-control hover:shadow-raised">
-            <span aria-hidden className="flex size-10 items-center justify-center rounded-control-md bg-muted text-icon">
-              <AreaIcon className="size-5" />
-            </span>
-            <div className="flex flex-col gap-1.5">
-              <h3 className="text-title-sm-strong text-fg">
-                <a href={href} className={cx("rounded-xs hover:underline hover:decoration-1 hover:underline-offset-4", focusRingNative)}>
-                  {title}
-                </a>
-              </h3>
-              <p className="text-body-md text-fg-secondary">{text}</p>
-            </div>
-            <ul className="mt-auto flex flex-col border-t border-line pt-3">
-              {links.map((link) => (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    className={cx("group flex items-center justify-between rounded-xs py-1.5 text-body-sm text-fg-secondary transition-colors hover:text-fg", focusRingNative)}
-                  >
-                    {link.label}
-                    <RiArrowRightSLine aria-hidden className="size-4 transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100" />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-    </section>
   );
 }
 
@@ -342,7 +234,7 @@ export function SaveBar({ onSave }: { onSave: () => void }) {
   },
 ];
 
-function QuickStart() {
+export function QuickStart() {
   return (
     <section aria-labelledby="quick-start" className="flex flex-col gap-8">
       <SectionHeading
@@ -396,26 +288,7 @@ const PRINCIPLES: { icon: IconComponent; title: string; text: string }[] = [
   },
 ];
 
-/** Home: a pointer to #/ai, with the one line most people need. */
-function UseWithAi() {
-  return (
-    <section aria-labelledby="use-with-ai" className="flex flex-col gap-8">
-      <SectionHeading
-        id="use-with-ai"
-        title="Build with your AI tools"
-        description="Windesign's MCP server gives Claude Code, Cursor and VS Code the real components, their props and the system's tokens, so generated code stays on the system."
-        action={
-          <Button variant="secondary" trailingIcon={RiArrowRightLine} onPress={go("#/ai")}>
-            Set it up
-          </Button>
-        }
-      />
-      <CodeBlock code="claude mcp add windesign -- npx -y @windesign-ds/mcp" language="bash" />
-    </section>
-  );
-}
-
-function Principles() {
+export function Principles() {
   return (
     <section aria-labelledby="principles" className="flex flex-col gap-8">
       <SectionHeading id="principles" title="How it's built" description="The rules every component follows, checked in the repository's tests and agent guide." />
@@ -429,81 +302,6 @@ function Principles() {
         ))}
       </ul>
     </section>
-  );
-}
-
-const FEATURED = ["button", "select", "date-range-picker", "toast", "revenue-chart", "command-palette"];
-
-export function HomePage() {
-  const featured = FEATURED.map(findEntry).filter((e): e is CatalogEntry => !!e);
-  const glassCount = entriesIn("Glass").length;
-  return (
-    <div className="flex flex-col">
-      <section aria-labelledby="hero" className="border-b border-line">
-        <Page className="grid grid-cols-1 gap-12 py-14 sm:py-20 lg:grid-cols-12 lg:items-center lg:py-24">
-          <div className="flex flex-col items-start gap-6 lg:col-span-7">
-            <a
-              href="#/section/glass"
-              className={cx(
-                "group flex items-center gap-2 rounded-full border border-line bg-surface py-1 ps-1 pe-3 text-body-sm text-fg-secondary transition-colors hover:border-line-control hover:text-fg",
-                focusRingNative,
-              )}
-            >
-              <NewChip />
-              Glass brand: {glassCount} components on Liquid Glass
-              <RiArrowRightLine aria-hidden className="size-4 transition-transform group-hover:translate-x-0.5 rtl:-scale-x-100" />
-            </a>
-            <h1 id="hero" className="text-display-md font-semibold tracking-tight text-balance text-fg sm:text-display-lg">
-              Build accessible React interfaces on one set of tokens
-            </h1>
-            <p className="max-w-xl text-body-lg text-pretty text-fg-secondary">
-              Windesign is a design system of {CATALOG.length} components, blocks, charts and templates. Behaviour comes from React Aria, every style comes
-              from tokens, and light, dark, three brands and any accent colour work without touching component code.
-            </p>
-            <div className="flex flex-wrap gap-3">
-              <Button
-                trailingIcon={RiArrowRightLine}
-                onPress={() => document.getElementById("quick-start")?.scrollIntoView({ behavior: "smooth", block: "start" })}
-              >
-                Get started
-              </Button>
-              <Button variant="secondary" onPress={go("#/components")}>
-                Browse components
-              </Button>
-            </div>
-          </div>
-          <div className="lg:col-span-5">
-            <HeroSpecimen />
-          </div>
-        </Page>
-      </section>
-
-      <Page className="gap-20 py-16 sm:gap-24 sm:py-20">
-        <Stats />
-        <Explore />
-        <QuickStart />
-        <UseWithAi />
-        <Principles />
-        <AccentSection />
-        <section aria-labelledby="featured" className="flex flex-col gap-8">
-          <SectionHeading
-            id="featured"
-            title="Popular components"
-            description="A few of the most used pieces. Every card is the live component."
-            action={
-              <LinkButton href="#/components" variant="secondary" trailingIcon={RiArrowRightLine}>
-                All components
-              </LinkButton>
-            }
-          />
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {featured.map((entry) => (
-              <EntryCard key={entry.slug} entry={entry} />
-            ))}
-          </div>
-        </section>
-      </Page>
-    </div>
   );
 }
 
