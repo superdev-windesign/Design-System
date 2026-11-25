@@ -152,7 +152,7 @@ export function Wordmark({ showVersion = true }: { showVersion?: boolean }) {
         </span>
         <span className="flex items-baseline gap-1.5">
           <span className="text-body-md-strong whitespace-nowrap text-fg">Windesign</span>
-          <span className="hidden text-body-md whitespace-nowrap text-fg-secondary xl:inline">Design System</span>
+          <span className="hidden text-body-md whitespace-nowrap text-fg-secondary 2xl:inline">Design System</span>
         </span>
       </a>
       {showVersion && <Badge aria-label={`Version ${VERSION}`}>v{VERSION}</Badge>}
@@ -164,15 +164,35 @@ function GitHubLink({ className }: { className?: string }) {
   return <IconLinkButton icon={RiGithubLine} size="small" href={REPO_URL} target="_blank" rel="noreferrer" aria-label="Source on GitHub" className={className} />;
 }
 
+/** True once the page has scrolled off its top, so the header can gain its surface. */
+function useScrolled(threshold = 8) {
+  const [scrolled, setScrolled] = useState(() => typeof window !== "undefined" && window.scrollY > threshold);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > threshold);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [threshold]);
+  return scrolled;
+}
+
 export function SiteHeader({ route }: { route: Route }) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  // At the very top the header is see-through, so the page (the home hero's light) runs up behind it;
+  // scrolled, it's a frosted bar with a rule and a soft shadow.
+  const scrolled = useScrolled();
 
   // Any navigation closes the menu sheet.
   useEffect(() => setMenuOpen(false), [route]);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-canvas/92 [backdrop-filter:var(--ds-effect-glass-panel)]">
+    <header
+      className={cx(
+        "sticky top-0 z-40 border-b transition-[background-color,border-color,box-shadow] duration-(--ds-motion-duration-moderate) ease-standard",
+        scrolled ? "border-line bg-canvas/92 shadow-raised [backdrop-filter:var(--ds-effect-glass-panel)]" : "border-transparent bg-transparent",
+      )}
+    >
       <div className="flex h-14 items-center gap-4 px-4 sm:px-6 xl:gap-6">
         <Wordmark />
 
@@ -202,6 +222,8 @@ export function SiteHeader({ route }: { route: Route }) {
           <BrandSwitch className="hidden lg:block" />
           <ThemeToggle className="hidden sm:inline-flex" />
           <GitHubLink className="hidden sm:inline-flex" />
+          {/* Settings on the left of the rule, your account on the right. */}
+          <span aria-hidden className="mx-1 hidden h-5 w-px bg-line sm:block" />
           <HeaderAccount />
           <IconButton icon={RiMenuLine} size="small" aria-label="Open menu" onClick={() => setMenuOpen(true)} className="lg:hidden" />
         </div>

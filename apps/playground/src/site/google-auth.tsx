@@ -253,22 +253,11 @@ export function HeaderAccount({ className }: { className?: string }) {
   if (!configured) return null;
   if (!user) {
     const busy = status === "signing-in" || status === "loading";
+    // Plain words, no logo: the Google window says who it signs you in with.
     return (
-      <span className={cx("flex", className)}>
-        {/* The header is full on most screens: the Google mark alone, with the words from 2xl. */}
-        <SocialButton brand="google" size="small" appearance="white" iconOnly aria-label="Sign in with Google" onClick={signIn} disabled={busy} className="2xl:hidden" />
-        <SocialButton
-          brand="google"
-          size="small"
-          appearance="white"
-          onClick={signIn}
-          disabled={busy}
-          // Sign-in forms give it a fixed width; in the header it fits its label.
-          className="hidden w-auto 2xl:inline-flex"
-        >
-          Sign in
-        </SocialButton>
-      </span>
+      <Button size="sm" onPress={signIn} isDisabled={busy} className={cx("whitespace-nowrap", className)}>
+        Sign in
+      </Button>
     );
   }
   return (
