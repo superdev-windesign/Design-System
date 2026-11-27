@@ -1,6 +1,6 @@
 {
   "name": "windesign-ds",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Add Windesign design-system components to your project as source: npx windesign-ds@latest add <component>.",
   "keywords": [
     "cli",

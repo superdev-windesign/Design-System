@@ -1,6 +1,6 @@
 {
     "name": "@windesign-ds/mcp",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "description": "MCP server for the Windesign design system: lets AI coding tools find components, read their props and examples, and follow the design rules.",
     "keywords": [
         "mcp",
