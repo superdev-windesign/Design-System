@@ -32,10 +32,15 @@ for (const family of Object.keys(color)) {
   color[family] = Object.fromEntries(Object.entries(color[family]).sort(([a], [b]) => Number(a) - Number(b)));
 }
 
+// The house ramps aren't Tailwind's: carry them over from the current file so a
+// sync never drops them (paper is Windesign's neutrals, lagoon its accent).
+const current = JSON.parse(await readFile(new URL("../src/primitives/color.json", import.meta.url), "utf8")).color;
+for (const family of ["paper", "lagoon", "terracotta"]) {
+  if (current[family]) color[family] = current[family];
+}
+
 // The accent ramp is an alias: rebrand by re-pointing these eleven tokens.
-color.accent = Object.fromEntries(
-  Object.keys(color.blue).map((step) => [step, { $type: "color", $value: `{color.blue.${step}}` }]),
-);
+color.accent = current.accent ?? Object.fromEntries(Object.keys(color.lagoon ?? color.teal).map((step) => [step, { $type: "color", $value: `{color.lagoon.${step}}` }]));
 delete color.accent["925"];
 
 await writeFile(

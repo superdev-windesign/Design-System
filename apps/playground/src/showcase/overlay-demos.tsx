@@ -134,7 +134,7 @@ function DialogDemo() {
           >
             <div className="flex flex-col gap-4">
               <Input label="Display name" defaultValue="Riley Chen" />
-              <Textarea label="Bio" defaultValue="Designs the paper, inks the type." />
+              <Textarea label="Bio" defaultValue="Designs the system, sets the type." />
             </div>
           </Dialog>
         </Modal>

@@ -16,6 +16,11 @@
       "instrument-sans": {
         "$type": "fontFamily",
         "$value": "\"Instrument Sans Variable\", \"Instrument Sans\", ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\""
+      },
+      "manrope": {
+        "$type": "fontFamily",
+        "$value": "\"Manrope Variable\", \"Manrope\", ui-sans-serif, system-ui, sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+        "$description": "Windesign (Tonal teal): display and interface."
       }
     },
     "size": {

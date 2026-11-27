@@ -4,12 +4,11 @@
  *
  *   @import "@windesign-ds/styles/fonts.css";
  *
- * Windesign: Fraunces (display) and Instrument Sans (interface).
+ * Windesign: Manrope (display and interface).
  * Moon: DM Sans. Glass: the system font, then Inter.
  * All brands: JetBrains Mono for code.
  */
-@import "@fontsource-variable/fraunces";
-@import "@fontsource-variable/instrument-sans";
+@import "@fontsource-variable/manrope";
 @import "@fontsource-variable/dm-sans";
 @import "@fontsource-variable/inter";
 @import "@fontsource-variable/jetbrains-mono";

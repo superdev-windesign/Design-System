@@ -110,7 +110,7 @@ export function SectionHeading({ id, title, description, action }: { id: string;
 }
 
 export const NewChip = () => (
-  <Chip variant="caption" color="blue">
+  <Chip variant="caption" color="cyan">
     New
   </Chip>
 );

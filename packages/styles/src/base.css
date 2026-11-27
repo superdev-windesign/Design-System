@@ -29,7 +29,7 @@
     color: var(--ds-color-text-primary);
   }
 
-  /* Display and title styles are set in the serif; everything else in the UI sans.
+  /* Display and title styles are set in the brand's display face; everything else in the UI sans.
      Matching on the style names keeps components free of font choices. */
   :where([class*="text-display-"], [class*="text-title-"]) {
     font-family: var(--ds-font-family-display);

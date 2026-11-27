@@ -3,7 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Windesign DS · Playground</title>
+    <title>Windesign · Accessible React design system</title>
+    <meta
+      name="description"
+      content="Accessible React components, charts, templates and effects on one set of tokens. Three brands, light and dark. Install with npm, copy the source with the CLI, or build with AI through MCP."
+    />
+    <!-- The browser's own chrome in the page colour (Windesign's tide 100 and 950). -->
+    <meta name="theme-color" content="#e8f4f3" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#081010" media="(prefers-color-scheme: dark)" />
+    <!-- What a shared link shows. Share images need an absolute URL. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Windesign" />
+    <meta property="og:title" content="Windesign · Accessible React design system" />
+    <meta property="og:description" content="Accessible React components, charts, templates and effects on one set of tokens. Three brands, light and dark." />
+    <meta property="og:image" content="https://galactic-deepskyblue-toad-85.hostingersite.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Windesign: accessible React components, one set of tokens" />
+    <meta name="twitter:card" content="summary_large_image" />
     <!-- The header's logo mark. SVG where it's supported, the .ico for the rest, the PNG for home screens. -->
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -18,9 +35,9 @@
         var brand = localStorage.getItem("ds-brand");
         if (brand === "moon" || brand === "glass") root.dataset.brand = brand;
         var a = localStorage.getItem("ds-accent");
-        var presets = { red: ["red", 0], orange: ["orange", 100], emerald: ["emerald", 100], teal: ["teal", 100], blue: ["blue", 0], purple: ["purple", 0], fuchsia: ["fuchsia", 0] };
+        var presets = { terracotta: ["terracotta", 0], red: ["red", 0], orange: ["orange", 100], emerald: ["emerald", 100], teal: ["teal", 100], blue: ["blue", 0], purple: ["purple", 0], fuchsia: ["fuchsia", 0] };
         var mix = { 50: "white 92%", 100: "white 84%", 200: "white 68%", 300: "white 50%", 400: "white 32%", 500: "white 16%", 600: "", 700: "black 16%", 800: "black 32%", 900: "black 48%", 950: "black 62%" };
-        if (a && a !== "terracotta") {
+        if (a && a !== "lagoon") {
           [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950].forEach(function (s) {
             var p = presets[a];
             var v = p ? "var(--ds-color-" + p[0] + "-" + Math.min(950, s + p[1]) + ")" : mix[s] ? "color-mix(in oklab, " + a + ", " + mix[s] + ")" : a;

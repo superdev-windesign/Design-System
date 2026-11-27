@@ -47,7 +47,7 @@ export const DEFAULT_BRAND: Brand = "windesign";
 
 /** The brands, with the accent each one ships with. */
 export const BRANDS: { id: Brand; label: string; accentLabel: string; accentColor: string }[] = [
-  { id: "windesign", label: "Windesign", accentLabel: "Terracotta", accentColor: "var(--ds-color-terracotta-600)" },
+  { id: "windesign", label: "Windesign", accentLabel: "Lagoon", accentColor: "var(--ds-color-lagoon-600)" },
   { id: "moon", label: "Moon", accentLabel: "Piccolo", accentColor: "var(--ds-color-piccolo-600)" },
   { id: "glass", label: "Glass", accentLabel: "Blue", accentColor: "var(--ds-color-azure-600)" },
 ];
@@ -80,6 +80,8 @@ export interface AccentPreset {
 }
 
 export const ACCENT_PRESETS: AccentPreset[] = [
+  { id: "lagoon", label: "Lagoon", hue: "lagoon", shift: 0 },
+  // Windesign's accent before Tonal teal: kept, so a stored choice still resolves.
   { id: "terracotta", label: "Terracotta", hue: "terracotta", shift: 0 },
   { id: "red", label: "Red", hue: "red", shift: 0 },
   { id: "orange", label: "Orange", hue: "orange", shift: 100 },
@@ -93,7 +95,7 @@ export const ACCENT_PRESETS: AccentPreset[] = [
 /** A preset id, or any CSS colour (e.g. "#2f6f4f") for a custom accent. */
 export type AccentChoice = string;
 
-export const DEFAULT_ACCENT = "terracotta";
+export const DEFAULT_ACCENT = "lagoon";
 
 const STOPS = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const;
 
@@ -274,7 +276,7 @@ export interface ThemeProviderProps {
   /** Controlled choice. */
   theme?: ThemeChoice;
   onThemeChange?: (theme: ThemeChoice) => void;
-  /** Used when nothing is stored. Default "terracotta". */
+  /** Used when nothing is stored. Default "lagoon". */
   defaultAccent?: AccentChoice;
   /** localStorage key for the accent. Pass `null` to not persist. Default "ds-accent". */
   accentStorageKey?: string | null;

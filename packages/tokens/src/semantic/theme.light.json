@@ -681,27 +681,27 @@
     "effect": {
       "1": {
         "$type": "color",
-        "$value": "{color.sky.300}",
+        "$value": "{color.teal.300}",
         "$description": "Decorative palette for effects (auroras, beams, confetti): a cool blue."
       },
       "2": {
         "$type": "color",
-        "$value": "{color.purple.300}",
+        "$value": "{color.cyan.300}",
         "$description": "A violet."
       },
       "3": {
         "$type": "color",
-        "$value": "{color.terracotta.400}",
+        "$value": "{color.emerald.300}",
         "$description": "A warm red."
       },
       "4": {
         "$type": "color",
-        "$value": "{color.yellow.300}",
+        "$value": "{color.sky.300}",
         "$description": "A yellow."
       },
       "5": {
         "$type": "color",
-        "$value": "{color.teal.300}",
+        "$value": "{color.amber.300}",
         "$description": "A green."
       }
     }
@@ -711,15 +711,15 @@
       "primary": {
         "default": {
           "$type": "gradient",
-          "$value": "linear-gradient({color.paper.950}, {color.paper.950})"
+          "$value": "linear-gradient({color.accent.700}, {color.accent.700})"
         },
         "hover": {
           "$type": "gradient",
-          "$value": "linear-gradient({color.paper.800}, {color.paper.800})"
+          "$value": "linear-gradient({color.accent.800}, {color.accent.800})"
         },
         "pressed": {
           "$type": "gradient",
-          "$value": "linear-gradient({color.paper.900}, {color.paper.900})"
+          "$value": "linear-gradient({color.accent.900}, {color.accent.900})"
         },
         "disabled": {
           "$type": "gradient",

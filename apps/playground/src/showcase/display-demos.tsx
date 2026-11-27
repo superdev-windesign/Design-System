@@ -300,7 +300,7 @@ function TimelineDemo() {
 function ImageDemo() {
   return (
     <div className="grid w-full max-w-2xl gap-6 sm:grid-cols-2">
-      <Image src={PICTURE} alt="A red sun over two hills" ratio={16 / 10} caption="The house palette as a landscape: paper, terracotta and ink." figureLabel="Fig. 1" />
+      <Image src={PICTURE} alt="A red sun over two hills" ratio={16 / 10} caption="A landscape in warm light: sun, hills and sky." figureLabel="Fig. 1" />
       <Image src="/does-not-exist.jpg" alt="Harbour at dawn" ratio={16 / 10} caption="A failed load keeps its frame and shows the alt text." figureLabel="Fig. 2" />
       <div className="flex flex-col gap-2 sm:col-span-2">
         <span className="font-mono text-caption tracking-wide text-fg-secondary uppercase">AspectRatio · 1, 4 / 3, 21 / 9</span>
@@ -400,7 +400,7 @@ function ResizableDemo({ compact = false }: { compact?: boolean }) {
         ) : (
           <ResizablePanels orientation="vertical" className="h-full">
             <ResizablePanel label="Source" defaultSize={65} minSize={25}>
-              <pre className="p-4 font-mono text-caption text-fg">{`--ds-radius-control-md: 4px;\n--ds-radius-surface: 6px;\n--ds-color-accent-600: terracotta;`}</pre>
+              <pre className="p-4 font-mono text-caption text-fg">{`--ds-radius-control-md: 10px;\n--ds-radius-surface: 16px;\n--ds-color-accent-600: lagoon;`}</pre>
             </ResizablePanel>
             <ResizablePanel label="Console" minSize={20}>
               <p className="p-4 font-mono text-caption text-fg-secondary">✓ 598 token tests passed</p>
@@ -585,7 +585,7 @@ export const DATA_DISPLAY_ENTRIES: CatalogEntry[] = [
     imports: ["Image", "AspectRatio"],
     preview: () => (
       <div className="w-56">
-        <Image src={PICTURE} alt="A red sun over two hills" ratio={16 / 10} caption="Paper, terracotta and ink." figureLabel="Fig. 1" />
+        <Image src={PICTURE} alt="A red sun over two hills" ratio={16 / 10} caption="Sun, hills and sky." figureLabel="Fig. 1" />
       </div>
     ),
     demo: () => <ImageDemo />,

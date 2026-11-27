@@ -12,7 +12,7 @@ npm install @windesign-ds/styles
 
 ```css
 @import "tailwindcss";
-@import "@windesign-ds/styles/fonts.css"; /* optional: Fraunces, Instrument Sans, DM Sans, Inter, JetBrains Mono */
+@import "@windesign-ds/styles/fonts.css"; /* optional: Manrope, DM Sans, Inter, JetBrains Mono */
 @import "@windesign-ds/styles/tailwind.css";
 ```
 

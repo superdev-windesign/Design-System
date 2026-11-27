@@ -215,7 +215,7 @@ function TypographyDemo() {
         </Heading>
       </Stack>
       <Stack gap={2}>
-        <Text>Body copy in Instrument Sans. Install it with <Code>npm i @windesign-ds/react</Code>, then import what you need.</Text>
+        <Text>Body copy in Manrope. Install it with <Code>npm i @windesign-ds/react</Code>, then import what you need.</Text>
         <Text size="sm" tone="secondary">
           Secondary, smaller text for supporting detail.
         </Text>
@@ -245,12 +245,12 @@ function ProseDemo() {
   return (
     <Prose dropCap className="w-full">
       <p>
-        Paper and ink do most of the work. A warm off-white page, near-black type and a single terracotta accent keep the interface calm, so the
-        content leads. Corners are crisp and surfaces are ruled rather than floating.
+        One hue does most of the work. Cool tide-grey pages, deep teal-black type and a single lagoon accent keep the interface calm, so the
+        content leads. Corners are soft and buttons are pills.
       </p>
-      <h2>Why a type pairing</h2>
+      <h2>Why one typeface</h2>
       <p>
-        Fraunces sets headings with a little warmth; Instrument Sans carries the interface; JetBrains Mono marks figures, code and labels such as{" "}
+        Manrope sets both headings and interface, so the page reads as one voice; JetBrains Mono marks figures, code and labels such as{" "}
         <code>Fig. 03.2</code>. Read more in the <a href="#/components/typography">typography foundation</a>.
       </p>
       <ul>
@@ -608,7 +608,7 @@ export const MORE_ENTRIES: CatalogEntry[] = [
     isNew: true,
     name: "Link",
     group: "Navigation",
-    summary: "Ink text with a terracotta underline; inline, standalone and quiet, with external links marked.",
+    summary: "Ink text with an accent underline; inline, standalone and quiet, with external links marked.",
     imports: ["Link"],
     preview: () => (
       <Text className="max-w-60">

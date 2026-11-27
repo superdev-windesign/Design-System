@@ -644,27 +644,27 @@
     "effect": {
       "1": {
         "$type": "color",
-        "$value": "{color.sky.400}",
+        "$value": "{color.teal.400}",
         "$description": "Decorative palette for effects (auroras, beams, confetti): a cool blue."
       },
       "2": {
         "$type": "color",
-        "$value": "{color.purple.400}",
+        "$value": "{color.cyan.400}",
         "$description": "A violet."
       },
       "3": {
         "$type": "color",
-        "$value": "{color.terracotta.500}",
+        "$value": "{color.emerald.400}",
         "$description": "A warm red."
       },
       "4": {
         "$type": "color",
-        "$value": "{color.yellow.400}",
+        "$value": "{color.sky.400}",
         "$description": "A yellow."
       },
       "5": {
         "$type": "color",
-        "$value": "{color.teal.400}",
+        "$value": "{color.amber.400}",
         "$description": "A green."
       }
     }

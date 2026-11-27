@@ -1213,101 +1213,149 @@
       "$type": "color",
       "$value": "#fff"
     },
-    "accent": {
+    "lagoon": {
       "50": {
         "$type": "color",
-        "$value": "{color.terracotta.50}"
+        "$value": "oklch(97.5% 0.014 190)"
       },
       "100": {
         "$type": "color",
-        "$value": "{color.terracotta.100}"
+        "$value": "oklch(94.5% 0.03 189)"
       },
       "200": {
         "$type": "color",
-        "$value": "{color.terracotta.200}"
+        "$value": "oklch(89.5% 0.05 188)"
       },
       "300": {
         "$type": "color",
-        "$value": "{color.terracotta.300}"
+        "$value": "oklch(82% 0.072 188)"
       },
       "400": {
         "$type": "color",
-        "$value": "{color.terracotta.400}"
+        "$value": "oklch(72% 0.085 189)"
       },
       "500": {
         "$type": "color",
-        "$value": "{color.terracotta.500}"
+        "$value": "oklch(61% 0.09 190)"
       },
       "600": {
         "$type": "color",
-        "$value": "{color.terracotta.600}"
+        "$value": "oklch(52% 0.085 191)"
       },
       "700": {
         "$type": "color",
-        "$value": "{color.terracotta.700}"
+        "$value": "oklch(44.5% 0.075 192)"
       },
       "800": {
         "$type": "color",
-        "$value": "{color.terracotta.800}"
+        "$value": "oklch(37% 0.062 193)"
       },
       "900": {
         "$type": "color",
-        "$value": "{color.terracotta.900}"
+        "$value": "oklch(30% 0.05 194)"
       },
       "950": {
         "$type": "color",
-        "$value": "{color.terracotta.950}"
+        "$value": "oklch(22% 0.038 195)"
+      },
+      "$description": "Windesign accent (Tonal teal): a muted teal. Buttons sit on 700 in light; marks, rings and fills on 600."
+    },
+    "accent": {
+      "50": {
+        "$type": "color",
+        "$value": "{color.lagoon.50}"
+      },
+      "100": {
+        "$type": "color",
+        "$value": "{color.lagoon.100}"
+      },
+      "200": {
+        "$type": "color",
+        "$value": "{color.lagoon.200}"
+      },
+      "300": {
+        "$type": "color",
+        "$value": "{color.lagoon.300}"
+      },
+      "400": {
+        "$type": "color",
+        "$value": "{color.lagoon.400}"
+      },
+      "500": {
+        "$type": "color",
+        "$value": "{color.lagoon.500}"
+      },
+      "600": {
+        "$type": "color",
+        "$value": "{color.lagoon.600}"
+      },
+      "700": {
+        "$type": "color",
+        "$value": "{color.lagoon.700}"
+      },
+      "800": {
+        "$type": "color",
+        "$value": "{color.lagoon.800}"
+      },
+      "900": {
+        "$type": "color",
+        "$value": "{color.lagoon.900}"
+      },
+      "950": {
+        "$type": "color",
+        "$value": "{color.lagoon.950}"
       }
     },
     "paper": {
       "50": {
         "$type": "color",
-        "$value": "oklch(98.8% 0.006 85)"
+        "$value": "oklch(98.4% 0.006 190)"
       },
       "100": {
         "$type": "color",
-        "$value": "oklch(96.7% 0.012 84)"
+        "$value": "oklch(95.8% 0.013 188)"
       },
       "200": {
         "$type": "color",
-        "$value": "oklch(93.4% 0.017 82)"
+        "$value": "oklch(93.4% 0.017 187)"
       },
       "300": {
         "$type": "color",
-        "$value": "oklch(88.4% 0.021 80)"
+        "$value": "oklch(87.2% 0.024 187)"
       },
       "400": {
         "$type": "color",
-        "$value": "oklch(77.5% 0.024 77)"
+        "$value": "oklch(76.5% 0.027 189)"
       },
       "500": {
         "$type": "color",
-        "$value": "oklch(62% 0.024 72)"
+        "$value": "oklch(61.5% 0.028 191)"
       },
       "600": {
         "$type": "color",
-        "$value": "oklch(50% 0.021 66)"
+        "$value": "oklch(49.5% 0.026 193)"
       },
       "700": {
         "$type": "color",
-        "$value": "oklch(40.5% 0.017 62)"
+        "$value": "oklch(40% 0.023 195)"
       },
       "800": {
         "$type": "color",
-        "$value": "oklch(30.5% 0.013 58)"
+        "$value": "oklch(30.5% 0.019 196)"
       },
       "900": {
         "$type": "color",
-        "$value": "oklch(23.5% 0.011 56)"
+        "$value": "oklch(23.5% 0.016 197)"
       },
       "925": {
         "$type": "color",
-        "$value": "oklch(20% 0.01 55)"
+        "$value": "oklch(20% 0.014 197)"
       },
       "950": {
         "$type": "color",
-        "$value": "oklch(16.5% 0.009 55)"
-      }
+        "$value": "oklch(16.5% 0.013 198)"
+      },
+      "$description": "Windesign neutrals (Tonal teal): cool greys tinted towards teal. 950 is the ink in light and the page in dark. Moon and Glass re-point this ramp."
     },
     "terracotta": {
       "50": {

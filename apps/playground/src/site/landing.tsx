@@ -351,7 +351,7 @@ function BrandShowcase() {
         <SectionHeading
           id="brands"
           title="One system. Three brands."
-          description="Windesign's paper and ink, Moon's soft panels and Glass's frosted light. Switch here and watch the whole page change: same components, same code, new tokens."
+          description="Windesign's tonal teal, Moon's soft panels and Glass's frosted light. Switch here and watch the whole page change: same components, same code, new tokens."
         />
         <div ref={control} className="flex flex-col gap-3">
           <SegmentedControl

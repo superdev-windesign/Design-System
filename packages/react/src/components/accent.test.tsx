@@ -8,14 +8,16 @@ const root = document.documentElement;
 const accent600 = () => root.style.getPropertyValue("--ds-color-accent-600");
 
 afterEach(() => {
-  applyAccent("terracotta");
+  applyAccent("lagoon");
   localStorage.clear();
   delete (document as { startViewTransition?: unknown }).startViewTransition;
 });
 
 describe("accent helpers", () => {
   it("maps presets onto their ramp, shifted where text needs it", () => {
-    expect(accentVariables("terracotta")).toBeNull();
+    expect(accentVariables("lagoon")).toBeNull();
+    // The old default stays a preset, so a stored "terracotta" still resolves.
+    expect(accentVariables("terracotta")!["--ds-color-accent-600"]).toBe("var(--ds-color-terracotta-600)");
     expect(accentVariables("blue")!["--ds-color-accent-600"]).toBe("var(--ds-color-blue-600)");
     expect(accentVariables("orange")!["--ds-color-accent-600"]).toBe("var(--ds-color-orange-700)");
     expect(accentVariables("orange")!["--ds-color-accent-950"]).toBe("var(--ds-color-orange-950)");
@@ -77,7 +79,7 @@ describe("AccentPicker", () => {
         <Current />
       </ThemeProvider>,
     );
-    expect(screen.getByRole("radio", { name: "Terracotta" })).toBeChecked();
+    expect(screen.getByRole("radio", { name: "Lagoon" })).toBeChecked();
     expect(screen.getByRole("button", { name: /Reset/ })).toBeDisabled();
 
     await user.click(screen.getByRole("radio", { name: "Blue" }));
@@ -87,7 +89,7 @@ describe("AccentPicker", () => {
     expect(screen.getByText("Accent: Blue")).toHaveAttribute("role", "status");
 
     await user.click(screen.getByRole("button", { name: /Reset/ }));
-    expect(screen.getByText("terracotta")).toBeInTheDocument();
+    expect(screen.getByText("lagoon")).toBeInTheDocument();
     expect(accent600()).toBe("");
     expect(localStorage.getItem("test-accent")).toBeNull();
   });

@@ -9,83 +9,83 @@
     "control": {
       "xs": {
         "$type": "dimension",
-        "$value": "{radius.2}"
+        "$value": "{radius.4}"
       },
       "sm": {
         "$type": "dimension",
-        "$value": "{radius.4}"
+        "$value": "{radius.8}"
       },
       "md": {
         "$type": "dimension",
-        "$value": "{radius.4}"
+        "$value": "{radius.10}"
       }
     },
     "item": {
       "$type": "dimension",
-      "$value": "{radius.4}",
+      "$value": "{radius.8}",
       "$description": "Day cells, small selectable items"
     },
     "tile": {
       "$type": "dimension",
-      "$value": "{radius.3}",
+      "$value": "{radius.8}",
       "$description": "Small icon tiles (20px and under)"
     },
     "chip": {
       "$type": "dimension",
-      "$value": "{radius.4}"
+      "$value": "{radius.full}"
     },
     "surface": {
       "$type": "dimension",
-      "$value": "{radius.6}",
+      "$value": "{radius.16}",
       "$description": "Cards and month panels"
     },
     "overlay": {
       "$type": "dimension",
-      "$value": "{radius.8}",
+      "$value": "{radius.16}",
       "$description": "Menus, listboxes"
     },
     "panel": {
       "$type": "dimension",
-      "$value": "{radius.10}",
+      "$value": "{radius.20}",
       "$description": "Large popovers and dialogs"
     },
     "action": {
       "$type": "dimension",
-      "$value": "{radius.4}",
+      "$value": "{radius.full}",
       "$description": "The action that commits a panel, such as Apply"
     },
     "scale": {
       "xs": {
         "$type": "dimension",
-        "$value": "{radius.2}"
+        "$value": "{radius.4}"
       },
       "sm": {
         "$type": "dimension",
-        "$value": "{radius.4}"
+        "$value": "{radius.6}"
       },
       "md": {
         "$type": "dimension",
-        "$value": "{radius.4}"
+        "$value": "{radius.8}"
       },
       "lg": {
         "$type": "dimension",
-        "$value": "{radius.4}"
+        "$value": "{radius.10}"
       },
       "2lg": {
         "$type": "dimension",
-        "$value": "{radius.6}"
+        "$value": "{radius.12}"
       },
       "xl": {
         "$type": "dimension",
-        "$value": "{radius.6}"
+        "$value": "{radius.12}"
       },
       "2xl": {
         "$type": "dimension",
-        "$value": "{radius.8}"
+        "$value": "{radius.16}"
       },
       "3xl": {
         "$type": "dimension",
-        "$value": "{radius.10}"
+        "$value": "{radius.20}"
       }
     }
   },
@@ -123,7 +123,7 @@
     "family": {
       "sans": {
         "$type": "fontFamily",
-        "$value": "{font.family.instrument-sans}"
+        "$value": "{font.family.manrope}"
       },
       "mono": {
         "$type": "fontFamily",
@@ -136,7 +136,7 @@
       },
       "display": {
         "$type": "fontFamily",
-        "$value": "{font.family.fraunces}",
+        "$value": "{font.family.manrope}",
         "$description": "Display and title styles"
       }
     }

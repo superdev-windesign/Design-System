@@ -40,7 +40,7 @@ function focusedCentre(): TransitionOrigin | undefined {
 
 export function AccentPicker({ showCustom = true, showReset = true, "aria-label": ariaLabel = "Accent colour", className }: AccentPickerProps) {
   const { accent, setAccent, brand } = useTheme();
-  // The first swatch is the brand's own accent: terracotta, or Moon's Piccolo.
+  // The first swatch is the brand's own accent: Lagoon, Moon's Piccolo or Glass's blue.
   const own = BRANDS.find((b) => b.id === brand)!;
   const swatchLabel = (preset: (typeof ACCENT_PRESETS)[number]) => (preset.id === DEFAULT_ACCENT ? own.accentLabel : preset.label);
   const pointer = useRef<TransitionOrigin | undefined>(undefined);
