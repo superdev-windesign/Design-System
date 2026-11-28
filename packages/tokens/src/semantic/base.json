@@ -123,7 +123,7 @@
     "family": {
       "sans": {
         "$type": "fontFamily",
-        "$value": "{font.family.manrope}"
+        "$value": "{font.family.inter}"
       },
       "mono": {
         "$type": "fontFamily",
@@ -136,7 +136,7 @@
       },
       "display": {
         "$type": "fontFamily",
-        "$value": "{font.family.manrope}",
+        "$value": "{font.family.inter}",
         "$description": "Display and title styles"
       }
     }

@@ -8,7 +8,8 @@ All packages are versioned together: `@windesign-ds/tokens`, `@windesign-ds/styl
 ### The Windesign brand is now Tonal teal
 
 The default look changes. If you use the Windesign brand (no `data-brand`), your
-app will restyle when you upgrade; Moon and Glass are unchanged.
+app will restyle when you upgrade. Moon and Glass keep their colours and
+shapes, and move to Inter like every brand.
 
 - **Neutrals:** cool, faintly teal greys replace warm paper. `paper-950` is still
   the ink in light mode and the page in dark mode.
@@ -16,9 +17,10 @@ app will restyle when you upgrade; Moon and Glass are unchanged.
   stays available as an accent preset, so a stored `"terracotta"` choice still
   resolves.
 - **Primary button (light):** lagoon 700 with white text, instead of ink.
-- **Type:** Manrope for display and interface. `@windesign-ds/styles/fonts.css`
-  now loads Manrope, DM Sans, Inter and JetBrains Mono; Fraunces and Instrument
-  Sans are no longer included.
+- **Type:** every brand now sets display and interface text in Inter (Moon
+  was DM Sans; Glass was the system font). Code stays in JetBrains Mono.
+  `@windesign-ds/styles/fonts.css` now loads just Inter and JetBrains Mono;
+  Fraunces, Instrument Sans and DM Sans are no longer included.
 - **Corners:** softer: 8–10px controls, 16px cards and overlays, round chips.
 - **Effects:** the effect palette becomes a tonal family (teal, cyan, emerald,
   sky, amber).
@@ -41,7 +43,7 @@ npm install @windesign-ds/react@^0.2.0 @windesign-ds/styles@^0.2.0
 ```
 
 If you import `@windesign-ds/styles/fonts.css`, nothing else changes. If you load
-fonts yourself, add Manrope (`@fontsource-variable/manrope`) for Windesign.
+fonts yourself, load Inter (`@fontsource-variable/inter`) for every brand.
 
 To keep the old terracotta accent on the new neutrals, pass
 `defaultAccent="terracotta"` to `ThemeProvider`.

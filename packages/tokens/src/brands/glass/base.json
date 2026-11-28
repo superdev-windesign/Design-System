@@ -86,15 +86,15 @@
     "family": {
       "sans": {
         "$type": "fontFamily",
-        "$value": "{font.family.system-glass}"
+        "$value": "{font.family.inter}"
       },
       "mono": {
         "$type": "fontFamily",
-        "$value": "{font.family.system-glass}"
+        "$value": "{font.family.inter}"
       },
       "display": {
         "$type": "fontFamily",
-        "$value": "{font.family.system-glass}"
+        "$value": "{font.family.inter}"
       }
     }
   },

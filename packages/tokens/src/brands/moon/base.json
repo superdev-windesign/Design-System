@@ -52,15 +52,15 @@
     "family": {
       "sans": {
         "$type": "fontFamily",
-        "$value": "{font.family.dm-sans}"
+        "$value": "{font.family.inter}"
       },
       "mono": {
         "$type": "fontFamily",
-        "$value": "{font.family.dm-sans}"
+        "$value": "{font.family.inter}"
       },
       "display": {
         "$type": "fontFamily",
-        "$value": "{font.family.dm-sans}"
+        "$value": "{font.family.inter}"
       }
     }
   },

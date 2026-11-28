@@ -215,7 +215,7 @@ function TypographyDemo() {
         </Heading>
       </Stack>
       <Stack gap={2}>
-        <Text>Body copy in Manrope. Install it with <Code>npm i @windesign-ds/react</Code>, then import what you need.</Text>
+        <Text>Body copy in Inter. Install it with <Code>npm i @windesign-ds/react</Code>, then import what you need.</Text>
         <Text size="sm" tone="secondary">
           Secondary, smaller text for supporting detail.
         </Text>
@@ -250,7 +250,7 @@ function ProseDemo() {
       </p>
       <h2>Why one typeface</h2>
       <p>
-        Manrope sets both headings and interface, so the page reads as one voice; JetBrains Mono marks figures, code and labels such as{" "}
+        Inter sets both headings and interface, so the page reads as one voice; JetBrains Mono marks figures, code and labels such as{" "}
         <code>Fig. 03.2</code>. Read more in the <a href="#/components/typography">typography foundation</a>.
       </p>
       <ul>

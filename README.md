@@ -1,7 +1,7 @@
 # Windesign Design System
 
 A token-driven React design system in Tonal teal: cool tide-grey neutrals, a
-muted lagoon-teal accent, Manrope for display and interface type, and soft
+muted lagoon-teal accent, Inter for display and interface type, and soft
 rounded corners with pill buttons. It was
 set up according to the blueprint in [docs/blueprint](docs/blueprint/README.md)
 and started from BoardUI's free MIT components, which have since been re-themed;
