@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { CodeBlock, PillTab, PillTabList } from "@windesign-ds/react";
+import { PillTab, PillTabList } from "@windesign-ds/react";
+import { CodeBlock } from "./gated-code";
 
 /**
  * A shell command shown for each package manager, as tabs over one code block.

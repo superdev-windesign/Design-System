@@ -33,7 +33,8 @@ import {
   RiUploadLine,
   RiUserLine,
 } from "@remixicon/react";
-import { AccentPicker, Button, CodeBlock, Grid, Stack, Text, ThemeScope, cx, useTheme } from "@windesign-ds/react";
+import { AccentPicker, Button, Grid, Stack, Text, ThemeScope, cx, useTheme } from "@windesign-ds/react";
+import { CodeBlock } from "../site/gated-code";
 import { AccentSpecimen } from "../site/accent-section";
 
 const centreOf = (el: Element) => {

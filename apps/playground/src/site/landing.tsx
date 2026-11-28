@@ -17,7 +17,6 @@ import {
   BRANDS,
   BorderBeam,
   Button,
-  CodeBlock,
   CopyButton,
   LightRays,
   LinkButton,
@@ -29,6 +28,7 @@ import {
   focusRingNative,
   useTheme,
 } from "@windesign-ds/react";
+import { CodeBlock, SignInGate } from "./gated-code";
 import type { Brand, IconComponent } from "@windesign-ds/react";
 import { CATALOG, findEntry } from "../showcase/catalog";
 import { AccentSection } from "./accent-section";
@@ -198,11 +198,13 @@ function Hero() {
           </Button>
         </div>
 
-        <div className="flex max-w-full items-center gap-2 rounded-control-md border border-line bg-surface py-1.5 ps-4 pe-1.5 shadow-raised">
-          <RiTerminalBoxLine aria-hidden className="size-4 shrink-0 text-icon-secondary" />
-          <code className="truncate font-code text-body-sm text-fg">{INSTALL}</code>
-          <CopyButton value={INSTALL} iconOnly label="Copy the command" size="sm" variant="tertiary" />
-        </div>
+        <SignInGate compact className="max-w-full">
+          <div className="flex max-w-full items-center gap-2 rounded-control-md border border-line bg-surface py-1.5 ps-4 pe-1.5 shadow-raised">
+            <RiTerminalBoxLine aria-hidden className="size-4 shrink-0 text-icon-secondary" />
+            <code className="truncate font-code text-body-sm text-fg">{INSTALL}</code>
+            <CopyButton value={INSTALL} iconOnly label="Copy the command" size="sm" variant="tertiary" />
+          </div>
+        </SignInGate>
 
         <HeroStats />
 
@@ -363,9 +365,10 @@ function BrandShowcase() {
               const r = control.current?.getBoundingClientRect();
               setBrand(next, r ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : undefined);
             }}
+            className="flex w-full"
           >
             {BRANDS.map(({ id, label }) => (
-              <SegmentedControlItem key={id} id={id}>
+              <SegmentedControlItem key={id} id={id} className="flex-1">
                 {label}
               </SegmentedControlItem>
             ))}

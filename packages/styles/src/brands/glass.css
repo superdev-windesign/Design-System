@@ -256,8 +256,7 @@ html[data-brand="glass"],
 }
 
 /* ── Switch ───────────────────────────────────────────────────────────────
-   The knob is a drop of glass wider than its track. Travel is unchanged, since
-   it's the track's width less its height whatever the knob's size. */
+   A capsule knob in a solid track; pressed, it becomes a drop of clear glass. */
 [data-brand="glass"] .bui-switch-track {
   overflow: visible;
   border-width: 0;
@@ -277,18 +276,30 @@ html[data-brand="glass"],
   display: none;
 }
 
+/* At rest the knob is a capsule inside the track, 62% of its inner width; it
+   only swells past the edge while held. Travel is the rest of the inner width,
+   which is 0.38 / 0.62 of the knob's own width, so one percentage fits every
+   size. */
 [data-brand="glass"] .bui-switch-knob {
-  inset-block-start: -0.1875rem;
-  inset-inline-start: -0.1875rem;
-  width: auto;
-  height: calc(100% + 0.375rem);
-  aspect-ratio: 1;
+  inset-block-start: 0.125rem;
+  inset-inline-start: 0.125rem;
+  width: calc((100% - 0.25rem) * 0.62);
+  height: calc(100% - 0.25rem);
   background-color: var(--ds-color-ios-white);
   box-shadow: var(--ds-elevation-glass-lens);
   transition:
     translate var(--ds-motion-duration-moderate) var(--ds-motion-easing-overshoot),
     scale var(--ds-motion-duration-base) var(--ds-motion-easing-standard),
     background-color var(--ds-motion-duration-base) ease;
+}
+
+[data-brand="glass"] .bui-switch-track[data-selected] .bui-switch-knob {
+  translate: 61.29% 0;
+}
+
+[data-brand="glass"] [dir="rtl"] .bui-switch-track[data-selected] .bui-switch-knob,
+[data-brand="glass"][dir="rtl"] .bui-switch-track[data-selected] .bui-switch-knob {
+  translate: -61.29% 0;
 }
 
 /* Held, it turns to clear glass so the track shows through. */

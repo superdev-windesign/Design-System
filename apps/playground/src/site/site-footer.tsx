@@ -6,6 +6,7 @@ const NPM_URL = "https://www.npmjs.com/package/@windesign-ds/react";
 const INSTALL = "npm install @windesign-ds/react @windesign-ds/styles";
 import { BRAND_GROUPS, PATTERN_GROUPS, groupSlug } from "./routes";
 import { Wordmark } from "./site-header";
+import { SignInGate } from "./gated-code";
 
 type FooterLink = { label: string; href: string; external?: boolean };
 
@@ -88,10 +89,12 @@ export function SiteFooter({ compact = false }: { compact?: boolean }) {
           <Wordmark showVersion={false} />
           <p className="max-w-xs text-body-md text-fg-secondary">React components, blocks and templates on React Aria, styled only through design tokens.</p>
           {/* The one line most people need, ready to copy. */}
-          <div className="flex w-full max-w-sm items-center gap-2 rounded-control-md border border-line bg-surface py-1.5 ps-3 pe-1.5">
-            <code className="min-w-0 flex-1 truncate font-code text-body-sm text-fg">{INSTALL}</code>
-            <CopyButton value={INSTALL} iconOnly label="Copy the install command" size="sm" variant="tertiary" />
-          </div>
+          <SignInGate compact className="w-full max-w-sm">
+            <div className="flex w-full items-center gap-2 rounded-control-md border border-line bg-surface py-1.5 ps-3 pe-1.5">
+              <code className="min-w-0 flex-1 truncate font-code text-body-sm text-fg">{INSTALL}</code>
+              <CopyButton value={INSTALL} iconOnly label="Copy the install command" size="sm" variant="tertiary" />
+            </div>
+          </SignInGate>
           <div className="flex items-center gap-2">
             <IconLinkButton icon={RiGithubFill} size="small" href={REPO_URL} target="_blank" rel="noreferrer" aria-label="Source on GitHub" />
             <IconLinkButton icon={RiNpmjsFill} size="small" href={NPM_URL} target="_blank" rel="noreferrer" aria-label="@windesign-ds/react on npm" />

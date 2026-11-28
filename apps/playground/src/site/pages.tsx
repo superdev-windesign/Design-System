@@ -18,7 +18,6 @@ import {
   Button,
   Checkbox,
   Chip,
-  CodeBlock,
   EmptyState,
   Input,
   Link,
@@ -31,6 +30,7 @@ import {
   cx,
   focusRingNative,
 } from "@windesign-ds/react";
+import { CodeBlock } from "./gated-code";
 import type { IconComponent } from "@windesign-ds/react";
 import { CATALOG, GROUPS } from "../showcase/catalog";
 import type { CatalogEntry, Group } from "../showcase/catalog";
@@ -173,10 +173,17 @@ export function HeroSpecimen() {
         <Input label="Project name" defaultValue="Atlas redesign" />
         <div className="flex flex-col gap-2">
           <span className="text-body-sm-strong text-fg">Plan</span>
-          <SegmentedControl aria-label="Plan" defaultSelectedKeys={["team"]}>
-            <SegmentedControlItem id="solo">Solo</SegmentedControlItem>
-            <SegmentedControlItem id="team">Team</SegmentedControlItem>
-            <SegmentedControlItem id="company">Company</SegmentedControlItem>
+          {/* Full width with even segments, so it lines up with the field above in every brand. */}
+          <SegmentedControl aria-label="Plan" defaultSelectedKeys={["team"]} className="flex w-full">
+            <SegmentedControlItem id="solo" className="flex-1">
+              Solo
+            </SegmentedControlItem>
+            <SegmentedControlItem id="team" className="flex-1">
+              Team
+            </SegmentedControlItem>
+            <SegmentedControlItem id="company" className="flex-1">
+              Company
+            </SegmentedControlItem>
           </SegmentedControl>
         </div>
         <div className="flex flex-col gap-3">

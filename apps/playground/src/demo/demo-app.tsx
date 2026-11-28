@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { RiArrowLeftLine, RiPhoneFill, RiTimerLine, RiUploadCloud2Line } from "@remixicon/react";
-import { Avatar, Button, CodeBlock, DynamicIsland, focusRingNative, cx } from "@windesign-ds/react";
+import { Avatar, Button, DynamicIsland, focusRingNative, cx } from "@windesign-ds/react";
+import { CodeBlock } from "../site/gated-code";
 import type { DynamicIslandSize } from "@windesign-ds/react";
 
 /**

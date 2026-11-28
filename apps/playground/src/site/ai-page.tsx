@@ -8,7 +8,8 @@ import {
   RiShapesLine,
   RiTerminalBoxLine,
 } from "@remixicon/react";
-import { CodeBlock, Link, LinkButton, PillTab, PillTabList } from "@windesign-ds/react";
+import { Link, LinkButton, PillTab, PillTabList } from "@windesign-ds/react";
+import { CodeBlock } from "./gated-code";
 import type { IconComponent } from "@windesign-ds/react";
 import { InstallCommand, cliCommand } from "./install-command";
 import { REPO_URL } from "./meta";
